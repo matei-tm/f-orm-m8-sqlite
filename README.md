@@ -1,0 +1,1 @@
+# flutter-sqlite-m8-generator
