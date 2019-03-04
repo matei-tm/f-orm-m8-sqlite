@@ -1,5 +1,5 @@
 import 'package:flutter_sqlite_m8_generator/src/flutter_sqlite_m8_generator.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 
 void main() {
