@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      flutter_sqlite_m8_generator|flutter_orm_m8:
+        enabled: true
+
+builders:
+  flutter_orm_m8:
+    target: ":flutter_sqlite_m8_generator"
+    import: "package:flutter_sqlite_m8_generator/builder.dart"
+    builder_factories: ["ormM8"]
+    build_extensions: {".dart": [".flutter_orm_m8.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
