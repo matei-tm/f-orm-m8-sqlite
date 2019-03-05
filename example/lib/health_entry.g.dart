@@ -6,4 +6,4 @@ part of 'health_entry.dart';
 // EntityHelperM8Generator
 // **************************************************************************
 
-//Annotation found!
+//Annotation found!class HealthEntry

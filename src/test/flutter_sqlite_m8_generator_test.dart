@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/src/flutter_sqlite_m8_generator.dart';
+import 'package:flutter_sqlite_m8_generator/flutter_sqlite_m8_generator.dart';
 import 'package:test/test.dart';
 
 
