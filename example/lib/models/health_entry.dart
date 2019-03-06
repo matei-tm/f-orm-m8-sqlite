@@ -1,6 +1,6 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-part "health_entry.g.dart";
+part "health_entry.m8.dart";
 
 
 @DataTable("health_entries")

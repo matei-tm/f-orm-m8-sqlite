@@ -9,8 +9,8 @@ class PropertiesHelperM8Generator extends GeneratorForAnnotation<DataColumn> {
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
-       String columnName =  annotation.objectValue.getField('name').toStringValue();
-       String modelName = element.displayName;
+    String columnName = annotation.objectValue.getField('name').toStringValue();
+    String modelName = element.displayName;
     print(columnName);
     print(modelName);
     return '//Annotation found!' + '$columnName';
