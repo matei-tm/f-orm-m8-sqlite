@@ -1,11 +1,11 @@
-library flutter_sqlite_m8_generator;
+library orm_m8_generator;
 
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:flutter_sqlite_m8_generator/flutter_sqlite_m8_generator.dart';
+import 'generator/orm_m8_generator_for_annotation.dart';
 
-Builder ormM8PartBuilder({String header}) =>
-    PartBuilder([EntityHelperM8Generator()], '.m8.dart', header: header);
+Builder m8GeneratorBuilder() =>
+    PartBuilder([OrmM8GeneratorForAnnotation()], '.m8.dart');
 
 Builder ormM8(BuilderOptions options) =>
-    ormM8PartBuilder(header: options.config['header'] as String);
+    m8GeneratorBuilder();
