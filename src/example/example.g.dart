@@ -3,7 +3,9 @@
 part of 'example.dart';
 
 // **************************************************************************
-// EntityHelperM8Generator
+// Generator: OrmM8GeneratorForAnnotation
 // **************************************************************************
 
-//Annotation found!
+/*
+Instance of 'EntityWriter'
+*/
