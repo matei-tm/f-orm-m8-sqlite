@@ -8,7 +8,7 @@ class EntityWriter {
   @override
   String toString() {
     StringBuffer sb = StringBuffer();
-    
+
     sb.writeln('/*');
     sb.writeln(super.toString());
     sb.writeln('*/');
