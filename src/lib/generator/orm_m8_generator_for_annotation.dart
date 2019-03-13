@@ -25,7 +25,7 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
           annotation.objectValue.getField('name').toStringValue();
       print("Generating entity for $modelName ... $entityName");
 
-      ModelParser modelParser = ModelParser(element);
+      ModelParser modelParser = ModelParser(element, entityName);
       final EmittedEntity emittedEntity = modelParser.getEmittedEntity();
 
       final entityWriter = EntityWriter(emittedEntity);

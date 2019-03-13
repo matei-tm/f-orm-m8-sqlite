@@ -53,3 +53,7 @@ bool isIndexed(int value) {
 bool isUnique(int value) {
   return value & ColumnMetadata.Unique == ColumnMetadata.Unique;
 }
+
+bool mustIgnore(int value) {
+  return value & ColumnMetadata.Ignore == ColumnMetadata.Ignore;
+}
