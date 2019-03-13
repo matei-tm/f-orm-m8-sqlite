@@ -14,7 +14,7 @@ void main() async {
 
     test('Test healthy annotations', () async {
       final output = await generator.generate(_library, null);
-      final expected = "Instance of 'EntityWriter'";
+      final expected = "/*\nInstance of 'EntityWriter'\n*/";
       expect(output, expected);
     });
   });

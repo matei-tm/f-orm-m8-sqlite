@@ -28,9 +28,9 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       ModelParser modelParser = ModelParser(element);
       final EmittedEntity emittedEntity = modelParser.getEmittedEntity();
 
-      final writer = EntityWriter(emittedEntity);
+      final entityWriter = EntityWriter(emittedEntity);
 
-      return writer.toString();
+      return entityWriter.toString();
     } catch (exception, stack) {
       return ExceptionExpander(exception, stack).toString();
     }
