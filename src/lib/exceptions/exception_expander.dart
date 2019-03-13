@@ -9,7 +9,7 @@ class ExceptionExpander {
 
   @override
   String toString() {
-    var result = new StringBuffer();
+    var result = StringBuffer();
     result.writeln('/*');
     result.write(exception.toString());
     result.writeln();

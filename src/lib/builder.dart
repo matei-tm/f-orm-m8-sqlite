@@ -7,5 +7,4 @@ import 'generator/orm_m8_generator_for_annotation.dart';
 Builder m8GeneratorBuilder() =>
     PartBuilder([OrmM8GeneratorForAnnotation()], '.m8.dart');
 
-Builder ormM8(BuilderOptions options) =>
-    m8GeneratorBuilder();
+Builder ormM8(BuilderOptions options) => m8GeneratorBuilder();

@@ -17,8 +17,7 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       ConstantReader annotation, BuildStep buildStep) async {
     try {
       if (element is! ClassElement) {
-        throw new Exception(
-            "@DataTable annotation must be defined on a class.");
+        throw Exception("@DataTable annotation must be defined on a class.");
       }
 
       final String modelName = element.name;
@@ -26,10 +25,10 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
           annotation.objectValue.getField('name').toStringValue();
       print("Generating entity for $modelName ... $entityName");
 
-      ModelParser modelParser = new ModelParser(element);
+      ModelParser modelParser = ModelParser(element);
       final EmittedEntity emittedEntity = modelParser.getEmittedEntity();
 
-      final writer = new EntityWriter(emittedEntity);
+      final writer = EntityWriter(emittedEntity);
 
       return writer.toString();
     } catch (exception, stack) {
@@ -37,11 +36,3 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
     }
   }
 }
-
-
-
-
-
-
-
-
