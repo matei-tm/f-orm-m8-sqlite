@@ -3,7 +3,9 @@
 part of 'health_entry.dart';
 
 // **************************************************************************
-// EntityHelperM8Generator
+// Generator: OrmM8GeneratorForAnnotation
 // **************************************************************************
 
-//Annotation found!class HealthEntry extends DataId
+/*
+Instance of 'EntityWriter'
+*/
