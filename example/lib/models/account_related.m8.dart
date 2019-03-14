@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'health_entry.dart';
+part of 'account_related.dart';
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -8,4 +8,5 @@ part of 'health_entry.dart';
 
 /*
 Instance of 'EntityWriter'
-*/
+Entity:my_account_related_table Model:HealthEntryAccountRelated
+{_id: Instance of 'EntityAttribute', _description: Instance of 'EntityAttribute', _account_id: Instance of 'EntityAttribute'}*/
