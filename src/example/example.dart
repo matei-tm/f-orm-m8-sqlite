@@ -26,5 +26,3 @@ class HealthEntry extends DbAccountRelatedEntity {
     return null;
   }
 }
-
-
