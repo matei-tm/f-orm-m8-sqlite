@@ -20,6 +20,8 @@ class HealthEntry implements DbEntity {
   @override
   int get id => _id;
 
+  int get FutureData => _futureData;
+
   String get description => _description;
 
   @override
