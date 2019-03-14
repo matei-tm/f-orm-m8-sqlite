@@ -26,7 +26,7 @@ class ModelParser {
     _extractEntityAttributes();
 
     final EmittedEntity resultEntity =
-        EmittedEntity(modelName, entityName, entityAttributes);
+        EmittedEntity(modelName, entityName, entityType, entityAttributes);
 
     return resultEntity;
   }

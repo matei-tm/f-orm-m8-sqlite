@@ -1,7 +1,5 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-part "account_related.m8.dart";
-
 @DataTable("my_account_related_table")
 class HealthEntryAccountRelated implements DbAccountRelatedEntity {
   @DataColumn(

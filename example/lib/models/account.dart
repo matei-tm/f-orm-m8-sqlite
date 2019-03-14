@@ -1,7 +1,5 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-part "account.m8.dart";
-
 @DataTable("my_account_table")
 class UserAccount implements DbAccountEntity {
   @DataColumn(
