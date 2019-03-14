@@ -14,10 +14,7 @@ class HealthEntry implements DbEntity {
   @DataColumn("my_description_column", ColumnMetadata.Unique)
   String _description;
 
-  @DataColumn(
-      "my_future_column",
-      ColumnMetadata.Ignore |
-          ColumnMetadata.Unique)
+  @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int _futureData;
 
   @override
