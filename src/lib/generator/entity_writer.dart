@@ -11,6 +11,8 @@ class EntityWriter {
 
     sb.writeln('/*');
     sb.writeln(super.toString());
+    sb.write(
+        'Entity:${emittedEntity.entityName} Model:${emittedEntity.modelName}\n${emittedEntity.attributes.toString()}');
     sb.writeln('*/');
 
     return sb.toString();
