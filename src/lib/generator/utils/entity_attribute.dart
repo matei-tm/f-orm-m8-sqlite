@@ -4,6 +4,8 @@ class EntityAttribute {
 
   final String attributeName;
 
+  final int metadataLevel;
+
   EntityAttribute(this.modelTypeName, this.modelName, this.attributeName,
-      {int metadataLevel});
+      {this.metadataLevel});
 }

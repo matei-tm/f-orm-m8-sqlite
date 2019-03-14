@@ -86,6 +86,9 @@ class ModelParser {
       if (rawEntityAttributes.length == 0) return;
 
       var firstField = rawEntityAttributes.first;
+
+      if (mustIgnore(firstField.metadataLevel)) return;
+
       if (firstField is EntityAttribute) {
         entityAttributes[firstField.modelName] = firstField;
       }
