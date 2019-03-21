@@ -27,7 +27,7 @@ class UserAccount implements DbAccountEntity {
   @override
   int get id => _id;
 
-  int get FutureData => _futureData;
+  int get futureData => _futureData;
 
   String get description => _description;
 

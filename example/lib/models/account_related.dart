@@ -16,12 +16,12 @@ class HealthEntryAccountRelated implements DbAccountRelatedEntity {
   int _futureData;
 
   @DataColumn("my_account_id_column", ColumnMetadata.NotNull)
-  int _account_id;
+  int _accountId;
 
   @override
   int get id => _id;
 
-  int get FutureData => _futureData;
+  int get futureData => _futureData;
 
   String get description => _description;
 
@@ -31,7 +31,7 @@ class HealthEntryAccountRelated implements DbAccountRelatedEntity {
   }
 
   @override
-  int get accountId => _account_id;
+  int get accountId => _accountId;
 
   @override
   DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
