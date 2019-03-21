@@ -25,4 +25,10 @@ class HealthEntry extends DbAccountRelatedEntity {
     // TODO: implement toMap
     return null;
   }
+
+  @override
+  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
+    // TODO: implement getDbEntityFromMap
+    return null;
+  }
 }

@@ -28,4 +28,9 @@ class HealthEntry implements DbEntity {
   Map<String, dynamic> toMap() {
     return null;
   }
+
+  @override
+  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
+    return null;
+  }
 }

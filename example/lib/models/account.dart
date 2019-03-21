@@ -44,4 +44,10 @@ class UserAccount implements DbAccountEntity {
 
   @override
   String get userName => _userName;
+
+  @override
+  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
+    // TODO: implement getDbEntityFromMap
+    return null;
+  }
 }

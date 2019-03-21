@@ -32,4 +32,10 @@ class HealthEntryAccountRelated implements DbAccountRelatedEntity {
 
   @override
   int get accountId => _account_id;
+
+  @override
+  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
+    // TODO: implement getDbEntityFromMap
+    return null;
+  }
 }

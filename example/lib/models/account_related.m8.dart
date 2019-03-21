@@ -4,6 +4,7 @@
 // Generator: OrmM8GeneratorForAnnotation
 // **************************************************************************
 
+import 'account_related.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 /*import 'package:/helpers/database/abstract_database_helper.dart';*/
