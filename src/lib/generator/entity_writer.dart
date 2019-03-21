@@ -10,14 +10,48 @@ class EntityWriter {
 
   String get theTableHandlerValue => "${this.emittedEntity.entityName}";
 
-  String get currentProjectPackage => 'Unknown';
-
   @override
   String toString() {
     return '/*Not implemented. */';
   }
 
-  String getColumnsList() {
-    return emittedEntity.attributes.keys.join(""",""");
+  String _getColumnsList() {
+    return emittedEntity.attributes.values
+        .map((f) => f.attributeName)
+        .join("\", \"");
+  }
+
+  String _getGeneralImports() {
+    return """
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+/*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
+import '${emittedEntity.packageIdentifier}';
+
+""";
+  }
+
+  String _getMixinHead() {
+    return """mixin ${emittedEntity.modelName}DatabaseHelper /*implements AbstractDatabaseHelper*/ {""";
+  }
+
+  String _getMixinBodyCommonFields() {
+    return """
+  Future<Database> db;
+  final the${emittedEntity.modelName}Columns = ["${_getColumnsList()}"];
+
+  final String ${theTableHandler} = '${theTableHandlerValue}';
+
+  final String primaryKeyHandler = 'id';""";
+  }
+
+  StringBuffer getCommonStart() {
+    StringBuffer sb = StringBuffer();
+    sb.writeln(_getGeneralImports());
+    sb.writeln();
+    sb.writeln(_getMixinHead());
+    sb.writeln(_getMixinBodyCommonFields());
+
+    return sb;
   }
 }
