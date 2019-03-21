@@ -10,6 +10,7 @@ class ModelParser {
   String modelName;
   EntityType entityType;
   ConstantReader reader;
+  String get packageIdentifier => modelClassElement.library.identifier;
 
   final ClassElement modelClassElement;
   final String entityName;
@@ -25,8 +26,8 @@ class ModelParser {
     _extractEntityMeta();
     _extractEntityAttributes();
 
-    final EmittedEntity resultEntity =
-        EmittedEntity(modelName, entityName, entityType, entityAttributes);
+    final EmittedEntity resultEntity = EmittedEntity(
+        modelName, entityName, entityType, entityAttributes, packageIdentifier);
 
     return resultEntity;
   }

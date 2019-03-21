@@ -5,8 +5,10 @@ class EmittedEntity {
   final String entityName;
   final EntityType entityType;
   final Map<String, EntityAttribute> attributes;
-  EmittedEntity(
-      this.modelName, this.entityName, this.entityType, this.attributes);
+  final String packageIdentifier;
+
+  EmittedEntity(this.modelName, this.entityName, this.entityType,
+      this.attributes, this.packageIdentifier);
 
   String get modelInstanceName => "instance$modelName";
 
