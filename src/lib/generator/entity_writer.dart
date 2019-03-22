@@ -27,7 +27,6 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 /*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
 import '${emittedEntity.packageIdentifier}';
-
 """;
   }
 
@@ -48,7 +47,6 @@ import '${emittedEntity.packageIdentifier}';
   StringBuffer getCommonStart() {
     StringBuffer sb = StringBuffer();
     sb.writeln(_getGeneralImports());
-    sb.writeln();
     sb.writeln(_getMixinHead());
     sb.writeln(_getMixinBodyCommonFields());
 
