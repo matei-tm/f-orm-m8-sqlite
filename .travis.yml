@@ -19,10 +19,10 @@ jobs:
       env: PKG="src"
       dart: stable
     - stage: unit_test
-      name: "SDK: 2.0.0 - DIR: src - TASKS: pub run test"
+      name: "SDK: 2.1.0 - DIR: src - TASKS: pub run test"
       script: ./tool/travis.sh test
       env: PKG="src"
-      dart: "2.0.0"
+      dart: "2.1.0"
     - stage: unit_test
       name: "SDK: dev - DIR: src - TASKS: pub run test"
       script: ./tool/travis.sh test
