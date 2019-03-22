@@ -38,8 +38,8 @@ void main() async {
       expect(hasFutureData, false);
     });
 
-    test('Has attribute _account_id', () async {
-      var hasDescription = e.attributes.containsKey("_account_id");
+    test('Has attribute _accountId', () async {
+      var hasDescription = e.attributes.containsKey("_accountId");
       expect(hasDescription, true);
     });
   });
