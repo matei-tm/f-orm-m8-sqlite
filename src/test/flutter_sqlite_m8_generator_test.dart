@@ -27,11 +27,10 @@ mixin HealthEntryAccountRelatedDatabaseHelper /*implements AbstractDatabaseHelpe
 
   final String _theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
 
-  final String primaryKeyHandler = 'id';
+  final String primaryKeyHandler = 'my_id_column';
 
   Future createHealthEntryAccountRelatedTable(Database db) async {
-await db.execute(
-    'CREATE TABLE $_theHealthEntryAccountRelatedTableHandler ($primaryKeyHandler INTEGER PRIMARY KEY, account_id INTEGER, record_date INTEGER, is_deleted INTEGER )');
+await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_account_id_column INTEGER  NOT NULL)');
   }
 
   Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelated instanceHealthEntryAccountRelated) async {
