@@ -4,11 +4,17 @@ class TypeMapper {
       case "int":
         return "INTEGER";
         break;
-      case "float":
+      case "num":
+        return "NUMERIC";
+        break;
+      case "double":
         return "REAL";
         break;
       case "String":
         return "TEXT";
+        break;
+      case "DateTime":
+        return "INTEGER";
         break;
       default:
         return "TEXT";
