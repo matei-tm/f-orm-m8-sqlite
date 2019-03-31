@@ -9,6 +9,8 @@ class EntityWriter {
 
   String get theTableHandlerValue => this.emittedEntity.entityName;
 
+  String get thePrimaryKey => this.emittedEntity.primaryKeyName;
+
   @override
   String toString() {
     return '/*Not implemented. */';
@@ -40,7 +42,7 @@ import '${emittedEntity.packageIdentifier}';
 
   final String ${theTableHandler} = '${theTableHandlerValue}';
 
-  final String primaryKeyHandler = 'id';""";
+  final String primaryKeyHandler = '${thePrimaryKey}';""";
   }
 
   StringBuffer getCommonStart() {

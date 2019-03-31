@@ -17,6 +17,8 @@ class EmittedEntity {
   // Todo: to find a package like node pluralize
   String get modelPlural => "${modelName}s";
 
+  get primaryKeyName => getPrimaryKeyName();
+
   String getTableDefinition() {
     List<String> columnList = List<String>();
 
@@ -27,5 +29,15 @@ class EmittedEntity {
         "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
     //  "'CREATE TABLE \$${theTableHandler} (\$primaryKeyHandler INTEGER PRIMARY KEY NOT NULL, record_date INTEGER, is_deleted INTEGER )'";
     return tableDefinition;
+  }
+
+  getPrimaryKeyName() {
+    String primaryKeyName;
+
+    attributes.forEach((k, v) {
+      if (isPrimaryKey(v.metadataLevel)) primaryKeyName = v.attributeName;
+    });
+
+    return primaryKeyName;
   }
 }
