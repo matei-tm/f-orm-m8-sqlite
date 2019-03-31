@@ -8,12 +8,10 @@ class IndependentEntityWriter extends EntityWriter {
   String toString() {
     StringBuffer sb = getCommonStart();
 
-    String tableDefinition = getTableDefinition();
-
     sb.write("""
   
   Future create${emittedEntity.modelName}Table(Database db) async {
-await db.execute($tableDefinition);
+await db.execute(${emittedEntity.getTableDefinition()});
   }
 
   Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName} ${emittedEntity.modelInstanceName}) async {
@@ -86,15 +84,5 @@ return await dbClient
     //sb.writeln('*/');
 
     return sb.toString();
-  }
-
-  String getTableDefinition() {
-    List<String> columnList =List<String>();
-
-    emittedEntity.attributes.forEach((k,v) => columnList.add("${v.attributeName} ${v.modelTypeName.toUpperCase()}"));
-
-    String tableDefinition = "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
-      //  "'CREATE TABLE \$${theTableHandler} (\$primaryKeyHandler INTEGER PRIMARY KEY NOT NULL, record_date INTEGER, is_deleted INTEGER )'";
-    return tableDefinition;
   }
 }

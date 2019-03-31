@@ -5,10 +5,9 @@ class EntityWriter {
 
   EntityWriter(this.emittedEntity) {}
 
-  String get theTableHandler =>
-      "_the${this.emittedEntity.modelName}TableHandler";
+  String get theTableHandler => this.emittedEntity.theTableHandler;
 
-  String get theTableHandlerValue => "${this.emittedEntity.entityName}";
+  String get theTableHandlerValue => this.emittedEntity.entityName;
 
   @override
   String toString() {

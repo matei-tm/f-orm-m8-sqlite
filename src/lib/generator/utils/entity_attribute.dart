@@ -1,3 +1,6 @@
+import 'package:flutter_sqlite_m8_generator/generator/utils/metadata_parser.dart';
+import 'package:flutter_sqlite_m8_generator/generator/utils/type_mapper.dart';
+
 class EntityAttribute {
   final String modelTypeName;
   final String modelName;
@@ -8,4 +11,16 @@ class EntityAttribute {
 
   EntityAttribute(this.modelTypeName, this.modelName, this.attributeName,
       {this.metadataLevel});
+
+  String getMetadataAsDefinition() {
+    return MetadataParser.getDefinition(metadataLevel);
+  }
+
+  String getAttributeTypeDefinition() {
+    return TypeMapper.getTypeDefinition(modelTypeName);
+  }
+
+  String getAttributeFullDefinition() {
+    return "${attributeName} ${getAttributeTypeDefinition()} ${getMetadataAsDefinition()}";
+  }
 }

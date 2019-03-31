@@ -11,8 +11,7 @@ class AccountEntityWriter extends EntityWriter {
     sb.write("""
 
   Future create${emittedEntity.modelName}Table(Database db) async {
-await db.execute(
-    'CREATE TABLE \$${theTableHandler} (\$primaryKeyHandler INTEGER PRIMARY KEY, record_date INTEGER, is_deleted INTEGER )');
+await db.execute(${emittedEntity.getTableDefinition()});
   }
 
   Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName} ${emittedEntity.modelInstanceName}) async {
