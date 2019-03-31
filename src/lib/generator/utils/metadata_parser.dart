@@ -1,5 +1,25 @@
+import 'package:flutter_sqlite_m8_generator/generator/utils/type_utils.dart';
+
 class MetadataParser {
   static String getDefinition(int metadataLevel) {
-    return "";
+    String definition = "";
+
+    if (isNotNull(metadataLevel)) {
+      definition = "$definition NOT NULL";
+    }
+
+    if (isPrimaryKey(metadataLevel)) {
+      definition = "$definition PRIMARY KEY";
+    }
+
+    if (isAutoIncrement(metadataLevel)) {
+      definition = "$definition AUTOINCREMENT";
+    }
+
+    if (isUnique(metadataLevel)) {
+      definition = "$definition UNIQUE";
+    }
+
+    return definition;
   }
 }

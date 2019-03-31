@@ -10,6 +10,9 @@ class TypeMapper {
       case "double":
         return "REAL";
         break;
+      case "bool":
+        return "INTEGER";
+        break;
       case "String":
         return "TEXT";
         break;
