@@ -1,28 +1,29 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-part "example.g.dart";
-
-@DataTable("health_entries")
-class HealthEntry extends DbAccountRelatedEntity {
+@DataTable("my_health_entries_table")
+class HealthEntry implements DbEntity {
   @DataColumn(
-      "id",
-      ColumnMetadata.PrimaryKey &
-          ColumnMetadata.Unique &
+      "my_id_column",
+      ColumnMetadata.PrimaryKey |
+          ColumnMetadata.Unique |
           ColumnMetadata.AutoIncrement)
-  int id;
+  int _id;
 
-  @DataColumn("account_id")
-  int accountId;
+  @DataColumn("my_description_column", ColumnMetadata.Unique)
+  String _description;
 
-  @DataColumn("record_date")
-  int recordDate;
+  @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  int _futureData;
 
-  @DataColumn("is_deleted")
-  int isDeleted;
+  @override
+  int get id => _id;
+
+  int get futureData => _futureData;
+
+  String get description => _description;
 
   @override
   Map<String, dynamic> toMap() {
-    // TODO: implement toMap
     return null;
   }
 
