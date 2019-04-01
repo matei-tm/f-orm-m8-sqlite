@@ -40,9 +40,7 @@ import '${emittedEntity.packageIdentifier}';
   Future<Database> db;
   final the${emittedEntity.modelName}Columns = ["${_getColumnsList()}"];
 
-  final String ${theTableHandler} = '${theTableHandlerValue}';
-
-  final String primaryKeyHandler = '${thePrimaryKey}';""";
+  final String ${theTableHandler} = '${theTableHandlerValue}';""";
   }
 
   StringBuffer getCommonStart() {

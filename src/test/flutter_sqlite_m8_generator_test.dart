@@ -27,8 +27,6 @@ mixin HealthEntryAccountRelatedDatabaseHelper /*implements AbstractDatabaseHelpe
 
   final String _theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
 
-  final String primaryKeyHandler = 'my_id_column';
-
   Future createHealthEntryAccountRelatedTable(Database db) async {
 await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_account_id_column INTEGER  NOT NULL)');
   }
@@ -66,7 +64,7 @@ return Sqflite.firstIntValue(
   Future<HealthEntryAccountRelated> getHealthEntryAccountRelated(int id) async {
 var dbClient = await db;
 List<Map> result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
-    columns: theHealthEntryAccountRelatedColumns, where: '$primaryKeyHandler = ?  AND is_deleted != 1', whereArgs: [id]);
+    columns: theHealthEntryAccountRelatedColumns, where: 'my_id_column = ?  AND is_deleted != 1', whereArgs: [id]);
 
 /*
 if (result.length > 0) {
@@ -80,7 +78,7 @@ return null;
   Future<int> deleteHealthEntryAccountRelated(int id) async {
 var dbClient = await db;
 return await dbClient
-    .delete(_theHealthEntryAccountRelatedTableHandler, where: '$primaryKeyHandler = ?', whereArgs: [id]);
+    .delete(_theHealthEntryAccountRelatedTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteHealthEntryAccountRelatedsAll() async {
@@ -92,7 +90,7 @@ return true;
   Future<int> updateHealthEntryAccountRelated(HealthEntryAccountRelated instanceHealthEntryAccountRelated) async {
 var dbClient = await db;
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
-    where: "$primaryKeyHandler = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
+    where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
   }
 
   Future<int> softdeleteHealthEntryAccountRelated(int id) async {
@@ -102,7 +100,7 @@ var map = Map<String, dynamic>();
 map['is_deleted'] = 1;
 
 return await dbClient
-    .update(_theHealthEntryAccountRelatedTableHandler, map, where: "$primaryKeyHandler = ?", whereArgs: [id]);
+    .update(_theHealthEntryAccountRelatedTableHandler, map, where: "my_id_column = ?", whereArgs: [id]);
   }
 }
 
