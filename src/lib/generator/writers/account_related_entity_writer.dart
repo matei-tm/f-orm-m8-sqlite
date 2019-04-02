@@ -81,16 +81,6 @@ var dbClient = await db;
 return await dbClient.update(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap(),
     where: "$thePrimaryKey = ?", whereArgs: [${emittedEntity.modelInstanceName}.id]);
   }
-
-  Future<int> softdelete${emittedEntity.modelName}(int id) async {
-var dbClient = await db;
-
-var map = Map<String, dynamic>();
-map['is_deleted'] = 1;
-
-return await dbClient
-    .update(${theTableHandler}, map, where: "$thePrimaryKey = ?", whereArgs: [id]);
-  }
 """);
 
     sb.write(getSoftdeleteMethod());
