@@ -9,28 +9,11 @@ class HealthEntry implements DbEntity {
       ColumnMetadata.PrimaryKey |
           ColumnMetadata.Unique |
           ColumnMetadata.AutoIncrement)
-  int _id;
+  int id;
 
   @DataColumn("my_description_column", ColumnMetadata.Unique)
-  String _description;
+  String description;
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
-  int _futureData;
-
-  @override
-  int get id => _id;
-
-  int get futureData => _futureData;
-
-  String get description => _description;
-
-  @override
-  Map<String, dynamic> toMap() {
-    return null;
-  }
-
-  @override
-  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
-    return null;
-  }
+  int futureData;
 }

@@ -7,35 +7,14 @@ class HealthEntryAccountRelated implements DbAccountRelatedEntity {
       ColumnMetadata.PrimaryKey |
           ColumnMetadata.Unique |
           ColumnMetadata.AutoIncrement)
-  int _id;
+  int id;
 
   @DataColumn("my_description_column", ColumnMetadata.Unique)
-  String _description;
+  String description;
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
-  int _futureData;
+  int futureData;
 
   @DataColumn("my_account_id_column", ColumnMetadata.NotNull)
-  int _accountId;
-
-  @override
-  int get id => _id;
-
-  int get futureData => _futureData;
-
-  String get description => _description;
-
-  @override
-  Map<String, dynamic> toMap() {
-    return null;
-  }
-
-  @override
-  int get accountId => _accountId;
-
-  @override
-  DbEntity getDbEntityFromMap(Map<String, dynamic> map) {
-    // TODO: implement getDbEntityFromMap
-    return null;
-  }
+  int accountId;
 }
