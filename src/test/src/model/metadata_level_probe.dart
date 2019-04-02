@@ -1,7 +1,13 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("my_account_table")
-class UserAccount implements DbAccountEntity {
+//part "metadata_level_probe.m8.dart";
+
+@DataTable(
+    "my_health_entries_table",
+    TableMetadata.SoftDeletable |
+        TableMetadata.TrackCreate |
+        TableMetadata.TrackUpdate)
+class HealthEntry implements DbEntity {
   @DataColumn(
       "my_id_column",
       ColumnMetadata.PrimaryKey |
@@ -14,13 +20,4 @@ class UserAccount implements DbAccountEntity {
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
-
-  @DataColumn("my_abbreviation_column", ColumnMetadata.NotNull)
-  String abbreviation;
-
-  @DataColumn("my_email_column", ColumnMetadata.NotNull)
-  String email;
-
-  @DataColumn("my_userName_column", ColumnMetadata.NotNull)
-  String userName;
 }
