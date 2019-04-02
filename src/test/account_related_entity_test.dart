@@ -42,7 +42,7 @@ void main() async {
       var hasDescription = e.attributes.containsKey("accountId");
       expect(hasDescription, true);
     });
-    
+
     test('Entity is not soft deletable', () async {
       var hasSoftDelete = e.hasSoftDelete;
       expect(hasSoftDelete, false);
