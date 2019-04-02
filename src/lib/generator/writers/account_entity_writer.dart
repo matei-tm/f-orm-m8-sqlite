@@ -1,12 +1,19 @@
 import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
 import 'package:flutter_sqlite_m8_generator/generator/entity_writer.dart';
+import 'package:flutter_sqlite_m8_generator/generator/writers/proxy_writer.dart';
 
 class AccountEntityWriter extends EntityWriter {
   AccountEntityWriter(EmittedEntity emittedEntity) : super(emittedEntity);
 
   @override
   String toString() {
-    StringBuffer sb = getCommonStart();
+    StringBuffer sb = getCommonImports();
+
+    ProxyWriter proxyWriter = ProxyWriter(emittedEntity);
+
+    sb.write(proxyWriter.toString());
+
+    sb.write(getMixinStart());
 
     sb.write("""
 
@@ -14,7 +21,7 @@ class AccountEntityWriter extends EntityWriter {
 await db.execute(${emittedEntity.getTableDefinition()});
   }
 
-  Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName} ${emittedEntity.modelInstanceName}) async {
+  Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
 var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap());
 return result;
@@ -39,11 +46,9 @@ var dbClient = await db;
 List<Map> result = await dbClient.query(${theTableHandler},
     columns: the${emittedEntity.modelName}Columns, where: '$thePrimaryKey = ?  AND is_deleted != 1', whereArgs: [id]);
 
-/*
 if (result.length > 0) {
-  return ${emittedEntity.modelName}.fromMap(result.first);
+  return ${emittedEntity.modelName}Proxy.fromMap(result.first);
 }
-*/
 
 return null;
   }
@@ -60,7 +65,7 @@ await dbClient.delete(${theTableHandler});
 return true;
   }
 
-  Future<int> update${emittedEntity.modelName}(${emittedEntity.modelName} ${emittedEntity.modelInstanceName}) async {
+  Future<int> update${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
 return await dbClient.update(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap(),
     where: "$thePrimaryKey = ?", whereArgs: [${emittedEntity.modelInstanceName}.id]);
@@ -77,11 +82,7 @@ return await dbClient
   }
 }
 
-
-//    Entity:${emittedEntity.entityName} Model:${emittedEntity.modelName}\n//${emittedEntity.attributes.toString()}
-    
                         """);
-    //sb.writeln('*/');
 
     return sb.toString();
   }

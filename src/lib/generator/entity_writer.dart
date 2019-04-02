@@ -43,12 +43,20 @@ import '${emittedEntity.packageIdentifier}';
   final String ${theTableHandler} = '${theTableHandlerValue}';""";
   }
 
-  StringBuffer getCommonStart() {
+  StringBuffer getCommonImports() {
     StringBuffer sb = StringBuffer();
+
     sb.writeln(_getGeneralImports());
+
+    return sb;
+  }
+
+  String getMixinStart() {
+    StringBuffer sb = StringBuffer();
+
     sb.writeln(_getMixinHead());
     sb.writeln(_getMixinBodyCommonFields());
 
-    return sb;
+    return sb.toString();
   }
 }
