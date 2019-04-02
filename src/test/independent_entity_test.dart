@@ -38,17 +38,17 @@ void main() async {
       expect(hasFutureData, false);
     });
 
-    test('Table is soft deletable', () async {
+    test('Entity is soft deletable', () async {
       var hasSoftDelete = e.hasSoftDelete;
       expect(hasSoftDelete, true);
     });
 
-    test('Table is with creation track', () async {
+    test('Entity is with creation track', () async {
       var hasTrackCreate = e.hasTrackCreate;
       expect(hasTrackCreate, true);
     });
 
-    test('Table is with update track', () async {
+    test('Entity is with update track', () async {
       var hasTrackUpdate = e.hasTrackUpdate;
       expect(hasTrackUpdate, true);
     });

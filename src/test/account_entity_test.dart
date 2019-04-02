@@ -46,9 +46,25 @@ void main() async {
       var hasDescription = e.attributes.containsKey("email");
       expect(hasDescription, true);
     });
+
     test('Has attribute userName', () async {
       var hasDescription = e.attributes.containsKey("userName");
       expect(hasDescription, true);
+    });
+
+    test('Entity is not soft deletable', () async {
+      var hasSoftDelete = e.hasSoftDelete;
+      expect(hasSoftDelete, false);
+    });
+
+    test('Entity is not with creation track', () async {
+      var hasTrackCreate = e.hasTrackCreate;
+      expect(hasTrackCreate, false);
+    });
+
+    test('Entity is not with update track', () async {
+      var hasTrackUpdate = e.hasTrackUpdate;
+      expect(hasTrackUpdate, false);
     });
   });
 }
