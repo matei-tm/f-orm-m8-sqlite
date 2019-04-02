@@ -22,32 +22,32 @@ void main() async {
       expect(e.attributes.length, 5);
     });
 
-    test('Has attribute _id', () async {
-      var hasId = e.attributes.containsKey("_id");
+    test('Has attribute id', () async {
+      var hasId = e.attributes.containsKey("id");
       expect(hasId, true);
     });
 
-    test('Has attribute _description', () async {
-      var hasDescription = e.attributes.containsKey("_description");
+    test('Has attribute description', () async {
+      var hasDescription = e.attributes.containsKey("description");
       expect(hasDescription, true);
     });
 
-    test('Ignored attribute _futureData', () async {
-      var hasFutureData = e.attributes.containsKey("_futureData");
+    test('Ignored attribute futureData', () async {
+      var hasFutureData = e.attributes.containsKey("futureData");
       expect(hasFutureData, false);
     });
 
-    test('Has attribute _abbreviation', () async {
-      var hasDescription = e.attributes.containsKey("_abbreviation");
+    test('Has attribute abbreviation', () async {
+      var hasDescription = e.attributes.containsKey("abbreviation");
       expect(hasDescription, true);
     });
 
-    test('Has attribute _email', () async {
-      var hasDescription = e.attributes.containsKey("_email");
+    test('Has attribute email', () async {
+      var hasDescription = e.attributes.containsKey("email");
       expect(hasDescription, true);
     });
-    test('Has attribute _userName', () async {
-      var hasDescription = e.attributes.containsKey("_userName");
+    test('Has attribute userName', () async {
+      var hasDescription = e.attributes.containsKey("userName");
       expect(hasDescription, true);
     });
   });

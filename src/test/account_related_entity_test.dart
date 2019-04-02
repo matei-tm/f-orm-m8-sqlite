@@ -23,23 +23,23 @@ void main() async {
       expect(e.attributes.length, 3);
     });
 
-    test('Has attribute _id', () async {
-      var hasId = e.attributes.containsKey("_id");
+    test('Has attribute id', () async {
+      var hasId = e.attributes.containsKey("id");
       expect(hasId, true);
     });
 
-    test('Has attribute _description', () async {
-      var hasDescription = e.attributes.containsKey("_description");
+    test('Has attribute description', () async {
+      var hasDescription = e.attributes.containsKey("description");
       expect(hasDescription, true);
     });
 
-    test('Ignored attribute _futureData', () async {
-      var hasFutureData = e.attributes.containsKey("_futureData");
+    test('Ignored attribute futureData', () async {
+      var hasFutureData = e.attributes.containsKey("futureData");
       expect(hasFutureData, false);
     });
 
-    test('Has attribute _accountId', () async {
-      var hasDescription = e.attributes.containsKey("_accountId");
+    test('Has attribute accountId', () async {
+      var hasDescription = e.attributes.containsKey("accountId");
       expect(hasDescription, true);
     });
   });
