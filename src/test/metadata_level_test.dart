@@ -39,7 +39,7 @@ void main() async {
     });
 
     test('Has description metadata level 4', () async {
-      var metadataLevel = e.attributes["id"].metadataLevel;
+      var metadataLevel = e.attributes["description"].metadataLevel;
       expect(metadataLevel, 4);
     });
 
