@@ -56,7 +56,7 @@ return result;
   Future<List> getHealthEntryAccountRelatedsAll() async {
 var dbClient = await db;
 var result =
-    await dbClient.query(_theHealthEntryAccountRelatedTableHandler, columns: theHealthEntryAccountRelatedColumns, where: 'is_deleted != 1');
+    await dbClient.query(_theHealthEntryAccountRelatedTableHandler, columns: theHealthEntryAccountRelatedColumns, where: '1');
 
 return result.toList();
   }
@@ -65,7 +65,7 @@ return result.toList();
 var dbClient = await db;
 var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
     columns: theHealthEntryAccountRelatedColumns,
-    where: 'account_id = ? AND is_deleted != 1',
+    where: 'account_id = ? AND 1',
     whereArgs: [accountId]);
 
 return result.toList();
@@ -74,13 +74,13 @@ return result.toList();
   Future<int> getHealthEntryAccountRelatedsCount() async {
 var dbClient = await db;
 return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theHealthEntryAccountRelatedTableHandler  WHERE is_deleted != 1'));
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theHealthEntryAccountRelatedTableHandler  WHERE 1'));
   }
 
   Future<HealthEntryAccountRelated> getHealthEntryAccountRelated(int id) async {
 var dbClient = await db;
 List<Map> result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
-    columns: theHealthEntryAccountRelatedColumns, where: 'my_id_column = ?  AND is_deleted != 1', whereArgs: [id]);
+    columns: theHealthEntryAccountRelatedColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
 
 if (result.length > 0) {
   return HealthEntryAccountRelatedProxy.fromMap(result.first);
@@ -105,16 +105,6 @@ return true;
 var dbClient = await db;
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
     where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
-  }
-
-  Future<int> softdeleteHealthEntryAccountRelated(int id) async {
-var dbClient = await db;
-
-var map = Map<String, dynamic>();
-map['is_deleted'] = 1;
-
-return await dbClient
-    .update(_theHealthEntryAccountRelatedTableHandler, map, where: "my_id_column = ?", whereArgs: [id]);
   }
 }''';
       expect(output, expected);
