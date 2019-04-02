@@ -83,4 +83,29 @@ import '${emittedEntity.packageIdentifier}';
 
     return tableDefinition;
   }
+
+  String getSoftdeleteCondition() {
+    if (emittedEntity.hasSoftDelete) {
+      return 'is_deleted != 1';
+    }
+
+    return '1'; // return a valid SQL expression
+  }
+
+  String getSoftdeleteMethod() {
+    if (emittedEntity.hasSoftDelete) {
+      return '''
+  Future<int> softdelete${emittedEntity.modelName}(int id) async {
+var dbClient = await db;
+
+var map = Map<String, dynamic>();
+map['is_deleted'] = 1;
+
+return await dbClient
+    .update(${theTableHandler}, map, where: "$thePrimaryKey = ?", whereArgs: [id]);
+  }''';
+    }
+
+    return '';
+  }
 }
