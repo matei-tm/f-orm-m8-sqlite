@@ -1,6 +1,6 @@
 name: flutter_sqlite_m8_generator
 description: Flutter package to generate SQLite fixture in conjuction with the package flutter_orm_m8.
-version: 0.0.6
+version: 0.0.7
 author: Mircea-Tiberiu MATEI<matei_tm@yahoo.com>
 homepage: https://github.com/matei-tm/flutter-sqlite-m8-generator
 
@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   build: '>=0.12.0 <2.0.0'
+  analyzer: ^0.33.0
+  path: ^1.6.2
   source_gen: ^0.9.0
   flutter_orm_m8: ^0.4.0
 
