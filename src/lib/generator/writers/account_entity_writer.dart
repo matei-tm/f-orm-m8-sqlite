@@ -18,7 +18,7 @@ class AccountEntityWriter extends EntityWriter {
     sb.write("""
 
   Future create${emittedEntity.modelName}Table(Database db) async {
-await db.execute(${emittedEntity.getTableDefinition()});
+await db.execute(${getTableDefinition()});
   }
 
   Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {

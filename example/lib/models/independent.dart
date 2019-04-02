@@ -1,6 +1,10 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("my_health_entries_table")
+@DataTable(
+    "my_health_entries_table",
+    TableMetadata.SoftDeletable |
+        TableMetadata.TrackCreate |
+        TableMetadata.TrackUpdate)
 class HealthEntry implements DbEntity {
   @DataColumn(
       "my_id_column",

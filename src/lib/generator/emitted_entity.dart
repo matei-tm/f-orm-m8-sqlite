@@ -23,18 +23,6 @@ class EmittedEntity {
 
   get primaryKeyName => getPrimaryKeyName();
 
-  String getTableDefinition() {
-    List<String> columnList = List<String>();
-
-    attributes
-        .forEach((k, v) => columnList.add("${v.getAttributeFullDefinition()}"));
-
-    String tableDefinition =
-        "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
-
-    return tableDefinition;
-  }
-
   getPrimaryKeyName() {
     String primaryKeyName;
 

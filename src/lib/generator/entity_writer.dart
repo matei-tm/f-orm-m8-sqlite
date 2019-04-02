@@ -59,4 +59,28 @@ import '${emittedEntity.packageIdentifier}';
 
     return sb.toString();
   }
+
+  String getTableDefinition() {
+    List<String> columnList = List<String>();
+
+    emittedEntity.attributes
+        .forEach((k, v) => columnList.add("${v.getAttributeFullDefinition()}"));
+
+    if (emittedEntity.hasSoftDelete) {
+      columnList.add("is_deleted INTEGER");
+    }
+
+    if (emittedEntity.hasTrackCreate) {
+      columnList.add("date_create INTEGER");
+    }
+
+    if (emittedEntity.hasTrackUpdate) {
+      columnList.add("date_update INTEGER");
+    }
+
+    String tableDefinition =
+        "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
+
+    return tableDefinition;
+  }
 }
