@@ -19,7 +19,7 @@ void main() async {
       final expected = r'''import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 /*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
-import '112__test__/lib/account_related.dart';
+import 'package:__test__/account_related.dart';
 
 class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
   Map<String, dynamic> toMap() {
