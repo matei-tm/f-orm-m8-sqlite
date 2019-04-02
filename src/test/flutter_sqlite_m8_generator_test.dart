@@ -21,6 +21,22 @@ import 'dart:async';
 /*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
 import 'package:__test__/account_related.dart';
 
+class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map['my_id_column'] = id;
+    map['my_description_column'] = description;
+    map['my_account_id_column'] = accountId;
+    return map;
+  }
+
+  HealthEntryAccountRelatedProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['my_id_column'];
+    this.description = map['my_description_column'];
+    this.accountId = map['my_account_id_column'];
+  }
+}
+
 mixin HealthEntryAccountRelatedDatabaseHelper /*implements AbstractDatabaseHelper*/ {
   Future<Database> db;
   final theHealthEntryAccountRelatedColumns = ["my_id_column", "my_description_column", "my_account_id_column"];
@@ -31,7 +47,7 @@ mixin HealthEntryAccountRelatedDatabaseHelper /*implements AbstractDatabaseHelpe
 await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_account_id_column INTEGER  NOT NULL)');
   }
 
-  Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelated instanceHealthEntryAccountRelated) async {
+  Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
 var dbClient = await db;
 var result = await dbClient.insert(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap());
 return result;
@@ -66,11 +82,9 @@ var dbClient = await db;
 List<Map> result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
     columns: theHealthEntryAccountRelatedColumns, where: 'my_id_column = ?  AND is_deleted != 1', whereArgs: [id]);
 
-/*
 if (result.length > 0) {
-  return HealthEntryAccountRelated.fromMap(result.first);
+  return HealthEntryAccountRelatedProxy.fromMap(result.first);
 }
-*/
 
 return null;
   }
@@ -87,7 +101,7 @@ await dbClient.delete(_theHealthEntryAccountRelatedTableHandler);
 return true;
   }
 
-  Future<int> updateHealthEntryAccountRelated(HealthEntryAccountRelated instanceHealthEntryAccountRelated) async {
+  Future<int> updateHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
 var dbClient = await db;
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
     where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
@@ -102,11 +116,7 @@ map['is_deleted'] = 1;
 return await dbClient
     .update(_theHealthEntryAccountRelatedTableHandler, map, where: "my_id_column = ?", whereArgs: [id]);
   }
-}
-
-
-//    Entity:my_account_related_table Model:HealthEntryAccountRelated
-//{_id: Instance of 'EntityAttribute', _description: Instance of 'EntityAttribute', _accountId: Instance of 'EntityAttribute'}''';
+}''';
       expect(output, expected);
     });
 

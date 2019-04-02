@@ -24,12 +24,12 @@ class ProxyWriter extends EntityWriter {
 class ${emittedEntity.modelName}Proxy extends ${emittedEntity.modelName} {
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    ${this._getToMapList()}    
+${this._getToMapList()}
     return map;
   }
 
   ${emittedEntity.modelName}Proxy.fromMap(Map<String, dynamic> map) {
-    ${this._getFromMapList()}
+${this._getFromMapList()}
   }
 }
 
