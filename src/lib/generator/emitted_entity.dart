@@ -6,11 +6,15 @@ class EmittedEntity {
   final EntityType entityType;
   final Map<String, EntityAttribute> attributes;
   final String packageIdentifier;
+  final int entityMetadataLevel;
 
   String get theTableHandler => "_the${modelName}TableHandler";
+  bool get hasSoftDelete => isSoftDeletable(entityMetadataLevel);
+  bool get hasTrackCreate => isCreateTrackable(entityMetadataLevel);
+  bool get hasTrackUpdate => isUpdateTrackable(entityMetadataLevel);
 
   EmittedEntity(this.modelName, this.entityName, this.entityType,
-      this.attributes, this.packageIdentifier);
+      this.entityMetadataLevel, this.attributes, this.packageIdentifier);
 
   String get modelInstanceName => "instance$modelName";
 
@@ -27,7 +31,7 @@ class EmittedEntity {
 
     String tableDefinition =
         "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
-    //  "'CREATE TABLE \$${theTableHandler} (\$primaryKeyHandler INTEGER PRIMARY KEY NOT NULL, record_date INTEGER, is_deleted INTEGER )'";
+
     return tableDefinition;
   }
 

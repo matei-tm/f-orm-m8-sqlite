@@ -1,6 +1,6 @@
 import 'package:flutter_sqlite_m8_generator/generator/utils/type_utils.dart';
 
-class MetadataParser {
+class AttributeMetadataParser {
   static String getDefinition(int metadataLevel) {
     String definition = "";
 

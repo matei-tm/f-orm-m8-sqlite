@@ -37,5 +37,20 @@ void main() async {
       var hasFutureData = e.attributes.containsKey("futureData");
       expect(hasFutureData, false);
     });
+
+    test('Table is soft deletable', () async {
+      var hasSoftDelete = e.hasSoftDelete;
+      expect(hasSoftDelete, true);
+    });
+
+    test('Table is with creation track', () async {
+      var hasTrackCreate = e.hasTrackCreate;
+      expect(hasTrackCreate, true);
+    });
+
+    test('Table is with update track', () async {
+      var hasTrackUpdate = e.hasTrackUpdate;
+      expect(hasTrackUpdate, true);
+    });
   });
 }

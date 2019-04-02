@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/generator/utils/metadata_parser.dart';
+import 'package:flutter_sqlite_m8_generator/generator/utils/attribute_metadata_parser.dart';
 import 'package:flutter_sqlite_m8_generator/generator/utils/type_mapper.dart';
 
 class EntityAttribute {
@@ -13,7 +13,7 @@ class EntityAttribute {
       {this.metadataLevel});
 
   String getMetadataAsDefinition() {
-    return MetadataParser.getDefinition(metadataLevel);
+    return AttributeMetadataParser.getDefinition(metadataLevel);
   }
 
   String getAttributeTypeDefinition() {

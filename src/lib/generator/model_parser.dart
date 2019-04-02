@@ -10,6 +10,8 @@ class ModelParser {
   String modelName;
   EntityType entityType;
   ConstantReader reader;
+  int entityMetadataLevel;
+
   String get packageIdentifier => modelClassElement.library.identifier;
 
   final ClassElement modelClassElement;
@@ -26,8 +28,8 @@ class ModelParser {
     _extractEntityMeta();
     _extractEntityAttributes();
 
-    final EmittedEntity resultEntity = EmittedEntity(
-        modelName, entityName, entityType, entityAttributes, packageIdentifier);
+    final EmittedEntity resultEntity = EmittedEntity(modelName, entityName,
+        entityType, entityMetadataLevel, entityAttributes, packageIdentifier);
 
     return resultEntity;
   }
@@ -43,6 +45,13 @@ class ModelParser {
                 isDataTable.isExactlyType(meta.computeConstantValue().type),
             orElse: () => throw Exception(
                 "The DbEntity implementations must be annotated with `@DataTable`!"));
+
+    entityMetadataLevel = modelClassElement.metadata
+            .map((ElementAnnotation annot) => annot.computeConstantValue())
+            .where((DartObject d) => isDataTable.isExactlyType(d.type))
+            .map((DartObject obj) => obj.getField('metadataLevel').toIntValue())
+            .first ??
+        0;
 
     reader = ConstantReader(elementAnnotationMetadata.computeConstantValue());
 
