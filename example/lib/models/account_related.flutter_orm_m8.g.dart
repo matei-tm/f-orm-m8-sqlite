@@ -10,6 +10,8 @@ import 'dart:async';
 import 'package:example/models/account_related.dart';
 
 class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
+  HealthEntryAccountRelatedProxy();
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['my_id_column'] = id;

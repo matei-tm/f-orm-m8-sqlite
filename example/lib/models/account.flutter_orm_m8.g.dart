@@ -10,6 +10,8 @@ import 'dart:async';
 import 'package:example/models/account.dart';
 
 class UserAccountProxy extends UserAccount {
+  UserAccountProxy();
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['my_id_column'] = id;

@@ -22,6 +22,8 @@ class ProxyWriter extends EntityWriter {
 
     sb.write("""
 class ${emittedEntity.modelName}Proxy extends ${emittedEntity.modelName} {
+  ${emittedEntity.modelName}Proxy();
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
 ${this._getToMapList()}
