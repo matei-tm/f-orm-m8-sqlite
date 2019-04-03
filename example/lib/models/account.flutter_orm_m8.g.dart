@@ -10,7 +10,11 @@ import 'dart:async';
 import 'package:example/models/account.dart';
 
 class UserAccountProxy extends UserAccount {
-  UserAccountProxy();
+  UserAccountProxy(abbreviation, email, userName) {
+    this.abbreviation = abbreviation;
+    this.email = email;
+    this.userName = userName;
+  }
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

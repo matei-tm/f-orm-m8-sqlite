@@ -10,7 +10,7 @@ import 'dart:async';
 import 'package:example/models/independent.dart';
 
 class HealthEntryProxy extends HealthEntry {
-  HealthEntryProxy();
+  HealthEntryProxy() {}
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
