@@ -11,7 +11,15 @@ import 'package:flutter_sqlite_m8_generator/generator/writers/entity_writer_fact
 import 'package:source_gen/source_gen.dart';
 
 class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
-  const OrmM8GeneratorForAnnotation();
+  List<EmittedEntity> emittedEntities;
+
+  OrmM8GeneratorForAnnotation() {
+    emittedEntities = List<EmittedEntity>();
+  }
+
+  OrmM8GeneratorForAnnotation.withEmitted(emittedEntities) {
+    this.emittedEntities = emittedEntities;
+  }
 
   @override
   Future<String> generateForAnnotatedElement(final Element element,
@@ -29,6 +37,7 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       ModelParser modelParser = ModelParser(element, entityName);
       final EmittedEntity emittedEntity = modelParser.getEmittedEntity();
 
+      emittedEntities.add(emittedEntity);
       final entityWriter = EntityWriterFactory().getWriter(emittedEntity);
 
       return entityWriter.toString();
