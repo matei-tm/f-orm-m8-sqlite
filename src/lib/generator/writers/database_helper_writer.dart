@@ -20,7 +20,7 @@ class DatabaseHelperWriter {
   String getMixinList() {
     String returnValue =
         emittedEntities.map((f) => "${f.modelName}DatabaseHelper").join(",");
-    if (returnValue.length > 0) {
+    if (returnValue.isNotEmpty) {
       return " with $returnValue";
     }
 
@@ -31,7 +31,7 @@ class DatabaseHelperWriter {
     String returnValue = emittedEntities
         .map((f) => "    await create${f.modelName}Table(db);")
         .join("\n");
-    if (returnValue.length > 0) {
+    if (returnValue.isNotEmpty) {
       return "$returnValue";
     }
 
@@ -42,7 +42,7 @@ class DatabaseHelperWriter {
     String returnValue = emittedEntities
         .map((f) => "    await delete${f.modelPlural}All();")
         .join("\n");
-    if (returnValue.length > 0) {
+    if (returnValue.isNotEmpty) {
       return "$returnValue";
     }
 

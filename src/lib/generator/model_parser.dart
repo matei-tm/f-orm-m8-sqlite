@@ -93,7 +93,7 @@ class ModelParser {
         throw Exception('Only one Column annotation is allowed on a Field!');
       }
 
-      if (rawEntityAttributes.length == 0) return;
+      if (rawEntityAttributes.isEmpty) return;
 
       var firstField = rawEntityAttributes.first;
 

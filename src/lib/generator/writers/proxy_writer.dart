@@ -29,7 +29,7 @@ class ProxyWriter extends EntityWriter {
         .map((f) => "    this.${f.modelName} = ${f.modelName};")
         .join("\n");
 
-    if (assignments == null || assignments.length == 0) {
+    if (assignments == null || assignments.isEmpty) {
       return """  ${emittedEntity.modelName}Proxy(${paramList});""";
     }
 

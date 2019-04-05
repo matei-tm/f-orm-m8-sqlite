@@ -3,7 +3,7 @@ import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
 class EntityWriter {
   final EmittedEntity emittedEntity;
 
-  EntityWriter(this.emittedEntity) {}
+  EntityWriter(this.emittedEntity);
 
   String get theTableHandler => this.emittedEntity.theTableHandler;
 
