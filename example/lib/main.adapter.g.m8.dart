@@ -36,7 +36,7 @@ class DatabaseHelper
 
   initDb() async {
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'm8_store_0.0.7.db');
+    String path = join(databasesPath, 'm8_store_0.1.0.db');
 
     var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;

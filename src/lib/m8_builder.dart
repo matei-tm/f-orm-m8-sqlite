@@ -18,7 +18,7 @@ class M8Builder extends LibraryBuilder {
   M8Builder.withWrapper(
       {String generatedAdapterExtension = '.adapter.g.m8.dart',
       String helpersExtension = '.g.m8.dart',
-      String databaseFileStamp = '0.0.7'})
+      String databaseFileStamp = '0.1.0'})
       : super(
             databaseHelperGenerator ??=
                 DatabaseHelperGenerator(databaseFileStamp, helpersExtension),
