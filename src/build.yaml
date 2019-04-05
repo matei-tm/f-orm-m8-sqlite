@@ -1,15 +1,8 @@
 builders:
-  flutter_orm_m8:
+  orm_m8:
     import: "package:flutter_sqlite_m8_generator/builder.dart"
     builder_factories: ["ormM8"]
-    build_extensions: {".dart": [".g.m8.part"]}
-    auto_apply: dependents
-    build_to: source
-    applies_builders: ["source_gen|combining_builder"]
-  database_helper:
-    import: "package:flutter_sqlite_m8_generator/builder.dart"
-    builder_factories: ["helperM8"]
-    build_extensions: {".dart": [".agg.m8.part"]}
+    build_extensions: {".dart": [".adapter.m8.part"]}
     auto_apply: dependents
     build_to: source
     applies_builders: ["source_gen|combining_builder"]

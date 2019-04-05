@@ -2,15 +2,19 @@ import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
 
 class DatabaseHelperWriter {
   final List<EmittedEntity> emittedEntities;
-  final String version = "0.0.7";
+  final String databaseFileStamp;
+  final String helpersExtension;
 
-  DatabaseHelperWriter(this.emittedEntities);
+  DatabaseHelperWriter(
+      this.emittedEntities, this.databaseFileStamp, this.helpersExtension);
 
   String getImportList() {
-    return emittedEntities
+    List<String> distinctImportEntriesList = emittedEntities
         .map((f) =>
-            "import '${f.packageIdentifier.replaceFirst(".dart", "flutter_orm_m8.g.dart")}';")
-        .join("\n");
+            "import '${f.packageIdentifier.replaceFirst(".dart", helpersExtension)}';")
+        .toSet()
+        .toList();
+    return distinctImportEntriesList.join("\n");
   }
 
   String getMixinList() {
@@ -36,7 +40,7 @@ class DatabaseHelperWriter {
 
   String getDeleteAllMethodBody() {
     String returnValue = emittedEntities
-        .map((f) => "    await delete${f.modelPlural}All());")
+        .map((f) => "    await delete${f.modelPlural}All();")
         .join("\n");
     if (returnValue.length > 0) {
       return "$returnValue";
@@ -79,7 +83,7 @@ class DatabaseHelper ${getMixinList()}
 
   initDb() async {
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'm8_store_${version}.db');
+    String path = join(databasesPath, 'm8_store_${databaseFileStamp}.db');
 
     var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;

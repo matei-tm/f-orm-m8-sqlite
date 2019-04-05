@@ -25,9 +25,7 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
   Future<String> generateForAnnotatedElement(final Element element,
       ConstantReader annotation, BuildStep buildStep) async {
     try {
-      if (element is! ClassElement) {
-        throw Exception("@DataTable annotation must be defined on a class.");
-      }
+      checkAllowedElementType(element);
 
       final String modelName = element.name;
       final String entityName =
@@ -43,6 +41,12 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       return entityWriter.toString();
     } catch (exception, stack) {
       return ExceptionExpander(exception, stack).toString();
+    }
+  }
+
+  void checkAllowedElementType(Element element) {
+    if (element is! ClassElement) {
+      throw Exception("@DataTable annotation must be defined on a class. Current type is ${element.runtimeType.toString()}");
     }
   }
 }
