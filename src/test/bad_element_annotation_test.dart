@@ -15,7 +15,8 @@ void main() async {
 
     test('Test @DataTable on wrong element', () async {
       String v = await generator.generate(_library, null);
-      expect(v.substring(0, 89), '''/*\nException: @DataTable annotation must be defined on a class. \'int croco\' is misplaced\n''');
+      expect(v.substring(0, 89),
+          '''/*\nException: @DataTable annotation must be defined on a class. \'int croco\' is misplaced\n''');
     });
   });
 }

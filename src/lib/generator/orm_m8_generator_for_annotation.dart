@@ -46,7 +46,8 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
 
   void checkAllowedElementType(Element element) {
     if (element is! ClassElement) {
-      throw Exception("@DataTable annotation must be defined on a class. '$element' is misplaced");
+      throw Exception(
+          "@DataTable annotation must be defined on a class. '$element' is misplaced");
     }
   }
 }
