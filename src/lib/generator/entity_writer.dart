@@ -26,13 +26,12 @@ class EntityWriter {
     return """
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-/*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
 import '${emittedEntity.packageIdentifier}';
 """;
   }
 
   String _getMixinHead() {
-    return """mixin ${emittedEntity.modelName}DatabaseHelper /*implements AbstractDatabaseHelper*/ {""";
+    return """mixin ${emittedEntity.modelName}DatabaseHelper {""";
   }
 
   String _getMixinBodyCommonFields() {
