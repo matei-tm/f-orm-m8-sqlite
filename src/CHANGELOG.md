@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2019-04-06
+
+### Changed
+
+* FileStamp for database file
+
+### Fixed
+
+* Fixing format and analyzer issues recommended after publish
+* Fixing readme formatting issues
+
 ## [0.1.0] - 2019-04-05
 
 ### Added
