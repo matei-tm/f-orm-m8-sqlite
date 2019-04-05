@@ -1,6 +1,6 @@
 # Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)
 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) <!--[![pub package](https://img.shields.io/pub/v/flutter-sqlite-m8-generator.svg)](https://pub.dartlang.org/packages/flutter-sqlite-m8-generator)--> [![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator)
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter-sqlite-m8-generator.svg)](https://pub.dartlang.org/packages/flutter-sqlite-m8-generator)[![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator)
 
 - [Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)](#sqlite-orm-mate-generator-flutter-sqlite-m8-generator)
   - [Introduction](#introduction)
@@ -21,7 +21,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 ## Usage
 
 1. Create a flutter project
-2. Add flutter_orm_m8, sqflite, build_runner, flutter_sqlite_m8_generator dependencies to **pubspec.yaml**
+2. Add flutter_orm_m8, sqflite, build_runner, flutter_sqlite_m8_generator dependencies to `pubspec.yaml`
 
     - Before
 
@@ -58,15 +58,14 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
 3. Add build.yaml file with the following content
 
-
     ```yaml
     targets:
-      $default:
-        builders:
-          flutter_sqlite_m8_generator|orm_m8:
-            generate_for:
-              - lib/models/*.dart
-              - lib/main.dart
+        $default:
+            builders:
+                flutter_sqlite_m8_generator|orm_m8:
+                    generate_for:
+                        - lib/models/*.dart
+                        - lib/main.dart
     ```
 
 4. Refresh packages
@@ -75,7 +74,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
    flutter packages get
    ```
 
-5. In the lib folder create a new one named **models**
+5. In the lib folder create a new one named `models`
 6. In the models folder add model classes for your business objects.
 7. Using [flutter-orm-m8](https://github.com/matei-tm/flutter-orm-m8) annotations convention mark:
 
