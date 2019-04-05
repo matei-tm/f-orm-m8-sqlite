@@ -6,7 +6,6 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-/*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
 import 'package:example/models/account.dart';
 
 class UserAccountProxy extends UserAccount {
@@ -17,7 +16,7 @@ class UserAccountProxy extends UserAccount {
   }
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
     map['my_id_column'] = id;
     map['my_description_column'] = description;
     map['my_abbreviation_column'] = abbreviation;
@@ -35,7 +34,7 @@ class UserAccountProxy extends UserAccount {
   }
 }
 
-mixin UserAccountDatabaseHelper /*implements AbstractDatabaseHelper*/ {
+mixin UserAccountDatabaseHelper {
   Future<Database> db;
   final theUserAccountColumns = [
     "my_id_column",

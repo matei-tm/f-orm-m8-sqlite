@@ -43,7 +43,7 @@ class ${emittedEntity.modelName}Proxy extends ${emittedEntity.modelName} {
 ${_getDefaultConstructorBody()}
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
 ${this._getToMapMethodBody()}
     return map;
   }

@@ -6,14 +6,13 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-/*import 'package:todo_currentProjectPackage_path/abstract_database_helper.dart';*/
 import 'package:example/models/independent.dart';
 
 class HealthEntryProxy extends HealthEntry {
-  HealthEntryProxy() {}
+  HealthEntryProxy();
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
     map['my_id_column'] = id;
     map['my_description_column'] = description;
     return map;
@@ -25,7 +24,7 @@ class HealthEntryProxy extends HealthEntry {
   }
 }
 
-mixin HealthEntryDatabaseHelper /*implements AbstractDatabaseHelper*/ {
+mixin HealthEntryDatabaseHelper {
   Future<Database> db;
   final theHealthEntryColumns = ["my_id_column", "my_description_column"];
 
