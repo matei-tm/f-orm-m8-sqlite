@@ -1,6 +1,6 @@
 # Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)
 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter-sqlite-m8-generator.svg)](https://pub.dartlang.org/packages/flutter-sqlite-m8-generator)[![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator)
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter_sqlite_m8_generator.svg)](https://pub.dartlang.org/packages/flutter_sqlite_m8_generator)[![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator)
 
 - [Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)](#sqlite-orm-mate-generator-flutter-sqlite-m8-generator)
   - [Introduction](#introduction)
