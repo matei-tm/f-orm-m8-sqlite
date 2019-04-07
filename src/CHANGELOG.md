@@ -4,6 +4,10 @@
 
 ## [0.2.0] - 2019-04-07
 
+### Added
+
+* A full implementation in the example project for a dbEntity CRUD
+
 ### Fixed
 
 * Returning all rows on softDeletable entities
