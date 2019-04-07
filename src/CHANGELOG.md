@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2019-04-07
+
+### Fixed
+
+* Returning all rows on softDeletable entities
+
 ## [0.1.1] - 2019-04-06
 
 ### Changed

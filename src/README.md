@@ -161,7 +161,7 @@ mixin HealthEntryDatabaseHelper {
 
   Future createHealthEntryTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, is_deleted INTEGER, date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theHealthEntryTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, is_deleted INTEGER DEFAULT 0, date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -228,7 +228,6 @@ mixin HealthEntryDatabaseHelper {
         where: "my_id_column = ?", whereArgs: [id]);
   }
 }
-
 ```
 
 and database adapter file `main.adapter.g.m8.dart`
