@@ -12,6 +12,8 @@ class HealthConditionsFragment extends StatefulWidget {
 
 class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _db = DatabaseHelper();
 
   @override
   void initState() {
@@ -20,7 +22,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
       healthEntries = [];
       _loadAsyncCurrentData().then((result) {
         setState(() {
-          print("Loading db is $result");
+          print("Loading database result is $result");
         });
       });
     }
@@ -29,12 +31,10 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    var db = DatabaseHelper();
-
-    var dbHealthEntries = await db.getHealthEntrysAll();
+    var _dbHealthEntries = await _db.getHealthEntrysAll();
     healthEntries = List<HealthEntryProxy>();
 
-    dbHealthEntries.forEach(
+    _dbHealthEntries.forEach(
       (f) {
         healthEntries.add(HealthEntryProxy.fromMap(f));
       },
@@ -47,8 +47,9 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
 
   Widget _container() {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("HealthConditions"),
+        title: Text("Health Conditions"),
         centerTitle: true,
       ),
       body: Column(
@@ -95,22 +96,36 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   }
 
   Future<void> _saveHealthEntry(String text) async {
-    var db = DatabaseHelper();
-    var tempHealthEntry = HealthEntryProxy();
-    tempHealthEntry.description = text;
-    var newId = await db.saveHealthEntry(tempHealthEntry);
-    tempHealthEntry.id = newId;
+    try {
+      var tempHealthEntry = HealthEntryProxy();
+      tempHealthEntry.description = text;
+      var newId = await _db.saveHealthEntry(tempHealthEntry);
+      tempHealthEntry.id = newId;
 
-    healthEntries.add(tempHealthEntry);
-    healthEntryController.clear();
-    setState(() {});
+      healthEntries.add(tempHealthEntry);
+      healthEntryController.clear();
+
+      setState(() {});
+    } catch (e) {
+      _showError(e.toString());
+    }
   }
 
   Future<void> _deleteHealthEntry(HealthEntryProxy h) async {
-    var db = DatabaseHelper();
+    try {
+      await _db.deleteHealthEntry(h.id);
+      healthEntries.remove(h);
 
-    await db.softdeleteHealthEntry(h.id);
-    healthEntries.remove(h);
-    setState(() {});
+      setState(() {});
+    } catch (e) {
+      _showError(e.toString());
+    }
+  }
+
+  void _showError(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: new Text('Error: $message'),
+      duration: new Duration(seconds: 10),
+    ));
   }
 }
