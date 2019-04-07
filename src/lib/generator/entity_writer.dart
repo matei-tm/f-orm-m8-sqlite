@@ -66,7 +66,7 @@ import '${emittedEntity.packageIdentifier}';
         .forEach((k, v) => columnList.add("${v.getAttributeFullDefinition()}"));
 
     if (emittedEntity.hasSoftDelete) {
-      columnList.add("is_deleted INTEGER");
+      columnList.add("is_deleted INTEGER DEFAULT 0");
     }
 
     if (emittedEntity.hasTrackCreate) {
