@@ -78,7 +78,8 @@ class ModelParser {
       if (field.displayName == 'hashCode' ||
           field.displayName == 'runtimeType' ||
           field.isStatic ||
-          field.getter == null) return;
+          field.getter == null ||
+          field.setter == null) return;
       //todo final or synthetic
 
       var valuesList = field.metadata
