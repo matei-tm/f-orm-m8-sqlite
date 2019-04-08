@@ -7,6 +7,6 @@ This is a sample showcase for the facets of `flutter-sqlite-m8-generator`
 For this purpose we are demonstrating how to use the code generator and how to integrate the 
 generated code into a functional `health entries` form with CRUD capabilities
 
-![usecase001](docs/usecase001.gif)
+![usecase001](docs/usecase001-320.gif)
 
 
