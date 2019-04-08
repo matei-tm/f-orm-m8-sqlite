@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2019-04-09
+
+### Changed
+
+* Emitting only public fields
+
+### Fixed
+
+* Missing metadataLevel on DataColumn annotated model fields, generates wrong emition
+
 ## [0.2.0] - 2019-04-07
 
 ### Added
