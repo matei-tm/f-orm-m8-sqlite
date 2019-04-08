@@ -8,15 +8,14 @@ LibraryReader _library;
 
 void main() async {
   final path = testFilePath('test', 'src', 'model');
-  _library =
-      await initializeLibraryReaderForDirectory(path, "no_column_metadata.dart");
+  _library = await initializeLibraryReaderForDirectory(
+      path, "no_column_metadata.dart");
   group('Generator global tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 
     test('Test @DataColumn with no ColumnMetadata', () async {
       String v = await generator.generate(_library, null);
-      expect(v,
-          '''import 'package:sqflite/sqflite.dart';
+      expect(v, '''import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:__test__/no_column_metadata.dart';
 
