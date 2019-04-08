@@ -81,12 +81,15 @@ class ModelParser {
           field.getter == null) return;
       //todo final or synthetic
 
-      List<EntityAttribute> rawEntityAttributes = field.metadata
+      var valuesList = field.metadata
           .map((ElementAnnotation annot) => annot.computeConstantValue())
+          .toList();
+
+      List<EntityAttribute> rawEntityAttributes = valuesList
           .where((DartObject d) => isDataColumn.isExactlyType(d.type))
           .map((DartObject obj) => EntityAttribute(
               field.type.name, field.name, obj.getField('name').toStringValue(),
-              metadataLevel: obj.getField('metadataLevel').toIntValue()))
+              metadataLevel: obj.getField('metadataLevel').toIntValue() ?? 0))
           .toList();
 
       if (rawEntityAttributes.length > 1) {
