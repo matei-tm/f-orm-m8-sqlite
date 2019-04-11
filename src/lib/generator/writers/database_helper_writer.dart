@@ -66,11 +66,13 @@ ${getImportList()}
 class DatabaseHelper ${getMixinList()}
          {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
+  static Database _db;
+
+  /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
+  bool extremeDevelopmentMode = false;
 
   factory DatabaseHelper() => _instance;
   DatabaseHelper.internal();
-
-  static Database _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -84,6 +86,10 @@ class DatabaseHelper ${getMixinList()}
   initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'm8_store_${databaseFileStamp}.db');
+
+    if (extremeDevelopmentMode) {
+      await deleteDatabase(path);
+    }
 
     var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;
