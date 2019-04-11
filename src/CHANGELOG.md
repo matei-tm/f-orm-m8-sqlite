@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2019-04-12
+
+### Added
+
+* Bidirectional mapping for Model DateTime to Database Integer
+* Complete implementation for trackable, update and create, fields
+* Boolean extremeDevelopmentMode field to DatabaseHelper to control regeneration of database in dev mode
+
 ## [0.2.1] - 2019-04-09
 
 ### Changed
