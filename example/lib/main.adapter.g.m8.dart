@@ -10,14 +10,22 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import 'package:example/models/independent.g.m8.dart';
+import 'package:example/models/account_related.g.m8.dart';
+import 'package:example/models/account.g.m8.dart';
 
-class DatabaseHelper with HealthEntryDatabaseHelper {
+class DatabaseHelper
+    with
+        HealthEntryDatabaseHelper,
+        HealthEntryAccountRelatedDatabaseHelper,
+        UserAccountDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
+  static Database _db;
+
+  /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
+  bool extremeDevelopmentMode;
 
   factory DatabaseHelper() => _instance;
   DatabaseHelper.internal();
-
-  static Database _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -32,12 +40,18 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'm8_store_0.2.0.db');
 
+    if (extremeDevelopmentMode) {
+      await deleteDatabase(path);
+    }
+
     var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;
   }
 
   void _onCreate(Database db, int newVersion) async {
     await createHealthEntryTable(db);
+    await createHealthEntryAccountRelatedTable(db);
+    await createUserAccountTable(db);
   }
 
   Future close() async {
@@ -47,5 +61,7 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
 
   Future deleteAll() async {
     await deleteHealthEntrysAll();
+    await deleteHealthEntryAccountRelatedsAll();
+    await deleteUserAccountsAll();
   }
 }

@@ -31,7 +31,14 @@ class HealthEntryRow extends StatelessWidget {
             Expanded(
               child: Row(
                   children: <Widget>[
-                    Expanded(flex: 2, child: Text(healthEntry.description)),
+                    Expanded(flex: 1, child: Text(healthEntry.description)),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        healthEntry.diagnosysDate.toString(),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline:

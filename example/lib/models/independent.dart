@@ -1,19 +1,20 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable(
-    "my_health_entries_table",
-        TableMetadata.TrackCreate |
-        TableMetadata.TrackUpdate)
+@DataTable("health_entries",
+    TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
 class HealthEntry implements DbEntity {
   @DataColumn(
-      "my_id_column",
+      "id",
       ColumnMetadata.PrimaryKey |
           ColumnMetadata.Unique |
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("my_description_column", ColumnMetadata.Unique)
+  @DataColumn("description", ColumnMetadata.Unique)
   String description;
+
+  @DataColumn("diagnosys_date")
+  DateTime diagnosysDate;
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;

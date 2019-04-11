@@ -99,6 +99,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
     try {
       var tempHealthEntry = HealthEntryProxy();
       tempHealthEntry.description = text;
+      tempHealthEntry.diagnosysDate = DateTime.now();
       var newId = await _db.saveHealthEntry(tempHealthEntry);
       tempHealthEntry.id = newId;
 
