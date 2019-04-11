@@ -48,6 +48,10 @@ mixin HealthEntryDatabaseHelper {
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
     var dbClient = await db;
+
+    instanceHealthEntry.dateCreate = DateTime.now();
+    instanceHealthEntry.dateUpdate = DateTime.now();
+
     var result = await dbClient.insert(
         _theHealthEntryTableHandler, instanceHealthEntry.toMap());
     return result;
@@ -93,6 +97,9 @@ mixin HealthEntryDatabaseHelper {
 
   Future<int> updateHealthEntry(HealthEntryProxy instanceHealthEntry) async {
     var dbClient = await db;
+
+    instanceHealthEntry.dateUpdate = DateTime.now();
+
     return await dbClient.update(
         _theHealthEntryTableHandler, instanceHealthEntry.toMap(),
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);

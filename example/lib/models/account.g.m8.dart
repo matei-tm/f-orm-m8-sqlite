@@ -53,6 +53,7 @@ mixin UserAccountDatabaseHelper {
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {
     var dbClient = await db;
+
     var result = await dbClient.insert(
         _theUserAccountTableHandler, instanceUserAccount.toMap());
     return result;
@@ -100,6 +101,7 @@ mixin UserAccountDatabaseHelper {
 
   Future<int> updateUserAccount(UserAccountProxy instanceUserAccount) async {
     var dbClient = await db;
+
     return await dbClient.update(
         _theUserAccountTableHandler, instanceUserAccount.toMap(),
         where: "my_id_column = ?", whereArgs: [instanceUserAccount.id]);

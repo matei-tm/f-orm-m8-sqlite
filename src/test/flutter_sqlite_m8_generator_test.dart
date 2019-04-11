@@ -21,6 +21,8 @@ import 'dart:async';
 import 'package:__test__/account_related.dart';
 
 class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
+
+
   HealthEntryAccountRelatedProxy(accountId) {
     this.accountId = accountId;
   }
@@ -52,6 +54,9 @@ await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id
 
   Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
 var dbClient = await db;
+
+
+
 var result = await dbClient.insert(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap());
 return result;
   }
@@ -106,6 +111,9 @@ return true;
 
   Future<int> updateHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
 var dbClient = await db;
+
+
+
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
     where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
   }

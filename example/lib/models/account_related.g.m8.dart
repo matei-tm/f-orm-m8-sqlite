@@ -47,6 +47,7 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
   Future<int> saveHealthEntryAccountRelated(
       HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
     var dbClient = await db;
+
     var result = await dbClient.insert(
         _theHealthEntryAccountRelatedTableHandler,
         instanceHealthEntryAccountRelated.toMap());
@@ -107,6 +108,7 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
   Future<int> updateHealthEntryAccountRelated(
       HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
     var dbClient = await db;
+
     return await dbClient.update(_theHealthEntryAccountRelatedTableHandler,
         instanceHealthEntryAccountRelated.toMap(),
         where: "my_id_column = ?",

@@ -20,6 +20,8 @@ import 'dart:async';
 import 'package:__test__/no_column_metadata.dart';
 
 class AModelWithoutExplicitColumnMetadataProxy extends AModelWithoutExplicitColumnMetadata {
+
+
   AModelWithoutExplicitColumnMetadataProxy();
 
   Map<String, dynamic> toMap() {
@@ -49,6 +51,9 @@ await db.execute('CREATE TABLE \$_theAModelWithoutExplicitColumnMetadataTableHan
 
   Future<int> saveAModelWithoutExplicitColumnMetadata(AModelWithoutExplicitColumnMetadataProxy instanceAModelWithoutExplicitColumnMetadata) async {
 var dbClient = await db;
+
+
+
 var result = await dbClient.insert(_theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap());
 return result;
   }
@@ -94,6 +99,9 @@ return true;
 
   Future<int> updateAModelWithoutExplicitColumnMetadata(AModelWithoutExplicitColumnMetadataProxy instanceAModelWithoutExplicitColumnMetadata) async {
 var dbClient = await db;
+
+
+
 return await dbClient.update(_theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap(),
     where: "null = ?", whereArgs: [instanceAModelWithoutExplicitColumnMetadata.id]);
   }
