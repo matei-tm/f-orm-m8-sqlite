@@ -24,6 +24,9 @@ await db.execute(${getTableDefinition()});
 
   Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
+
+${getCreateTrackableTimestampString()}
+
 var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap());
 return result;
   }
@@ -78,6 +81,9 @@ return true;
 
   Future<int> update${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
+
+${getUpdateTrackableTimestampString()}
+
 return await dbClient.update(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap(),
     where: "$thePrimaryKey = ?", whereArgs: [${emittedEntity.modelInstanceName}.id]);
   }
