@@ -12,7 +12,7 @@ class HealthConditionsFragment extends StatefulWidget {
 
 class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var _db = DatabaseHelper();
 
   @override
@@ -125,8 +125,8 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
 
   void _showError(String message) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: new Text('Error: $message'),
-      duration: new Duration(seconds: 10),
+      content: Text('Error: $message'),
+      duration: Duration(seconds: 10),
     ));
   }
 }
