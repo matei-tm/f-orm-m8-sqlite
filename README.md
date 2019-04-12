@@ -104,20 +104,20 @@ Adding a model file `independent.dart` with the following content:
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "my_health_entries_table",
-    TableMetadata.SoftDeletable |
-        TableMetadata.TrackCreate |
-        TableMetadata.TrackUpdate)
+    "health_entries", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
 class HealthEntry implements DbEntity {
   @DataColumn(
-      "my_id_column",
+      "id",
       ColumnMetadata.PrimaryKey |
           ColumnMetadata.Unique |
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("my_description_column", ColumnMetadata.Unique)
+  @DataColumn("description", ColumnMetadata.Unique)
   String description;
+
+  @DataColumn("diagnosys_date")
+  DateTime diagnosysDate;
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
@@ -138,34 +138,49 @@ import 'dart:async';
 import 'package:example/models/independent.dart';
 
 class HealthEntryProxy extends HealthEntry {
+  DateTime dateCreate;
+  DateTime dateUpdate;
+
   HealthEntryProxy();
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map['my_id_column'] = id;
-    map['my_description_column'] = description;
+    map['id'] = id;
+    map['description'] = description;
+    map['diagnosys_date'] = diagnosysDate.millisecondsSinceEpoch;
+    map['date_create'] = dateCreate.millisecondsSinceEpoch;
+    map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+
     return map;
   }
 
   HealthEntryProxy.fromMap(Map<String, dynamic> map) {
-    this.id = map['my_id_column'];
-    this.description = map['my_description_column'];
+    this.id = map['id'];
+    this.description = map['description'];
+    this.diagnosysDate =
+        DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
+    this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
+    this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
   }
 }
 
 mixin HealthEntryDatabaseHelper {
   Future<Database> db;
-  final theHealthEntryColumns = ["my_id_column", "my_description_column"];
+  final theHealthEntryColumns = ["id", "description", "diagnosys_date"];
 
-  final String _theHealthEntryTableHandler = 'my_health_entries_table';
+  final String _theHealthEntryTableHandler = 'health_entries';
 
   Future createHealthEntryTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, is_deleted INTEGER DEFAULT 0, date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
     var dbClient = await db;
+
+    instanceHealthEntry.dateCreate = DateTime.now();
+    instanceHealthEntry.dateUpdate = DateTime.now();
+
     var result = await dbClient.insert(
         _theHealthEntryTableHandler, instanceHealthEntry.toMap());
     return result;
@@ -174,7 +189,7 @@ mixin HealthEntryDatabaseHelper {
   Future<List> getHealthEntrysAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
-        columns: theHealthEntryColumns, where: 'is_deleted != 1');
+        columns: theHealthEntryColumns, where: '1');
 
     return result.toList();
   }
@@ -182,15 +197,13 @@ mixin HealthEntryDatabaseHelper {
   Future<int> getHealthEntrysCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE is_deleted != 1'));
+        'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE 1'));
   }
 
   Future<HealthEntry> getHealthEntry(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(_theHealthEntryTableHandler,
-        columns: theHealthEntryColumns,
-        where: 'is_deleted != 1 AND my_id_column = ?',
-        whereArgs: [id]);
+        columns: theHealthEntryColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
       return HealthEntryProxy.fromMap(result.first);
@@ -201,8 +214,8 @@ mixin HealthEntryDatabaseHelper {
 
   Future<int> deleteHealthEntry(int id) async {
     var dbClient = await db;
-    return await dbClient.delete(_theHealthEntryTableHandler,
-        where: 'my_id_column = ?', whereArgs: [id]);
+    return await dbClient
+        .delete(_theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteHealthEntrysAll() async {
@@ -213,19 +226,12 @@ mixin HealthEntryDatabaseHelper {
 
   Future<int> updateHealthEntry(HealthEntryProxy instanceHealthEntry) async {
     var dbClient = await db;
+
+    instanceHealthEntry.dateUpdate = DateTime.now();
+
     return await dbClient.update(
         _theHealthEntryTableHandler, instanceHealthEntry.toMap(),
-        where: "my_id_column = ?", whereArgs: [instanceHealthEntry.id]);
-  }
-
-  Future<int> softdeleteHealthEntry(int id) async {
-    var dbClient = await db;
-
-    var map = Map<String, dynamic>();
-    map['is_deleted'] = 1;
-
-    return await dbClient.update(_theHealthEntryTableHandler, map,
-        where: "my_id_column = ?", whereArgs: [id]);
+        where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 }
 ```
@@ -248,15 +254,28 @@ import 'package:example/models/independent.g.m8.dart';
 import 'package:example/models/account_related.g.m8.dart';
 import 'package:example/models/account.g.m8.dart';
 
+import 'dart:async';
+
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+import 'package:example/models/independent.g.m8.dart';
+import 'package:example/models/account_related.g.m8.dart';
+import 'package:example/models/account.g.m8.dart';
+
 class DatabaseHelper
     with
-        HealthEntryDatabaseHelper {
+        HealthEntryDatabaseHelper,
+        HealthEntryAccountRelatedDatabaseHelper,
+        UserAccountDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
+  static Database _db;
+
+  /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
+  bool extremeDevelopmentMode = false;
 
   factory DatabaseHelper() => _instance;
   DatabaseHelper.internal();
-
-  static Database _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -270,6 +289,10 @@ class DatabaseHelper
   initDb() async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'm8_store_0.2.0.db');
+
+    if (extremeDevelopmentMode) {
+      await deleteDatabase(path);
+    }
 
     var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;
