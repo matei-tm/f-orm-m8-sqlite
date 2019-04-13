@@ -37,7 +37,13 @@ class HealthEntryProxy extends HealthEntry {
 
 mixin HealthEntryDatabaseHelper {
   Future<Database> db;
-  final theHealthEntryColumns = ["id", "description", "diagnosys_date"];
+  final theHealthEntryColumns = [
+    "id",
+    "description",
+    "diagnosys_date",
+    "date_create",
+    "date_update"
+  ];
 
   final String _theHealthEntryTableHandler = 'health_entries';
 

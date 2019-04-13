@@ -16,10 +16,27 @@ class EntityWriter {
     return '/*Not implemented. */';
   }
 
-  String _getColumnsList() {
-    return emittedEntity.attributes.values
-        .map((f) => f.attributeName)
-        .join("\", \"");
+  List<String> _getColumnsList() {
+    var columnList =
+        emittedEntity.attributes.values.map((f) => f.attributeName).toList();
+
+    if (emittedEntity.hasSoftDelete) {
+      columnList.add("is_deleted");
+    }
+
+    if (emittedEntity.hasTrackCreate) {
+      columnList.add("date_create");
+    }
+
+    if (emittedEntity.hasTrackUpdate) {
+      columnList.add("date_update");
+    }
+
+    return columnList;
+  }
+
+  String _getColumnsListString() {
+    return _getColumnsList().join("\", \"");
   }
 
   String _getGeneralImports() {
@@ -37,7 +54,7 @@ import '${emittedEntity.packageIdentifier}';
   String _getMixinBodyCommonFields() {
     return """
   Future<Database> db;
-  final the${emittedEntity.modelName}Columns = ["${_getColumnsList()}"];
+  final the${emittedEntity.modelName}Columns = ["${_getColumnsListString()}"];
 
   final String ${theTableHandler} = '${theTableHandlerValue}';""";
   }
