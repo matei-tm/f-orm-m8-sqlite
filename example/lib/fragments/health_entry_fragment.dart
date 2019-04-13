@@ -59,7 +59,8 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: healthEntryController,
+                    key: Key('healthEntry'),
+                    controller: healthEntryController,                    
                     decoration: InputDecoration(
                       hintText: "Type Health Condition. Press enter to finish",
                       labelText: "New Health Condition Entry",
