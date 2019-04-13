@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.2.3] - 2019-04-13
+
+### Fixed
+
+* The generated entity database helper does not contain the meta columns
+* Fixed test in the example project
+
+
 ## [0.2.2] - 2019-04-12
 
 ### Added
