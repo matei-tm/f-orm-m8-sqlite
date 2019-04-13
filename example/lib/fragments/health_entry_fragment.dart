@@ -43,7 +43,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
     return true;
   }
 
-  final TextEditingController healthEntryController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   Widget _container() {
     return Scaffold(
@@ -58,16 +58,37 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
             child: Container(
               child: Column(
                 children: <Widget>[
-                  TextField(
-                    key: Key('healthEntry'),
-                    controller: healthEntryController,                    
-                    decoration: InputDecoration(
-                      hintText: "Type Health Condition. Press enter to finish",
-                      labelText: "New Health Condition Entry",
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TextFormField(
+                          key: Key('textFormField'),
+                          onSaved: (value) {
+                            _saveHealthEntry(value);
+                            setState(() {});
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: RaisedButton(
+                            key: Key('button'),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                              }
+                            },
+                            child: Text('Submit'),
+                          ),
+                        ),
+                      ],
                     ),
-                    onSubmitted: (text) async {
-                      _saveHealthEntry(text);
-                    },
                   ),
                   Expanded(
                     child: ListView.builder(
@@ -105,7 +126,6 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
       tempHealthEntry.id = newId;
 
       healthEntries.add(tempHealthEntry);
-      healthEntryController.clear();
 
       setState(() {});
     } catch (e) {
