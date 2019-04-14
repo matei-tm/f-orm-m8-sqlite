@@ -9,6 +9,9 @@
 * The generated entity database helper does not contain the meta columns
 * Fixed test in the example project
 
+### Changed
+
+* The showcase in the example project
 
 ## [0.2.2] - 2019-04-12
 
