@@ -50,7 +50,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
         dev_dependencies:
             build_runner: ^1.0.0
-            flutter_sqlite_m8_generator: ^0.1.0
+            flutter_sqlite_m8_generator: ^0.2.3
             flutter_test:
                 sdk: flutter
 
