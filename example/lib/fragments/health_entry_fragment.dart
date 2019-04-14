@@ -53,24 +53,30 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  TextField(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: TextField(
                     key: Key('healthEntry'),
                     controller: healthEntryController,
                     decoration: InputDecoration(
-                      hintText: "Type Health Condition. Press enter to finish",
+                      hintText: "Type a short description",
                       labelText: "New Health Condition Entry",
                     ),
                     onSubmitted: (text) async {
                       _saveHealthEntry(text);
-                    },                    
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: RaisedButton(
                       key: Key('addButton'),
                       onPressed: () {
@@ -79,21 +85,21 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
                       child: Text('Add'),
                     ),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: healthEntries.length,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return HealthEntryRow(
-                          healthEntry: healthEntries[index],
-                          onPressed: (h) {
-                            _deleteHealthEntry(h);
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: healthEntries.length,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return HealthEntryRow(
+                  healthEntry: healthEntries[index],
+                  onPressed: (h) {
+                    _deleteHealthEntry(h);
+                  },
+                );
+              },
             ),
           ),
         ],
