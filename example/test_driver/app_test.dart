@@ -3,8 +3,8 @@ import 'package:test/test.dart';
 
 void main() {
   group('orm-m8 App', () {
-    final textFieldHealthEntryFinder = find.byValueKey('textFormField');
-    final buttonFinder = find.byValueKey('button');
+    final textFieldHealthEntryFinder = find.byValueKey('healthEntry');
+    final addButtonFinder = find.byValueKey('addButton');
 
     FlutterDriver driver;
 
@@ -32,13 +32,38 @@ void main() {
       await driver.enterText("happy", timeout: Duration(seconds: 1));
       await driver.waitFor(find.text('happy'));
 
-      await driver.waitFor(buttonFinder);
-      await driver.tap(buttonFinder);
+      await driver.waitFor(addButtonFinder);
+      await driver.tap(addButtonFinder);
+    });
 
+    test('delete health entry', () async {
+      var delButtonFinder = find.byValueKey('delBtnHealth1');
+
+      await driver.waitFor(delButtonFinder);
+      await driver.tap(delButtonFinder);
+    });
+
+    test('add same health entry twice', () async {
       await driver.waitFor(textFieldHealthEntryFinder);
-      await driver.enterText('young',
-          timeout: Duration(seconds: 1));
-      await driver.waitFor(find.text('young'));
+      await driver.tap(textFieldHealthEntryFinder);
+
+      await driver.enterText("happy", timeout: Duration(seconds: 1));
+      await driver.waitFor(find.text('happy'));
+
+      await driver.waitFor(addButtonFinder);
+      await driver.tap(addButtonFinder);
+
+      await driver.enterText("happy", timeout: Duration(seconds: 1));
+      await driver.waitFor(find.text('happy'));
+
+      await driver.waitFor(addButtonFinder);
+      await driver.tap(addButtonFinder);
+
+      await driver.waitFor(find.byValueKey('errorSnack'));
+
+      var delButtonFinder = find.byValueKey('delBtnHealth2');
+      await driver.waitFor(delButtonFinder);
+      await driver.tap(delButtonFinder);
     });
   });
 }
