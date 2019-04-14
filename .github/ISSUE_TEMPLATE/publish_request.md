@@ -12,8 +12,8 @@ assignees: ''
 - [ ] Update the src/pubspec.yaml with the required version
 - [ ] Update the changelog
 - [ ] Update documentation
-  - [ ] README.md
-  - [ ] src/README.md
+  - [ ] README.md (+version sync)
+  - [ ] src/README.md (+version sync)
   - [ ] example/README.md
 - [ ] Format the code
   - [ ]  in src  ```dartfmt -w --fix src```
