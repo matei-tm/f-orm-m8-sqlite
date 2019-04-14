@@ -2,7 +2,7 @@
 name: Publish request
 about: Publish master branch
 title: ''
-labels: ''
+labels: 'publish'
 assignees: ''
 
 ---
@@ -26,9 +26,11 @@ assignees: ''
   - [ ] ```flutter test```
   - [ ] ```cd ..```
 - [ ] Commit with message `#xxxx. Publish review completed`
+- [ ] Merge develop changes into master
+  - [ ] Check CI [results](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator) 
 - [ ] Dry run
   - [ ] ```cd src```
   - [ ] ```pub publish --dry-run```
 - [ ] Publish ```pub publish```
-- [ ] Commit with message `Completed publish closes #xxxx.`
+- [ ] Commit empty ```git commit --allow-empty -m "Completed publish closes #xxxx."```
 
