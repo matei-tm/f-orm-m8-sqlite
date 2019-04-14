@@ -24,6 +24,7 @@ assignees: ''
   - [ ] ```cd ..```
   - [ ] ```cd example```
   - [ ] ```flutter test```
+  - [ ] ```flutter drive --target=test_driver/app.dart```
   - [ ] ```cd ..```
 - [ ] Commit with message `#xxxx. Publish review completed`
 - [ ] Merge develop changes into master
