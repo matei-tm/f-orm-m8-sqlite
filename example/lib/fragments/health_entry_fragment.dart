@@ -12,8 +12,12 @@ class HealthConditionsFragment extends StatefulWidget {
 
 class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _healthEntryController = TextEditingController();
+
   var _db = DatabaseHelper();
+  bool _validate = false;
 
   @override
   void initState() {
@@ -43,8 +47,6 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
     return true;
   }
 
-  final TextEditingController healthEntryController = TextEditingController();
-
   Widget _container() {
     return Scaffold(
       key: _scaffoldKey,
@@ -63,10 +65,11 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
                   flex: 4,
                   child: TextField(
                     key: Key('healthEntry'),
-                    controller: healthEntryController,
+                    controller: _healthEntryController,
                     decoration: InputDecoration(
                       hintText: "Type a short description",
                       labelText: "New Health Condition Entry",
+                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
                     ),
                     onSubmitted: (text) async {
                       _saveHealthEntry(text);
@@ -80,9 +83,12 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
                     child: RaisedButton(
                       key: Key('addButton'),
                       onPressed: () {
-                        _saveHealthEntry(healthEntryController.value.text);
+                        _saveHealthEntry(_healthEntryController.value.text);
                       },
-                      child: Text('Add'),
+                      child: Icon(Icons.add,
+                          color: Theme.of(context).accentIconTheme.color),
+                      shape: CircleBorder(),
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                 ),
@@ -114,6 +120,13 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
 
   Future<void> _saveHealthEntry(String text) async {
     try {
+      if (_healthEntryController.text.isEmpty) {
+        setState(() {
+          _validate = true;
+        });
+        return;
+      }
+
       var tempHealthEntry = HealthEntryProxy();
       tempHealthEntry.description = text;
       tempHealthEntry.diagnosysDate = DateTime.now();
@@ -121,9 +134,11 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
       tempHealthEntry.id = newId;
 
       healthEntries.add(tempHealthEntry);
-      healthEntryController.clear();
+      _healthEntryController.clear();
 
-      setState(() {});
+      setState(() {
+        _validate = false;
+      });
     } catch (e) {
       _showError(e.toString());
     }

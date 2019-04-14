@@ -47,7 +47,7 @@ class HealthEntryRow extends StatelessWidget {
             IconButton(
               key: Key('delBtnHealth${healthEntry.id}'),
               icon: const Icon(Icons.delete),
-              color: Colors.orange,
+              color: Theme.of(context).accentColor,
               onPressed: _getHandler(onPressed),
             ),
           ],
