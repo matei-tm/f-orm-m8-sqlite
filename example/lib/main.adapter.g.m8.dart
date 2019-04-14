@@ -9,15 +9,9 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:example/models/independent/gym_location.g.m8.dart';
-import 'package:example/models/account_related/health_entry.g.m8.dart';
-import 'package:example/models/user_account.g.m8.dart';
+import 'package:example/models/independent/health_entry.g.m8.dart';
 
-class DatabaseHelper
-    with
-        GymLocationDatabaseHelper,
-        HealthEntryDatabaseHelper,
-        UserAccountDatabaseHelper {
+class DatabaseHelper with HealthEntryDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   static Database _db;
 
@@ -49,9 +43,7 @@ class DatabaseHelper
   }
 
   void _onCreate(Database db, int newVersion) async {
-    await createGymLocationTable(db);
     await createHealthEntryTable(db);
-    await createUserAccountTable(db);
   }
 
   Future close() async {
@@ -60,8 +52,6 @@ class DatabaseHelper
   }
 
   Future deleteAll() async {
-    await deleteGymLocationsAll();
     await deleteHealthEntrysAll();
-    await deleteUserAccountsAll();
   }
 }
