@@ -9,4 +9,3 @@ generated code into a functional `health entries` form with CRUD capabilities
 
 ![usecase001](docs/usecase001-320.gif)
 
-

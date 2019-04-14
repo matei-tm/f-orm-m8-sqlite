@@ -2,7 +2,17 @@
 
 ## [Unreleased]
 
-## [0.2.3] - 2019-04-13
+## [0.2.3+1] - 2019-04-15
+
+### Fixed
+
+* Fix typo in save and update methods for trackable entities
+
+### Changed
+
+* The showcase in the example project. All models are closer to a real life application
+
+## [0.2.3] - 2019-04-14
 
 ### Fixed
 

@@ -50,7 +50,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
         dev_dependencies:
             build_runner: ^1.0.0
-            flutter_sqlite_m8_generator: ^0.2.3
+            flutter_sqlite_m8_generator: ^0.2.3+1
             flutter_test:
                 sdk: flutter
 
@@ -92,13 +92,18 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
     - in models folder, a *.g.m8.dart file for each model file
     - in lib folder, a main.adapter.g.m8.dart file
 
+9. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example for a trivial usage.
+
 ## Example
 
 A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example)
 
+![usecase001](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase001-320.gif)
+
 ### A DbEntity implementation
 
-Adding a model file `independent.dart` with the following content:
+We added a HealthEntry model that implements DbEntity. 
+Adding a model file `independent/health_entry.dart` with the following content:
 
 ```dart
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
@@ -124,7 +129,7 @@ class HealthEntry implements DbEntity {
 }
 ```
 
-the builder creates `independent.g.m8.dart` file with content
+the builder creates `independent/health_entry.g.m8.dart` file with content
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
@@ -135,7 +140,7 @@ the builder creates `independent.g.m8.dart` file with content
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/independent.dart';
+import 'package:example/models/independent/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
@@ -166,7 +171,13 @@ class HealthEntryProxy extends HealthEntry {
 
 mixin HealthEntryDatabaseHelper {
   Future<Database> db;
-  final theHealthEntryColumns = ["id", "description", "diagnosys_date"];
+  final theHealthEntryColumns = [
+    "id",
+    "description",
+    "diagnosys_date",
+    "date_create",
+    "date_update"
+  ];
 
   final String _theHealthEntryTableHandler = 'health_entries';
 
@@ -234,6 +245,7 @@ mixin HealthEntryDatabaseHelper {
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 }
+
 ```
 
 and database adapter file `main.adapter.g.m8.dart`
@@ -250,24 +262,9 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:example/models/independent.g.m8.dart';
-import 'package:example/models/account_related.g.m8.dart';
-import 'package:example/models/account.g.m8.dart';
+import 'package:example/models/independent/health_entry.g.m8.dart';
 
-import 'dart:async';
-
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
-
-import 'package:example/models/independent.g.m8.dart';
-import 'package:example/models/account_related.g.m8.dart';
-import 'package:example/models/account.g.m8.dart';
-
-class DatabaseHelper
-    with
-        HealthEntryDatabaseHelper,
-        HealthEntryAccountRelatedDatabaseHelper,
-        UserAccountDatabaseHelper {
+class DatabaseHelper with HealthEntryDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   static Database _db;
 
@@ -300,8 +297,6 @@ class DatabaseHelper
 
   void _onCreate(Database db, int newVersion) async {
     await createHealthEntryTable(db);
-    await createHealthEntryAccountRelatedTable(db);
-    await createUserAccountTable(db);
   }
 
   Future close() async {
@@ -311,8 +306,6 @@ class DatabaseHelper
 
   Future deleteAll() async {
     await deleteHealthEntrysAll();
-    await deleteHealthEntryAccountRelatedsAll();
-    await deleteUserAccountsAll();
   }
 }
 
