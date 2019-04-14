@@ -103,12 +103,12 @@ import '${emittedEntity.packageIdentifier}';
   String getCreateTrackableTimestampString() {
     String trackableTimestamp = '';
     if (emittedEntity.hasTrackCreate) {
-      trackableTimestamp = "instanceHealthEntry.dateCreate = DateTime.now();";
+      trackableTimestamp = "instance${emittedEntity.modelName}.dateCreate = DateTime.now();";
     }
 
     if (emittedEntity.hasTrackUpdate) {
       trackableTimestamp +=
-          "\ninstanceHealthEntry.dateUpdate = DateTime.now();";
+          "\ninstance${emittedEntity.modelName}.dateUpdate = DateTime.now();";
     }
 
     return trackableTimestamp;
@@ -116,7 +116,7 @@ import '${emittedEntity.packageIdentifier}';
 
   String getUpdateTrackableTimestampString() {
     if (emittedEntity.hasTrackUpdate) {
-      return "instanceHealthEntry.dateUpdate = DateTime.now();";
+      return "instance${emittedEntity.modelName}.dateUpdate = DateTime.now();";
     }
 
     return "";
