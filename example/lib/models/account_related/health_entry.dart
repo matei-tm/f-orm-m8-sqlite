@@ -2,7 +2,7 @@ import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
     "health_entries", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
-class HealthEntry implements DbEntity {
+class HealthEntry implements DbAccountRelatedEntity {
   @DataColumn(
       "id",
       ColumnMetadata.PrimaryKey |
@@ -18,4 +18,7 @@ class HealthEntry implements DbEntity {
 
   @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
+
+  @override
+  int accountId;
 }

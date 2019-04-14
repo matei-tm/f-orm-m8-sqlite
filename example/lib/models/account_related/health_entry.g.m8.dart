@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/independent.dart';
+import 'package:example/models/account_related/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
@@ -67,6 +67,16 @@ mixin HealthEntryDatabaseHelper {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
+
+    return result.toList();
+  }
+
+  Future<List> getHealthEntrysByAccountId(int accountId) async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theHealthEntryTableHandler,
+        columns: theHealthEntryColumns,
+        where: 'account_id = ? AND 1',
+        whereArgs: [accountId]);
 
     return result.toList();
   }

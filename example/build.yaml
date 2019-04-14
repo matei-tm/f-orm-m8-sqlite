@@ -4,4 +4,6 @@ targets:
       flutter_sqlite_m8_generator|orm_m8:
         generate_for:
           - lib/models/*.dart
+          - lib/models/independent/*.dart
+          - lib/models/account_related/*.dart
           - lib/main.dart

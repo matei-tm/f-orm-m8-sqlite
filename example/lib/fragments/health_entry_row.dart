@@ -1,4 +1,4 @@
-import 'package:example/models/independent.g.m8.dart';
+import 'package:example/models/account_related/health_entry.g.m8.dart';
 import 'package:flutter/material.dart';
 
 typedef HealthEntryRowActionCallback = void Function(

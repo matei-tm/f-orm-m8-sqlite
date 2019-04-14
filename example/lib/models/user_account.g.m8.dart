@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/account.dart';
+import 'package:example/models/user_account.dart';
 
 class UserAccountProxy extends UserAccount {
   UserAccountProxy(abbreviation, email, userName) {
@@ -17,38 +17,38 @@ class UserAccountProxy extends UserAccount {
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    map['my_id_column'] = id;
-    map['my_description_column'] = description;
-    map['my_abbreviation_column'] = abbreviation;
-    map['my_email_column'] = email;
-    map['my_userName_column'] = userName;
+    map['id'] = id;
+    map['description'] = description;
+    map['abbreviation'] = abbreviation;
+    map['email'] = email;
+    map['user_name'] = userName;
     return map;
   }
 
   UserAccountProxy.fromMap(Map<String, dynamic> map) {
-    this.id = map['my_id_column'];
-    this.description = map['my_description_column'];
-    this.abbreviation = map['my_abbreviation_column'];
-    this.email = map['my_email_column'];
-    this.userName = map['my_userName_column'];
+    this.id = map['id'];
+    this.description = map['description'];
+    this.abbreviation = map['abbreviation'];
+    this.email = map['email'];
+    this.userName = map['user_name'];
   }
 }
 
 mixin UserAccountDatabaseHelper {
   Future<Database> db;
   final theUserAccountColumns = [
-    "my_id_column",
-    "my_description_column",
-    "my_abbreviation_column",
-    "my_email_column",
-    "my_userName_column"
+    "id",
+    "description",
+    "abbreviation",
+    "email",
+    "user_name"
   ];
 
-  final String _theUserAccountTableHandler = 'my_account_table';
+  final String _theUserAccountTableHandler = 'user_account';
 
   Future createUserAccountTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theUserAccountTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_abbreviation_column TEXT  NOT NULL, my_email_column TEXT  NOT NULL, my_userName_column TEXT  NOT NULL)');
+        'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, abbreviation TEXT  NOT NULL, email TEXT  NOT NULL, user_name TEXT  NOT NULL)');
   }
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {
@@ -76,9 +76,7 @@ mixin UserAccountDatabaseHelper {
   Future<UserAccount> getUserAccount(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(_theUserAccountTableHandler,
-        columns: theUserAccountColumns,
-        where: '1 AND my_id_column = ?',
-        whereArgs: [id]);
+        columns: theUserAccountColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
       return UserAccountProxy.fromMap(result.first);
@@ -89,8 +87,8 @@ mixin UserAccountDatabaseHelper {
 
   Future<int> deleteUserAccount(int id) async {
     var dbClient = await db;
-    return await dbClient.delete(_theUserAccountTableHandler,
-        where: 'my_id_column = ?', whereArgs: [id]);
+    return await dbClient
+        .delete(_theUserAccountTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteUserAccountsAll() async {
@@ -104,6 +102,6 @@ mixin UserAccountDatabaseHelper {
 
     return await dbClient.update(
         _theUserAccountTableHandler, instanceUserAccount.toMap(),
-        where: "my_id_column = ?", whereArgs: [instanceUserAccount.id]);
+        where: "id = ?", whereArgs: [instanceUserAccount.id]);
   }
 }
