@@ -103,7 +103,8 @@ import '${emittedEntity.packageIdentifier}';
   String getCreateTrackableTimestampString() {
     String trackableTimestamp = '';
     if (emittedEntity.hasTrackCreate) {
-      trackableTimestamp = "instance${emittedEntity.modelName}.dateCreate = DateTime.now();";
+      trackableTimestamp =
+          "instance${emittedEntity.modelName}.dateCreate = DateTime.now();";
     }
 
     if (emittedEntity.hasTrackUpdate) {
