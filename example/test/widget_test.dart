@@ -4,8 +4,6 @@
 // utility that Flutter provides. For example, you can send tap and scroll
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:example/fragments/health_entry_fragment.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,5 +30,8 @@ void main() {
     await tester.pump();
 
     expect(find.text('Healthy'), findsOneWidget);
+    expect(find.byKey(Key('addButton')), findsOneWidget);
+
+    await tester.tap(find.byKey(Key('addButton')));
   });
 }
