@@ -19,7 +19,7 @@ void main() async {
     });
 
     test('Test attributes count', () async {
-      expect(e.attributes.length, 5);
+      expect(e.attributes.length, 6);
     });
 
     test('Has attribute id', () async {
