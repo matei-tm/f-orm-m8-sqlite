@@ -10,7 +10,7 @@ void main() async {
   final path = testFilePath('test', 'src', 'model');
   _library = await initializeLibraryReaderForDirectory(path, "account.dart");
   var e = getEmittedEntityForAnnotation("my_account_table", _library);
-  group('Account related entity tests', () {
+  group('Account entity tests', () {
     test('Test entity name', () async {
       expect(e.entityName, "my_account_table");
     });
@@ -38,18 +38,23 @@ void main() async {
     });
 
     test('Has attribute abbreviation', () async {
-      var hasDescription = e.attributes.containsKey("abbreviation");
-      expect(hasDescription, true);
+      var hasAttribute = e.attributes.containsKey("abbreviation");
+      expect(hasAttribute, true);
     });
 
     test('Has attribute email', () async {
-      var hasDescription = e.attributes.containsKey("email");
-      expect(hasDescription, true);
+      var hasAttribute = e.attributes.containsKey("email");
+      expect(hasAttribute, true);
     });
 
     test('Has attribute userName', () async {
-      var hasDescription = e.attributes.containsKey("userName");
-      expect(hasDescription, true);
+      var hasAttribute = e.attributes.containsKey("userName");
+      expect(hasAttribute, true);
+    });
+
+    test('Has attribute isCurrent', () async {
+      var hasAttribute = e.attributes.containsKey("isCurrent");
+      expect(hasAttribute, true);
     });
 
     test('Entity is not soft deletable', () async {
