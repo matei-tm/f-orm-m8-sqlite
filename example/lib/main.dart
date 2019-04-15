@@ -1,4 +1,4 @@
-import 'package:example/fragments/health_entry_fragment.dart';
+import 'package:example/fragments/health_conditions_fragment.dart';
 import 'package:example/pages/account_page.dart';
 import 'package:flutter/material.dart';
 

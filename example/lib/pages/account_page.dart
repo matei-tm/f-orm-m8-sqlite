@@ -115,7 +115,7 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                       new Flexible(
                         child: new CircleAvatar(
-                          backgroundColor: Colors.brown,
+                          backgroundColor: Colors.red,
                           child: new Text("??"),
                         ),
                       ),
