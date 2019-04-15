@@ -23,4 +23,7 @@ class UserAccount implements DbAccountEntity {
 
   @DataColumn("user_name", ColumnMetadata.NotNull)
   String userName;
+
+  @DataColumn("is_current")
+  bool isCurrent;
 }
