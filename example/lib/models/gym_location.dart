@@ -16,6 +16,6 @@ class GymLocation implements DbEntity {
   @DataColumn("rating")
   int rating;
 
-  @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn("my_future_column3", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }

@@ -9,9 +9,17 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:example/models/independent/health_entry.g.m8.dart';
+import 'package:example/models/gym_location.g.m8.dart';
+import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/models/to_do.g.m8.dart';
+import 'package:example/models/user_account.g.m8.dart';
 
-class DatabaseHelper with HealthEntryDatabaseHelper {
+class DatabaseHelper
+    with
+        GymLocationDatabaseHelper,
+        HealthEntryDatabaseHelper,
+        ToDoDatabaseHelper,
+        UserAccountDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   static Database _db;
 
@@ -43,7 +51,10 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
   }
 
   void _onCreate(Database db, int newVersion) async {
+    await createGymLocationTable(db);
     await createHealthEntryTable(db);
+    await createToDoTable(db);
+    await createUserAccountTable(db);
   }
 
   Future close() async {
@@ -52,6 +63,9 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
   }
 
   Future deleteAll() async {
+    await deleteGymLocationsAll();
     await deleteHealthEntrysAll();
+    await deleteToDosAll();
+    await deleteUserAccountsAll();
   }
 }

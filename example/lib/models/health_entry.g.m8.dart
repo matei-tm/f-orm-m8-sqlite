@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/independent/health_entry.dart';
+import 'package:example/models/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;

@@ -16,6 +16,6 @@ class HealthEntry implements DbEntity {
   @DataColumn("diagnosys_date")
   DateTime diagnosysDate;
 
-  @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn("my_future_column3", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }

@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/account_related/to_do.dart';
+import 'package:example/models/to_do.dart';
 
 class ToDoProxy extends ToDo {
   DateTime dateCreate;
