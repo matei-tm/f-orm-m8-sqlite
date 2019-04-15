@@ -1,9 +1,9 @@
 import 'package:example/fragments/health_entry_fragment.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(GymspectorApp());
 
-class MyApp extends StatelessWidget {
+class GymspectorApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ void main() {
   var _db = DatabaseHelper();
   _db.extremeDevelopmentMode = true;
   testWidgets('Adding health entry smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(GymspectorApp());
 
     expect(find.text('Health Conditions'), findsOneWidget);
     expect(find.text('Healthy'), findsNothing);
