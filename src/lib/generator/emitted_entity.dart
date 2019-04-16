@@ -18,8 +18,7 @@ class EmittedEntity {
 
   String get modelInstanceName => "instance$modelName";
 
-  // Todo: to find a package like node pluralize
-  String get modelPlural => "${modelName}s";
+  String get modelPlural => "ListOf${modelName}"; 
 
   get primaryKeyName => getPrimaryKeyName();
 
