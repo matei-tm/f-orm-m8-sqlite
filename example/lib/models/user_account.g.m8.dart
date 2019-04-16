@@ -22,7 +22,7 @@ class UserAccountProxy extends UserAccount {
     map['abbreviation'] = abbreviation;
     map['email'] = email;
     map['user_name'] = userName;
-    map['is_current'] = isCurrent;
+    map['is_current'] = isCurrent ? 1 : 0;
     return map;
   }
 
@@ -32,7 +32,7 @@ class UserAccountProxy extends UserAccount {
     this.abbreviation = map['abbreviation'];
     this.email = map['email'];
     this.userName = map['user_name'];
-    this.isCurrent = map['is_current'];
+    this.isCurrent = map['is_current'] == 1 ? true : false;
   }
 }
 
