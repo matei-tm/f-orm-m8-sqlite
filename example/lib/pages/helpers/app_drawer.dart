@@ -26,7 +26,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  _switchAccount(userAccount, context);
+                  switchAccount(userAccount, context);
                 },
               ),
               FlatButton(
@@ -40,14 +40,10 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     );
   }
 
-  void _switchAccount(UserAccount userAccount, BuildContext context) {
-    setState(() {
-      guardedUserAccounts.remove(userAccount);
-      guardedUserAccounts.add(guardedCurrentAccount);
-      guardedCurrentAccount = userAccount;
-
-      widget.onSelectItem("Gym Places");
-    });
+  @override
+  Future switchAccount(UserAccount userAccount, BuildContext context) async {
+    await super.switchAccount(userAccount, context);
+    widget.onSelectItem("Privacy");
   }
 
   List<Widget> _buildOtherAccounts(accounts) {

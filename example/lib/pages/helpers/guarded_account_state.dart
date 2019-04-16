@@ -33,6 +33,14 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
     });
   }
 
+  Future switchAccount(UserAccount userAccount, BuildContext context) async {
+    await _db.setCurrentUserAccount(userAccount.id);
+    guardedUserAccounts.remove(userAccount);
+    guardedUserAccounts.add(guardedCurrentAccount);
+    guardedCurrentAccount = userAccount;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return null;
