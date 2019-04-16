@@ -25,16 +25,18 @@ class _AccountPageState extends State<AccountPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      _db = new DatabaseHelper();
+      _db = DatabaseHelper();
 
       int id;
+      _stateAccount.isCurrent = true;
 
       if (_stateAccount.id == null) {
         id = await _db.saveUserAccount(_stateAccount);
       } else {
-        _stateAccount.isCurrent = true;
         id = await _db.updateUserAccount(_stateAccount);
       }
+
+      _db.setCurrentUserAccount(id);
 
       Navigator.of(context).pushReplacementNamed("/");
     }
@@ -42,28 +44,28 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: Text(this.title ?? "User account"),
         actions: <Widget>[
           IconButton(
-            icon: new Icon(Icons.check),
+            icon: Icon(Icons.check),
             onPressed: submit,
           ),
         ],
       ),
       body: Stack(
         children: <Widget>[
-          new Container(
-            padding: new EdgeInsets.all(20.0),
+          Container(
+            padding: EdgeInsets.all(20.0),
             child: Form(
               autovalidate: false,
               key: _formKey,
-              child: new ListView(
+              child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Account name",
                       labelText: "Account name*",
                     ),
@@ -78,7 +80,7 @@ class _AccountPageState extends State<AccountPage> {
                     },
                   ),
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "e-mail",
                       labelText: "e-mail*",
                     ),
@@ -95,10 +97,10 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   Row(
                     children: <Widget>[
-                      new Flexible(
+                      Flexible(
                         child: TextFormField(
                           maxLength: 2,
-                          decoration: new InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Account abbreviation",
                             labelText: "Account abbreviation",
                           ),
@@ -113,10 +115,10 @@ class _AccountPageState extends State<AccountPage> {
                           },
                         ),
                       ),
-                      new Flexible(
-                        child: new CircleAvatar(
+                      Flexible(
+                        child: CircleAvatar(
                           backgroundColor: Colors.red,
-                          child: new Text("??"),
+                          child: Text("??"),
                         ),
                       ),
                     ],
@@ -138,7 +140,7 @@ class _AccountPageState extends State<AccountPage> {
               child: FloatingActionButton(
                 onPressed: () => _onTapAddNew(this.context),
                 tooltip: 'Info',
-                child: new Icon(Icons.add),
+                child: Icon(Icons.add),
               ),
             ),
           ],
@@ -165,17 +167,17 @@ class _AccountPageState extends State<AccountPage> {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => new AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
             title: Text("Confirm adding new account"),
             actions: <Widget>[
-              new FlatButton(
+              FlatButton(
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   this._addNewAccount();
                 },
               ),
-              new FlatButton(
+              FlatButton(
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -193,10 +195,10 @@ class _AccountPageState extends State<AccountPage> {
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (BuildContext context) => new AlertDialog(
+        builder: (BuildContext context) => AlertDialog(
               title: Text("The accounts max limit was reached"),
               actions: <Widget>[
-                new FlatButton(
+                FlatButton(
                   child: Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();

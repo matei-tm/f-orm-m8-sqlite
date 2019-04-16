@@ -5,6 +5,6 @@ import 'package:flutter/material.dart';
 class StartPageRoute extends MaterialPageRoute {
   StartPageRoute() : super(builder: (context) => AccountPage());
 
-  StartPageRoute.goToDrawer()
-      : super(builder: (context) => HealthConditionsFragment());
+  // StartPageRoute.goToDrawer()
+  //     : super(builder: (context) => HealthConditionsFragment());
 }

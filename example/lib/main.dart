@@ -1,5 +1,6 @@
-import 'package:example/fragments/health_conditions_fragment.dart';
+import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/pages/account_page.dart';
+import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(GymspectorApp());
@@ -23,20 +24,45 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
+  String _currentRoute;
+
+  @override
+  void initState() {
+    super.initState();
+    _getInitialRoute().then((initialRoute) {
+      this._currentRoute = initialRoute;
+      setState(() {
+        print("Initial route is $initialRoute");
+      });
+      
+    });
+  }
+
+  Future<String> _getInitialRoute() async {
+    var _db = DatabaseHelper();
+
+    var _currentAccount = await _db.getCurrentUserAccount();
+    if (_currentAccount == null) {
+      return 'start';
+    } else {
+      return '/';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      initialRoute: '/HealthCondition',
+      initialRoute: _currentRoute,
       routes: {
-        '/': (context) => HealthConditionsFragment(),
-        '/HealthCondition': (context) => AccountPage(),
+        '/': (context) => HomePage(),
+        '/start': (context) => AccountPage(),
       },
     );
   }

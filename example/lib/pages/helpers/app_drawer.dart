@@ -1,5 +1,5 @@
 import 'package:example/models/user_account.dart';
-import 'package:example/pages/guarded_account_state.dart';
+import 'package:example/pages/helpers/guarded_account_state.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -11,7 +11,7 @@ class AppDrawer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State createState() => new AppDrawerState();
+  State createState() => AppDrawerState();
 }
 
 class AppDrawerState extends GuardedAccountState<AppDrawer> {
@@ -19,19 +19,18 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => new AlertDialog(
-            title:
-                Text("EmergencyStrings.of(context).confirmSwitchingAccount()"),
+      builder: (BuildContext context) => AlertDialog(
+            title: Text("Confirm Switching Account"),
             actions: <Widget>[
-              new FlatButton(
-                child: Text("EmergencyStrings.of(context).oK()"),
+              FlatButton(
+                child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _switchAccount(userAccount, context);
                 },
               ),
-              new FlatButton(
-                child: Text("EmergencyStrings.of(context).cancel()"),
+              FlatButton(
+                child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -43,12 +42,10 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
 
   void _switchAccount(UserAccount userAccount, BuildContext context) {
     setState(() {
-
-
       guardedUserAccounts.remove(userAccount);
       guardedUserAccounts.add(guardedCurrentAccount);
       guardedCurrentAccount = userAccount;
-
+      
       widget.onSelectItem("Gym Places");
     });
   }
@@ -58,13 +55,13 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     if (guardedUserAccounts == null) return result;
 
     for (var userAccount in guardedUserAccounts) {
-      result.add(new GestureDetector(
+      result.add(GestureDetector(
         onTap: () => _onTapOtherAccounts(context, userAccount),
-        child: new Semantics(
-          label: "EmergencyStrings.of(context).switchAccount()",
-          child: new CircleAvatar(
+        child: Semantics(
+          label: "Switch account",
+          child: CircleAvatar(
             backgroundColor: Colors.brown,
-            child: new Text(userAccount.abbreviation),
+            child: Text(userAccount.abbreviation),
           ),
         ),
       ));
@@ -77,12 +74,12 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     if (guardedCurrentAccount == null) return List<Widget>();
 
     return [
-      new UserAccountsDrawerHeader(
+      UserAccountsDrawerHeader(
           accountName: Text(guardedCurrentAccount.userName),
           accountEmail: Text(guardedCurrentAccount.email),
-          currentAccountPicture: new CircleAvatar(
+          currentAccountPicture: CircleAvatar(
             backgroundColor: Colors.brown,
-            child: new Text(guardedCurrentAccount.abbreviation),
+            child: Text(guardedCurrentAccount.abbreviation),
           ),
           otherAccountsPictures: _buildOtherAccounts(guardedUserAccounts))
     ];
@@ -92,7 +89,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     List<Widget> children = [];
     children
       ..addAll(_buildUserAccounts(context))
-      ..addAll([new Divider()])
+      ..addAll([Divider()])
       ..addAll(_buildActions(context));
     return children;
   }
@@ -100,17 +97,24 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
   List<Widget> _buildActions(BuildContext context) {
     return [
       ListTile(
-        leading: new Icon(Icons.healing),
+        leading: Icon(Icons.healing),
         title: Text("Health Conditions"),
         onTap: () {
-          widget.onSelectItem("HealthConditions");
+          widget.onSelectItem("Health Conditions");
+        },
+      ),
+            ListTile(
+        leading: new Icon(Icons.verified_user),
+        title: Text("Privacy"),
+        onTap: () {
+          widget.onSelectItem("Privacy");
         },
       ),
       const Divider(
         color: Colors.black,
       ),
       ListTile(
-        leading: new Icon(Icons.account_circle),
+        leading: Icon(Icons.account_circle),
         title: Text("User Account"),
         onTap: () {
           goToStartPage();

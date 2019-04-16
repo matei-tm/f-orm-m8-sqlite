@@ -1,9 +1,10 @@
 import 'package:example/fragments/health_conditions_fragment.dart';
-import 'package:example/pages/app_drawer.dart';
+import 'package:example/fragments/privacy_fragment.dart';
+import 'package:example/pages/helpers/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePageRoute extends MaterialPageRoute {
-  HomePageRoute() : super(builder: (context) => new HomePage());
+  HomePageRoute() : super(builder: (context) => HomePage());
 }
 
 class HomePage extends StatefulWidget {
@@ -11,11 +12,11 @@ class HomePage extends StatefulWidget {
 
   static const String routeName = '/';
   @override
-  HomePageState createState() => new HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String title;
 
   _onSelectItem(String key, {bool fromDrawer = true}) {
@@ -34,22 +35,22 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _appDrawer = new AppDrawer(_onSelectItem);
+    _appDrawer = AppDrawer(_onSelectItem);
   }
 
   AppDrawer _appDrawer;
   _getDrawerItemWidget(String pos) {
     switch (pos) {
       case "Health Conditions":
-        return new HealthConditionsFragment();
+        return HealthConditionsFragment(_scaffoldKey);
       case "Gym Places":
-        return new HealthConditionsFragment();
+        return PrivacyFragment();
       default:
-        return new Text("Error");
+        return Text("Error");
     }
   }
 
-  String _selectedDrawerIndex = "Health Conditions";
+  String _selectedDrawerIndex = "Gym Places";
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +62,10 @@ class HomePageState extends State<HomePage> {
       print("We should never get here");
     }
 
-    return new WillPopScope(
-      child: new Scaffold(
+    return WillPopScope(
+      child: Scaffold(
         key: _scaffoldKey,
-        appBar: new AppBar(
+        appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(this.title ?? "Gymspector"),
@@ -74,7 +75,7 @@ class HomePageState extends State<HomePage> {
         body: _getDrawerItemWidget(selectedDrawerIndex),
       ),
       onWillPop: () {
-        return new Future(() => false);
+        return Future(() => false);
       },
     );
   }

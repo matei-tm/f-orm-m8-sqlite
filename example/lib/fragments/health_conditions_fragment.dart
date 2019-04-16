@@ -4,20 +4,25 @@ import 'package:example/models/health_entry.g.m8.dart';
 import 'package:flutter/material.dart';
 
 class HealthConditionsFragment extends StatefulWidget {
-  HealthConditionsFragment();
+  final Key _parentScaffoldKey;
+
+  HealthConditionsFragment(this._parentScaffoldKey);
 
   _HealthConditionsFragmentState createState() =>
-      _HealthConditionsFragmentState();
+      _HealthConditionsFragmentState(_parentScaffoldKey);
 }
 
 class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _healthEntryController = TextEditingController();
 
   var _db = DatabaseHelper();
   bool _validate = false;
+
+  var _parentScaffoldKey;
+
+  _HealthConditionsFragmentState(this._parentScaffoldKey);
 
   @override
   void initState() {
@@ -35,26 +40,13 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    var _dbHealthEntries = await _db.getHealthEntrysAll();
-    healthEntries = List<HealthEntryProxy>();
-
-    _dbHealthEntries.forEach(
-      (f) {
-        healthEntries.add(HealthEntryProxy.fromMap(f));
-      },
-    );
-
+    healthEntries = await _db.getHealthEntrysAll();
     return true;
   }
 
   Widget _container() {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text("Health Conditions"),
-        centerTitle: true,
-      ),
-      body: Column(
+    return Container(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
@@ -156,7 +148,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   }
 
   void _showError(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    _parentScaffoldKey.currentState.showSnackBar(SnackBar(
       key: Key('errorSnack'),
       content: Text('Error: $message'),
       duration: Duration(seconds: 10),
