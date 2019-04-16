@@ -12,7 +12,8 @@ class UserAccount implements DbAccountEntity {
   @DataColumn("description", ColumnMetadata.Unique)
   String description;
 
-  @DataColumn("my_future_column3", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn(
+      "my_future_column3", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 
   @DataColumn("abbreviation", ColumnMetadata.NotNull)
