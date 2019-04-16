@@ -1,3 +1,4 @@
+import 'package:example/fragments/gym_places_fragment.dart';
 import 'package:example/fragments/health_conditions_fragment.dart';
 import 'package:example/fragments/privacy_fragment.dart';
 import 'package:example/pages/helpers/app_drawer.dart';
@@ -44,6 +45,8 @@ class HomePageState extends State<HomePage> {
       case "Health Conditions":
         return HealthConditionsFragment(_scaffoldKey);
       case "Gym Places":
+        return GymPlacesFragment(_scaffoldKey);
+      case "Privacy":
         return PrivacyFragment();
       default:
         return Text("Error");

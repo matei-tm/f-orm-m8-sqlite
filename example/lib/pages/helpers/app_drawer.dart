@@ -79,7 +79,10 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
           accountEmail: Text(guardedCurrentAccount.email),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Colors.brown,
-            child: Text(guardedCurrentAccount.abbreviation),
+            child: Text(
+              guardedCurrentAccount.abbreviation,
+              style: Theme.of(context).textTheme.display1,
+            ),
           ),
           otherAccountsPictures: _buildOtherAccounts(guardedUserAccounts))
     ];
@@ -101,6 +104,13 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         title: Text("Health Conditions"),
         onTap: () {
           widget.onSelectItem("Health Conditions");
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.fitness_center),
+        title: Text("Gym Places"),
+        onTap: () {
+          widget.onSelectItem("Gym Places");
         },
       ),
       ListTile(

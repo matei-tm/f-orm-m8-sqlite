@@ -14,28 +14,23 @@ class _PrivacyFragmentState extends State<PrivacyFragment> {
 
     return Container(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(style: titleStyle, text: "Empty page"),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text: '\n\n',
-                      ),
-                      TextSpan(
-                        style: subtitleStyle,
-                        text: '\n\nNo content',
-                      ),
-                    ],
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(style: titleStyle, text: "Empty page"),
+                  TextSpan(
+                    style: contentTextStyle,
+                    text: '\n\n',
                   ),
-                ),
+                  TextSpan(
+                    style: subtitleStyle,
+                    text: '\n\nNo content',
+                  ),
+                ],
               ),
             ),
           ),
