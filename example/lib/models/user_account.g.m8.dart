@@ -48,7 +48,6 @@ mixin UserAccountDatabaseHelper {
   ];
 
   final String _theUserAccountTableHandler = 'user_account';
-
   Future createUserAccountTable(Database db) async {
     await db.execute(
         'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, abbreviation TEXT  NOT NULL, email TEXT  NOT NULL, user_name TEXT  NOT NULL, is_current INTEGER )');
@@ -62,38 +61,12 @@ mixin UserAccountDatabaseHelper {
     return result;
   }
 
-  Future<UserAccount> getCurrentUserAccount() async {
-    var dbClient = await db;
-    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
-        columns: theUserAccountColumns, where: '1 AND is_current = 1');
-
-    if (result.length > 0) {
-      return UserAccountProxy.fromMap(result.first);
-    }
-
-    return null;
-  }
-
-  Future<int> setCurrentUserAccount(int id) async {
-    var dbClient = await db;
-
-    var map = Map<String, dynamic>();
-    map['is_current'] = 0;
-
-    await dbClient.update(_theUserAccountTableHandler, map,
-        where: "is_current = 1");
-
-    map['is_current'] = 1;
-    return await dbClient.update(_theUserAccountTableHandler, map,
-        where: "1 AND id = ?", whereArgs: [id]);
-  }
-
-  Future<List> getUserAccountsAll() async {
+  Future<List<UserAccount>> getUserAccountsAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1');
 
-    return result.toList();
+    return result.map((e) => UserAccountProxy.fromMap(e)).toList();
   }
 
   Future<int> getUserAccountsCount() async {
@@ -132,5 +105,31 @@ mixin UserAccountDatabaseHelper {
     return await dbClient.update(
         _theUserAccountTableHandler, instanceUserAccount.toMap(),
         where: "id = ?", whereArgs: [instanceUserAccount.id]);
+  }
+
+  Future<UserAccount> getCurrentUserAccount() async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+        columns: theUserAccountColumns, where: '1 AND is_current = 1');
+
+    if (result.length > 0) {
+      return UserAccountProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> setCurrentUserAccount(int id) async {
+    var dbClient = await db;
+
+    var map = Map<String, dynamic>();
+    map['is_current'] = 0;
+
+    await dbClient.update(_theUserAccountTableHandler, map,
+        where: "is_current = 1");
+
+    map['is_current'] = 1;
+    return await dbClient.update(_theUserAccountTableHandler, map,
+        where: "1 AND id = ?", whereArgs: [id]);
   }
 }

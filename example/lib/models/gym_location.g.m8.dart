@@ -45,7 +45,6 @@ mixin GymLocationDatabaseHelper {
   ];
 
   final String _theGymLocationTableHandler = 'gym_location';
-
   Future createGymLocationTable(Database db) async {
     await db.execute(
         'CREATE TABLE $_theGymLocationTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, rating INTEGER , date_create INTEGER, date_update INTEGER)');
@@ -62,12 +61,12 @@ mixin GymLocationDatabaseHelper {
     return result;
   }
 
-  Future<List> getGymLocationsAll() async {
+  Future<List<GymLocation>> getGymLocationsAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1');
 
-    return result.toList();
+    return result.map((e) => GymLocationProxy.fromMap(e)).toList();
   }
 
   Future<int> getGymLocationsCount() async {

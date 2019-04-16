@@ -51,7 +51,6 @@ mixin ToDoDatabaseHelper {
   ];
 
   final String _theToDoTableHandler = 'to_do';
-
   Future createToDoTable(Database db) async {
     await db.execute(
         'CREATE TABLE $_theToDoTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , user_account_id INTEGER  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
@@ -68,22 +67,12 @@ mixin ToDoDatabaseHelper {
     return result;
   }
 
-  Future<List> getToDosAll() async {
+  Future<List<ToDo>> getToDosAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
         columns: theToDoColumns, where: '1');
 
-    return result.toList();
-  }
-
-  Future<List> getToDosByAccountId(int accountId) async {
-    var dbClient = await db;
-    var result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns,
-        where: 'account_id = ? AND 1',
-        whereArgs: [accountId]);
-
-    return result.toList();
+    return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
 
   Future<int> getToDosCount() async {
@@ -123,5 +112,15 @@ mixin ToDoDatabaseHelper {
 
     return await dbClient.update(_theToDoTableHandler, instanceToDo.toMap(),
         where: "id = ?", whereArgs: [instanceToDo.id]);
+  }
+
+  Future<List> getToDosByAccountId(int accountId) async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theToDoTableHandler,
+        columns: theToDoColumns,
+        where: 'account_id = ? AND 1',
+        whereArgs: [accountId]);
+
+    return result.toList();
   }
 }

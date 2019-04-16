@@ -46,7 +46,6 @@ mixin HealthEntryDatabaseHelper {
   ];
 
   final String _theHealthEntryTableHandler = 'health_entries';
-
   Future createHealthEntryTable(Database db) async {
     await db.execute(
         'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , date_create INTEGER, date_update INTEGER)');
@@ -63,12 +62,12 @@ mixin HealthEntryDatabaseHelper {
     return result;
   }
 
-  Future<List> getHealthEntrysAll() async {
+  Future<List<HealthEntry>> getHealthEntrysAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
 
-    return result.toList();
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 
   Future<int> getHealthEntrysCount() async {
