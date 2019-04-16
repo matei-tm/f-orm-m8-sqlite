@@ -61,7 +61,7 @@ mixin GymLocationDatabaseHelper {
     return result;
   }
 
-  Future<List<GymLocation>> getGymLocationsAll() async {
+  Future<List<GymLocation>> getGymLocationProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1');
@@ -69,7 +69,7 @@ mixin GymLocationDatabaseHelper {
     return result.map((e) => GymLocationProxy.fromMap(e)).toList();
   }
 
-  Future<int> getGymLocationsCount() async {
+  Future<int> getGymLocationProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT COUNT(*) FROM $_theGymLocationTableHandler  WHERE 1'));
@@ -93,7 +93,7 @@ mixin GymLocationDatabaseHelper {
         .delete(_theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteGymLocationsAll() async {
+  Future<bool> deleteGymLocationProxiesAll() async {
     var dbClient = await db;
     await dbClient.delete(_theGymLocationTableHandler);
     return true;

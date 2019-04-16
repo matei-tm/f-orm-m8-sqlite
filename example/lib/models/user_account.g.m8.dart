@@ -61,7 +61,7 @@ mixin UserAccountDatabaseHelper {
     return result;
   }
 
-  Future<List<UserAccount>> getUserAccountsAll() async {
+  Future<List<UserAccount>> getUserAccountProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1');
@@ -69,7 +69,7 @@ mixin UserAccountDatabaseHelper {
     return result.map((e) => UserAccountProxy.fromMap(e)).toList();
   }
 
-  Future<int> getUserAccountsCount() async {
+  Future<int> getUserAccountProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT COUNT(*) FROM $_theUserAccountTableHandler  WHERE 1'));
@@ -93,7 +93,7 @@ mixin UserAccountDatabaseHelper {
         .delete(_theUserAccountTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteUserAccountsAll() async {
+  Future<bool> deleteUserAccountProxiesAll() async {
     var dbClient = await db;
     await dbClient.delete(_theUserAccountTableHandler);
     return true;

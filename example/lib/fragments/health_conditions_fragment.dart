@@ -40,7 +40,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    healthEntries = await _db.getHealthEntrysAll();
+    healthEntries = await _db.getHealthEntryProxiesAll();
     return true;
   }
 

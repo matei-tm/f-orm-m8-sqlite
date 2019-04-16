@@ -190,7 +190,7 @@ class _AccountPageState extends State<AccountPage> {
 
   Future testIfMaxAccountsCountWasReached(BuildContext context) async {
     bool maxAccountsCountReached;
-    var accountsCount = await _db.getUserAccountsCount();
+    var accountsCount = await _db.getUserAccountProxiesCount();
     if (accountsCount > 3) {
       showDialog<void>(
         context: context,

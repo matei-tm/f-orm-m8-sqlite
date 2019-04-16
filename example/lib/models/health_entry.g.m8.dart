@@ -62,7 +62,7 @@ mixin HealthEntryDatabaseHelper {
     return result;
   }
 
-  Future<List<HealthEntry>> getHealthEntrysAll() async {
+  Future<List<HealthEntry>> getHealthEntryProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
@@ -70,7 +70,7 @@ mixin HealthEntryDatabaseHelper {
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 
-  Future<int> getHealthEntrysCount() async {
+  Future<int> getHealthEntryProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE 1'));
@@ -94,7 +94,7 @@ mixin HealthEntryDatabaseHelper {
         .delete(_theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteHealthEntrysAll() async {
+  Future<bool> deleteHealthEntryProxiesAll() async {
     var dbClient = await db;
     await dbClient.delete(_theHealthEntryTableHandler);
     return true;

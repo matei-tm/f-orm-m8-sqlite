@@ -40,7 +40,7 @@ class DatabaseHelperWriter {
 
   String getDeleteAllMethodBody() {
     String returnValue = emittedEntities
-        .map((f) => "    await delete${f.modelPlural}All();")
+        .map((f) => "    await delete${f.modelNameProxyPlural}All();")
         .join("\n");
     if (returnValue.isNotEmpty) {
       return "$returnValue";

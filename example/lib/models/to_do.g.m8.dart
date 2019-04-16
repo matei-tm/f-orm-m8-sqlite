@@ -67,7 +67,7 @@ mixin ToDoDatabaseHelper {
     return result;
   }
 
-  Future<List<ToDo>> getToDosAll() async {
+  Future<List<ToDo>> getToDoProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
         columns: theToDoColumns, where: '1');
@@ -75,7 +75,7 @@ mixin ToDoDatabaseHelper {
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
 
-  Future<int> getToDosCount() async {
+  Future<int> getToDoProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient
         .rawQuery('SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE 1'));
@@ -99,7 +99,7 @@ mixin ToDoDatabaseHelper {
         .delete(_theToDoTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteToDosAll() async {
+  Future<bool> deleteToDoProxiesAll() async {
     var dbClient = await db;
     await dbClient.delete(_theToDoTableHandler);
     return true;
@@ -114,7 +114,7 @@ mixin ToDoDatabaseHelper {
         where: "id = ?", whereArgs: [instanceToDo.id]);
   }
 
-  Future<List> getToDosByAccountId(int accountId) async {
+  Future<List> getToDoProxiesByAccountId(int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
         columns: theToDoColumns,

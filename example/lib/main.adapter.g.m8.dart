@@ -63,9 +63,9 @@ class DatabaseHelper
   }
 
   Future deleteAll() async {
-    await deleteGymLocationsAll();
-    await deleteHealthEntrysAll();
-    await deleteToDosAll();
-    await deleteUserAccountsAll();
+    await deleteGymLocationProxiesAll();
+    await deleteHealthEntryProxiesAll();
+    await deleteToDoProxiesAll();
+    await deleteUserAccountProxiesAll();
   }
 }

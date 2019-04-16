@@ -154,7 +154,7 @@ return await dbClient
 await db.execute(${getTableDefinition()});
   }
 
-  Future<int> save${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
+  Future<int> save${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
 
 ${getCreateTrackableTimestampString()}
@@ -163,15 +163,15 @@ var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.modelInst
 return result;
   }
 
-  Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelPlural}All() async {
+  Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}All() async {
 var dbClient = await db;
 var result =
     await dbClient.query(${theTableHandler}, columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()}');
 
-return result.map((e) => ${emittedEntity.modelName}Proxy.fromMap(e)).toList();
+return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
   }
 
-  Future<int> get${emittedEntity.modelPlural}Count() async {
+  Future<int> get${emittedEntity.modelNameProxyPlural}Count() async {
 var dbClient = await db;
 return Sqflite.firstIntValue(
     await dbClient.rawQuery('SELECT COUNT(*) FROM \$${theTableHandler}  WHERE ${getSoftdeleteCondition()}'));
@@ -184,7 +184,7 @@ List<Map> result = await dbClient.query(${theTableHandler},
 
 
 if (result.length > 0) {
-  return ${emittedEntity.modelName}Proxy.fromMap(result.first);
+  return ${emittedEntity.modelNameProxy}.fromMap(result.first);
 }
 
 return null;
@@ -196,13 +196,13 @@ return await dbClient
     .delete(${theTableHandler}, where: '$thePrimaryKey = ?', whereArgs: [id]);
   }
 
-  Future<bool> delete${emittedEntity.modelPlural}All() async {
+  Future<bool> delete${emittedEntity.modelNameProxyPlural}All() async {
 var dbClient = await db;
 await dbClient.delete(${theTableHandler});
 return true;
   }
 
-  Future<int> update${emittedEntity.modelName}(${emittedEntity.modelName}Proxy ${emittedEntity.modelInstanceName}) async {
+  Future<int> update${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
 var dbClient = await db;
 
 ${getUpdateTrackableTimestampString()}

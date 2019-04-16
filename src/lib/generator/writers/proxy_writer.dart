@@ -38,10 +38,10 @@ class ProxyWriter extends EntityWriter {
         .join("\n");
 
     if (assignments == null || assignments.isEmpty) {
-      return """  ${emittedEntity.modelName}Proxy(${paramList});""";
+      return """  ${emittedEntity.modelNameProxy}(${paramList});""";
     }
 
-    return """  ${emittedEntity.modelName}Proxy(${paramList}) {
+    return """  ${emittedEntity.modelNameProxy}(${paramList}) {
 $assignments
   }""";
   }
@@ -101,7 +101,7 @@ $assignments
     StringBuffer sb = StringBuffer();
 
     sb.write("""
-class ${emittedEntity.modelName}Proxy extends ${emittedEntity.modelName} {
+class ${emittedEntity.modelNameProxy} extends ${emittedEntity.modelName} {
 ${_getTableMetaFields()}
 
 ${_getDefaultConstructorBody()}
@@ -112,7 +112,7 @@ ${this._getToMapMethodBody()}
     return map;
   }
 
-  ${emittedEntity.modelName}Proxy.fromMap(Map<String, dynamic> map) {
+  ${emittedEntity.modelNameProxy}.fromMap(Map<String, dynamic> map) {
 ${this._getFromMapMethodBody()}
   }
 }

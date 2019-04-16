@@ -18,7 +18,9 @@ class EmittedEntity {
 
   String get modelInstanceName => "instance$modelName";
 
-  String get modelPlural => "ListOf${modelName}"; 
+  String get modelNameProxyPlural => "${modelName}Proxies";
+  
+  String get modelNameProxy => "${modelName}Proxy";
 
   get primaryKeyName => getPrimaryKeyName();
 

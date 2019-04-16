@@ -28,7 +28,7 @@ class AccountEntityWriter extends EntityWriter {
         columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()} AND ${getAttributeStringIsCurrent()} = 1');
 
     if (result.length > 0) {
-      return ${emittedEntity.modelName}Proxy.fromMap(result.first);
+      return ${emittedEntity.modelNameProxy}.fromMap(result.first);
     }
 
     return null;
