@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PrivacyFragment extends StatefulWidget {
-  _PrivacyFragmentState createState() =>
-      _PrivacyFragmentState();
+  _PrivacyFragmentState createState() => _PrivacyFragmentState();
 }
 
 class _PrivacyFragmentState extends State<PrivacyFragment> {
@@ -19,7 +18,7 @@ class _PrivacyFragmentState extends State<PrivacyFragment> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: new SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: RichText(
@@ -32,8 +31,7 @@ class _PrivacyFragmentState extends State<PrivacyFragment> {
                       ),
                       TextSpan(
                         style: subtitleStyle,
-                        text:
-                            '\n\nNo content',
+                        text: '\n\nNo content',
                       ),
                     ],
                   ),

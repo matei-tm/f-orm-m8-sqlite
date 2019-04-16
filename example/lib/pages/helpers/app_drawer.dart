@@ -45,7 +45,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
       guardedUserAccounts.remove(userAccount);
       guardedUserAccounts.add(guardedCurrentAccount);
       guardedCurrentAccount = userAccount;
-      
+
       widget.onSelectItem("Gym Places");
     });
   }
@@ -103,8 +103,8 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
           widget.onSelectItem("Health Conditions");
         },
       ),
-            ListTile(
-        leading: new Icon(Icons.verified_user),
+      ListTile(
+        leading: Icon(Icons.verified_user),
         title: Text("Privacy"),
         onTap: () {
           widget.onSelectItem("Privacy");

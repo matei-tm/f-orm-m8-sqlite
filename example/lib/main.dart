@@ -38,7 +38,6 @@ class MyHomePageState extends State<MyHomePage> {
       setState(() {
         print("Initial route is $initialRoute");
       });
-      
     });
   }
 
