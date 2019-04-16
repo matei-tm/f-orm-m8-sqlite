@@ -44,7 +44,6 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
   final theAModelWithoutExplicitColumnMetadataColumns = ["my_id_column", "my_description_column", "my_future_column"];
 
   final String _theAModelWithoutExplicitColumnMetadataTableHandler = 'my_account_related_table';
-  
   Future createAModelWithoutExplicitColumnMetadataTable(Database db) async {
 await db.execute('CREATE TABLE \$_theAModelWithoutExplicitColumnMetadataTableHandler (my_id_column INTEGER , my_description_column TEXT , my_future_column INTEGER )');
   }
@@ -58,15 +57,15 @@ var result = await dbClient.insert(_theAModelWithoutExplicitColumnMetadataTableH
 return result;
   }
 
-  Future<List> getAModelWithoutExplicitColumnMetadatasAll() async {
+  Future<List<AModelWithoutExplicitColumnMetadata>> getAModelWithoutExplicitColumnMetadataProxiesAll() async {
 var dbClient = await db;
 var result =
     await dbClient.query(_theAModelWithoutExplicitColumnMetadataTableHandler, columns: theAModelWithoutExplicitColumnMetadataColumns, where: '1');
 
-return result.toList();
+return result.map((e) => AModelWithoutExplicitColumnMetadataProxy.fromMap(e)).toList();
   }
 
-  Future<int> getAModelWithoutExplicitColumnMetadatasCount() async {
+  Future<int> getAModelWithoutExplicitColumnMetadataProxiesCount() async {
 var dbClient = await db;
 return Sqflite.firstIntValue(
     await dbClient.rawQuery('SELECT COUNT(*) FROM \$_theAModelWithoutExplicitColumnMetadataTableHandler  WHERE 1'));
@@ -91,7 +90,7 @@ return await dbClient
     .delete(_theAModelWithoutExplicitColumnMetadataTableHandler, where: 'null = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteAModelWithoutExplicitColumnMetadatasAll() async {
+  Future<bool> deleteAModelWithoutExplicitColumnMetadataProxiesAll() async {
 var dbClient = await db;
 await dbClient.delete(_theAModelWithoutExplicitColumnMetadataTableHandler);
 return true;

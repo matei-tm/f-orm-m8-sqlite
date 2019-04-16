@@ -47,7 +47,6 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
   final theHealthEntryAccountRelatedColumns = ["my_id_column", "my_description_column", "my_account_id_column"];
 
   final String _theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
-
   Future createHealthEntryAccountRelatedTable(Database db) async {
 await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_account_id_column INTEGER  NOT NULL)');
   }
@@ -61,25 +60,15 @@ var result = await dbClient.insert(_theHealthEntryAccountRelatedTableHandler, in
 return result;
   }
 
-  Future<List> getHealthEntryAccountRelatedsAll() async {
+  Future<List<HealthEntryAccountRelated>> getHealthEntryAccountRelatedProxiesAll() async {
 var dbClient = await db;
 var result =
     await dbClient.query(_theHealthEntryAccountRelatedTableHandler, columns: theHealthEntryAccountRelatedColumns, where: '1');
 
-return result.toList();
+return result.map((e) => HealthEntryAccountRelatedProxy.fromMap(e)).toList();
   }
 
-  Future<List> getHealthEntryAccountRelatedsByAccountId(int accountId) async {
-var dbClient = await db;
-var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
-    columns: theHealthEntryAccountRelatedColumns,
-    where: 'account_id = ? AND 1',
-    whereArgs: [accountId]);
-
-return result.toList();
-  }
-
-  Future<int> getHealthEntryAccountRelatedsCount() async {
+  Future<int> getHealthEntryAccountRelatedProxiesCount() async {
 var dbClient = await db;
 return Sqflite.firstIntValue(
     await dbClient.rawQuery('SELECT COUNT(*) FROM $_theHealthEntryAccountRelatedTableHandler  WHERE 1'));
@@ -89,6 +78,7 @@ return Sqflite.firstIntValue(
 var dbClient = await db;
 List<Map> result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
     columns: theHealthEntryAccountRelatedColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
+
 
 if (result.length > 0) {
   return HealthEntryAccountRelatedProxy.fromMap(result.first);
@@ -103,7 +93,7 @@ return await dbClient
     .delete(_theHealthEntryAccountRelatedTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteHealthEntryAccountRelatedsAll() async {
+  Future<bool> deleteHealthEntryAccountRelatedProxiesAll() async {
 var dbClient = await db;
 await dbClient.delete(_theHealthEntryAccountRelatedTableHandler);
 return true;
@@ -117,6 +107,16 @@ var dbClient = await db;
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
     where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
   }
+  Future<List> getHealthEntryAccountRelatedProxiesByAccountId(int accountId) async {
+var dbClient = await db;
+var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
+    columns: theHealthEntryAccountRelatedColumns,
+    where: 'account_id = ? AND 1',
+    whereArgs: [accountId]);
+
+return result.toList();
+  }
+
 }''';
       expect(output, expected);
     });
