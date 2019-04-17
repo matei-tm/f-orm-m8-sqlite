@@ -22,7 +22,7 @@ class HealthEntryProxy extends HealthEntry {
     map['id'] = id;
     map['description'] = description;
     map['diagnosys_date'] = diagnosysDate.millisecondsSinceEpoch;
-    map['user_account_id'] = accountId;
+    map['account_id'] = accountId;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
 
@@ -34,7 +34,7 @@ class HealthEntryProxy extends HealthEntry {
     this.description = map['description'];
     this.diagnosysDate =
         DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
-    this.accountId = map['user_account_id'];
+    this.accountId = map['account_id'];
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
   }
@@ -46,7 +46,7 @@ mixin HealthEntryDatabaseHelper {
     "id",
     "description",
     "diagnosys_date",
-    "user_account_id",
+    "account_id",
     "date_create",
     "date_update"
   ];
@@ -54,7 +54,7 @@ mixin HealthEntryDatabaseHelper {
   final String _theHealthEntryTableHandler = 'health_entries';
   Future createHealthEntryTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  NOT NULL, diagnosys_date INTEGER , user_account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  NOT NULL, diagnosys_date INTEGER , account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -116,13 +116,13 @@ mixin HealthEntryDatabaseHelper {
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 
-  Future<List> getHealthEntryProxiesByAccountId(int accountId) async {
+  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns,
         where: 'account_id = ? AND 1',
         whereArgs: [accountId]);
 
-    return result.toList();
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 }

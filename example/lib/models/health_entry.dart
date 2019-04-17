@@ -17,10 +17,10 @@ class HealthEntry implements DbAccountRelatedEntity {
   DateTime diagnosysDate;
 
   @override
-  @DataColumn("user_account_id", ColumnMetadata.NotNull)
+  @DataColumn("account_id", ColumnMetadata.NotNull)
   int accountId;
 
   @DataColumn(
-      "my_future_column4", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column5", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }

@@ -1,7 +1,9 @@
 import 'package:example/fragments/health_entry_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/models/user_account.dart';
 import 'package:example/pages/helpers/guarded_account_state.dart';
+import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class HealthConditionsFragment extends StatefulWidget {
@@ -24,26 +26,20 @@ class _HealthConditionsFragmentState
 
   var _parentScaffoldKey;
 
-  _HealthConditionsFragmentState(this._parentScaffoldKey);
+  _HealthConditionsFragmentState(this._parentScaffoldKey) {
+    callExtraLoad = (i) {
+      return _loadAsyncCurrentData(i);
+    };
+  }
 
   @override
   void initState() {
     super.initState();
-
-    if (healthEntries == null) {
-      print("Init State load is called");
-      healthEntries = [];
-      _loadAsyncCurrentData().then((result) {
-        setState(() {
-          print("Loading database result is $result");
-        });
-      });
-    }
   }
 
-  Future<bool> _loadAsyncCurrentData() async {
-    healthEntries =
-        await _db.getHealthEntryProxiesByAccountId(guardedCurrentAccount.id);
+  Future<bool> _loadAsyncCurrentData(int accountId) async {
+    healthEntries = await _db.getHealthEntryProxiesByAccountId(accountId);
+    healthEntries = healthEntries ?? [];
     return true;
   }
 
@@ -113,6 +109,10 @@ class _HealthConditionsFragmentState
 
   @override
   Widget build(BuildContext context) {
+    if (guardedCurrentAccount == null || healthEntries == null) {
+      return Container();
+    }
+
     return _container();
   }
 

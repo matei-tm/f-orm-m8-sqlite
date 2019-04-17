@@ -3,7 +3,7 @@ import 'package:example/models/user_account.dart';
 import 'package:example/routes/start_page_route.dart';
 import 'package:flutter/material.dart';
 
-typedef AccountActionCallback = Future<bool> Function();
+typedef AccountActionCallback = Future<bool> Function(int);
 
 abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
   UserAccount guardedCurrentAccount;
@@ -20,7 +20,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
     _loadAsyncData().then((result) {
       if (callExtraLoad != null) {
         print("Guarded extra load is called");
-        callExtraLoad().then((result) {
+        callExtraLoad(result).then((result) {
           setState(() {
             print("Loading extra is $result");
           });
@@ -46,7 +46,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
     return null;
   }
 
-  Future<bool> _loadAsyncData() async {
+  Future<int> _loadAsyncData() async {
     try {
       guardedCurrentAccount = await _db.getCurrentUserAccount();
       if (guardedCurrentAccount == null) {
@@ -54,10 +54,10 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
       }
 
       await _loadNonCurrentAccounts();
-      return true;
+      return guardedCurrentAccount.id;
     } catch (ex) {
       print(ex.toString());
-      return false;
+      return 0;
     }
   }
 
