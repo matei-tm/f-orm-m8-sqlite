@@ -27,7 +27,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
   @override
   void initState() {
     super.initState();
-    
+
     if (healthEntries == null) {
       print("Init State load is called");
       healthEntries = [];
@@ -37,8 +37,6 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
         });
       });
     }
-
-    
   }
 
   Future<bool> _loadAsyncCurrentData() async {
@@ -57,17 +55,20 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
               children: <Widget>[
                 Expanded(
                   flex: 4,
-                  child: TextField(
-                    key: Key('gymLocation'),
-                    controller: _gymLocationController,
-                    decoration: InputDecoration(
-                      hintText: "Type a short description",
-                      labelText: "New Gym Place Entry",
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: TextField(
+                      key: Key('gymLocation'),
+                      controller: _gymLocationController,
+                      decoration: InputDecoration(
+                        hintText: "Type a short description",
+                        labelText: "New Gym Place Entry",
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      onSubmitted: (text) async {
+                        _saveGymLocation(text);
+                      },
                     ),
-                    onSubmitted: (text) async {
-                      _saveGymLocation(text);
-                    },
                   ),
                 ),
                 Expanded(

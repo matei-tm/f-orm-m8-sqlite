@@ -13,7 +13,8 @@ class HealthConditionsFragment extends StatefulWidget {
       _HealthConditionsFragmentState(_parentScaffoldKey);
 }
 
-class _HealthConditionsFragmentState extends GuardedAccountState<HealthConditionsFragment> {
+class _HealthConditionsFragmentState
+    extends GuardedAccountState<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
 
   final TextEditingController _healthEntryController = TextEditingController();
@@ -38,12 +39,11 @@ class _HealthConditionsFragmentState extends GuardedAccountState<HealthCondition
         });
       });
     }
-
-    
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    healthEntries = await _db.getHealthEntryProxiesByAccountId(guardedCurrentAccount.id);
+    healthEntries =
+        await _db.getHealthEntryProxiesByAccountId(guardedCurrentAccount.id);
     return true;
   }
 
@@ -58,17 +58,20 @@ class _HealthConditionsFragmentState extends GuardedAccountState<HealthCondition
               children: <Widget>[
                 Expanded(
                   flex: 4,
-                  child: TextField(
-                    key: Key('healthEntry'),
-                    controller: _healthEntryController,
-                    decoration: InputDecoration(
-                      hintText: "Type a short description",
-                      labelText: "New Health Condition Entry",
-                      errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: TextField(
+                      key: Key('healthEntry'),
+                      controller: _healthEntryController,
+                      decoration: InputDecoration(
+                        hintText: "Type a short description",
+                        labelText: "New Health Condition Entry",
+                        errorText: _validate ? 'Value Can\'t Be Empty' : null,
+                      ),
+                      onSubmitted: (text) async {
+                        _saveHealthEntry(text);
+                      },
                     ),
-                    onSubmitted: (text) async {
-                      _saveHealthEntry(text);
-                    },
                   ),
                 ),
                 Expanded(
