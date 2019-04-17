@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PrivacyFragment extends StatefulWidget {
-  _PrivacyFragmentState createState() => _PrivacyFragmentState();
-}
-
-class _PrivacyFragmentState extends State<PrivacyFragment> {
+class PrivacyFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
@@ -21,10 +17,10 @@ class _PrivacyFragmentState extends State<PrivacyFragment> {
             child: RichText(
               text: TextSpan(
                 children: <TextSpan>[
-                  TextSpan(style: titleStyle, text: "Empty page"),
+                  TextSpan(style: titleStyle, text: "Disclaimer"),
                   TextSpan(
                     style: contentTextStyle,
-                    text: '\n\n',
+                    text: '\nThis is a sample application\n',
                   ),
                   TextSpan(
                     style: subtitleStyle,
