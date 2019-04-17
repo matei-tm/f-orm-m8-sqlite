@@ -9,7 +9,7 @@ class UserAccount implements DbAccountEntity {
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.Unique)
+  @DataColumn("description")
   String description;
 
   @DataColumn(
@@ -22,7 +22,7 @@ class UserAccount implements DbAccountEntity {
   @DataColumn("email", ColumnMetadata.NotNull)
   String email;
 
-  @DataColumn("user_name", ColumnMetadata.NotNull)
+  @DataColumn("user_name", ColumnMetadata.NotNull | ColumnMetadata.Unique)
   String userName;
 
   @DataColumn("is_current")

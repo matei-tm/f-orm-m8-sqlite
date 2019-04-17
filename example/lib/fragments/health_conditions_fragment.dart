@@ -1,6 +1,7 @@
 import 'package:example/fragments/health_entry_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/pages/helpers/guarded_account_state.dart';
 import 'package:flutter/material.dart';
 
 class HealthConditionsFragment extends StatefulWidget {
@@ -12,7 +13,7 @@ class HealthConditionsFragment extends StatefulWidget {
       _HealthConditionsFragmentState(_parentScaffoldKey);
 }
 
-class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
+class _HealthConditionsFragmentState extends GuardedAccountState<HealthConditionsFragment> {
   List<HealthEntryProxy> healthEntries;
 
   final TextEditingController _healthEntryController = TextEditingController();
@@ -26,6 +27,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
 
   @override
   void initState() {
+    super.initState();
     if (healthEntries == null) {
       print("Init State load is called");
       healthEntries = [];
@@ -36,11 +38,11 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
       });
     }
 
-    super.initState();
+    
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    healthEntries = await _db.getHealthEntryProxiesAll();
+    healthEntries = await _db.getHealthEntryProxiesByAccountId(guardedCurrentAccount.id);
     return true;
   }
 
@@ -119,7 +121,7 @@ class _HealthConditionsFragmentState extends State<HealthConditionsFragment> {
         return;
       }
 
-      var tempHealthEntry = HealthEntryProxy();
+      var tempHealthEntry = HealthEntryProxy(guardedCurrentAccount.id);
       tempHealthEntry.description = text;
       tempHealthEntry.diagnosysDate = DateTime.now();
       var newId = await _db.saveHealthEntry(tempHealthEntry);
