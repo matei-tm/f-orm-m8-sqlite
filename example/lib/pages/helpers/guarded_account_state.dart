@@ -67,7 +67,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
   }
 
   void goToStartPage() {
-    Navigator.pushReplacement(context, StartPageRoute());
+    Navigator.of(context).push(StartPageRoute(guardedCurrentAccount));
     return;
   }
 }

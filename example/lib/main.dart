@@ -54,15 +54,17 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      initialRoute: _currentRoute,
-      routes: {
-        '/': (context) => HomePage(),
-        '/start': (context) => AccountPage(),
-      },
-    );
+    return (_currentRoute == null)
+        ? Container()
+        : MaterialApp(
+            theme: ThemeData(
+              primarySwatch: Colors.red,
+            ),
+            initialRoute: _currentRoute,
+            routes: {
+              '/': (context) => HomePage(),
+              'start': (context) => AccountPage(null),
+            },
+          );
   }
 }

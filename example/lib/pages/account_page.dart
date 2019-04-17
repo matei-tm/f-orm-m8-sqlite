@@ -1,9 +1,14 @@
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/user_account.g.m8.dart';
+import 'package:example/routes/start_page_route.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatefulWidget {
-  _AccountPageState createState() => _AccountPageState();
+  final UserAccountProxy _stateAccount;
+
+  AccountPage(this._stateAccount);
+
+  _AccountPageState createState() => _AccountPageState(_stateAccount);
 }
 
 class _AccountPageState extends State<AccountPage> {
@@ -13,12 +18,8 @@ class _AccountPageState extends State<AccountPage> {
   String title;
   DatabaseHelper _db = DatabaseHelper();
 
-  _AccountPageState();
-
-  @override
-  void initState() {
-    super.initState();
-    _stateAccount = _stateAccount ?? UserAccountProxy(null, null, null);
+  _AccountPageState(UserAccountProxy stateAccount) {
+    this._stateAccount = stateAccount ?? UserAccountProxy(null, null, null);
   }
 
   Future<void> submit() async {
@@ -69,7 +70,7 @@ class _AccountPageState extends State<AccountPage> {
                       hintText: "Account name",
                       labelText: "Account name*",
                     ),
-                    initialValue: _stateAccount.userName,
+                    initialValue: _stateAccount?.userName,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Please enter account name";
@@ -85,7 +86,7 @@ class _AccountPageState extends State<AccountPage> {
                       labelText: "e-mail*",
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    initialValue: _stateAccount.email,
+                    initialValue: _stateAccount?.email,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Please Enter Email";
@@ -104,7 +105,7 @@ class _AccountPageState extends State<AccountPage> {
                             hintText: "Account abbreviation",
                             labelText: "Account abbreviation",
                           ),
-                          initialValue: _stateAccount.abbreviation,
+                          initialValue: _stateAccount?.abbreviation,
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Please enter account abbreviation";
@@ -150,10 +151,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _addNewAccount() {
-    setState(() {
-      this._formKey.currentState.reset();
-      _stateAccount = UserAccountProxy(null, null, null);
-    });
+    Navigator.of(context).pushReplacement(StartPageRoute(null));
   }
 
   _onTapAddNew(BuildContext context) async {
