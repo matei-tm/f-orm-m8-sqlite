@@ -16,7 +16,7 @@ class ToDo implements DbAccountRelatedEntity {
   DateTime diagnosysDate;
 
   @DataColumn(
-      "my_future_column3", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column4", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 
   @override

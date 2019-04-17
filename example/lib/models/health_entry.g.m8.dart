@@ -53,7 +53,7 @@ mixin HealthEntryDatabaseHelper {
   final String _theHealthEntryTableHandler = 'health_entries';
   Future createHealthEntryTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , user_account_id INTEGER  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , user_account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
