@@ -10,7 +10,7 @@ class HealthEntry implements DbAccountRelatedEntity {
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.Unique)
+  @DataColumn("description", ColumnMetadata.NotNull)
   String description;
 
   @DataColumn("diagnosys_date")

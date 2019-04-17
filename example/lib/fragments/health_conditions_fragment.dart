@@ -28,7 +28,7 @@ class _HealthConditionsFragmentState extends GuardedAccountState<HealthCondition
   @override
   void initState() {
     super.initState();
-    
+
     if (healthEntries == null) {
       print("Init State load is called");
       healthEntries = [];
@@ -122,8 +122,7 @@ class _HealthConditionsFragmentState extends GuardedAccountState<HealthCondition
         return;
       }
 
-      var tempHealthEntry = HealthEntryProxy(guardedCurrentAccount.id);
-      tempHealthEntry.description = text;
+      var tempHealthEntry = HealthEntryProxy(text, guardedCurrentAccount.id);
       tempHealthEntry.diagnosysDate = DateTime.now();
       var newId = await _db.saveHealthEntry(tempHealthEntry);
       tempHealthEntry.id = newId;
