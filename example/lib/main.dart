@@ -33,6 +33,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    
     _getInitialRoute().then((initialRoute) {
       this._currentRoute = initialRoute;
       setState(() {

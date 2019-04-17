@@ -28,6 +28,7 @@ class _HealthConditionsFragmentState extends GuardedAccountState<HealthCondition
   @override
   void initState() {
     super.initState();
+    
     if (healthEntries == null) {
       print("Init State load is called");
       healthEntries = [];

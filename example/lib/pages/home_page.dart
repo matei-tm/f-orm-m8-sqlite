@@ -12,8 +12,11 @@ class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   static const String routeName = '/';
+
   @override
-  HomePageState createState() => HomePageState();
+  HomePageState createState() {
+    return HomePageState();
+  }
 }
 
 class HomePageState extends State<HomePage> {
@@ -36,6 +39,7 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     _appDrawer = AppDrawer(_onSelectItem);
   }
 

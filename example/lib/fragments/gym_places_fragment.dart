@@ -26,6 +26,8 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
 
   @override
   void initState() {
+    super.initState();
+    
     if (healthEntries == null) {
       print("Init State load is called");
       healthEntries = [];
@@ -36,7 +38,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
       });
     }
 
-    super.initState();
+    
   }
 
   Future<bool> _loadAsyncCurrentData() async {
