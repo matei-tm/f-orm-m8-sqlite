@@ -7,7 +7,7 @@ class AccountRelatedEntityWriter extends EntityWriter {
       : super(emittedEntity);
 
   String getAttributeStringAccountId() {
-    return "account_id";
+    return emittedEntity.attributes["accountId"].attributeName;
   }
 
   @override
@@ -30,7 +30,7 @@ var result = await dbClient.query(${theTableHandler},
     where: '${getAttributeStringAccountId()} = ? AND ${getSoftdeleteCondition()}',
     whereArgs: [accountId]);
 
-return result.toList();
+return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
   }
 
 """);
