@@ -23,7 +23,7 @@ class AccountRelatedEntityWriter extends EntityWriter {
     sb.write(getCommonMethods());
 
     sb.write("""
-  Future<List> get${emittedEntity.modelNameProxyPlural}ByAccountId(int accountId) async {
+  Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}ByAccountId(int accountId) async {
 var dbClient = await db;
 var result = await dbClient.query(${theTableHandler},
     columns: the${emittedEntity.modelName}Columns,
