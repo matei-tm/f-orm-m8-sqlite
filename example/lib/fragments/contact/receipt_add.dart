@@ -93,7 +93,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                           Duration(hours: int.parse(value));
                     },
                   ),
-                  TextFormField(                    
+                  TextFormField(
                     decoration: new InputDecoration(
                       hintText: "expiration Date (format: 2012-02-27 13:27:00)",
                       labelText: "expiration Date*",
@@ -152,6 +152,20 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                     },
                     onSaved: (String value) {
                       _stateReceipt.quantity = double.parse(value);
+                    },
+                  ),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                      hintText: "storage Temperature as num",
+                      labelText: "storage Temperature*",
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Please enter storage Temperature";
+                      }
+                    },
+                    onSaved: (String value) {
+                      _stateReceipt.storageTemperature = num.parse(value);
                     },
                   ),
                 ],
