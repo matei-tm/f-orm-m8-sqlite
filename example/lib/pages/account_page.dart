@@ -19,7 +19,13 @@ class _AccountPageState extends State<AccountPage> {
   DatabaseHelper _db = DatabaseHelper();
 
   _AccountPageState(UserAccountProxy stateAccount) {
-    this._stateAccount = stateAccount ?? UserAccountProxy(null, null, null);
+    if (stateAccount == null) {
+      title = "New";
+      this._stateAccount = UserAccountProxy(null, null, null);
+    } else {
+      title = "Edit";
+      this._stateAccount = stateAccount;
+    }
   }
 
   Future<void> submit() async {
@@ -47,7 +53,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.title ?? "User account"),
+        title: Text("${this.title} User account"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),

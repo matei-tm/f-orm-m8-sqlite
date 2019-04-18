@@ -1,6 +1,6 @@
+import 'package:example/fragments/disclaimer_fragment.dart';
 import 'package:example/fragments/gym_places_fragment.dart';
 import 'package:example/fragments/health_conditions_fragment.dart';
-import 'package:example/fragments/privacy_fragment.dart';
 import 'package:example/pages/helpers/app_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -50,14 +50,14 @@ class HomePageState extends State<HomePage> {
         return HealthConditionsFragment(_scaffoldKey);
       case "Gym Places":
         return GymPlacesFragment(_scaffoldKey);
-      case "Privacy":
-        return PrivacyFragment();
+      case "Disclaimer":
+        return DisclaimerFragment();
       default:
         return Text("Error");
     }
   }
 
-  String _selectedDrawerIndex = "Gym Places";
+  String _selectedDrawerIndex = "Disclaimer";
 
   @override
   Widget build(BuildContext context) {

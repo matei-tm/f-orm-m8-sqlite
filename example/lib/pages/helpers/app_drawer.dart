@@ -43,7 +43,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
   @override
   Future switchAccount(UserAccount userAccount, BuildContext context) async {
     await super.switchAccount(userAccount, context);
-    widget.onSelectItem("Privacy");
+    widget.onSelectItem("Disclaimer");
   }
 
   List<Widget> _buildOtherAccounts(accounts) {
@@ -56,7 +56,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         child: Semantics(
           label: "Switch account",
           child: CircleAvatar(
-            backgroundColor: Colors.brown,
+            backgroundColor: Colors.black,
             child: Text(userAccount.abbreviation),
           ),
         ),
@@ -74,7 +74,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
           accountName: Text(guardedCurrentAccount.userName),
           accountEmail: Text(guardedCurrentAccount.email),
           currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.brown,
+            backgroundColor: Colors.white,
             child: Text(
               guardedCurrentAccount.abbreviation,
               style: Theme.of(context).textTheme.display1,
@@ -88,7 +88,6 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     List<Widget> children = [];
     children
       ..addAll(_buildUserAccounts(context))
-      ..addAll([Divider()])
       ..addAll(_buildActions(context));
     return children;
   }
@@ -111,9 +110,9 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
       ),
       ListTile(
         leading: Icon(Icons.verified_user),
-        title: Text("Privacy"),
+        title: Text("Disclaimer"),
         onTap: () {
-          widget.onSelectItem("Privacy");
+          widget.onSelectItem("Disclaimer");
         },
       ),
       const Divider(
