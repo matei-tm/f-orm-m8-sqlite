@@ -52,8 +52,7 @@ class DisclaimerFragment extends StatelessWidget {
                           ),
                           TextSpan(
                             style: contentTextStyle,
-                            text:
-                                '\nHealth Records => DbAccountRelatedEntity',
+                            text: '\nHealth Records => DbAccountRelatedEntity',
                           ),
                           TextSpan(
                             style: contentTextStyle,
@@ -70,9 +69,7 @@ class DisclaimerFragment extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
-                    child: Image.asset(
-                      "docs/usecase001-320.gif"
-                    ),
+                    child: Image.asset("docs/usecase001-320.gif"),
                   ),
                 ],
               ),
