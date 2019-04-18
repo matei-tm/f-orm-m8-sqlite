@@ -1,7 +1,7 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "health_entries", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+    "health_entry", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
 class HealthEntry implements DbAccountRelatedEntity {
   @DataColumn(
       "id",
