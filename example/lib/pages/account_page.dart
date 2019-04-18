@@ -138,15 +138,30 @@ class _AccountPageState extends State<AccountPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:
-          Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Column(mainAxisAlignment: MainAxisAlignment.end, children:<Widget> [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 8, 8),
+              child: FloatingActionButton(
+                heroTag: "DeleteAccount",
+                onPressed: () => _onTapDelete(this.context),
+                tooltip: 'Delete',
+                child: Icon(Icons.delete),
+              ),
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
               child: FloatingActionButton(
+                heroTag: "AddNewAccount",
                 onPressed: () => _onTapAddNew(this.context),
-                tooltip: 'Info',
+                tooltip: 'New',
                 child: Icon(Icons.add),
               ),
             ),
@@ -158,6 +173,25 @@ class _AccountPageState extends State<AccountPage> {
 
   void _addNewAccount() {
     Navigator.of(context).pushReplacement(StartPageRoute(null));
+  }
+
+  _onTapDelete(BuildContext context) async {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+            title: Text(
+                "Deleting the account is forbidden. Other entities may share this account id"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Accept"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+    );
   }
 
   _onTapAddNew(BuildContext context) async {
