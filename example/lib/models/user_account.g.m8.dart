@@ -50,7 +50,7 @@ mixin UserAccountDatabaseHelper {
   final String _theUserAccountTableHandler = 'user_account';
   Future createUserAccountTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT , abbreviation TEXT  NOT NULL, email TEXT  NOT NULL, user_name TEXT  NOT NULL UNIQUE, is_current INTEGER )');
+        'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT , abbreviation TEXT  NOT NULL UNIQUE, email TEXT  NOT NULL, user_name TEXT  NOT NULL UNIQUE, is_current INTEGER )');
   }
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {

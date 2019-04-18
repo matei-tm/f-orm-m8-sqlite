@@ -21,6 +21,6 @@ class HealthEntry implements DbAccountRelatedEntity {
   int accountId;
 
   @DataColumn(
-      "my_future_column5", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column6", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }
