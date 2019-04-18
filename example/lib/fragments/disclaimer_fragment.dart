@@ -15,54 +15,66 @@ class DisclaimerFragment extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: new SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(style: headlineStyle, text: "Disclaimer"),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text:
-                            '\n\nThis is a demo application. Do not use for production purposes\n',
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(style: headlineStyle, text: "Disclaimer"),
+                          TextSpan(
+                            style: contentTextStyle,
+                            text:
+                                '\n\nThis is a demo application. Do not use for production purposes\n',
+                          ),
+                          TextSpan(
+                            style: titleStyle,
+                            text: '\n\nPurpose\n',
+                          ),
+                          TextSpan(
+                            style: contentTextStyle,
+                            text:
+                                '\nThe only purpose of this example is to be a showcase of flutter-sqlite-m8 generator based on the orm-m8 annotation framework\n',
+                          ),
+                          TextSpan(
+                            style: titleStyle,
+                            text: '\n\nDependencies\n',
+                          ),
+                          TextSpan(
+                            style: subtitleStyle,
+                            text: '\nflutter-sqlite-m8\nflutter-orm-m8',
+                          ),
+                          TextSpan(
+                            style: titleStyle,
+                            text: '\n\nCRUD showcase\n',
+                          ),
+                          TextSpan(
+                            style: contentTextStyle,
+                            text:
+                                '\nHealth Conditions => DbAccountRelatedEntity',
+                          ),
+                          TextSpan(
+                            style: contentTextStyle,
+                            text: '\nGym Places => DbEntity',
+                          ),
+                          TextSpan(
+                            style: contentTextStyle,
+                            text: '\nUser Account => DbAccountEntity',
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        style: titleStyle,
-                        text: '\n\nPurpose\n',
-                      ),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text:
-                            '\nThe only purpose of this example is to be a showcase of flutter-sqlite-m8 generator based on the orm-m8 annotation framework\n',
-                      ),
-                      TextSpan(
-                        style: titleStyle,
-                        text: '\n\nDependencies\n',
-                      ),
-                      TextSpan(
-                        style: subtitleStyle,
-                        text: '\nflutter-sqlite-m8\nflutter-orm-m8',
-                      ),
-                      TextSpan(
-                        style: titleStyle,
-                        text: '\n\nCRUD showcase\n',
-                      ),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text: '\nHealth Conditions => DbAccountRelatedEntity',
-                      ),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text: '\nGym Places => DbEntity',
-                      ),
-                      TextSpan(
-                        style: contentTextStyle,
-                        text: '\nUser Account => DbAccountEntity',
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
+                    child: Image.asset(
+                      "docs/usecase001-320.gif"
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
