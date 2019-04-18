@@ -1,3 +1,4 @@
+import 'package:example/fragments/contact/receipt_add.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/pages/account_page.dart';
 import 'package:example/pages/home_page.dart';
@@ -64,6 +65,7 @@ class MyHomePageState extends State<MyHomePage> {
             initialRoute: _currentRoute,
             routes: {
               '/': (context) => HomePage(),
+              '/receipts/add': (context) => ReceiptAddPage(null),
               'start': (context) => AccountPage(null),
             },
           );

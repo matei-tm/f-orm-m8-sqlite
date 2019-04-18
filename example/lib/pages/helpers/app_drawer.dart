@@ -109,6 +109,13 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         },
       ),
       ListTile(
+        leading: Icon(Icons.receipt),
+        title: Text("Receipts"),
+        onTap: () {
+          widget.onSelectItem("Receipts");
+        },
+      ),
+      ListTile(
         leading: Icon(Icons.verified_user),
         title: Text("Disclaimer"),
         onTap: () {

@@ -1,6 +1,7 @@
 import 'package:example/fragments/disclaimer_fragment.dart';
 import 'package:example/fragments/gym_places_fragment.dart';
 import 'package:example/fragments/health_records_fragment.dart';
+import 'package:example/fragments/receipts_fragment.dart';
 import 'package:example/pages/helpers/app_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +51,8 @@ class HomePageState extends State<HomePage> {
         return HealthRecordsFragment(_scaffoldKey);
       case "Gym Places":
         return GymPlacesFragment(_scaffoldKey);
+      case "Receipts":
+        return ReceiptsFragment(_scaffoldKey);
       case "Disclaimer":
         return DisclaimerFragment();
       default:
