@@ -1,6 +1,6 @@
 import 'package:example/fragments/disclaimer_fragment.dart';
 import 'package:example/fragments/gym_places_fragment.dart';
-import 'package:example/fragments/health_conditions_fragment.dart';
+import 'package:example/fragments/health_records_fragment.dart';
 import 'package:example/pages/helpers/app_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +46,8 @@ class HomePageState extends State<HomePage> {
   AppDrawer _appDrawer;
   _getDrawerItemWidget(String pos) {
     switch (pos) {
-      case "Health Conditions":
-        return HealthConditionsFragment(_scaffoldKey);
+      case "Health Records":
+        return HealthRecordsFragment(_scaffoldKey);
       case "Gym Places":
         return GymPlacesFragment(_scaffoldKey);
       case "Disclaimer":

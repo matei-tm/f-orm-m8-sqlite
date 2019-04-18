@@ -16,7 +16,7 @@ void main() {
   testWidgets('Adding health entry smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(GymspectorApp());
 
-    expect(find.text('Health Conditions'), findsOneWidget);
+    expect(find.text('Health Records'), findsOneWidget);
     expect(find.text('Healthy'), findsNothing);
 
     await tester.showKeyboard(find.byType(TextField));

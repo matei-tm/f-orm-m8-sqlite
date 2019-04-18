@@ -1,22 +1,20 @@
 import 'package:example/fragments/health_entry_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/health_entry.g.m8.dart';
-import 'package:example/models/user_account.dart';
 import 'package:example/pages/helpers/guarded_account_state.dart';
-import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class HealthConditionsFragment extends StatefulWidget {
+class HealthRecordsFragment extends StatefulWidget {
   final Key _parentScaffoldKey;
 
-  HealthConditionsFragment(this._parentScaffoldKey);
+  HealthRecordsFragment(this._parentScaffoldKey);
 
-  _HealthConditionsFragmentState createState() =>
-      _HealthConditionsFragmentState(_parentScaffoldKey);
+  _HealthRecordsFragmentState createState() =>
+      _HealthRecordsFragmentState(_parentScaffoldKey);
 }
 
-class _HealthConditionsFragmentState
-    extends GuardedAccountState<HealthConditionsFragment> {
+class _HealthRecordsFragmentState
+    extends GuardedAccountState<HealthRecordsFragment> {
   List<HealthEntryProxy> healthEntries;
 
   final TextEditingController _healthEntryController = TextEditingController();
@@ -26,7 +24,7 @@ class _HealthConditionsFragmentState
 
   var _parentScaffoldKey;
 
-  _HealthConditionsFragmentState(this._parentScaffoldKey) {
+  _HealthRecordsFragmentState(this._parentScaffoldKey) {
     callExtraLoad = (i) {
       return _loadAsyncCurrentData(i);
     };
@@ -61,7 +59,7 @@ class _HealthConditionsFragmentState
                       controller: _healthEntryController,
                       decoration: InputDecoration(
                         hintText: "Type a short description",
-                        labelText: "New Health Condition Entry",
+                        labelText: "New Health Record Entry",
                         errorText: _validate ? 'Value Can\'t Be Empty' : null,
                       ),
                       onSubmitted: (text) async {

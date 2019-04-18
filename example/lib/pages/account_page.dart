@@ -311,7 +311,7 @@ class _AccountPageState extends State<AccountPage> {
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
               title: Text(
-                  "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health conditions' and delete all entries"),
+                  "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health Records' and delete all entries"),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Accept"),

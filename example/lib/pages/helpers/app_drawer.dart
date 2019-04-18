@@ -96,9 +96,9 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
     return [
       ListTile(
         leading: Icon(Icons.healing),
-        title: Text("Health Conditions"),
+        title: Text("Health Records"),
         onTap: () {
-          widget.onSelectItem("Health Conditions");
+          widget.onSelectItem("Health Records");
         },
       ),
       ListTile(

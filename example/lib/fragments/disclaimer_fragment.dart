@@ -53,7 +53,7 @@ class DisclaimerFragment extends StatelessWidget {
                           TextSpan(
                             style: contentTextStyle,
                             text:
-                                '\nHealth Conditions => DbAccountRelatedEntity',
+                                '\nHealth Records => DbAccountRelatedEntity',
                           ),
                           TextSpan(
                             style: contentTextStyle,
