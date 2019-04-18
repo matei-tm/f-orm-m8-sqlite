@@ -116,7 +116,8 @@ mixin HealthEntryDatabaseHelper {
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 
-  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(int accountId) async {
+  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(
+      int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns,

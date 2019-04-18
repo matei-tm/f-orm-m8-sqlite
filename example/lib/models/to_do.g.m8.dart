@@ -114,13 +114,13 @@ mixin ToDoDatabaseHelper {
         where: "id = ?", whereArgs: [instanceToDo.id]);
   }
 
-  Future<List> getToDoProxiesByAccountId(int accountId) async {
+  Future<List<ToDo>> getToDoProxiesByAccountId(int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
         columns: theToDoColumns,
-        where: 'account_id = ? AND 1',
+        where: 'user_account_id = ? AND 1',
         whereArgs: [accountId]);
 
-    return result.toList();
+    return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
 }
