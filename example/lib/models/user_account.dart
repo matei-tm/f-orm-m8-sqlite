@@ -13,7 +13,7 @@ class UserAccount implements DbAccountEntity {
   String description;
 
   @DataColumn(
-      "my_future_column6", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 
   @DataColumn("abbreviation", ColumnMetadata.NotNull | ColumnMetadata.Unique)

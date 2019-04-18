@@ -11,6 +11,7 @@ import 'package:path/path.dart';
 
 import 'package:example/models/gym_location.g.m8.dart';
 import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/models/receipt.g.m8.dart';
 import 'package:example/models/to_do.g.m8.dart';
 import 'package:example/models/user_account.g.m8.dart';
 
@@ -18,6 +19,7 @@ class DatabaseHelper
     with
         GymLocationDatabaseHelper,
         HealthEntryDatabaseHelper,
+        ReceiptDatabaseHelper,
         ToDoDatabaseHelper,
         UserAccountDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
@@ -53,6 +55,7 @@ class DatabaseHelper
   void _onCreate(Database db, int newVersion) async {
     await createGymLocationTable(db);
     await createHealthEntryTable(db);
+    await createReceiptTable(db);
     await createToDoTable(db);
     await createUserAccountTable(db);
   }
@@ -65,6 +68,7 @@ class DatabaseHelper
   Future deleteAll() async {
     await deleteGymLocationProxiesAll();
     await deleteHealthEntryProxiesAll();
+    await deleteReceiptProxiesAll();
     await deleteToDoProxiesAll();
     await deleteUserAccountProxiesAll();
   }
