@@ -138,7 +138,7 @@ class _AccountPageState extends State<AccountPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton:
-          Column(mainAxisAlignment: MainAxisAlignment.end, children:<Widget> [
+          Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -176,15 +176,62 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   _onTapDelete(BuildContext context) async {
+    if (_stateAccount.id == null) {
+      handleUnsavedAccount(context);
+      return;
+    }
+
+    var accountHasDependents = await testIfAccountHasDependents(context);
+
+    if (accountHasDependents) {
+      return;
+    }
+
+    handleDeletingExistingAccount(context);
+  }
+
+  void handleDeletingExistingAccount(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+            title: Text("Delete the account?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  this._deleteAccount();
+                },
+              ),
+              FlatButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+    );
+  }
+
+  void handleUnsavedAccount(BuildContext context) {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
             title: Text(
-                "Deleting the account is forbidden. Other entities may share this account id"),
+                "The account is not saved. Instead a reset will be triggered."),
             actions: <Widget>[
               FlatButton(
                 child: Text("Accept"),
+                onPressed: () {
+                  this._formKey.currentState.reset();
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -226,7 +273,7 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  Future testIfMaxAccountsCountWasReached(BuildContext context) async {
+  Future<bool> testIfMaxAccountsCountWasReached(BuildContext context) async {
     bool maxAccountsCountReached;
     var accountsCount = await _db.getUserAccountProxiesCount();
     if (accountsCount > 3) {
@@ -252,5 +299,46 @@ class _AccountPageState extends State<AccountPage> {
     }
 
     return maxAccountsCountReached;
+  }
+
+  Future<bool> testIfAccountHasDependents(BuildContext context) async {
+    bool hasDependents;
+    var dependentsCount =
+        await _db.getHealthEntryProxiesByAccountId(_stateAccount.id);
+    if (dependentsCount.length > 0) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              title: Text(
+                  "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health conditions' and delete all entries"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Accept"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+      );
+
+      hasDependents = true;
+    } else {
+      hasDependents = false;
+    }
+
+    return hasDependents;
+  }
+
+  Future _deleteAccount() async {
+    _db = DatabaseHelper();
+    _db.deleteUserAccount(this._stateAccount.id);
+
+    var id = await _db.getUserAccountProxiesAll().then((v) => v.first.id);
+
+    _db.setCurrentUserAccount(id);
+
+    Navigator.of(context).pushReplacementNamed("/");
   }
 }
