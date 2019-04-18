@@ -107,14 +107,14 @@ var dbClient = await db;
 return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
     where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
   }
-  Future<List> getHealthEntryAccountRelatedProxiesByAccountId(int accountId) async {
+  Future<List<HealthEntryAccountRelated>> getHealthEntryAccountRelatedProxiesByAccountId(int accountId) async {
 var dbClient = await db;
 var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
     columns: theHealthEntryAccountRelatedColumns,
-    where: 'account_id = ? AND 1',
+    where: 'my_account_id_column = ? AND 1',
     whereArgs: [accountId]);
 
-return result.toList();
+return result.map((e) => HealthEntryAccountRelatedProxy.fromMap(e)).toList();
   }
 
 }''';
