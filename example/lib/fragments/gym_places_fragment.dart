@@ -1,4 +1,4 @@
-import 'package:example/fragments/gym_place_row.dart';
+import 'package:example/fragments/gym/gym_place_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/gym_location.g.m8.dart';
 import 'package:flutter/material.dart';
