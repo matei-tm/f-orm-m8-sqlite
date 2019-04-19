@@ -9,7 +9,7 @@ import 'dart:async';
 import 'package:example/models/user_account.dart';
 
 class UserAccountProxy extends UserAccount {
-  UserAccountProxy(abbreviation, email, userName) {
+  UserAccountProxy({abbreviation, email, userName}) {
     this.abbreviation = abbreviation;
     this.email = email;
     this.userName = userName;

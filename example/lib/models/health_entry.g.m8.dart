@@ -12,7 +12,7 @@ class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  HealthEntryProxy(description, accountId) {
+  HealthEntryProxy({description, accountId}) {
     this.description = description;
     this.accountId = accountId;
   }

@@ -63,13 +63,13 @@ class ReceiptRow extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
-                            "${receipt.description}",
+                            "${receipt?.description}",
                             style: titleStyle,
                           ),
                         ),
-                        Text("${receipt.decomposingDuration}"),
-                        Text("${receipt.expirationDate}"),
-                        Text("${receipt.isBio}"),
+                        //Text("${receipt.decomposingDuration}"),
+                        Text("${receipt?.expirationDate}"),
+                        Text("${receipt?.isBio}"),
                       ],
                     ),
                   ),

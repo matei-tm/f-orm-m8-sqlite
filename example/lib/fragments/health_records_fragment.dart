@@ -123,7 +123,8 @@ class _HealthRecordsFragmentState
         return;
       }
 
-      var tempHealthEntry = HealthEntryProxy(text, guardedCurrentAccount.id);
+      var tempHealthEntry = HealthEntryProxy(
+          description: text, accountId: guardedCurrentAccount.id);
       tempHealthEntry.diagnosysDate = DateTime.now();
       var newId = await _db.saveHealthEntry(tempHealthEntry);
       tempHealthEntry.id = newId;

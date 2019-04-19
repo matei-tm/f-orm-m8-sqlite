@@ -38,10 +38,10 @@ class ProxyWriter extends EntityWriter {
         .join("\n");
 
     if (assignments == null || assignments.isEmpty) {
-      return """  ${emittedEntity.modelNameProxy}(${paramList});""";
+      return """  ${emittedEntity.modelNameProxy}();""";
     }
 
-    return """  ${emittedEntity.modelNameProxy}(${paramList}) {
+    return """  ${emittedEntity.modelNameProxy}({${paramList}}) {
 $assignments
   }""";
   }

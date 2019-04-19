@@ -12,7 +12,7 @@ class ToDoProxy extends ToDo {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  ToDoProxy(accountId) {
+  ToDoProxy({accountId}) {
     this.accountId = accountId;
   }
 

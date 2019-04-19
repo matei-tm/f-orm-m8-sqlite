@@ -9,8 +9,8 @@ class Receipt implements DbEntity {
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("number_of_molecules", ColumnMetadata.NotNull)
-  BigInt numberOfMolecules;
+  //@DataColumn("number_of_molecules", ColumnMetadata.NotNull)
+  //BigInt numberOfMolecules;
 
   @DataColumn("is_bio", ColumnMetadata.NotNull)
   bool isBio;
@@ -21,8 +21,8 @@ class Receipt implements DbEntity {
   @DataColumn("price", ColumnMetadata.NotNull)
   double quantity;
 
-  @DataColumn("decomposing_duration", ColumnMetadata.NotNull)
-  Duration decomposingDuration;
+  //@DataColumn("decomposing_duration", ColumnMetadata.NotNull)
+  //Duration decomposingDuration;
 
   @DataColumn("number_of_items", ColumnMetadata.NotNull)
   int numberOfItems;

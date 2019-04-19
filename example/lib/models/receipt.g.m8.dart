@@ -12,13 +12,16 @@ class ReceiptProxy extends Receipt {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  ReceiptProxy(numberOfMolecules, isBio, expirationDate, quantity,
-      decomposingDuration, numberOfItems, storageTemperature, description) {
-    this.numberOfMolecules = numberOfMolecules;
+  ReceiptProxy(
+      {isBio,
+      expirationDate,
+      quantity,
+      numberOfItems,
+      storageTemperature,
+      description}) {
     this.isBio = isBio;
     this.expirationDate = expirationDate;
     this.quantity = quantity;
-    this.decomposingDuration = decomposingDuration;
     this.numberOfItems = numberOfItems;
     this.storageTemperature = storageTemperature;
     this.description = description;
@@ -27,11 +30,9 @@ class ReceiptProxy extends Receipt {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
-    map['number_of_molecules'] = numberOfMolecules;
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
     map['price'] = quantity;
-    map['decomposing_duration'] = decomposingDuration;
     map['number_of_items'] = numberOfItems;
     map['storage_temperature'] = storageTemperature;
     map['description'] = description;
@@ -43,12 +44,10 @@ class ReceiptProxy extends Receipt {
 
   ReceiptProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.numberOfMolecules = map['number_of_molecules'];
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
     this.quantity = map['price'];
-    this.decomposingDuration = map['decomposing_duration'];
     this.numberOfItems = map['number_of_items'];
     this.storageTemperature = map['storage_temperature'];
     this.description = map['description'];
@@ -61,11 +60,9 @@ mixin ReceiptDatabaseHelper {
   Future<Database> db;
   final theReceiptColumns = [
     "id",
-    "number_of_molecules",
     "is_bio",
     "expiration_date",
     "price",
-    "decomposing_duration",
     "number_of_items",
     "storage_temperature",
     "description",
@@ -76,7 +73,7 @@ mixin ReceiptDatabaseHelper {
   final String _theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theReceiptTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, number_of_molecules TEXT  NOT NULL, is_bio INTEGER  NOT NULL, expiration_date INTEGER  NOT NULL, price REAL  NOT NULL, decomposing_duration TEXT  NOT NULL, number_of_items INTEGER  NOT NULL, storage_temperature NUMERIC  NOT NULL, description TEXT  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theReceiptTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, is_bio INTEGER  NOT NULL, expiration_date INTEGER  NOT NULL, price REAL  NOT NULL, number_of_items INTEGER  NOT NULL, storage_temperature NUMERIC  NOT NULL, description TEXT  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {
