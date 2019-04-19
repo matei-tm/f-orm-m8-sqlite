@@ -39,7 +39,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      _db = new DatabaseHelper();
+      _db = DatabaseHelper();
 
       int id = await _db.saveReceipt(_stateReceipt);
       _stateReceipt.id = id;
@@ -50,28 +50,28 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: Text(this.title ?? "Add Receipt"),
         actions: <Widget>[
           IconButton(
-            icon: new Icon(Icons.check),
+            icon: Icon(Icons.check),
             onPressed: submit,
           ),
         ],
       ),
       body: Stack(
         children: <Widget>[
-          new Container(
-            padding: new EdgeInsets.all(20.0),
+          Container(
+            padding: EdgeInsets.all(20.0),
             child: Form(
               autovalidate: false,
               key: _formKey,
-              child: new ListView(
+              child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Description",
                       labelText: "Description*",
                     ),
@@ -100,7 +100,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                   //   },
                   // ),
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "expiration Date (format: 2012-02-27 13:27:00)",
                       labelText: "expiration Date*",
                     ),
@@ -119,7 +119,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                       onChanged: (bool val) =>
                           setState(() => _stateReceipt.isBio = val)),
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "number of Items as int",
                       labelText: "number of Items*",
                     ),
@@ -147,7 +147,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                   //   },
                   // ),
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "quantity as double",
                       labelText: "quantity*",
                     ),
@@ -161,7 +161,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                     },
                   ),
                   TextFormField(
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "storage Temperature as num",
                       labelText: "storage Temperature*",
                     ),

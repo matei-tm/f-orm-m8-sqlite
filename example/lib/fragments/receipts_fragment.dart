@@ -28,10 +28,10 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: new Column(
+      child: Column(
         children: <Widget>[
-          new Expanded(
-            child: new ListView.builder(
+          Expanded(
+            child: ListView.builder(
               itemCount: receipts.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return ReceiptRow(
@@ -55,7 +55,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
                     _addReceipt();
                   },
                   tooltip: "Add Receipt",
-                  child: new Icon(Icons.add)),
+                  child: Icon(Icons.add)),
             ),
           ),
         ],
@@ -75,17 +75,17 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => new AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
             title: Text("Confirm Delete Receipt"),
             actions: <Widget>[
-              new FlatButton(
+              FlatButton(
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _deleteReceiptFromDatabase(h);
                 },
               ),
-              new FlatButton(
+              FlatButton(
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();

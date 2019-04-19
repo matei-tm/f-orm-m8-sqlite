@@ -21,7 +21,8 @@ class _AccountPageState extends State<AccountPage> {
   _AccountPageState(UserAccountProxy stateAccount) {
     if (stateAccount == null) {
       title = "New";
-      this._stateAccount = UserAccountProxy(abbreviation: null, email: null, userName: null);
+      this._stateAccount =
+          UserAccountProxy(abbreviation: null, email: null, userName: null);
     } else {
       title = "Edit";
       this._stateAccount = stateAccount;
