@@ -23,7 +23,7 @@ import 'package:__test__/account_related.dart';
 class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
 
 
-  HealthEntryAccountRelatedProxy(accountId) {
+  HealthEntryAccountRelatedProxy({accountId}) {
     this.accountId = accountId;
   }
 
