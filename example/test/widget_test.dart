@@ -21,7 +21,7 @@ void main() {
 }
 
 Future healthEntrySubmit(WidgetTester tester) async {
-  await tester.pumpWidget(GymspectorApp());
+  await tester.pumpWidget(GymspectorApp(GlobalKey<ScaffoldState>()));
 
   expect(find.text('Health Records'), findsOneWidget);
   expect(find.text('Healthy'), findsNothing);
@@ -43,7 +43,8 @@ Future healthEntrySubmit(WidgetTester tester) async {
 }
 
 Future accountPageFormSubmit(WidgetTester tester) async {
-  await tester.pumpWidget(GymspectorApp(), Duration(seconds: 3));
+  await tester.pumpWidget(
+      GymspectorApp(GlobalKey<ScaffoldState>()), Duration(seconds: 3));
   await tester.pump(Duration(seconds: 3));
 
   expect(find.byType(TextFormField), findsNWidgets(3));

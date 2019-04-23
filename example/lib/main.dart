@@ -1,13 +1,15 @@
 import 'package:example/fragments/contact/receipt_add.dart';
-import 'package:example/fragments/contact/receipt_edit.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/pages/account_page.dart';
 import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(GymspectorApp());
+GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+void main() => runApp(GymspectorApp(scaffoldKey));
 
 class GymspectorApp extends StatelessWidget {
+  GymspectorApp(GlobalKey<ScaffoldState> scaffoldKey);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,22 +17,31 @@ class GymspectorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'orm-m8 Demo Home Page'),
+      home: MyHomePage(
+        title: 'orm-m8 Demo Home Page',
+        scaffoldKey: scaffoldKey,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  var scaffoldKey;
+
+  MyHomePage({Key key, this.title, this.scaffoldKey}) : super(key: key);
 
   final String title;
 
   @override
-  MyHomePageState createState() => MyHomePageState();
+  MyHomePageState createState() => MyHomePageState(scaffoldKey);
 }
 
 class MyHomePageState extends State<MyHomePage> {
   String _currentRoute;
+
+  var scaffoldKey;
+
+  MyHomePageState(this.scaffoldKey);
 
   @override
   void initState() {
@@ -68,7 +79,9 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             initialRoute: _currentRoute,
             routes: {
-              '/': (context) => HomePage(),
+              '/': (context) => HomePage(
+                    scaffoldKey: scaffoldKey,
+                  ),
               '/receipts/add': (context) => ReceiptAddPage(null),
               'start': (context) => AccountPage(null),
             },

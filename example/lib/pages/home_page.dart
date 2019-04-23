@@ -10,19 +10,23 @@ class HomePageRoute extends MaterialPageRoute {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  GlobalKey<ScaffoldState> scaffoldKey;
+
+  HomePage({Key key, this.scaffoldKey}) : super(key: key);
 
   static const String routeName = '/';
 
   @override
   HomePageState createState() {
-    return HomePageState();
+    return HomePageState(scaffoldKey);
   }
 }
 
 class HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> scaffoldKey; // = GlobalKey<ScaffoldState>();
   String title;
+
+  HomePageState(scaffoldKey);
 
   _onSelectItem(String key, {bool fromDrawer = true}) {
     this.title = parseKey(key);
@@ -48,11 +52,11 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(String pos) {
     switch (pos) {
       case "Health Records":
-        return HealthRecordsFragment(_scaffoldKey);
+        return HealthRecordsFragment(scaffoldKey);
       case "Gym Places":
-        return GymPlacesFragment(_scaffoldKey);
+        return GymPlacesFragment(scaffoldKey);
       case "Receipts":
-        return ReceiptsFragment(_scaffoldKey);
+        return ReceiptsFragment(scaffoldKey);
       case "Disclaimer":
         return DisclaimerFragment();
       default:
@@ -74,7 +78,7 @@ class HomePageState extends State<HomePage> {
 
     return WillPopScope(
       child: Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.

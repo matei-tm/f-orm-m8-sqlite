@@ -2,11 +2,14 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('orm-m8 App', () {
-    final textFieldHealthEntryFinder = find.byValueKey('healthEntry');
-    final addButtonFinder = find.byValueKey('addButton');
-
-    FlutterDriver driver;
+  FlutterDriver driver;
+  group('orm-m8 Account Page', () {
+    final accountNameTextFormFieldFinder =
+        find.byValueKey('accountNameTextFormField');
+    final emailTextFormFieldFinder = find.byValueKey('emailTextFormField');
+    final abbreviationTextFormFieldFinder =
+        find.byValueKey('abbreviationTextFormField');
+    final saveAccountButtonFinder = find.byValueKey('saveAccountButton');
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -17,53 +20,33 @@ void main() {
         driver.close();
       }
     });
-    test('enter text in TextField', () async {
-      await driver.waitFor(textFieldHealthEntryFinder);
-      await driver.tap(textFieldHealthEntryFinder);
+    test('enter text in User name', () async {
+      await driver.waitFor(accountNameTextFormFieldFinder);
+      await driver.tap(accountNameTextFormFieldFinder);
 
-      await driver.enterText("happy");
-      await driver.waitFor(find.text('happy'));
+      await driver.enterText("John Doe");
+      await driver.waitFor(find.text('John Doe'));
     });
 
-    test('add new health entry', () async {
-      await driver.waitFor(textFieldHealthEntryFinder);
-      await driver.tap(textFieldHealthEntryFinder);
+    test('enter text in email', () async {
+      await driver.waitFor(emailTextFormFieldFinder);
+      await driver.tap(emailTextFormFieldFinder);
 
-      await driver.enterText("happy", timeout: Duration(seconds: 1));
-      await driver.waitFor(find.text('happy'));
-
-      await driver.waitFor(addButtonFinder);
-      await driver.tap(addButtonFinder);
+      await driver.enterText("john@doe.com");
+      await driver.waitFor(find.text('john@doe.com'));
     });
 
-    test('delete health entry', () async {
-      var delButtonFinder = find.byValueKey('delBtnHealth1');
+    test('enter text in abbreviation', () async {
+      await driver.waitFor(abbreviationTextFormFieldFinder);
+      await driver.tap(abbreviationTextFormFieldFinder);
 
-      await driver.waitFor(delButtonFinder);
-      await driver.tap(delButtonFinder);
+      await driver.enterText("JD");
+      await driver.waitFor(find.text('JD'));
     });
 
-    test('add same health entry twice', () async {
-      await driver.waitFor(textFieldHealthEntryFinder);
-      await driver.tap(textFieldHealthEntryFinder);
-
-      await driver.enterText("happy", timeout: Duration(seconds: 1));
-      await driver.waitFor(find.text('happy'));
-
-      await driver.waitFor(addButtonFinder);
-      await driver.tap(addButtonFinder);
-
-      await driver.enterText("happy", timeout: Duration(seconds: 1));
-      await driver.waitFor(find.text('happy'));
-
-      await driver.waitFor(addButtonFinder);
-      await driver.tap(addButtonFinder);
-
-      await driver.waitFor(find.byValueKey('errorSnack'));
-
-      var delButtonFinder = find.byValueKey('delBtnHealth2');
-      await driver.waitFor(delButtonFinder);
-      await driver.tap(delButtonFinder);
+    test('submit new account', () async {
+      await driver.waitFor(saveAccountButtonFinder);
+      await driver.tap(saveAccountButtonFinder);
     });
   });
 }
