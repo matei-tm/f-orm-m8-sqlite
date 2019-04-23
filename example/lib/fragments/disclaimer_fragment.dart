@@ -112,7 +112,8 @@ class DisclaimerFragment extends StatelessWidget {
                           ),
                           TextSpan(
                             style: contentTextStyle,
-                            text: '\nExample: Gym Places\nModel: GymLocation\nField types: int, String',
+                            text:
+                                '\nExample: Gym Places\nModel: GymLocation\nField types: int, String',
                           ),
                         ],
                       ),

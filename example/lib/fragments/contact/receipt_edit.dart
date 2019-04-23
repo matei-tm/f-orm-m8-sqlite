@@ -1,4 +1,3 @@
-
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/receipt.dart';
 import 'package:example/models/receipt.g.m8.dart';
@@ -102,7 +101,8 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                   //   },
                   // ),
                   TextFormField(
-                    initialValue: _stateReceipt.expirationDate.toIso8601String(),
+                    initialValue:
+                        _stateReceipt.expirationDate.toIso8601String(),
                     decoration: InputDecoration(
                       hintText: "expiration Date (format: 2071-05-30 17:50:03)",
                       labelText: "expiration Date*",

@@ -8,6 +8,5 @@ class GymspectorRoute extends MaterialPageRoute {
   GymspectorRoute(UserAccount userAccount)
       : super(builder: (context) => AccountPage(userAccount));
   GymspectorRoute.editReceipt(Receipt receipt)
-      : super(
-            builder: (context) => ReceiptEditPage(currentReceipt: receipt));
+      : super(builder: (context) => ReceiptEditPage(currentReceipt: receipt));
 }

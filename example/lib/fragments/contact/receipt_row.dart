@@ -72,7 +72,8 @@ class ReceiptRow extends StatelessWidget {
                         Text("Is Bio: ${receipt?.isBio}"),
                         Text("Number of Items: ${receipt?.numberOfItems}"),
                         Text("Quantity: ${receipt?.quantity}"),
-                        Text("Storage Temperature: ${receipt?.storageTemperature}\u00b0"),
+                        Text(
+                            "Storage Temperature: ${receipt?.storageTemperature}\u00b0"),
                       ],
                     ),
                   ),
