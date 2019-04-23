@@ -1,6 +1,6 @@
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/user_account.dart';
-import 'package:example/routes/start_page_route.dart';
+import 'package:example/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
 typedef AccountActionCallback = Future<bool> Function(int);
@@ -67,7 +67,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
   }
 
   void goToStartPage() {
-    Navigator.of(context).push(StartPageRoute(guardedCurrentAccount));
+    Navigator.of(context).push(GymspectorRoute(guardedCurrentAccount));
     return;
   }
 }

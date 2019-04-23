@@ -100,8 +100,9 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
                   //   },
                   // ),
                   TextFormField(
+                    //initialValue: "2061-07-28 17:50:03", // DateTime.now().add(Duration(days: 30)).toIso8601String(),
                     decoration: InputDecoration(
-                      hintText: "expiration Date (format: 2012-02-27 13:27:00)",
+                      hintText: "expiration Date (format: 2071-05-30 17:50:03)",
                       labelText: "expiration Date*",
                     ),
                     validator: (value) {

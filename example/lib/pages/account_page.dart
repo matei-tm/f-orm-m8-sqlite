@@ -1,6 +1,6 @@
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/user_account.g.m8.dart';
-import 'package:example/routes/start_page_route.dart';
+import 'package:example/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatefulWidget {
@@ -173,7 +173,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _addNewAccount() {
-    Navigator.of(context).pushReplacement(StartPageRoute(null));
+    Navigator.of(context).pushReplacement(GymspectorRoute(null));
   }
 
   _onTapDelete(BuildContext context) async {
@@ -336,10 +336,14 @@ class _AccountPageState extends State<AccountPage> {
     _db = DatabaseHelper();
     _db.deleteUserAccount(this._stateAccount.id);
 
-    var id = await _db.getUserAccountProxiesAll().then((v) => v.first.id);
+    var reminingUserAccounts = await _db.getUserAccountProxiesAll();
 
-    _db.setCurrentUserAccount(id);
-
-    Navigator.of(context).pushReplacementNamed("/");
+    if (reminingUserAccounts.length > 0) {
+      _db.setCurrentUserAccount(reminingUserAccounts.first.id);
+      Navigator.of(context).pushReplacementNamed("/");
+    } else {
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed("start");
+    }
   }
 }

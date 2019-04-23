@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 typedef ReceiptRowActionCallback = void Function(Receipt receipt);
 
 class ReceiptRow extends StatelessWidget {
-  static const double height = 192.0;
+  static const double height = 240.0;
 
   final RoundedRectangleBorder shape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -68,8 +68,11 @@ class ReceiptRow extends StatelessWidget {
                           ),
                         ),
                         //Text("${receipt.decomposingDuration}"),
-                        Text("${receipt?.expirationDate}"),
-                        Text("${receipt?.isBio}"),
+                        Text("Expiration Date: ${receipt?.expirationDate}"),
+                        Text("Is Bio: ${receipt?.isBio}"),
+                        Text("Number of Items: ${receipt?.numberOfItems}"),
+                        Text("Quantity: ${receipt?.quantity}"),
+                        Text("Storage Temperature: ${receipt?.storageTemperature}\u00b0"),
                       ],
                     ),
                   ),
@@ -84,14 +87,14 @@ class ReceiptRow extends StatelessWidget {
                       child: Text(
                         "Edit",
                       ),
-                      textColor: Colors.amber.shade500,
+                      textColor: Theme.of(context).accentColor,
                       onPressed: _getHandler(onPressedUpdate),
                     ),
                     FlatButton(
                       child: Text(
                         "Delete",
                       ),
-                      textColor: Colors.amber.shade500,
+                      textColor: Theme.of(context).accentColor,
                       onPressed: _getHandler(onPressedDelete),
                     ),
                   ],
