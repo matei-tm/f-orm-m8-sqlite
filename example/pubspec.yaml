@@ -54,6 +54,9 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - docs/usecase001-320.gif
+    - docs/usecase002-320.gif
+    - docs/usecase003-320.gif
+    - docs/usecase004-320.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
