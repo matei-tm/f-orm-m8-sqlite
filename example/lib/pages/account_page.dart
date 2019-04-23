@@ -14,6 +14,13 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final _accountNameKey = Key('accountNameTextFormField');
+  final _emailKey = Key('emailTextFormField');
+  final _abbreviationKey = Key('abbreviationTextFormField');
+  final _addNewAccountKey = Key('addNewAccountButton');
+  final _deleteAccountKey = Key('deleteAccountButton');
+  final _saveAccountKey = Key('saveAccountButton');
+
   UserAccountProxy _stateAccount;
   String title;
   DatabaseHelper _db = DatabaseHelper();
@@ -57,6 +64,7 @@ class _AccountPageState extends State<AccountPage> {
         title: Text("${this.title} User account"),
         actions: <Widget>[
           IconButton(
+            key: _saveAccountKey,
             icon: Icon(Icons.check),
             onPressed: submit,
           ),
@@ -73,6 +81,7 @@ class _AccountPageState extends State<AccountPage> {
                 shrinkWrap: true,
                 children: <Widget>[
                   TextFormField(
+                    key: _accountNameKey,
                     decoration: InputDecoration(
                       hintText: "Account name",
                       labelText: "Account name*",
@@ -88,6 +97,7 @@ class _AccountPageState extends State<AccountPage> {
                     },
                   ),
                   TextFormField(
+                    key: _emailKey,
                     decoration: InputDecoration(
                       hintText: "e-mail",
                       labelText: "e-mail*",
@@ -107,6 +117,7 @@ class _AccountPageState extends State<AccountPage> {
                     children: <Widget>[
                       Flexible(
                         child: TextFormField(
+                          key: _abbreviationKey,
                           maxLength: 2,
                           decoration: InputDecoration(
                             hintText: "Account abbreviation",
@@ -146,6 +157,7 @@ class _AccountPageState extends State<AccountPage> {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 8, 8),
               child: FloatingActionButton(
+                key: _deleteAccountKey,
                 heroTag: "DeleteAccount",
                 onPressed: () => _onTapDelete(this.context),
                 tooltip: 'Delete',
@@ -160,6 +172,7 @@ class _AccountPageState extends State<AccountPage> {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
               child: FloatingActionButton(
+                key: _addNewAccountKey,
                 heroTag: "AddNewAccount",
                 onPressed: () => _onTapAddNew(this.context),
                 tooltip: 'New',

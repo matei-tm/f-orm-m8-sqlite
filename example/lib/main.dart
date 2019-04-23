@@ -46,6 +46,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   Future<String> _getInitialRoute() async {
     var _db = DatabaseHelper();
+    if (_db.extremeDevelopmentMode) {
+      return 'start';
+    }
 
     var _currentAccount = await _db.getCurrentUserAccount();
     if (_currentAccount == null) {
@@ -67,7 +70,6 @@ class MyHomePageState extends State<MyHomePage> {
             routes: {
               '/': (context) => HomePage(),
               '/receipts/add': (context) => ReceiptAddPage(null),
-              '/receipts/edit': (context) => ReceiptEditPage(),
               'start': (context) => AccountPage(null),
             },
           );
