@@ -173,7 +173,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _addNewAccount() {
-    Navigator.of(context).pushReplacement(GymspectorRoute(null));
+    Navigator.of(context).pushReplacement(EnhancedRoute(null));
   }
 
   _onTapDelete(BuildContext context) async {

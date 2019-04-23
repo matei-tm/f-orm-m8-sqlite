@@ -80,7 +80,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   Future<void> _updateReceipt(Receipt receipt) async {
-    await Navigator.of(context).push(GymspectorRoute.editReceipt(receipt));
+    await Navigator.of(context).push(EnhancedRoute.editReceipt(receipt));
 
     receipts.removeWhere((item) => item.id == receipt.id);
     receipts.add(receipt);
