@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2019-04-23
+
+### Changed
+
+* Aligned generators with `flutter-orm-m8` v0.0.6
+* Default constructor on proxy entities has named parameters
+* All db helpers `get*all` methods return a list of proxy entities 
+* The generator handles DbAccountEntity isCurrent field 
+* The pluralize for model switched from "${modelName}s" to "${modelName}Proxies" 
+* Example project was extended with implementations for:
+  * DbEntity
+  * DbAccountEntity
+  * DbAccountRelatedEntity
+
+### Fixed
+
+* Wrong attribute emission on accountId, for account related entities
+
 ## [0.2.3+1] - 2019-04-15
 
 ### Fixed

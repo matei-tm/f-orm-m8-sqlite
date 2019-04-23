@@ -109,8 +109,8 @@ Adding a model file `independent/health_entry.dart` with the following content:
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "health_entries", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
-class HealthEntry implements DbEntity {
+    "health_entry", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+class HealthEntry implements DbAccountRelatedEntity {
   @DataColumn(
       "id",
       ColumnMetadata.PrimaryKey |
@@ -118,13 +118,18 @@ class HealthEntry implements DbEntity {
           ColumnMetadata.AutoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.Unique)
+  @DataColumn("description", ColumnMetadata.NotNull)
   String description;
 
   @DataColumn("diagnosys_date")
   DateTime diagnosysDate;
 
-  @DataColumn("my_future_column", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @override
+  @DataColumn("account_id", ColumnMetadata.NotNull)
+  int accountId;
+
+  @DataColumn(
+      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }
 ```
@@ -140,19 +145,23 @@ the builder creates `independent/health_entry.g.m8.dart` file with content
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/independent/health_entry.dart';
+import 'package:example/models/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  HealthEntryProxy();
+  HealthEntryProxy({description, accountId}) {
+    this.description = description;
+    this.accountId = accountId;
+  }
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
     map['description'] = description;
     map['diagnosys_date'] = diagnosysDate.millisecondsSinceEpoch;
+    map['account_id'] = accountId;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
 
@@ -164,6 +173,7 @@ class HealthEntryProxy extends HealthEntry {
     this.description = map['description'];
     this.diagnosysDate =
         DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
+    this.accountId = map['account_id'];
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
   }
@@ -175,15 +185,15 @@ mixin HealthEntryDatabaseHelper {
     "id",
     "description",
     "diagnosys_date",
+    "account_id",
     "date_create",
     "date_update"
   ];
 
-  final String _theHealthEntryTableHandler = 'health_entries';
-
+  final String _theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
     await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , date_create INTEGER, date_update INTEGER)');
+        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  NOT NULL, diagnosys_date INTEGER , account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -197,15 +207,15 @@ mixin HealthEntryDatabaseHelper {
     return result;
   }
 
-  Future<List> getHealthEntrysAll() async {
+  Future<List<HealthEntry>> getHealthEntryProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
 
-    return result.toList();
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 
-  Future<int> getHealthEntrysCount() async {
+  Future<int> getHealthEntryProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE 1'));
@@ -229,7 +239,7 @@ mixin HealthEntryDatabaseHelper {
         .delete(_theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<bool> deleteHealthEntrysAll() async {
+  Future<bool> deleteHealthEntryProxiesAll() async {
     var dbClient = await db;
     await dbClient.delete(_theHealthEntryTableHandler);
     return true;
@@ -244,8 +254,18 @@ mixin HealthEntryDatabaseHelper {
         _theHealthEntryTableHandler, instanceHealthEntry.toMap(),
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
-}
 
+  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(
+      int accountId) async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theHealthEntryTableHandler,
+        columns: theHealthEntryColumns,
+        where: 'account_id = ? AND 1',
+        whereArgs: [accountId]);
+
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
+  }
+}
 ```
 
 and database adapter file `main.adapter.g.m8.dart`
@@ -262,9 +282,19 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:example/models/independent/health_entry.g.m8.dart';
+import 'package:example/models/gym_location.g.m8.dart';
+import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/models/receipt.g.m8.dart';
+import 'package:example/models/to_do.g.m8.dart';
+import 'package:example/models/user_account.g.m8.dart';
 
-class DatabaseHelper with HealthEntryDatabaseHelper {
+class DatabaseHelper
+    with
+        GymLocationDatabaseHelper,
+        HealthEntryDatabaseHelper,
+        ReceiptDatabaseHelper,
+        ToDoDatabaseHelper,
+        UserAccountDatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   static Database _db;
 
@@ -296,7 +326,11 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
   }
 
   void _onCreate(Database db, int newVersion) async {
+    await createGymLocationTable(db);
     await createHealthEntryTable(db);
+    await createReceiptTable(db);
+    await createToDoTable(db);
+    await createUserAccountTable(db);
   }
 
   Future close() async {
@@ -305,8 +339,11 @@ class DatabaseHelper with HealthEntryDatabaseHelper {
   }
 
   Future deleteAll() async {
-    await deleteHealthEntrysAll();
+    await deleteGymLocationProxiesAll();
+    await deleteHealthEntryProxiesAll();
+    await deleteReceiptProxiesAll();
+    await deleteToDoProxiesAll();
+    await deleteUserAccountProxiesAll();
   }
 }
-
 ```
