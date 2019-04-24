@@ -1,4 +1,4 @@
-import 'package:example/fragments/contact/receipt_edit.dart';
+import 'package:example/fragments/receipt/receipt_edit.dart';
 import 'package:example/models/receipt.dart';
 import 'package:example/models/user_account.dart';
 import 'package:example/pages/account_page.dart';

@@ -1,4 +1,4 @@
-import 'package:example/fragments/contact/receipt_row.dart';
+import 'package:example/fragments/receipt/receipt_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/receipt.dart';
 import 'package:example/routes/enhanced_route.dart';
