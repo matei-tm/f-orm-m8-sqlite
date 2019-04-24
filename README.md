@@ -41,7 +41,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
         ```yaml
         dependencies:
-            flutter_orm_m8: ^0.4.0
+            flutter_orm_m8: ^0.6.0
             sqflite: ^1.1.0
             flutter:
                 sdk: flutter
