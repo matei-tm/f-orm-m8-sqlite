@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.3.0+1] - 2019-04-25
+
+### Fixed
+
+* Documentation
+
 ## [0.3.0] - 2019-04-23
 
 ### Changed

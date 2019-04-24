@@ -1,13 +1,25 @@
 # Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)
 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter_sqlite_m8_generator.svg)](https://pub.dartlang.org/packages/flutter_sqlite_m8_generator) [![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator)
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter_sqlite_m8_generator.svg)](https://pub.dartlang.org/packages/flutter_sqlite_m8_generator) [![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator) [![license](https://img.shields.io/github/license/matei-tm/flutter-sqlite-m8-generator.svg)](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/LICENSE)
 
 - [Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)](#sqlite-orm-mate-generator-flutter-sqlite-m8-generator)
   - [Introduction](#introduction)
   - [Dependencies](#dependencies)
   - [Usage](#usage)
-  - [Example](#example)
-    - [A DbEntity implementation](#a-dbentity-implementation)
+  - [Example - Gymspector application](#example---gymspector-application)
+    - [UserAccount - A DbAccountEntity implementation](#useraccount---a-dbaccountentity-implementation)
+      - [The model](#the-model)
+      - [The generated code](#the-generated-code)
+    - [HealthEntry - A DbAccountRelatedEntity implementation](#healthentry---a-dbaccountrelatedentity-implementation)
+      - [The model](#the-model-1)
+      - [The generated code](#the-generated-code-1)
+    - [GymLocation - A DbEntity implementation](#gymlocation---a-dbentity-implementation)
+      - [The model](#the-model-2)
+      - [The generated code](#the-generated-code-2)
+    - [Receipt - A DbEntity implementation](#receipt---a-dbentity-implementation)
+      - [The model](#the-model-3)
+      - [The generated code](#the-generated-code-3)
+    - [The database adapter](#the-database-adapter)
 
 
 ## Introduction
@@ -50,7 +62,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
         dev_dependencies:
             build_runner: ^1.0.0
-            flutter_sqlite_m8_generator: ^0.2.3+1
+            flutter_sqlite_m8_generator: ^0.3.0+1
             flutter_test:
                 sdk: flutter
 
@@ -94,16 +106,206 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
 9. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example for a trivial usage.
 
-## Example
+## Example - Gymspector application
 
-A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example)
+A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
+The example presents different approaches to solve CRUD functionality for models that adhere to flutter-orm-m8 annotation framework.
+
+### UserAccount - A DbAccountEntity implementation
+
+We added a UserAccount model that implements DbAccountEntity
 
 ![usecase001](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase001-320.gif)
 
-### A DbEntity implementation
+#### The model
 
-We added a HealthEntry model that implements DbEntity. 
-Adding a model file `independent/health_entry.dart` with the following content:
+The model file `models/user_account.dart` has the following content:
+
+```dart
+import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+
+@DataTable("user_account")
+class UserAccount implements DbAccountEntity {
+  @DataColumn(
+      "id",
+      ColumnMetadata.PrimaryKey |
+          ColumnMetadata.Unique |
+          ColumnMetadata.AutoIncrement)
+  int id;
+
+  @DataColumn("description")
+  String description;
+
+  @DataColumn(
+      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  int futureData;
+
+  @DataColumn("abbreviation", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  String abbreviation;
+
+  @DataColumn("email", ColumnMetadata.NotNull)
+  String email;
+
+  @DataColumn("user_name", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  String userName;
+
+  @DataColumn("is_current")
+  bool isCurrent;
+}
+```
+
+#### The generated code
+
+From the model, the builder creates `models/user_account.g.m8.dart` file with following content
+
+```dart
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: OrmM8GeneratorForAnnotation
+// **************************************************************************
+
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:example/models/user_account.dart';
+
+class UserAccountProxy extends UserAccount {
+  UserAccountProxy({abbreviation, email, userName}) {
+    this.abbreviation = abbreviation;
+    this.email = email;
+    this.userName = userName;
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['id'] = id;
+    map['description'] = description;
+    map['abbreviation'] = abbreviation;
+    map['email'] = email;
+    map['user_name'] = userName;
+    map['is_current'] = isCurrent ? 1 : 0;
+    return map;
+  }
+
+  UserAccountProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.description = map['description'];
+    this.abbreviation = map['abbreviation'];
+    this.email = map['email'];
+    this.userName = map['user_name'];
+    this.isCurrent = map['is_current'] == 1 ? true : false;
+  }
+}
+
+mixin UserAccountDatabaseHelper {
+  Future<Database> db;
+  final theUserAccountColumns = [
+    "id",
+    "description",
+    "abbreviation",
+    "email",
+    "user_name",
+    "is_current"
+  ];
+
+  final String _theUserAccountTableHandler = 'user_account';
+  Future createUserAccountTable(Database db) async {
+    await db.execute(
+        'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT , abbreviation TEXT  NOT NULL UNIQUE, email TEXT  NOT NULL, user_name TEXT  NOT NULL UNIQUE, is_current INTEGER )');
+  }
+
+  Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {
+    var dbClient = await db;
+
+    var result = await dbClient.insert(
+        _theUserAccountTableHandler, instanceUserAccount.toMap());
+    return result;
+  }
+
+  Future<List<UserAccount>> getUserAccountProxiesAll() async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theUserAccountTableHandler,
+        columns: theUserAccountColumns, where: '1');
+
+    return result.map((e) => UserAccountProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getUserAccountProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(await dbClient.rawQuery(
+        'SELECT COUNT(*) FROM $_theUserAccountTableHandler  WHERE 1'));
+  }
+
+  Future<UserAccount> getUserAccount(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+        columns: theUserAccountColumns, where: '1 AND id = ?', whereArgs: [id]);
+
+    if (result.length > 0) {
+      return UserAccountProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteUserAccount(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(_theUserAccountTableHandler, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteUserAccountProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(_theUserAccountTableHandler);
+    return true;
+  }
+
+  Future<int> updateUserAccount(UserAccountProxy instanceUserAccount) async {
+    var dbClient = await db;
+
+    return await dbClient.update(
+        _theUserAccountTableHandler, instanceUserAccount.toMap(),
+        where: "id = ?", whereArgs: [instanceUserAccount.id]);
+  }
+
+  Future<UserAccount> getCurrentUserAccount() async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+        columns: theUserAccountColumns, where: '1 AND is_current = 1');
+
+    if (result.length > 0) {
+      return UserAccountProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> setCurrentUserAccount(int id) async {
+    var dbClient = await db;
+
+    var map = Map<String, dynamic>();
+    map['is_current'] = 0;
+
+    await dbClient.update(_theUserAccountTableHandler, map,
+        where: "is_current = 1");
+
+    map['is_current'] = 1;
+    return await dbClient.update(_theUserAccountTableHandler, map,
+        where: "1 AND id = ?", whereArgs: [id]);
+  }
+}
+
+```
+
+### HealthEntry - A DbAccountRelatedEntity implementation
+
+We added a HealthEntry model that implements DbAccountRelatedEntity. 
+
+![usecase002](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase002-320.gif)
+
+#### The model
+
+The model file `models/health_entry.dart` has the following content:
 
 ```dart
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
@@ -132,9 +334,12 @@ class HealthEntry implements DbAccountRelatedEntity {
       "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
   int futureData;
 }
+
 ```
 
-the builder creates `independent/health_entry.g.m8.dart` file with content
+#### The generated code
+
+From the model, the builder creates `models/health_entry.g.m8.dart` file with content
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
@@ -266,9 +471,355 @@ mixin HealthEntryDatabaseHelper {
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 }
+
 ```
 
-and database adapter file `main.adapter.g.m8.dart`
+### GymLocation - A DbEntity implementation
+
+We added a GymLocation model that implements DbEntity. 
+
+![usecase003](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase003-320.gif)
+
+#### The model
+
+The model file `models/gym_location.dart` has the following content:
+
+```dart
+import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+
+@DataTable(
+    "gym_location", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+class GymLocation implements DbEntity {
+  @DataColumn(
+      "id",
+      ColumnMetadata.PrimaryKey |
+          ColumnMetadata.Unique |
+          ColumnMetadata.AutoIncrement)
+  int id;
+
+  @DataColumn("description", ColumnMetadata.Unique)
+  String description;
+
+  @DataColumn("rating")
+  int rating;
+
+  @DataColumn(
+      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  int futureData;
+}
+```
+
+#### The generated code
+
+From the model, the builder creates `models/gym_location.g.m8.dart` file with content
+
+```dart
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: OrmM8GeneratorForAnnotation
+// **************************************************************************
+
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:example/models/gym_location.dart';
+
+class GymLocationProxy extends GymLocation {
+  DateTime dateCreate;
+  DateTime dateUpdate;
+
+  GymLocationProxy();
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['id'] = id;
+    map['description'] = description;
+    map['rating'] = rating;
+    map['date_create'] = dateCreate.millisecondsSinceEpoch;
+    map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+
+    return map;
+  }
+
+  GymLocationProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.description = map['description'];
+    this.rating = map['rating'];
+    this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
+    this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
+  }
+}
+
+mixin GymLocationDatabaseHelper {
+  Future<Database> db;
+  final theGymLocationColumns = [
+    "id",
+    "description",
+    "rating",
+    "date_create",
+    "date_update"
+  ];
+
+  final String _theGymLocationTableHandler = 'gym_location';
+  Future createGymLocationTable(Database db) async {
+    await db.execute(
+        'CREATE TABLE $_theGymLocationTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, rating INTEGER , date_create INTEGER, date_update INTEGER)');
+  }
+
+  Future<int> saveGymLocation(GymLocationProxy instanceGymLocation) async {
+    var dbClient = await db;
+
+    instanceGymLocation.dateCreate = DateTime.now();
+    instanceGymLocation.dateUpdate = DateTime.now();
+
+    var result = await dbClient.insert(
+        _theGymLocationTableHandler, instanceGymLocation.toMap());
+    return result;
+  }
+
+  Future<List<GymLocation>> getGymLocationProxiesAll() async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theGymLocationTableHandler,
+        columns: theGymLocationColumns, where: '1');
+
+    return result.map((e) => GymLocationProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getGymLocationProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(await dbClient.rawQuery(
+        'SELECT COUNT(*) FROM $_theGymLocationTableHandler  WHERE 1'));
+  }
+
+  Future<GymLocation> getGymLocation(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(_theGymLocationTableHandler,
+        columns: theGymLocationColumns, where: '1 AND id = ?', whereArgs: [id]);
+
+    if (result.length > 0) {
+      return GymLocationProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteGymLocation(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(_theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteGymLocationProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(_theGymLocationTableHandler);
+    return true;
+  }
+
+  Future<int> updateGymLocation(GymLocationProxy instanceGymLocation) async {
+    var dbClient = await db;
+
+    instanceGymLocation.dateUpdate = DateTime.now();
+
+    return await dbClient.update(
+        _theGymLocationTableHandler, instanceGymLocation.toMap(),
+        where: "id = ?", whereArgs: [instanceGymLocation.id]);
+  }
+}
+```
+
+### Receipt - A DbEntity implementation
+
+We added a Receipt model that implements DbEntity. 
+
+![usecase004](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase004-320.gif)
+
+#### The model
+
+The model file `models/receipt.dart` has the following content:
+
+```dart
+import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+
+@DataTable("receipt", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+class Receipt implements DbEntity {
+  @DataColumn(
+      "id",
+      ColumnMetadata.PrimaryKey |
+          ColumnMetadata.Unique |
+          ColumnMetadata.AutoIncrement)
+  int id;
+
+  @DataColumn("is_bio", ColumnMetadata.NotNull)
+  bool isBio;
+
+  @DataColumn("expiration_date", ColumnMetadata.NotNull)
+  DateTime expirationDate;
+
+  @DataColumn("price", ColumnMetadata.NotNull)
+  double quantity;
+
+  @DataColumn("number_of_items", ColumnMetadata.NotNull)
+  int numberOfItems;
+
+  @DataColumn("storage_temperature", ColumnMetadata.NotNull)
+  num storageTemperature;
+
+  @DataColumn("description", ColumnMetadata.Unique | ColumnMetadata.NotNull)
+  String description;
+
+  @DataColumn(
+      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  int futureData;
+}
+```
+
+#### The generated code
+
+From the model, the builder creates `models/receipt.g.m8.dart` file with content
+
+```dart
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// Generator: OrmM8GeneratorForAnnotation
+// **************************************************************************
+
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:example/models/receipt.dart';
+
+class ReceiptProxy extends Receipt {
+  DateTime dateCreate;
+  DateTime dateUpdate;
+
+  ReceiptProxy(
+      {isBio,
+      expirationDate,
+      quantity,
+      numberOfItems,
+      storageTemperature,
+      description}) {
+    this.isBio = isBio;
+    this.expirationDate = expirationDate;
+    this.quantity = quantity;
+    this.numberOfItems = numberOfItems;
+    this.storageTemperature = storageTemperature;
+    this.description = description;
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['id'] = id;
+    map['is_bio'] = isBio ? 1 : 0;
+    map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
+    map['price'] = quantity;
+    map['number_of_items'] = numberOfItems;
+    map['storage_temperature'] = storageTemperature;
+    map['description'] = description;
+    map['date_create'] = dateCreate.millisecondsSinceEpoch;
+    map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+
+    return map;
+  }
+
+  ReceiptProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.isBio = map['is_bio'] == 1 ? true : false;
+    this.expirationDate =
+        DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
+    this.quantity = map['price'];
+    this.numberOfItems = map['number_of_items'];
+    this.storageTemperature = map['storage_temperature'];
+    this.description = map['description'];
+    this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
+    this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
+  }
+}
+
+mixin ReceiptDatabaseHelper {
+  Future<Database> db;
+  final theReceiptColumns = [
+    "id",
+    "is_bio",
+    "expiration_date",
+    "price",
+    "number_of_items",
+    "storage_temperature",
+    "description",
+    "date_create",
+    "date_update"
+  ];
+
+  final String _theReceiptTableHandler = 'receipt';
+  Future createReceiptTable(Database db) async {
+    await db.execute(
+        'CREATE TABLE $_theReceiptTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, is_bio INTEGER  NOT NULL, expiration_date INTEGER  NOT NULL, price REAL  NOT NULL, number_of_items INTEGER  NOT NULL, storage_temperature NUMERIC  NOT NULL, description TEXT  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+  }
+
+  Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {
+    var dbClient = await db;
+
+    instanceReceipt.dateCreate = DateTime.now();
+    instanceReceipt.dateUpdate = DateTime.now();
+
+    var result =
+        await dbClient.insert(_theReceiptTableHandler, instanceReceipt.toMap());
+    return result;
+  }
+
+  Future<List<Receipt>> getReceiptProxiesAll() async {
+    var dbClient = await db;
+    var result = await dbClient.query(_theReceiptTableHandler,
+        columns: theReceiptColumns, where: '1');
+
+    return result.map((e) => ReceiptProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getReceiptProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $_theReceiptTableHandler  WHERE 1'));
+  }
+
+  Future<Receipt> getReceipt(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(_theReceiptTableHandler,
+        columns: theReceiptColumns, where: '1 AND id = ?', whereArgs: [id]);
+
+    if (result.length > 0) {
+      return ReceiptProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteReceipt(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(_theReceiptTableHandler, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteReceiptProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(_theReceiptTableHandler);
+    return true;
+  }
+
+  Future<int> updateReceipt(ReceiptProxy instanceReceipt) async {
+    var dbClient = await db;
+
+    instanceReceipt.dateUpdate = DateTime.now();
+
+    return await dbClient.update(
+        _theReceiptTableHandler, instanceReceipt.toMap(),
+        where: "id = ?", whereArgs: [instanceReceipt.id]);
+  }
+}
+```
+
+### The database adapter
+
+For the all models the builder will generate a common database adapter file `main.adapter.g.m8.dart`
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
