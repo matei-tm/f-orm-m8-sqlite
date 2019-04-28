@@ -128,25 +128,25 @@ import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 class UserAccount implements DbAccountEntity {
   @DataColumn(
       "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+      ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
   @DataColumn("description")
   String description;
 
   @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 
-  @DataColumn("abbreviation", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  @DataColumn("abbreviation", ColumnMetadata.notNull | ColumnMetadata.unique)
   String abbreviation;
 
-  @DataColumn("email", ColumnMetadata.NotNull)
+  @DataColumn("email", ColumnMetadata.notNull)
   String email;
 
-  @DataColumn("user_name", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  @DataColumn("user_name", ColumnMetadata.notNull | ColumnMetadata.unique)
   String userName;
 
   @DataColumn("is_current")
@@ -311,27 +311,27 @@ The model file `models/health_entry.dart` has the following content:
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "health_entry", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+    "health_entry", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class HealthEntry implements DbAccountRelatedEntity {
   @DataColumn(
       "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+      ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.NotNull)
+  @DataColumn("description", ColumnMetadata.notNull)
   String description;
 
   @DataColumn("diagnosys_date")
   DateTime diagnosysDate;
 
   @override
-  @DataColumn("account_id", ColumnMetadata.NotNull)
+  @DataColumn("account_id", ColumnMetadata.notNull)
   int accountId;
 
   @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
 
@@ -488,23 +488,23 @@ The model file `models/gym_location.dart` has the following content:
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "gym_location", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+    "gym_location", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class GymLocation implements DbEntity {
   @DataColumn(
       "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+      ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.Unique)
+  @DataColumn("description", ColumnMetadata.unique)
   String description;
 
   @DataColumn("rating")
   int rating;
 
   @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
 ```
@@ -640,35 +640,35 @@ The model file `models/receipt.dart` has the following content:
 ```dart
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("receipt", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+@DataTable("receipt", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class Receipt implements DbEntity {
   @DataColumn(
       "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+      ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("is_bio", ColumnMetadata.NotNull)
+  @DataColumn("is_bio", ColumnMetadata.notNull)
   bool isBio;
 
-  @DataColumn("expiration_date", ColumnMetadata.NotNull)
+  @DataColumn("expiration_date", ColumnMetadata.notNull)
   DateTime expirationDate;
 
-  @DataColumn("price", ColumnMetadata.NotNull)
+  @DataColumn("price", ColumnMetadata.notNull)
   double quantity;
 
-  @DataColumn("number_of_items", ColumnMetadata.NotNull)
+  @DataColumn("number_of_items", ColumnMetadata.notNull)
   int numberOfItems;
 
-  @DataColumn("storage_temperature", ColumnMetadata.NotNull)
+  @DataColumn("storage_temperature", ColumnMetadata.notNull)
   num storageTemperature;
 
-  @DataColumn("description", ColumnMetadata.Unique | ColumnMetadata.NotNull)
+  @DataColumn("description", ColumnMetadata.unique | ColumnMetadata.notNull)
   String description;
 
   @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
 ```

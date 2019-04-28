@@ -2,27 +2,28 @@ import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable("user_account")
 class UserAccount implements DbAccountEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
   @DataColumn("description")
   String description;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 
-  @DataColumn("abbreviation", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  @DataColumn("abbreviation",
+      metadataLevel: ColumnMetadata.notNull | ColumnMetadata.unique)
   String abbreviation;
 
-  @DataColumn("email", ColumnMetadata.NotNull)
+  @DataColumn("email", metadataLevel: ColumnMetadata.notNull)
   String email;
 
-  @DataColumn("user_name", ColumnMetadata.NotNull | ColumnMetadata.Unique)
+  @DataColumn("user_name",
+      metadataLevel: ColumnMetadata.notNull | ColumnMetadata.unique)
   String userName;
 
   @DataColumn("is_current")

@@ -1,25 +1,25 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 bool isNotNull(int value) {
-  return value & ColumnMetadata.NotNull == ColumnMetadata.NotNull;
+  return value & ColumnMetadata.notNull == ColumnMetadata.notNull;
 }
 
 bool isPrimaryKey(int value) {
-  return value & ColumnMetadata.PrimaryKey == ColumnMetadata.PrimaryKey;
+  return value & ColumnMetadata.primaryKey == ColumnMetadata.primaryKey;
 }
 
 bool isAutoIncrement(int value) {
-  return value & ColumnMetadata.AutoIncrement == ColumnMetadata.AutoIncrement;
+  return value & ColumnMetadata.autoIncrement == ColumnMetadata.autoIncrement;
 }
 
 bool isIndexed(int value) {
-  return value & ColumnMetadata.Indexed == ColumnMetadata.Indexed;
+  return value & ColumnMetadata.indexed == ColumnMetadata.indexed;
 }
 
 bool isUnique(int value) {
-  return value & ColumnMetadata.Unique == ColumnMetadata.Unique;
+  return value & ColumnMetadata.unique == ColumnMetadata.unique;
 }
 
 bool mustIgnore(int value) {
-  return value & ColumnMetadata.Ignore == ColumnMetadata.Ignore;
+  return value & ColumnMetadata.ignore == ColumnMetadata.ignore;
 }

@@ -1,22 +1,21 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 @DataTable(
-    "gym_location", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+    "gym_location", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class GymLocation implements DbEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.Unique)
+  @DataColumn("description", metadataLevel: ColumnMetadata.unique)
   String description;
 
   @DataColumn("rating")
   int rating;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }

@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2019-04-29
+
+### Changed
+
+* Aligned generators with `flutter-orm-m8` v0.7.0
+
 ## [0.3.0+1] - 2019-04-25
 
 ### Fixed
@@ -12,7 +18,7 @@
 
 ### Changed
 
-* Aligned generators with `flutter-orm-m8` v0.0.6
+* Aligned generators with `flutter-orm-m8` v0.6.0
 * Default constructor on proxy entities has named parameters
 * All db helpers `get*all` methods return a list of proxy entities 
 * The generator handles DbAccountEntity isCurrent field 

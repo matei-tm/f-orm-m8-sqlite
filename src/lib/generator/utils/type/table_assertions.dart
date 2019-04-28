@@ -1,13 +1,13 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
 bool isSoftDeletable(int value) {
-  return value & TableMetadata.SoftDeletable == TableMetadata.SoftDeletable;
+  return value & TableMetadata.softDeletable == TableMetadata.softDeletable;
 }
 
 bool isCreateTrackable(int value) {
-  return value & TableMetadata.TrackCreate == TableMetadata.TrackCreate;
+  return value & TableMetadata.trackCreate == TableMetadata.trackCreate;
 }
 
 bool isUpdateTrackable(int value) {
-  return value & TableMetadata.TrackUpdate == TableMetadata.TrackUpdate;
+  return value & TableMetadata.trackUpdate == TableMetadata.trackUpdate;
 }

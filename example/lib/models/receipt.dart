@@ -1,39 +1,39 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("receipt", TableMetadata.TrackCreate | TableMetadata.TrackUpdate)
+@DataTable("receipt", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class Receipt implements DbEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.PrimaryKey |
-          ColumnMetadata.Unique |
-          ColumnMetadata.AutoIncrement)
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
+          ColumnMetadata.unique |
+          ColumnMetadata.autoIncrement)
   int id;
 
-  //@DataColumn("number_of_molecules", ColumnMetadata.NotNull)
+  //@DataColumn("number_of_molecules", ColumnMetadata.notNull)
   //BigInt numberOfMolecules;
 
-  @DataColumn("is_bio", ColumnMetadata.NotNull)
+  @DataColumn("is_bio", metadataLevel: ColumnMetadata.notNull)
   bool isBio;
 
-  @DataColumn("expiration_date", ColumnMetadata.NotNull)
+  @DataColumn("expiration_date", metadataLevel: ColumnMetadata.notNull)
   DateTime expirationDate;
 
-  @DataColumn("price", ColumnMetadata.NotNull)
+  @DataColumn("price", metadataLevel: ColumnMetadata.notNull)
   double quantity;
 
-  //@DataColumn("decomposing_duration", ColumnMetadata.NotNull)
+  //@DataColumn("decomposing_duration", ColumnMetadata.notNull)
   //Duration decomposingDuration;
 
-  @DataColumn("number_of_items", ColumnMetadata.NotNull)
+  @DataColumn("number_of_items", metadataLevel: ColumnMetadata.notNull)
   int numberOfItems;
 
-  @DataColumn("storage_temperature", ColumnMetadata.NotNull)
+  @DataColumn("storage_temperature", metadataLevel: ColumnMetadata.notNull)
   num storageTemperature;
 
-  @DataColumn("description", ColumnMetadata.Unique | ColumnMetadata.NotNull)
+  @DataColumn("description",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
   String description;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.Ignore | ColumnMetadata.Unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
