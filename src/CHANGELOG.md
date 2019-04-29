@@ -2,11 +2,11 @@
 
 ## [Unreleased]
 
-## [0.4.0] - 2019-04-29
+## [0.4.0-beta] - 2019-04-29
 
 ### Changed
 
-* Aligned generators with `flutter-orm-m8` v0.7.0
+* Aligned generators with `flutter-orm-m8` v0.7.1
 
 ## [0.3.0+1] - 2019-04-25
 
