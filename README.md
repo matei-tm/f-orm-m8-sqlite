@@ -34,8 +34,8 @@ Supported orm-m8 features:
 
 | Prefix               | Framework gem          | Type                | Generator version | Notes              |
 | -------------------- | ---------------------- | ------------------- | ----------------- | ------------------ |
-| @                    | DataTable              | annotation          | v0.1.0            |                    |
-| @                    | DataColumn             | annotation          | v0.1.0            |                    |
+| @                    | DataTable              | class annotation    | v0.1.0            |                    |
+| @                    | DataColumn             | field annotation    | v0.1.0            |                    |
 | TableMetadata.       | softDeletable          | TableMetadata       | v0.3.0            |                    |
 | TableMetadata.       | trackCreate            | TableMetadata       | v0.3.0            |                    |
 | TableMetadata.       | trackUpdate            | TableMetadata       | v0.1.0            |                    |
