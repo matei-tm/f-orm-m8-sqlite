@@ -30,6 +30,30 @@ Dart package to generate SQLite ready-to-go fixture. Uses [Dart Build System](ht
 
 It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-orm-m8). Read [README.md](https://github.com/matei-tm/flutter-orm-m8/blob/master/README.md) for implemented annotation convention.
 
+Supported orm-m8 features:
+
+| Prefix               | Framework gem          | Type                | Generator version | Notes              |
+| -------------------- | ---------------------- | ------------------- | ----------------- | ------------------ |
+| @                    | DataTable              | annotation          | v0.1.0            |                    |
+| @                    | DataColumn             | annotation          | v0.1.0            |                    |
+| TableMetadata.       | softDeletable          | TableMetadata       | v0.3.0            |                    |
+| TableMetadata.       | trackCreate            | TableMetadata       | v0.3.0            |                    |
+| TableMetadata.       | trackUpdate            | TableMetadata       | v0.1.0            |                    |
+| ColumnMetadata.      | ignore                 | ColumnMetadata      | v0.1.0            |                    |
+| ColumnMetadata.      | primaryKey             | ColumnMetadata      | v0.1.0            |                    |
+| ColumnMetadata.      | unique                 | ColumnMetadata      | v0.1.0            |                    |
+| ColumnMetadata.      | notNull                | ColumnMetadata      | v0.1.0            |                    |
+| ColumnMetadata.      | autoIncrement          | ColumnMetadata      | v0.3.0            |                    |
+| ColumnMetadata.      | indexed                | ColumnMetadata      | -                 | Planned for v0.6.0 |
+| CompositeConstraint. | unique                 | CompositeConstraint | -                 | Planned for v0.4.0 |
+| CompositeConstraint. | primaryKey             | CompositeConstraint | -                 | Planned for v0.4.0 |
+| CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.6.0 |
+| CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.6.0 |
+| implements           | DbOpenEntity           | entity helper       | -                 | Planned for v0.6.0 |
+| implements           | DbEntity               | entity helper       | v0.1.0            |                    |
+| implements           | DbAccountEntity        | entity helper       | v0.1.0            |                    |
+| implements           | DbAccountRelatedEntity | entity helper       | v0.1.0            |                    |
+
 ## Usage
 
 1. Create a flutter project
@@ -53,7 +77,7 @@ It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-
 
         ```yaml
         dependencies:
-            flutter_orm_m8: ^0.6.0
+            flutter_orm_m8: ^0.7.1
             sqflite: ^1.1.0
             flutter:
                 sdk: flutter
