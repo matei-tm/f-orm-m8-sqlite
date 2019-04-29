@@ -26,7 +26,7 @@ class GymspectorApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  var scaffoldKey;
+  final scaffoldKey;
 
   MyHomePage({Key key, this.title, this.scaffoldKey}) : super(key: key);
 

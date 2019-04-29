@@ -10,7 +10,7 @@ class HomePageRoute extends MaterialPageRoute {
 }
 
 class HomePage extends StatefulWidget {
-  GlobalKey<ScaffoldState> scaffoldKey;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   HomePage({Key key, this.scaffoldKey}) : super(key: key);
 
