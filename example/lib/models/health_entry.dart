@@ -9,15 +9,30 @@ class HealthEntry implements DbAccountRelatedEntity {
           ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", metadataLevel: ColumnMetadata.notNull)
-  String description;
-
   @DataColumn("diagnosys_date")
   DateTime diagnosysDate;
 
   @override
-  @DataColumn("account_id", metadataLevel: ColumnMetadata.notNull)
+  @DataColumn("account_id",
+      metadataLevel: ColumnMetadata.notNull,
+      compositeConstraints: [
+        CompositeConstraint(
+            name: "uq_account_entry",
+            constraintType: CompositeConstraintType.unique),
+        CompositeConstraint(
+            name: "ix_account_entry",
+            constraintType: CompositeConstraintType.indexed)
+      ])
   int accountId;
+
+  @DataColumn("description",
+      metadataLevel: ColumnMetadata.notNull,
+      compositeConstraints: [
+        CompositeConstraint(
+            name: "uq_account_entry",
+            constraintType: CompositeConstraintType.unique)
+      ])
+  String description;
 
   @DataColumn("my_future_column7",
       metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)

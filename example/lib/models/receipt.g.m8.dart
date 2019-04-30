@@ -72,8 +72,17 @@ mixin ReceiptDatabaseHelper {
 
   final String _theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theReceiptTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, is_bio INTEGER  NOT NULL, expiration_date INTEGER  NOT NULL, price REAL  NOT NULL, number_of_items INTEGER  NOT NULL, storage_temperature NUMERIC  NOT NULL, description TEXT  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theReceiptTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    is_bio INTEGER  NOT NULL,
+    expiration_date INTEGER  NOT NULL,
+    price REAL  NOT NULL,
+    number_of_items INTEGER  NOT NULL,
+    storage_temperature NUMERIC  NOT NULL,
+    description TEXT  NOT NULL UNIQUE,
+    date_create INTEGER,
+    date_update INTEGER        
+)''');
   }
 
   Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {

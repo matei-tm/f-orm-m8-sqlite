@@ -46,8 +46,13 @@ mixin GymLocationDatabaseHelper {
 
   final String _theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theGymLocationTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, rating INTEGER , date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theGymLocationTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    description TEXT  UNIQUE,
+    rating INTEGER ,
+    date_create INTEGER,
+    date_update INTEGER        
+)''');
   }
 
   Future<int> saveGymLocation(GymLocationProxy instanceGymLocation) async {

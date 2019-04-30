@@ -26,7 +26,7 @@ class DatabaseHelper
   static Database _db;
 
   /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
-  bool extremeDevelopmentMode = false;
+  bool extremeDevelopmentMode = true;
 
   factory DatabaseHelper() => _instance;
   DatabaseHelper.internal();

@@ -52,8 +52,14 @@ mixin ToDoDatabaseHelper {
 
   final String _theToDoTableHandler = 'to_do';
   Future createToDoTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theToDoTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, diagnosys_date INTEGER , user_account_id INTEGER  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theToDoTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    description TEXT  UNIQUE,
+    diagnosys_date INTEGER ,
+    user_account_id INTEGER  NOT NULL UNIQUE,
+    date_create INTEGER,
+    date_update INTEGER        
+)''');
   }
 
   Future<int> saveToDo(ToDoProxy instanceToDo) async {

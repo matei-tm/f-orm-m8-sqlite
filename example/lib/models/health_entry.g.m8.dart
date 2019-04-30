@@ -12,17 +12,17 @@ class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  HealthEntryProxy({description, accountId}) {
-    this.description = description;
+  HealthEntryProxy({accountId, description}) {
     this.accountId = accountId;
+    this.description = description;
   }
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
-    map['description'] = description;
     map['diagnosys_date'] = diagnosysDate.millisecondsSinceEpoch;
     map['account_id'] = accountId;
+    map['description'] = description;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
 
@@ -31,10 +31,10 @@ class HealthEntryProxy extends HealthEntry {
 
   HealthEntryProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.description = map['description'];
     this.diagnosysDate =
         DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
     this.accountId = map['account_id'];
+    this.description = map['description'];
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
   }
@@ -44,17 +44,24 @@ mixin HealthEntryDatabaseHelper {
   Future<Database> db;
   final theHealthEntryColumns = [
     "id",
-    "description",
     "diagnosys_date",
     "account_id",
+    "description",
     "date_create",
     "date_update"
   ];
 
   final String _theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  NOT NULL, diagnosys_date INTEGER , account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theHealthEntryTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    diagnosys_date INTEGER ,
+    account_id INTEGER  NOT NULL,
+    description TEXT  NOT NULL,
+    date_create INTEGER,
+    date_update INTEGER    ,
+    UNIQUE(account_id, description)
+)''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
