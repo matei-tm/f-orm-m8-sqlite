@@ -1,6 +1,7 @@
 import 'package:example/fragments/gym/gym_place_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/gym_location.g.m8.dart';
+import 'package:example/pages/helpers/snack_presenter.dart';
 import 'package:flutter/material.dart';
 
 class GymPlacesFragment extends StatefulWidget {
@@ -150,10 +151,6 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
   }
 
   void _showError(String message) {
-    _parentScaffoldKey.currentState.showSnackBar(SnackBar(
-      key: Key('errorSnackGymPlace'),
-      content: Text('Error: $message'),
-      duration: Duration(seconds: 10),
-    ));
+    SnackPresenter.showError(message, _parentScaffoldKey);    
   }
 }

@@ -1,6 +1,7 @@
 import 'package:example/fragments/receipt/receipt_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/receipt.dart';
+import 'package:example/pages/helpers/snack_presenter.dart';
 import 'package:example/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
@@ -125,10 +126,6 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   void _showMessage(String message) {
-    _parentScaffoldKey.currentState.showSnackBar(SnackBar(
-      key: Key('infoSnack'),
-      content: Text('Info: $message'),
-      duration: Duration(seconds: 3),
-    ));
+    SnackPresenter.showInfo(message, _parentScaffoldKey);    
   }
 }

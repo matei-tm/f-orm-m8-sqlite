@@ -37,9 +37,9 @@ Future healthEntrySubmit(WidgetTester tester) async {
   await tester.pump();
 
   expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('addButton')), findsOneWidget);
+  expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
 
-  await tester.tap(find.byKey(Key('addButton')));
+  await tester.tap(find.byKey(Key('addHealthEntryButton')));
 }
 
 Future accountPageFormSubmit(WidgetTester tester) async {

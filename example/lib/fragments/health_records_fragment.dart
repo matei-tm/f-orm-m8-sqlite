@@ -1,6 +1,7 @@
 import 'package:example/fragments/health/health_entry_row.dart';
 import 'package:example/main.adapter.g.m8.dart';
 import 'package:example/models/health_entry.g.m8.dart';
+import 'package:example/pages/helpers/snack_presenter.dart';
 import 'package:example/pages/helpers/guarded_account_state.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +74,7 @@ class _HealthRecordsFragmentState
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: RaisedButton(
-                      key: Key('addButton'),
+                      key: Key('addHealthEntryButton'),
                       onPressed: () {
                         _saveHealthEntry(_healthEntryController.value.text);
                       },
@@ -152,10 +153,6 @@ class _HealthRecordsFragmentState
   }
 
   void _showError(String message) {
-    _parentScaffoldKey.currentState.showSnackBar(SnackBar(
-      key: Key('errorSnack'),
-      content: Text('Error: $message'),
-      duration: Duration(seconds: 10),
-    ));
+    SnackPresenter.showError(message, _parentScaffoldKey);    
   }
 }

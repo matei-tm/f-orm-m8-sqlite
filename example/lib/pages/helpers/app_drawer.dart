@@ -95,6 +95,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
   List<Widget> _buildActions(BuildContext context) {
     return [
       ListTile(
+        key: Key('healthRecordsMenuButton'),
         leading: Icon(Icons.healing),
         title: Text("Health Records"),
         onTap: () {
@@ -102,6 +103,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         },
       ),
       ListTile(
+        key: Key('gymPlacesMenuButton'),
         leading: Icon(Icons.fitness_center),
         title: Text("Gym Places"),
         onTap: () {
@@ -109,6 +111,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         },
       ),
       ListTile(
+        key: Key('receiptsMenuButton'),
         leading: Icon(Icons.receipt),
         title: Text("Receipts"),
         onTap: () {
@@ -116,6 +119,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         },
       ),
       ListTile(
+        key: Key('disclaimerMenuButton'),
         leading: Icon(Icons.verified_user),
         title: Text("Disclaimer"),
         onTap: () {
@@ -126,6 +130,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
         color: Colors.black,
       ),
       ListTile(
+        key: Key('userAccountMenuButton'),
         leading: Icon(Icons.account_circle),
         title: Text("User Account"),
         onTap: () {
