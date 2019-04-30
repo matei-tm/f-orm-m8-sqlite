@@ -4,11 +4,10 @@ import 'package:example/pages/account_page.dart';
 import 'package:example/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-void main() => runApp(GymspectorApp(scaffoldKey));
+void main() => runApp(GymspectorApp());
 
 class GymspectorApp extends StatelessWidget {
-  GymspectorApp(GlobalKey<ScaffoldState> scaffoldKey);
+  GymspectorApp();
 
   @override
   Widget build(BuildContext context) {
@@ -17,31 +16,24 @@ class GymspectorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(
-        title: 'orm-m8 Demo Home Page',
-        scaffoldKey: scaffoldKey,
-      ),
+      home: MyHomePage(title: 'orm-m8 Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final scaffoldKey;
-
-  MyHomePage({Key key, this.title, this.scaffoldKey}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  MyHomePageState createState() => MyHomePageState(scaffoldKey);
+  MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
   String _currentRoute;
 
-  var scaffoldKey;
-
-  MyHomePageState(this.scaffoldKey);
+  MyHomePageState();
 
   @override
   void initState() {
@@ -74,14 +66,13 @@ class MyHomePageState extends State<MyHomePage> {
     return (_currentRoute == null)
         ? Container()
         : MaterialApp(
+            key: const ValueKey<String>('OrmM8Example'),
             theme: ThemeData(
               primarySwatch: Colors.red,
             ),
             initialRoute: _currentRoute,
             routes: {
-              '/': (context) => HomePage(
-                    scaffoldKey: scaffoldKey,
-                  ),
+              '/': (context) => HomePage(),
               '/receipts/add': (context) => ReceiptAddPage(null),
               'start': (context) => AccountPage(null),
             },

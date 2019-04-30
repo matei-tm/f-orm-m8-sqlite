@@ -48,5 +48,14 @@ void main() {
       await driver.waitFor(saveAccountButtonFinder);
       await driver.tap(saveAccountButtonFinder);
     });
+
+    test('open drawer', () async {
+      final SerializableFinder drawerOpenButton =
+          find.byTooltip('Navigation menu');
+
+      await driver.tap(drawerOpenButton);
+      //final SerializableFinder app = find.byValueKey('OrmM8Example');
+      //await driver.scroll(app, -300.0, 0.0, const Duration(milliseconds: 300));
+    });
   });
 }

@@ -18,15 +18,15 @@ class HomePage extends StatefulWidget {
 
   @override
   HomePageState createState() {
-    return HomePageState(scaffoldKey);
+    return HomePageState();
   }
 }
 
 class HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> scaffoldKey; // = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String title;
 
-  HomePageState(scaffoldKey);
+  HomePageState();
 
   _onSelectItem(String key, {bool fromDrawer = true}) {
     this.title = parseKey(key);
@@ -52,11 +52,11 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(String pos) {
     switch (pos) {
       case "Health Records":
-        return HealthRecordsFragment(scaffoldKey);
+        return HealthRecordsFragment(_scaffoldKey);
       case "Gym Places":
-        return GymPlacesFragment(scaffoldKey);
+        return GymPlacesFragment(_scaffoldKey);
       case "Receipts":
-        return ReceiptsFragment(scaffoldKey);
+        return ReceiptsFragment(_scaffoldKey);
       case "Disclaimer":
         return DisclaimerFragment();
       default:
@@ -76,21 +76,21 @@ class HomePageState extends State<HomePage> {
       print("We should never get here");
     }
 
-    return WillPopScope(
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(this.title ?? "Gymspector"),
-          actions: <Widget>[],
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        leading: IconButton(
+          tooltip: 'Navigation menu',
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
         ),
-        drawer: _appDrawer,
-        body: _getDrawerItemWidget(selectedDrawerIndex),
+        title: Text(this.title ?? "Gymspector"),
+        actions: <Widget>[],
       ),
-      onWillPop: () {
-        return Future(() => false);
-      },
+      drawer: _appDrawer,
+      body: _getDrawerItemWidget(selectedDrawerIndex),
     );
   }
 }
