@@ -151,6 +151,6 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
   }
 
   void _showError(String message) {
-    SnackPresenter.showError(message, _parentScaffoldKey);    
+    SnackPresenter.showError(message, _parentScaffoldKey);
   }
 }

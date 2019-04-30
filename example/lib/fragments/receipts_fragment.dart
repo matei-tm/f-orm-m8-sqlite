@@ -126,6 +126,6 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   void _showMessage(String message) {
-    SnackPresenter.showInfo(message, _parentScaffoldKey);    
+    SnackPresenter.showInfo(message, _parentScaffoldKey);
   }
 }

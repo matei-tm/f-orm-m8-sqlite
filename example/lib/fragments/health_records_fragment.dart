@@ -153,6 +153,6 @@ class _HealthRecordsFragmentState
   }
 
   void _showError(String message) {
-    SnackPresenter.showError(message, _parentScaffoldKey);    
+    SnackPresenter.showError(message, _parentScaffoldKey);
   }
 }
