@@ -53,7 +53,7 @@ void main() {
     final healthEntryTextFieldFinder = find.byValueKey('healthEntry');
     final addHealthEntryButtonFinder = find.byValueKey('addHealthEntryButton');
     final deleteHealthEntry03ButtonFinder = find.byValueKey('delBtnHealth3');
-    
+
     setUpAll(() async {
       driver = await FlutterDriver.connect();
     });
@@ -91,7 +91,7 @@ void main() {
       await driver.waitFor(find.text('Happy'));
     });
 
-    test('enter Happy text again entry and check unique constraint', () async {
+    test('enter Happy text again and check unique constraint', () async {
       await driver.waitFor(healthEntryTextFieldFinder);
       await driver.tap(healthEntryTextFieldFinder);
 
@@ -127,10 +127,105 @@ void main() {
       await driver.waitFor(addHealthEntryButtonFinder);
       await driver.tap(addHealthEntryButtonFinder);
 
-      await driver.waitFor(find.text('Heavy'));      
-      
+      await driver.waitFor(find.text('Heavy'));
+
       await driver.waitFor(deleteHealthEntry03ButtonFinder);
       await driver.tap(deleteHealthEntry03ButtonFinder);
+    });
+  });
+
+  group('orm-m8 Gym Places Page', () {
+    final gymPlaceTextFieldFinder = find.byValueKey('gymLocation');
+    final addGymPlaceButtonFinder = find.byValueKey('addGymPlaceButton');
+    final deleteGymPlace03ButtonFinder = find.byValueKey('delBtnGymPlace3');
+
+    setUpAll(() async {
+      driver = await FlutterDriver.connect();
+    });
+
+    tearDownAll(() async {
+      if (driver != null) {
+        driver.close();
+      }
+    });
+    test('open drawer and tap Gym Places', () async {
+      final SerializableFinder drawerOpenButton =
+          find.byTooltip('Navigation menu');
+
+      await driver.tap(drawerOpenButton);
+      final gymPlacesMenuButtonFinder = find.byValueKey('gymPlacesMenuButton');
+      await driver.waitFor(gymPlacesMenuButtonFinder);
+      await driver.tap(gymPlacesMenuButtonFinder);
+
+      await driver.checkHealth(timeout: const Duration(milliseconds: 3000));
+    });
+
+    test('enter Forum text in Gym Place entry and save', () async {
+      await driver.waitFor(gymPlaceTextFieldFinder);
+      await driver.tap(gymPlaceTextFieldFinder);
+
+      await driver.enterText("Forum");
+      await driver.waitFor(find.text('Forum'));
+
+      await driver.waitFor(addGymPlaceButtonFinder);
+      await driver.tap(addGymPlaceButtonFinder);
+
+      await driver.waitFor(find.text('Forum'));
+    });
+
+    test('enter Forum text again and check unique constraint', () async {
+      await driver.waitFor(gymPlaceTextFieldFinder);
+      await driver.tap(gymPlaceTextFieldFinder);
+
+      await driver.enterText("Forum");
+      await driver.waitFor(find.text('Forum'));
+
+      await driver.waitFor(addGymPlaceButtonFinder);
+      await driver.tap(addGymPlaceButtonFinder);
+
+      await driver.waitFor(find.text('Error:'));
+    });
+
+    test('enter Silva text in Gym Place entry and save', () async {
+      await driver.waitFor(gymPlaceTextFieldFinder);
+      await driver.tap(gymPlaceTextFieldFinder);
+
+      await driver.enterText("Silva");
+      await driver.waitFor(find.text('Silva'));
+
+      await driver.waitFor(addGymPlaceButtonFinder);
+      await driver.tap(addGymPlaceButtonFinder);
+
+      await driver.waitFor(find.text('Silva'));
+    });
+
+    test('enter Rubicon text in Gym Place entry, save and delete', () async {
+      await driver.waitFor(gymPlaceTextFieldFinder);
+      await driver.tap(gymPlaceTextFieldFinder);
+
+      await driver.enterText("Rubicon");
+      await driver.waitFor(find.text('Rubicon'));
+
+      await driver.waitFor(addGymPlaceButtonFinder);
+      await driver.tap(addGymPlaceButtonFinder);
+
+      await driver.waitFor(find.text('Rubicon'));
+
+      await driver.waitFor(deleteGymPlace03ButtonFinder);
+      await driver.tap(deleteGymPlace03ButtonFinder);
+    });
+
+    test('enter Montis text in Gym Place entry and save', () async {
+      await driver.waitFor(gymPlaceTextFieldFinder);
+      await driver.tap(gymPlaceTextFieldFinder);
+
+      await driver.enterText("Montis");
+      await driver.waitFor(find.text('Montis'));
+
+      await driver.waitFor(addGymPlaceButtonFinder);
+      await driver.tap(addGymPlaceButtonFinder);
+
+      await driver.waitFor(find.text('Montis'));
     });
   });
 }
