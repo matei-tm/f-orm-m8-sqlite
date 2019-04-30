@@ -63,15 +63,18 @@ class SqlDefinitionWriter {
   }
 
   String getPrimaryKeyCompositeString() {
-    return getCompositeString(_primaryKeyCompositesMap, ",\n${tableSpacer}PRIMARY KEY");
+    return getCompositeString(
+        _primaryKeyCompositesMap, ",\n${tableSpacer}PRIMARY KEY");
   }
 
   void collectCompositeConstraints() {
     emittedEntity.attributes.forEach((k, v) {
-      buildCompositesByType(v, _uniqueCompositesMap, CompositeConstraintType.unique);
+      buildCompositesByType(
+          v, _uniqueCompositesMap, CompositeConstraintType.unique);
       buildCompositesByType(
           v, _primaryKeyCompositesMap, CompositeConstraintType.primaryKey);
-      buildCompositesByType(v, _indexCompositesMap, CompositeConstraintType.indexed);
+      buildCompositesByType(
+          v, _indexCompositesMap, CompositeConstraintType.indexed);
     });
   }
 
