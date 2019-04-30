@@ -1,13 +1,7 @@
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
+import 'package:flutter_sqlite_m8_generator/generator/writers/sql_definition_writer.dart';
 
-class EntityWriter {
-  final EmittedEntity emittedEntity;
-
-  EntityWriter(this.emittedEntity);
-
-  String get theTableHandler => this.emittedEntity.theTableHandler;
-
-  String get theTableHandlerValue => this.emittedEntity.entityName;
+class EntityWriter extends SqlDefinitionWriter {
+  EntityWriter(emittedEntity) : super(emittedEntity);
 
   String get thePrimaryKey => this.emittedEntity.primaryKeyName;
 
@@ -74,30 +68,6 @@ import '${emittedEntity.packageIdentifier}';
     sb.writeln(_getMixinBodyCommonFields());
 
     return sb.toString();
-  }
-
-  String getTableDefinition() {
-    List<String> columnList = List<String>();
-
-    emittedEntity.attributes
-        .forEach((k, v) => columnList.add("${v.getAttributeFullDefinition()}"));
-
-    if (emittedEntity.hasSoftDelete) {
-      columnList.add("is_deleted INTEGER DEFAULT 0");
-    }
-
-    if (emittedEntity.hasTrackCreate) {
-      columnList.add("date_create INTEGER");
-    }
-
-    if (emittedEntity.hasTrackUpdate) {
-      columnList.add("date_update INTEGER");
-    }
-
-    String tableDefinition =
-        "'CREATE TABLE \$${theTableHandler} (${columnList.join(", ")})'";
-
-    return tableDefinition;
   }
 
   String getCreateTrackableTimestampString() {

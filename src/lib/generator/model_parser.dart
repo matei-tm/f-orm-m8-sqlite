@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 import 'package:flutter_sqlite_m8_generator/exceptions/field_parse_exception.dart';
 import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
 import 'package:flutter_sqlite_m8_generator/generator/utils/utils.dart';
@@ -88,10 +89,25 @@ class ModelParser {
 
       List<EntityAttribute> rawEntityAttributes = valuesList
           .where((DartObject d) => isDataColumn.isExactlyType(d.type))
-          .map((DartObject obj) => EntityAttribute(
-              field.type.name, field.name, obj.getField('name').toStringValue(),
-              metadataLevel: obj.getField('metadataLevel').toIntValue() ?? 0))
-          .toList();
+          .map((DartObject obj) {
+        return EntityAttribute(
+            field.type.name, field.name, obj.getField('name').toStringValue(),
+            metadataLevel: obj.getField('metadataLevel').toIntValue() ?? 0,
+            compositeConstraints: obj
+                ?.getField('compositeConstraints')
+                ?.toListValue()
+                ?.map((s) => CompositeConstraint(
+                    name: s.getField('name').toString(),
+                    constraintType: CompositeConstraintType.values.firstWhere(
+                        (t) =>
+                            t.toString().split('.')[1] ==
+                            s
+                                .getField('constraintType')
+                                .toString()
+                                .split(' ')[1]
+                                .replaceFirst('(', ''))))
+                ?.toList());
+      }).toList();
 
       if (rawEntityAttributes.length > 1) {
         throw Exception('Only one Column annotation is allowed on a Field!');
