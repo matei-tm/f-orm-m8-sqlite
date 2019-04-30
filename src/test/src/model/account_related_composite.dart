@@ -15,7 +15,10 @@ class HealthEntryAccountRelated implements DbAccountRelatedEntity {
   @DataColumn("account_id", compositeConstraints: [
     CompositeConstraint(
         name: "uq_account_entry",
-        constraintType: CompositeConstraintType.unique)
+        constraintType: CompositeConstraintType.unique),
+    CompositeConstraint(
+        name: "ix_account_entry",
+        constraintType: CompositeConstraintType.indexed)
   ])
   int accountId;
 
