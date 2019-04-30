@@ -16,7 +16,7 @@ void main() async {
 
     test('Test raw output', () async {
       final output = await generator.generate(_library, null);
-      final expected = r'''import 'package:sqflite/sqflite.dart';
+      final expected = r"""import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:__test__/account_related.dart';
 
@@ -48,7 +48,11 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
 
   final String _theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
   Future createHealthEntryAccountRelatedTable(Database db) async {
-await db.execute('CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, my_description_column TEXT  UNIQUE, my_account_id_column INTEGER  NOT NULL)');
+await db.execute('''CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (
+    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    my_description_column TEXT  UNIQUE,
+    my_account_id_column INTEGER  NOT NULL        
+)''');
   }
 
   Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
@@ -117,7 +121,7 @@ var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
 return result.map((e) => HealthEntryAccountRelatedProxy.fromMap(e)).toList();
   }
 
-}''';
+}""";
       expect(output, expected);
     });
 

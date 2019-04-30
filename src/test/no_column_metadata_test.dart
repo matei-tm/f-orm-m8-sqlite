@@ -15,7 +15,7 @@ void main() async {
 
     test('Test @DataColumn with no ColumnMetadata', () async {
       String v = await generator.generate(_library, null);
-      expect(v, '''import 'package:sqflite/sqflite.dart';
+      expect(v, r"""import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:__test__/no_column_metadata.dart';
 
@@ -45,7 +45,11 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
 
   final String _theAModelWithoutExplicitColumnMetadataTableHandler = 'my_account_related_table';
   Future createAModelWithoutExplicitColumnMetadataTable(Database db) async {
-await db.execute('CREATE TABLE \$_theAModelWithoutExplicitColumnMetadataTableHandler (my_id_column INTEGER , my_description_column TEXT , my_future_column INTEGER )');
+await db.execute('''CREATE TABLE $_theAModelWithoutExplicitColumnMetadataTableHandler (
+    my_id_column INTEGER ,
+    my_description_column TEXT ,
+    my_future_column INTEGER         
+)''');
   }
 
   Future<int> saveAModelWithoutExplicitColumnMetadata(AModelWithoutExplicitColumnMetadataProxy instanceAModelWithoutExplicitColumnMetadata) async {
@@ -68,7 +72,7 @@ return result.map((e) => AModelWithoutExplicitColumnMetadataProxy.fromMap(e)).to
   Future<int> getAModelWithoutExplicitColumnMetadataProxiesCount() async {
 var dbClient = await db;
 return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM \$_theAModelWithoutExplicitColumnMetadataTableHandler  WHERE 1'));
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theAModelWithoutExplicitColumnMetadataTableHandler  WHERE 1'));
   }
 
   Future<AModelWithoutExplicitColumnMetadata> getAModelWithoutExplicitColumnMetadata(int id) async {
@@ -104,7 +108,7 @@ var dbClient = await db;
 return await dbClient.update(_theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap(),
     where: "null = ?", whereArgs: [instanceAModelWithoutExplicitColumnMetadata.id]);
   }
-}''');
+}""");
     });
   });
 }
