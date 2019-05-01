@@ -89,10 +89,7 @@ jobs:
         - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
         - sdkmanager --list | head -15
         - echo no | avdmanager create avd --force -n $EMULATOR_NAME -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
-        - echo "hw.lcd.width=1440" >> ~/.android/avd/$EMULATOR_NAME.avd/config.ini
-        - echo "hw.lcd.height=2560" >> ~/.android/avd/$EMULATOR_NAME.avd/config.ini
         - cat ~/.android/avd/$EMULATOR_NAME.avd/config.ini
-        - cat ~/.android/avd/$EMULATOR_NAME.avd/hardware.ini
         - sudo ln -sf /usr/share/zoneinfo/US/Pacific /etc/localtime
         - $ANDROID_HOME/emulator/emulator -avd $EMULATOR_NAME -no-audio -no-window -gpu swiftshader &
 
