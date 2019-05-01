@@ -53,7 +53,7 @@ jobs:
 
     - &integration-test-stage
       stage: example_integration_test
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
+      name: "FLUTTER_SDK: 1.0.0-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       sudo: true
       dist: trusty
       language: generic
@@ -64,7 +64,6 @@ jobs:
         - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
         # Install the Android SDK Dependency.
         - export ANDROID_HOME=/opt/android-sdk-linux
-        - export ANDROID_SDK_ROOT=/opt/android-sdk-linux
         - cd /opt
         - wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip
         - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
@@ -80,10 +79,10 @@ jobs:
         - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
         - sdkmanager --list | head -15
         # install older packages (for emulator)
-        - sdkmanager "build-tools;28.0.3" "platforms;android-28" > /dev/null
+        - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
 
         # Create and start emulator.
-        - EMULATOR_API_LEVEL=28
+        - EMULATOR_API_LEVEL=22
         - ANDROID_ABI="default;armeabi-v7a"
         - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
         - sdkmanager --list | head -15
@@ -92,14 +91,14 @@ jobs:
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
-        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - FLUTTER_VERSION=1.0.0-${FLUTTER_CHANNEL}
         - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
 
         # Wait for emulator to finish startup.
-        - ./tool/android-wait-for-emulator.sh
+        - ./script/android-wait-for-emulator.sh
         - adb shell input keyevent 82
         - flutter devices
       script: ./tool/travis_flutter.sh test_driver
