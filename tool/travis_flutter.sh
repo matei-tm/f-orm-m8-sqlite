@@ -11,7 +11,7 @@ if [ "$#" == "0" ]; then
 fi
 
 pushd $PKG
-pub upgrade || exit $?
+flutter packages get || exit $?
 
 EXIT_CODE=0
 
