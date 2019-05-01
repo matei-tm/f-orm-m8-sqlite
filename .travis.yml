@@ -64,6 +64,7 @@ jobs:
         - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
         # Install the Android SDK Dependency.
         - export ANDROID_HOME=/opt/android-sdk-linux
+        - export ANDROID_SDK_ROOT=/opt/android-sdk-linux
         - cd /opt
         - wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip
         - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
@@ -84,10 +85,16 @@ jobs:
         # Create and start emulator.
         - EMULATOR_API_LEVEL=22
         - ANDROID_ABI="default;armeabi-v7a"
+        - EMULATOR_NAME='Nexus_6P_API_28'
         - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
         - sdkmanager --list | head -15
-        - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
-        - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+        - echo no | avdmanager create avd --force -n $EMULATOR_NAME -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
+        - echo "hw.lcd.width=1440" >> ~/.android/avd/$EMULATOR_NAME.avd/config.ini
+        - echo "hw.lcd.height=2560" >> ~/.android/avd/$EMULATOR_NAME.avd/config.ini
+        - cat ~/.android/avd/$EMULATOR_NAME.avd/config.ini
+        - cat ~/.android/avd/$EMULATOR_NAME.avd/hardware.ini
+        - sudo ln -sf /usr/share/zoneinfo/US/Pacific /etc/localtime
+        - $ANDROID_HOME/emulator/emulator -avd $EMULATOR_NAME -no-audio -no-window -gpu swiftshader &
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
