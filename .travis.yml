@@ -3,16 +3,6 @@ language: dart
 
 jobs:
   include:
-    - stage: example_analyzer_and_format
-      name: "SDK: dev - DIR: example - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-infos --fatal-warnings .]"
-      script: ./tool/travis.sh dartfmt dartanalyzer_0
-      env: PKG="example"
-      dart: dev
-    - stage: example_analyzer_and_format_stable
-      name: "SDK: stable - DIR: example - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-warnings .]"
-      script: ./tool/travis.sh dartfmt dartanalyzer_1
-      env: PKG="example"
-      dart: stable
     - stage: analyzer_and_format
       name: "SDK: dev - DIR: src - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-infos --fatal-warnings .]"
       script: ./tool/travis.sh dartfmt dartanalyzer_0
@@ -39,12 +29,118 @@ jobs:
       env: PKG="src"
       dart: dev
 
+
+    - stage: example_unit_test
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter test"
+      language: generic
+      os: linux
+      env: PKG="example"
+      before_script:
+        - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
+
+        # install pre-compiled flutter
+        - FLUTTER_CHANNEL=stable
+        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
+        - flutter doctor -v
+
+        - pub global activate coverage
+      script: ./tool/travis_flutter.sh test
+      after_success: bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
+
+    - &integration-test-stage
+      stage: example_integration_test
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
+      sudo: true
+      dist: trusty
+      language: generic
+      os: linux
+      env: PKG="example"
+      # Run integration tests on android
+      before_install:
+        - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
+        # Install the Android SDK Dependency.
+        - export ANDROID_HOME=/opt/android-sdk-linux
+        - cd /opt
+        - wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip
+        - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+        - rm android-sdk-tools.zip
+        - cd -
+        - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+        # Silence warning.
+        - mkdir -p ~/.android
+        - touch ~/.android/repositories.cfg
+        # Accept licenses before installing components, no need to echo y for each component
+        - yes | sdkmanager --licenses
+        # Platform tools
+        - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
+        - sdkmanager --list | head -15
+        # install older packages (for emulator)
+        - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
+
+        # Create and start emulator.
+        - EMULATOR_API_LEVEL=22
+        - ANDROID_ABI="default;armeabi-v7a"
+        - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
+        - sdkmanager --list | head -15
+        - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI"
+        - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+
+        # install pre-compiled flutter
+        - FLUTTER_CHANNEL=stable
+        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
+        - flutter doctor -v
+
+        # Wait for emulator to finish startup.
+        - ./tool/android-wait-for-emulator.sh
+        - adb shell input keyevent 82
+        - flutter devices
+      script: ./tool/travis_flutter.sh test_driver
+    - <<: *integration-test-stage
+      os: osx
+      # use oldest flutter supported version of xcode
+      osx_image: xcode8.0
+      name: running driver on simulator
+      env: PKG="example"
+      # Run integration tests on ios
+      before_install:
+        - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
+        - export HOMEBREW_NO_AUTO_UPDATE=1
+        - brew install libimobiledevice
+        - brew install ideviceinstaller
+        - brew install ios-deploy
+        - brew install cocoapods || echo 'ignore exit(1)'
+        - brew link --overwrite cocoapods
+
+        # install pre-compiled flutter
+        - FLUTTER_CHANNEL=stable
+        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - wget --quiet --output-document=flutter.zip https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/macos/flutter_macos_v${FLUTTER_VERSION}.zip && unzip -qq flutter.zip > /dev/null && rm flutter.zip
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
+        - flutter doctor -v
+
+    - stage: example_ready_to_deploy
+      os: osx
+      language: generic
+      name: not implemented
+      env: PKG="example"
+      script: echo "Deploying to store ..."
+
+
 stages:
   - analyzer_and_format
   - analyzer_and_format_stable
   - unit_test
   - example_analyzer_and_format
-  - example_analyzer_and_format_stable
+  - example_unit_test
+  - example_integration_test
+  - example_ready_to_deploy
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
