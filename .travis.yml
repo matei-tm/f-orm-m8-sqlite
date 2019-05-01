@@ -106,7 +106,7 @@ jobs:
       os: osx
       # use oldest flutter supported version of xcode
       osx_image: xcode8.0
-      name: running driver on simulator
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       env: PKG="example"
       # Run integration tests on ios
       before_install:
