@@ -79,7 +79,7 @@ jobs:
         - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
         - sdkmanager --list | head -15
         # install older packages (for emulator)
-        - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
+        - sdkmanager "build-tools;28.0.3" "platforms;android-28" > /dev/null
 
         # Create and start emulator.
         - EMULATOR_API_LEVEL=22
@@ -126,21 +126,12 @@ jobs:
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
 
-    - stage: example_ready_to_deploy
-      os: osx
-      language: generic
-      name: not implemented
-      env: PKG="example"
-      script: echo "Deploying to store ..."
-
-
 stages:
-  #- analyzer_and_format
-  #- analyzer_and_format_stable
-  #- unit_test
-  #- example_unit_test_and_analyzer
+  - analyzer_and_format
+  - analyzer_and_format_stable
+  - unit_test
+  - example_unit_test_and_analyzer
   - example_integration_test
-  - example_ready_to_deploy
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
