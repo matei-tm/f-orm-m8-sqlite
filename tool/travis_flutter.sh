@@ -41,7 +41,7 @@ run_tests () {
     escapedPath="$(echo $1 | sed 's/\//\\\//g')"
 
     # run tests with coverage
-    if grep flutter pubspec.yaml > /dev/null; then
+    if grep sqlite_m8_demo pubspec.yaml > /dev/null; then
       echo "run flutter tests"
       if [ -f "test/all_tests.dart" ]; then
         flutter test --coverage test/all_tests.dart || error=true
