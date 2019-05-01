@@ -1,75 +1,118 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ -z "$PKG" ]; then
-  echo -e '\033[31mPKG environment variable must be set!\033[0m'
-  exit 1
-fi
+# remember some failed commands and report on exit
+error=false
 
-if [ "$#" == "0" ]; then
-  echo -e '\033[31mAt least one task argument must be provided!\033[0m'
-  exit 1
-fi
+show_help() {
+    printf "usage: $0 [--help] [--report] [<path to package>]
 
-travis_retry() {
-  local result=0
-  local count=1
-  while [ $count -le 3 ]; do
-    [ $result -ne 0 ] && {
-      echo -e "\n${ANSI_RED}The command \"$@\" failed. Retrying, $count of 3.${ANSI_RESET}\n" >&2
-    }
-    "$@"
-    result=$?
-    [ $result -eq 0 ] && break
-    count=$(($count + 1))
-    sleep 1
-  done
+Tool for running all unit and widget tests with code coverage.
+(run from root of repo)
 
-  [ $count -gt 3 ] && {
-    echo -e "\n${ANSI_RED}The command \"$@\" failed 3 times.${ANSI_RESET}\n" >&2
-  }
+where:
+    <path to package>
+        run tests for package at path only
+        (otherwise runs all tests)
+    --report
+        run a coverage report
+        (requires lcov installed)
+    --help
+        print this message
 
-  return $result
+requires code_coverage package
+(install with 'pub global activate coverage')
+"
+    exit 1
 }
 
-pushd $PKG
-flutter packages get || exit $?
+# run unit and widget tests
+run_tests () {
+  cd $1;
+  if [ -f "pubspec.yaml" ] && [ -d "test" ]; then
+    echo "running tests in $1"
+#    flutter packages get || echo "Ignore exit(1)"
+    flutter packages get
+   # check if build_runner needs to be run
+    # todo: fix build in ./built_redux (not regenerating *.g.dart files in dart 2.0)
+    if grep build_runner pubspec.yaml > /dev/null  && [ "$1" != "./built_redux" ]; then
+      flutter packages pub run build_runner build --delete-conflicting-outputs
+    fi
 
-EXIT_CODE=0
+    escapedPath="$(echo $1 | sed 's/\//\\\//g')"
 
-while (( "$#" )); do
-  TASK=$1
-  case $TASK in
-  dartanalyzer_0) echo
-    echo -e '\033[1mTASK: dartanalyzer_0\033[22m'
-    echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
-    dartanalyzer --fatal-infos --fatal-warnings . || EXIT_CODE=$?
-    ;;
-  dartanalyzer_1) echo
-    echo -e '\033[1mTASK: dartanalyzer_1\033[22m'
-    echo -e 'dartanalyzer --fatal-warnings .'
-    dartanalyzer --fatal-warnings . || EXIT_CODE=$?
-    ;;
-  dartfmt) echo
-    echo -e '\033[1mTASK: dartfmt\033[22m'
-    echo -e 'dartfmt -n --set-exit-if-changed .'
-    dartfmt -n --set-exit-if-changed . || EXIT_CODE=$?
-    ;;
-  test) echo
-    echo -e '\033[1mTASK: test\033[22m'
-    echo -e 'flutter test --coverage'
-    flutter test --coverage || EXIT_CODE=$?
-    ;;
-  test_driver) echo
-    echo -e '\033[1mTASK: test_driver\033[22m'
-    echo -e 'travis_retry flutter driver --target=test_driver/app.dart'
-    travis_retry flutter driver --target=test_driver/app.dart || EXIT_CODE=$?
-    ;;
-  *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
-    EXIT_CODE=1
-    ;;
-  esac
+    # run tests with coverage
+    if grep flutter pubspec.yaml > /dev/null; then
+      echo "run flutter tests"
+      if [ -f "test/all_tests.dart" ]; then
+        flutter test --coverage test/all_tests.dart || error=true
+      else
+        flutter test --coverage || error=true
+      fi
+      if [ -d "coverage" ]; then
+        # combine line coverage info from package tests to a common file
+        sed "s/^SF:lib/SF:$escapedPath\/lib/g" coverage/lcov.info >> $2/lcov.info
+        rm -rf "coverage"
+      fi
+    else
+      # pure dart
+      echo "run dart tests"
+      pub get
+      nohup pub global run coverage:collect_coverage --port=8111 -o coverage.json --resume-isolates --wait-paused &
+      dart --pause-isolates-on-exit --enable-vm-service=8111 "test/all_tests.dart" || error=true
+      pub global run coverage:format_coverage --packages=.packages -i coverage.json --report-on lib --lcov --out lcov.info
+      if [ -f "lcov.info" ]; then
+        # combine line coverage info from package tests to a common file
+        sed "s/^SF:.*lib/SF:$escapedPath\/lib/g" lcov.info >> $2/lcov.info
+        rm lcov.info
+      fi
+      rm -f coverage.json
+    fi
+  fi
+  cd - > /dev/null
+}
 
-  shift
-done
+run_report() {
+    if [ -f "lcov.info" ] && ! [ "$TRAVIS" ]; then
+        genhtml lcov.info -o coverage --no-function-coverage -s -p `pwd`
+        open coverage/index.html
+    fi
+}
 
-exit $EXIT_CODE
+if ! [ -d .git ]; then printf "\nError: not in root of repo"; show_help; fi
+
+case $1 in
+    --help)
+        show_help
+        ;;
+    --report)
+        if ! [ -z ${2+x} ]; then
+            printf "\nError: no extra parameters required: $2"
+            show_help
+        fi
+        run_report
+        ;;
+    *)
+        currentDir=`pwd`
+        # if no parameter passed
+        if [ -z $1 ]; then
+            rm -f lcov.info
+            dirs=(`find . -maxdepth 2 -type d`)
+            for dir in "${dirs[@]}"; do
+                run_tests $dir $currentDir
+            done
+        else
+            if [[ -d "$1" ]]; then
+                run_tests $1 $currentDir
+            else
+                printf "\nError: not a directory: $1"
+                show_help
+            fi
+        fi
+        ;;
+esac
+
+#Fail the build if there was an error
+if [ "$error" = true ] ;
+then
+    exit -1
+fi

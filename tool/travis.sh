@@ -11,8 +11,36 @@ if [ "$#" == "0" ]; then
   exit 1
 fi
 
+travis_retry() {
+  local result=0
+  local count=1
+  while [ $count -le 3 ]; do
+    [ $result -ne 0 ] && {
+      echo -e "\n${ANSI_RED}The command \"$@\" failed. Retrying, $count of 3.${ANSI_RESET}\n" >&2
+    }
+    "$@"
+    result=$?
+    [ $result -eq 0 ] && break
+    count=$(($count + 1))
+    sleep 1
+  done
+
+  [ $count -gt 3 ] && {
+    echo -e "\n${ANSI_RED}The command \"$@\" failed 3 times.${ANSI_RESET}\n" >&2
+  }
+
+  return $result
+}
+
 pushd $PKG
-pub upgrade || exit $?
+case $PKG in
+src) echo
+  pub upgrade || exit $?
+  ;;
+example) echo
+  flutter packages get || exit $?
+  ;;
+esac
 
 EXIT_CODE=0
 
@@ -34,10 +62,20 @@ while (( "$#" )); do
     echo -e 'dartfmt -n --set-exit-if-changed .'
     dartfmt -n --set-exit-if-changed . || EXIT_CODE=$?
     ;;
-  test) echo
+  dart_test) echo
     echo -e '\033[1mTASK: test\033[22m'
     echo -e 'pub run test'
     pub run test || EXIT_CODE=$?
+    ;;
+  flutter_test) echo
+    echo -e '\033[1mTASK: test\033[22m'
+    echo -e 'flutter test'
+    flutter test || EXIT_CODE=$?
+    ;;
+  flutter_test_driver) echo
+    echo -e '\033[1mTASK: test_driver\033[22m'
+    echo -e 'travis_retry flutter driver --target=test_driver/app.dart'
+    travis_retry flutter driver --target=test_driver/app.dart || EXIT_CODE=$?
     ;;
   *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
     EXIT_CODE=1

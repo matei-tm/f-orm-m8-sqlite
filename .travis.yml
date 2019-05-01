@@ -15,21 +15,21 @@ jobs:
       dart: stable
     - stage: unit_test
       name: "SDK: stable - DIR: src - TASKS: pub run test"
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh dart_test
       env: PKG="src"
       dart: stable
     - stage: unit_test
       name: "SDK: 2.1.0 - DIR: src - TASKS: pub run test"
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh dart_test
       env: PKG="src"
       dart: "2.1.0"
     - stage: unit_test
       name: "SDK: dev - DIR: src - TASKS: pub run test"
-      script: ./tool/travis.sh test
+      script: ./tool/travis.sh dart_test
       env: PKG="src"
       dart: dev
     - stage: example_unit_test_and_analyzer
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter test"
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-infos --fatal-warnings ., flutter test]"
       language: generic
       os: linux
       env: PKG="example"
@@ -43,14 +43,36 @@ jobs:
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
+      script:
+        - ./tool/travis.sh dartfmt dartanalyzer_0
+        - ./tool/travis.sh dartfmt dartanalyzer_1
+        - ./tool/travis.sh flutter_test
+      cache:
+        directories:
+          - $HOME/.pub-cache
+    - stage: test_coverage
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: . - TASKS: run_tests"
+      language: generic
+      os: linux
+      env: PKG="."
+      before_script:
+        - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
+
+        # install pre-compiled flutter
+        - FLUTTER_CHANNEL=stable
+        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
+        - export PATH="$PATH":"$HOME/.pub-cache/bin"
+        - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
+        - flutter doctor -v
 
         - pub global activate coverage
       script:
-        - ./tool/travis_flutter.sh dartfmt dartanalyzer_0
-        - ./tool/travis_flutter.sh  dartfmt dartanalyzer_1
-        - ./tool/travis_flutter.sh test
+        - ./tool/travis_flutter.sh
       after_success: bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
-
+      cache:
+        directories:
+          - $HOME/.pub-cache
     - stage: example_integration_test
       name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       os: osx
@@ -75,7 +97,7 @@ jobs:
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
-      script: ./tool/travis_flutter.sh test_driver
+      script: ./tool/travis.sh flutter_test_driver
 
 stages:
   - analyzer_and_format
@@ -83,6 +105,7 @@ stages:
   - unit_test
   - example_unit_test_and_analyzer
   - example_integration_test
+  - test_coverage
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
