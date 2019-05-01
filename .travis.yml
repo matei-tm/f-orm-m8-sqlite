@@ -51,14 +51,12 @@ jobs:
         - ./tool/travis_flutter.sh test
       after_success: bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
 
-    - &integration-test-stage
-      stage: example_integration_test
-      script: ./tool/travis_flutter.sh test_driver
-    - <<: *integration-test-stage
+    - stage: example_integration_test
+      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       os: osx
       # use oldest flutter supported version of xcode
       osx_image: xcode8.0
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
+      
       env: PKG="example"
       # Run integration tests on ios
       before_install:
@@ -77,6 +75,7 @@ jobs:
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
+      script: ./tool/travis_flutter.sh test_driver
 
 stages:
   - analyzer_and_format
