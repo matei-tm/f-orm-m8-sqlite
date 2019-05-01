@@ -64,6 +64,7 @@ jobs:
         - sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
         # Install the Android SDK Dependency.
         - export ANDROID_HOME=/opt/android-sdk-linux
+        - export ANDROID_SDK_ROOT=/opt/android-sdk-linux
         - cd /opt
         - wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip
         - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
@@ -82,7 +83,7 @@ jobs:
         - sdkmanager "build-tools;28.0.3" "platforms;android-28" > /dev/null
 
         # Create and start emulator.
-        - EMULATOR_API_LEVEL=22
+        - EMULATOR_API_LEVEL=28
         - ANDROID_ABI="default;armeabi-v7a"
         - sdkmanager "system-images;android-$EMULATOR_API_LEVEL;$ANDROID_ABI" > /dev/null
         - sdkmanager --list | head -15
