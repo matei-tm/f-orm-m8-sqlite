@@ -212,6 +212,7 @@ class _AccountPageState extends State<AccountPage> {
             title: Text("Delete the account?"),
             actions: <Widget>[
               FlatButton(
+                key: Key('confirmDeleteAccount'),
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -219,6 +220,7 @@ class _AccountPageState extends State<AccountPage> {
                 },
               ),
               FlatButton(
+                key: Key('cancelDeleteAccount'),
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -270,6 +272,7 @@ class _AccountPageState extends State<AccountPage> {
             title: Text("Confirm adding new account"),
             actions: <Widget>[
               FlatButton(
+                key: Key('confirmAddingAccount'),
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -277,6 +280,7 @@ class _AccountPageState extends State<AccountPage> {
                 },
               ),
               FlatButton(
+                key: Key('cancelAddingAccount'),
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();

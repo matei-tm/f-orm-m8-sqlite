@@ -13,6 +13,12 @@ class ReceiptEditPage extends StatefulWidget {
 
 class _ReceiptEditPageState extends State<ReceiptEditPage> {
   final _formKey = GlobalKey<FormState>();
+  final _descriptionKey = Key("receiptDescriptionField");
+  final _expirationKey = Key("receiptExpirationDateField");
+  final _numberOfItemsKey = Key("receiptNumberOfItemsField");
+  final _isBioKey = Key("receiptIsBioSwitch");
+  final _quantityKey = Key("receiptQuantityField");
+  final _temperatureKey = Key("receiptStorageTemperatureField");
 
   Receipt _stateReceipt;
   String title;
@@ -55,6 +61,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
         title: Text(this.title ?? "Edit Receipt"),
         actions: <Widget>[
           IconButton(
+            key: Key("saveReceiptButton"),
             icon: Icon(Icons.check),
             onPressed: submit,
           ),
@@ -71,6 +78,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                 shrinkWrap: true,
                 children: <Widget>[
                   TextFormField(
+                    key: _descriptionKey,
                     initialValue: _stateReceipt.description,
                     decoration: InputDecoration(
                       hintText: "Description",
@@ -101,6 +109,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                   //   },
                   // ),
                   TextFormField(
+                    key: _expirationKey,
                     initialValue:
                         _stateReceipt.expirationDate.toIso8601String(),
                     decoration: InputDecoration(
@@ -117,11 +126,13 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                     },
                   ),
                   SwitchListTile(
+                      key: _isBioKey,
                       title: const Text('Is Bio'),
                       value: _stateReceipt.isBio,
                       onChanged: (bool val) =>
                           setState(() => _stateReceipt.isBio = val)),
                   TextFormField(
+                    key: _numberOfItemsKey,
                     initialValue: _stateReceipt.numberOfItems.toString(),
                     decoration: InputDecoration(
                       hintText: "number of Items as int",
@@ -151,6 +162,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                   //   },
                   // ),
                   TextFormField(
+                    key: _quantityKey,
                     initialValue: _stateReceipt.quantity.toString(),
                     decoration: InputDecoration(
                       hintText: "quantity as double",
@@ -166,6 +178,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
+                    key: _temperatureKey,
                     initialValue: _stateReceipt.storageTemperature.toString(),
                     decoration: InputDecoration(
                       hintText: "storage Temperature as num",

@@ -58,6 +58,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
+                  key: Key("addReceiptButton"),
                   onPressed: () {
                     _addReceipt();
                   },
@@ -98,6 +99,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
             title: Text("Confirm Delete Receipt"),
             actions: <Widget>[
               FlatButton(
+                key: Key("confirmDeleteReceiptButton"),
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -105,6 +107,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
                 },
               ),
               FlatButton(
+                key: Key("cancelDeleteReceiptButton"),
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();

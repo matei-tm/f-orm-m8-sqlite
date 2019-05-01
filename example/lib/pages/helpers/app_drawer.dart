@@ -23,6 +23,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
             title: Text("Confirm Switching Account"),
             actions: <Widget>[
               FlatButton(
+                key: Key("confirmSwitchingAccount"),
                 child: Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -30,6 +31,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
                 },
               ),
               FlatButton(
+                key: Key("cancelSwitchingAccount"),
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -52,6 +54,7 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
 
     for (var userAccount in guardedUserAccounts) {
       result.add(GestureDetector(
+        key: Key("accountAvatar${userAccount.id}"),
         onTap: () => _onTapOtherAccounts(context, userAccount),
         child: Semantics(
           label: "Switch account",
