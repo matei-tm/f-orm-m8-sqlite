@@ -98,7 +98,7 @@ jobs:
         - flutter doctor -v
 
         # Wait for emulator to finish startup.
-        - ./script/android-wait-for-emulator.sh
+        - ./tool/android-wait-for-emulator.sh
         - adb shell input keyevent 82
         - flutter devices
       script: ./tool/travis_flutter.sh test_driver
