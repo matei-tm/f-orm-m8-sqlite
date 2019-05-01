@@ -36,12 +36,12 @@ while (( "$#" )); do
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
     echo -e 'flutter test --coverage'
-    pub run test || EXIT_CODE=$?
+    flutter test --coverage || EXIT_CODE=$?
     ;;
   test_driver) echo
     echo -e '\033[1mTASK: test_driver\033[22m'
     echo -e 'travis_retry flutter driver --target=test_driver/app.dart'
-    pub run test || EXIT_CODE=$?
+    travis_retry flutter driver --target=test_driver/app.dart || EXIT_CODE=$?
     ;;
   *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
     EXIT_CODE=1

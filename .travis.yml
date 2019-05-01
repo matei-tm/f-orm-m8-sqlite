@@ -28,9 +28,7 @@ jobs:
       script: ./tool/travis.sh test
       env: PKG="src"
       dart: dev
-
-
-    - stage: example_unit_test
+    - stage: example_unit_test_and_analyzer
       name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter test"
       language: generic
       os: linux
@@ -47,7 +45,10 @@ jobs:
         - flutter doctor -v
 
         - pub global activate coverage
-      script: ./tool/travis_flutter.sh test
+      script:
+        - ./tool/travis_flutter.sh dartfmt dartanalyzer_0
+        - ./tool/travis_flutter.sh  dartfmt dartanalyzer_1
+        - ./tool/travis_flutter.sh test
       after_success: bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
 
     - &integration-test-stage
@@ -137,8 +138,7 @@ stages:
   - analyzer_and_format
   - analyzer_and_format_stable
   - unit_test
-  - example_analyzer_and_format
-  - example_unit_test
+  - example_unit_test_and_analyzer
   - example_integration_test
   - example_ready_to_deploy
 
