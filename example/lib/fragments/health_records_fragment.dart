@@ -1,8 +1,8 @@
-import 'package:example/fragments/health/health_entry_row.dart';
-import 'package:example/main.adapter.g.m8.dart';
-import 'package:example/models/health_entry.g.m8.dart';
-import 'package:example/pages/helpers/snack_presenter.dart';
-import 'package:example/pages/helpers/guarded_account_state.dart';
+import 'package:sqlite_m8_demo/fragments/health/health_entry_row.dart';
+import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
+import 'package:sqlite_m8_demo/pages/helpers/snack_presenter.dart';
+import 'package:sqlite_m8_demo/pages/helpers/guarded_account_state.dart';
 import 'package:flutter/material.dart';
 
 class HealthRecordsFragment extends StatefulWidget {

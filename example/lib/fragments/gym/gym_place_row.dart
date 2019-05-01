@@ -1,4 +1,4 @@
-import 'package:example/models/gym_location.g.m8.dart';
+import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
 import 'package:flutter/material.dart';
 
 typedef GymLocationRowActionCallback = void Function(

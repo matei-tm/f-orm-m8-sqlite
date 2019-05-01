@@ -1,8 +1,8 @@
-import 'package:example/fragments/disclaimer_fragment.dart';
-import 'package:example/fragments/gym_places_fragment.dart';
-import 'package:example/fragments/health_records_fragment.dart';
-import 'package:example/fragments/receipts_fragment.dart';
-import 'package:example/pages/helpers/app_drawer.dart';
+import 'package:sqlite_m8_demo/fragments/disclaimer_fragment.dart';
+import 'package:sqlite_m8_demo/fragments/gym_places_fragment.dart';
+import 'package:sqlite_m8_demo/fragments/health_records_fragment.dart';
+import 'package:sqlite_m8_demo/fragments/receipts_fragment.dart';
+import 'package:sqlite_m8_demo/pages/helpers/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePageRoute extends MaterialPageRoute {

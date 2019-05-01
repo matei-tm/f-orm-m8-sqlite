@@ -70,7 +70,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/health_entry.dart';
+import 'package:sqlite_m8_demo/models/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;

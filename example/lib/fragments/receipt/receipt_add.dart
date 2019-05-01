@@ -1,6 +1,6 @@
-import 'package:example/main.adapter.g.m8.dart';
-import 'package:example/models/receipt.dart';
-import 'package:example/models/receipt.g.m8.dart';
+import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/models/receipt.dart';
+import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:flutter/material.dart';
 
 class ReceiptAddPage extends StatefulWidget {

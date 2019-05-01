@@ -1,5 +1,5 @@
-import 'package:example/models/user_account.dart';
-import 'package:example/pages/helpers/guarded_account_state.dart';
+import 'package:sqlite_m8_demo/models/user_account.dart';
+import 'package:sqlite_m8_demo/pages/helpers/guarded_account_state.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatefulWidget {

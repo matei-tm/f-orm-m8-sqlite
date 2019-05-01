@@ -1,6 +1,6 @@
-import 'package:example/main.adapter.g.m8.dart';
-import 'package:example/models/user_account.g.m8.dart';
-import 'package:example/routes/enhanced_route.dart';
+import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
+import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatefulWidget {

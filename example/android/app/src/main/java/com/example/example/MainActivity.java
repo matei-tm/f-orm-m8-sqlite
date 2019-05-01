@@ -1,4 +1,4 @@
-package com.example.example;
+package eu.matei_tm.orm_m8.sqlite_m8_demo;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

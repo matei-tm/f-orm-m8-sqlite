@@ -1,6 +1,6 @@
-import 'package:example/main.adapter.g.m8.dart';
-import 'package:example/models/user_account.dart';
-import 'package:example/routes/enhanced_route.dart';
+import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/models/user_account.dart';
+import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
 typedef AccountActionCallback = Future<bool> Function(int);

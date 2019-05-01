@@ -1,7 +1,7 @@
-import 'package:example/fragments/gym/gym_place_row.dart';
-import 'package:example/main.adapter.g.m8.dart';
-import 'package:example/models/gym_location.g.m8.dart';
-import 'package:example/pages/helpers/snack_presenter.dart';
+import 'package:sqlite_m8_demo/fragments/gym/gym_place_row.dart';
+import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
+import 'package:sqlite_m8_demo/pages/helpers/snack_presenter.dart';
 import 'package:flutter/material.dart';
 
 class GymPlacesFragment extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:example/models/health_entry.g.m8.dart';
+import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:flutter/material.dart';
 
 typedef HealthEntryRowActionCallback = void Function(

@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/receipt.dart';
+import 'package:sqlite_m8_demo/models/receipt.dart';
 
 class ReceiptProxy extends Receipt {
   DateTime dateCreate;

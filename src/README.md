@@ -195,7 +195,7 @@ From the model, the builder creates `models/user_account.g.m8.dart` file with fo
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/user_account.dart';
+import 'package:sqlite_m8_demo/models/user_account.dart';
 
 class UserAccountProxy extends UserAccount {
   UserAccountProxy({abbreviation, email, userName}) {
@@ -398,7 +398,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/health_entry.dart';
+import 'package:sqlite_m8_demo/models/health_entry.dart';
 
 class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
@@ -576,7 +576,7 @@ From the model, the builder creates `models/gym_location.g.m8.dart` file with co
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/gym_location.dart';
+import 'package:sqlite_m8_demo/models/gym_location.dart';
 
 class GymLocationProxy extends GymLocation {
   DateTime dateCreate;
@@ -745,7 +745,7 @@ From the model, the builder creates `models/receipt.g.m8.dart` file with content
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/receipt.dart';
+import 'package:sqlite_m8_demo/models/receipt.dart';
 
 class ReceiptProxy extends Receipt {
   DateTime dateCreate;
@@ -901,11 +901,11 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:example/models/gym_location.g.m8.dart';
-import 'package:example/models/health_entry.g.m8.dart';
-import 'package:example/models/receipt.g.m8.dart';
-import 'package:example/models/to_do.g.m8.dart';
-import 'package:example/models/user_account.g.m8.dart';
+import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
+import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
+import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
+import 'package:sqlite_m8_demo/models/to_do.g.m8.dart';
+import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
 class DatabaseHelper
     with

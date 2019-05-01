@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/user_account.dart';
+import 'package:sqlite_m8_demo/models/user_account.dart';
 
 class UserAccountProxy extends UserAccount {
   UserAccountProxy({abbreviation, email, userName}) {

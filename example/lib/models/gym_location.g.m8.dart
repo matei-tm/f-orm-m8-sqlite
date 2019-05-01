@@ -6,7 +6,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-import 'package:example/models/gym_location.dart';
+import 'package:sqlite_m8_demo/models/gym_location.dart';
 
 class GymLocationProxy extends GymLocation {
   DateTime dateCreate;

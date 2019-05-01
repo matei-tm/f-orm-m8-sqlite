@@ -1,4 +1,4 @@
-import 'package:example/models/receipt.dart';
+import 'package:sqlite_m8_demo/models/receipt.dart';
 import 'package:flutter/material.dart';
 
 typedef ReceiptRowActionCallback = void Function(Receipt receipt);

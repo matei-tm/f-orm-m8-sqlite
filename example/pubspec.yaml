@@ -1,5 +1,5 @@
-name: example
-description: A new Flutter project.
+name: sqlite_m8_demo
+description: sqlite-m8-generator example.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
