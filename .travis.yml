@@ -135,10 +135,10 @@ jobs:
 
 
 stages:
-  - analyzer_and_format
-  - analyzer_and_format_stable
-  - unit_test
-  - example_unit_test_and_analyzer
+  #- analyzer_and_format
+  #- analyzer_and_format_stable
+  #- unit_test
+  #- example_unit_test_and_analyzer
   - example_integration_test
   - example_ready_to_deploy
 
