@@ -45,14 +45,15 @@ Supported orm-m8 features:
 | ColumnMetadata.      | notNull                | ColumnMetadata      | v0.1.0            |                    |
 | ColumnMetadata.      | autoIncrement          | ColumnMetadata      | v0.3.0            |                    |
 | ColumnMetadata.      | indexed                | ColumnMetadata      | -                 | Planned for v0.6.0 |
-| CompositeConstraint. | unique                 | CompositeConstraint | -                 | Planned for v0.4.0 |
-| CompositeConstraint. | primaryKey             | CompositeConstraint | -                 | Planned for v0.4.0 |
+| CompositeConstraint. | unique                 | CompositeConstraint | v0.4.0            |                    |
+| CompositeConstraint. | primaryKey             | CompositeConstraint | v0.4.0            |                    |
 | CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.6.0 |
 | CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.6.0 |
 | implements           | DbOpenEntity           | entity helper       | -                 | Planned for v0.6.0 |
 | implements           | DbEntity               | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountEntity        | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountRelatedEntity | entity helper       | v0.1.0            |                    |
+
 
 ## Usage
 
@@ -86,7 +87,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            flutter_sqlite_m8_generator: ^0.3.0+1
+            flutter_sqlite_m8_generator: ^0.4.0
             flutter_test:
                 sdk: flutter
 
@@ -135,9 +136,12 @@ Supported orm-m8 features:
 A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
 The example presents different approaches to solve CRUD functionality for models that adhere to flutter-orm-m8 annotation framework.
 
+![usecase000](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase000-320.gif)
+
+
 ### UserAccount - A DbAccountEntity implementation
 
-We added a UserAccount model that implements DbAccountEntity
+The example has a common UserAccount model that implements DbAccountEntity
 
 ![usecase001](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase001-320.gif)
 
@@ -234,8 +238,14 @@ mixin UserAccountDatabaseHelper {
 
   final String _theUserAccountTableHandler = 'user_account';
   Future createUserAccountTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theUserAccountTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT , abbreviation TEXT  NOT NULL UNIQUE, email TEXT  NOT NULL, user_name TEXT  NOT NULL UNIQUE, is_current INTEGER )');
+    await db.execute('''CREATE TABLE $_theUserAccountTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    description TEXT ,
+    abbreviation TEXT  NOT NULL UNIQUE,
+    email TEXT  NOT NULL,
+    user_name TEXT  NOT NULL UNIQUE,
+    is_current INTEGER         
+)''');
   }
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {
@@ -323,7 +333,8 @@ mixin UserAccountDatabaseHelper {
 
 ### HealthEntry - A DbAccountRelatedEntity implementation
 
-We added a HealthEntry model that implements DbAccountRelatedEntity. 
+To demonstrate how to use a model that is dependent to UserAccount, we added HealthEntry model that implements DbAccountRelatedEntity.
+The model detain a composite unique constraint based on accountId and description.
 
 ![usecase002](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase002-320.gif)
 
@@ -337,28 +348,41 @@ import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 @DataTable(
     "health_entry", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class HealthEntry implements DbAccountRelatedEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.primaryKey |
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
           ColumnMetadata.unique |
           ColumnMetadata.autoIncrement)
   int id;
-
-  @DataColumn("description", ColumnMetadata.notNull)
-  String description;
 
   @DataColumn("diagnosys_date")
   DateTime diagnosysDate;
 
   @override
-  @DataColumn("account_id", ColumnMetadata.notNull)
+  @DataColumn("account_id",
+      metadataLevel: ColumnMetadata.notNull,
+      compositeConstraints: [
+        CompositeConstraint(
+            name: "uq_account_entry",
+            constraintType: CompositeConstraintType.unique),
+        CompositeConstraint(
+            name: "ix_account_entry",
+            constraintType: CompositeConstraintType.indexed)
+      ])
   int accountId;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
+  @DataColumn("description",
+      metadataLevel: ColumnMetadata.notNull,
+      compositeConstraints: [
+        CompositeConstraint(
+            name: "uq_account_entry",
+            constraintType: CompositeConstraintType.unique)
+      ])
+  String description;
+
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
-
 ```
 
 #### The generated code
@@ -380,17 +404,17 @@ class HealthEntryProxy extends HealthEntry {
   DateTime dateCreate;
   DateTime dateUpdate;
 
-  HealthEntryProxy({description, accountId}) {
-    this.description = description;
+  HealthEntryProxy({accountId, description}) {
     this.accountId = accountId;
+    this.description = description;
   }
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
-    map['description'] = description;
     map['diagnosys_date'] = diagnosysDate.millisecondsSinceEpoch;
     map['account_id'] = accountId;
+    map['description'] = description;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
 
@@ -399,10 +423,10 @@ class HealthEntryProxy extends HealthEntry {
 
   HealthEntryProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.description = map['description'];
     this.diagnosysDate =
         DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
     this.accountId = map['account_id'];
+    this.description = map['description'];
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
   }
@@ -412,17 +436,24 @@ mixin HealthEntryDatabaseHelper {
   Future<Database> db;
   final theHealthEntryColumns = [
     "id",
-    "description",
     "diagnosys_date",
     "account_id",
+    "description",
     "date_create",
     "date_update"
   ];
 
   final String _theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theHealthEntryTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  NOT NULL, diagnosys_date INTEGER , account_id INTEGER  NOT NULL, date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theHealthEntryTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    diagnosys_date INTEGER ,
+    account_id INTEGER  NOT NULL,
+    description TEXT  NOT NULL,
+    date_create INTEGER,
+    date_update INTEGER    ,
+    UNIQUE(account_id, description)
+)''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -495,12 +526,11 @@ mixin HealthEntryDatabaseHelper {
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 }
-
 ```
 
 ### GymLocation - A DbEntity implementation
 
-We added a GymLocation model that implements DbEntity. 
+To demonstrate how to use a generic model, we added a GymLocation model that implements DbEntity. 
 
 ![usecase003](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase003-320.gif)
 
@@ -586,8 +616,13 @@ mixin GymLocationDatabaseHelper {
 
   final String _theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theGymLocationTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, description TEXT  UNIQUE, rating INTEGER , date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theGymLocationTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    description TEXT  UNIQUE,
+    rating INTEGER ,
+    date_create INTEGER,
+    date_update INTEGER        
+)''');
   }
 
   Future<int> saveGymLocation(GymLocationProxy instanceGymLocation) async {
@@ -653,7 +688,7 @@ mixin GymLocationDatabaseHelper {
 
 ### Receipt - A DbEntity implementation
 
-We added a Receipt model that implements DbEntity. 
+For a more detailed model with all supported fields type, we added a Receipt model that implements DbEntity. 
 
 ![usecase004](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase004-320.gif)
 
@@ -776,8 +811,17 @@ mixin ReceiptDatabaseHelper {
 
   final String _theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
-    await db.execute(
-        'CREATE TABLE $_theReceiptTableHandler (id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE, is_bio INTEGER  NOT NULL, expiration_date INTEGER  NOT NULL, price REAL  NOT NULL, number_of_items INTEGER  NOT NULL, storage_temperature NUMERIC  NOT NULL, description TEXT  NOT NULL UNIQUE, date_create INTEGER, date_update INTEGER)');
+    await db.execute('''CREATE TABLE $_theReceiptTableHandler (
+    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    is_bio INTEGER  NOT NULL,
+    expiration_date INTEGER  NOT NULL,
+    price REAL  NOT NULL,
+    number_of_items INTEGER  NOT NULL,
+    storage_temperature NUMERIC  NOT NULL,
+    description TEXT  NOT NULL UNIQUE,
+    date_create INTEGER,
+    date_update INTEGER        
+)''');
   }
 
   Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {

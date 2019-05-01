@@ -2,11 +2,19 @@
 
 ## [Unreleased]
 
-## [0.4.0-beta] - 2019-04-29
+## [0.4.0] - 2019-05-01
 
 ### Changed
 
 * Aligned generators with `flutter-orm-m8` v0.7.1
+* Example project: HealthEntry model received a composite unique constraint
+
+### Added
+
+* Generator support for CompositeConstraint.unique
+* Generator support for CompositeConstraint.primaryKey
+* Tests for CompositeConstraint generation
+* Flutter Driver tests on example project for all UI use cases
 
 ## [0.3.0+1] - 2019-04-25
 
