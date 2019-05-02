@@ -13,7 +13,7 @@ void main() {
         await initializeLibraryReaderForDirectory(path, "bad_element.dart");
   });
 
-  group('Generator global tests', () {
+  group('Bad element annotation tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 
     test('Test @DataTable on wrong element', () async {
