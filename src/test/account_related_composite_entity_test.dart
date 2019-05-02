@@ -10,7 +10,7 @@ void main() {
   final path = testFilePath('test', 'src', 'model');
   var e;
   var entityWriter;
-  
+
   setUp(() async {
     library = await initializeLibraryReaderForDirectory(
         path, "account_related_composite.dart");
