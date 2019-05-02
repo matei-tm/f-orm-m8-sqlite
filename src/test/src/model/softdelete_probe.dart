@@ -1,17 +1,25 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("my_health_entries_table", TableMetadata.softDeletable)
-class HealthEntry implements DbEntity {
-  @DataColumn("my_id_column",
+@DataTable("to_do", TableMetadata.trackCreate | TableMetadata.trackUpdate | TableMetadata.softDeletable)
+class ToDo implements DbAccountRelatedEntity {
+  @DataColumn("id",
       metadataLevel: ColumnMetadata.primaryKey |
           ColumnMetadata.unique |
           ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("my_description_column", metadataLevel: ColumnMetadata.unique)
+  @DataColumn("description", metadataLevel: ColumnMetadata.unique)
   String description;
 
-  @DataColumn("my_future_column",
+  @DataColumn("diagnosys_date")
+  DateTime diagnosysDate;
+
+  @DataColumn("my_future_column7",
       metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
+
+  @override
+  @DataColumn("user_account_id",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
+  int accountId;
 }
