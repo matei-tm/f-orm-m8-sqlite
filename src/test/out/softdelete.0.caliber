@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:__test__/softdelete_probe.dart';
 
 class ToDoProxy extends ToDo {
-  bool get isDeleted => dateDelete.year > 1970;
-  DateTime dateDelete;
   DateTime dateCreate;
   DateTime dateUpdate;
+  DateTime dateDelete;
+  bool get isDeleted => dateDelete.year > 1970;
 
   ToDoProxy({accountId}) {
     this.accountId = accountId;
@@ -20,6 +20,7 @@ class ToDoProxy extends ToDo {
     map['user_account_id'] = accountId;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+    // map['date_delete'] is handled by delete method
 
     return map;
   }
@@ -27,10 +28,8 @@ class ToDoProxy extends ToDo {
   ToDoProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
     this.description = map['description'];
-    this.diagnosysDate =
-        DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
+    this.diagnosysDate = DateTime.fromMillisecondsSinceEpoch(map['diagnosys_date']);
     this.accountId = map['user_account_id'];
-
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
     this.dateDelete = DateTime.fromMillisecondsSinceEpoch(map['date_delete']);
@@ -57,9 +56,9 @@ mixin ToDoDatabaseHelper {
     diagnosys_date INTEGER ,
     user_account_id INTEGER  NOT NULL UNIQUE,
     date_create INTEGER,
-    date_update INTEGER
-    date_delete INTEGER DEFAULT 0,
-)''');
+    date_update INTEGER,
+    date_delete INTEGER DEFAULT 0
+    )''');
   }
 
   Future<int> saveToDo(ToDoProxy instanceToDo) async {
