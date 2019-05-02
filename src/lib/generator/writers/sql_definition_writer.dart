@@ -59,7 +59,8 @@ class SqlDefinitionWriter with Spacers {
   }
 
   String getPrimaryKeyCompositeString() {
-    return getCompositeString(_primaryKeyCompositesMap, ",\n${s00004}PRIMARY KEY");
+    return getCompositeString(
+        _primaryKeyCompositesMap, ",\n${s00004}PRIMARY KEY");
   }
 
   void collectCompositeConstraints() {

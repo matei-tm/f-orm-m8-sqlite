@@ -1,6 +1,10 @@
 import 'package:flutter_orm_m8/flutter_orm_m8.dart';
 
-@DataTable("to_do", TableMetadata.trackCreate | TableMetadata.trackUpdate | TableMetadata.softDeletable)
+@DataTable(
+    "to_do",
+    TableMetadata.trackCreate |
+        TableMetadata.trackUpdate |
+        TableMetadata.softDeletable)
 class ToDo implements DbAccountRelatedEntity {
   @DataColumn("id",
       metadataLevel: ColumnMetadata.primaryKey |
