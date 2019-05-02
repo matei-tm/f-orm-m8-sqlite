@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-03 02:18:31.120724
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -23,6 +24,7 @@ class UserAccountProxy extends UserAccount {
     map['email'] = email;
     map['user_name'] = userName;
     map['is_current'] = isCurrent ? 1 : 0;
+
     return map;
   }
 
@@ -55,8 +57,8 @@ mixin UserAccountDatabaseHelper {
     abbreviation TEXT  NOT NULL UNIQUE,
     email TEXT  NOT NULL,
     user_name TEXT  NOT NULL UNIQUE,
-    is_current INTEGER         
-)''');
+    is_current INTEGER 
+    )''');
   }
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {

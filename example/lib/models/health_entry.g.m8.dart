@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-03 02:18:31.120724
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -61,7 +62,7 @@ mixin HealthEntryDatabaseHelper {
     date_create INTEGER,
     date_update INTEGER    ,
     UNIQUE(account_id, description)
-)''');
+    )''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {

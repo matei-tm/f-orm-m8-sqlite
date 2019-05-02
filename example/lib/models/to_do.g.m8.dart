@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-03 02:18:31.120724
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -11,6 +12,8 @@ import 'package:sqlite_m8_demo/models/to_do.dart';
 class ToDoProxy extends ToDo {
   DateTime dateCreate;
   DateTime dateUpdate;
+  DateTime dateDelete;
+  bool get isDeleted => dateDelete.year > 1970;
 
   ToDoProxy({accountId}) {
     this.accountId = accountId;
@@ -24,6 +27,7 @@ class ToDoProxy extends ToDo {
     map['user_account_id'] = accountId;
     map['date_create'] = dateCreate.millisecondsSinceEpoch;
     map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+    // map['date_delete'] is handled by delete method
 
     return map;
   }
@@ -36,6 +40,7 @@ class ToDoProxy extends ToDo {
     this.accountId = map['user_account_id'];
     this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
     this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
+    this.dateDelete = DateTime.fromMillisecondsSinceEpoch(map['date_delete']);
   }
 }
 
@@ -47,7 +52,8 @@ mixin ToDoDatabaseHelper {
     "diagnosys_date",
     "user_account_id",
     "date_create",
-    "date_update"
+    "date_update",
+    "date_delete"
   ];
 
   final String _theToDoTableHandler = 'to_do';
@@ -58,8 +64,9 @@ mixin ToDoDatabaseHelper {
     diagnosys_date INTEGER ,
     user_account_id INTEGER  NOT NULL UNIQUE,
     date_create INTEGER,
-    date_update INTEGER        
-)''');
+    date_update INTEGER,
+    date_delete INTEGER DEFAULT 0
+    )''');
   }
 
   Future<int> saveToDo(ToDoProxy instanceToDo) async {
@@ -76,21 +83,23 @@ mixin ToDoDatabaseHelper {
   Future<List<ToDo>> getToDoProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns, where: '1');
+        columns: theToDoColumns, where: 'date_delete > 0');
 
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
 
   Future<int> getToDoProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient
-        .rawQuery('SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient.rawQuery(
+        'SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE date_delete > 0'));
   }
 
   Future<ToDo> getToDo(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns, where: '1 AND id = ?', whereArgs: [id]);
+        columns: theToDoColumns,
+        where: 'date_delete > 0 AND id = ?',
+        whereArgs: [id]);
 
     if (result.length > 0) {
       return ToDoProxy.fromMap(result.first);
@@ -124,9 +133,19 @@ mixin ToDoDatabaseHelper {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
         columns: theToDoColumns,
-        where: 'user_account_id = ? AND 1',
+        where: 'user_account_id = ? AND date_delete > 0',
         whereArgs: [accountId]);
 
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
+  }
+
+  Future<int> softdeleteToDo(int id) async {
+    var dbClient = await db;
+
+    var map = Map<String, dynamic>();
+    map['date_delete'] = DateTime.now().millisecondsSinceEpoch;
+
+    return await dbClient
+        .update(_theToDoTableHandler, map, where: "id = ?", whereArgs: [id]);
   }
 }

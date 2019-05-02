@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-03 02:18:31.120724
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -81,8 +82,8 @@ mixin ReceiptDatabaseHelper {
     storage_temperature NUMERIC  NOT NULL,
     description TEXT  NOT NULL UNIQUE,
     date_create INTEGER,
-    date_update INTEGER        
-)''');
+    date_update INTEGER
+    )''');
   }
 
   Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {
