@@ -67,31 +67,29 @@ mixin ToDoDatabaseHelper {
     instanceToDo.dateCreate = DateTime.now();
     instanceToDo.dateUpdate = DateTime.now();
 
-    var result =
-        await dbClient.insert(_theToDoTableHandler, instanceToDo.toMap());
+    var result = await dbClient.insert(_theToDoTableHandler, instanceToDo.toMap());
     return result;
   }
 
   Future<List<ToDo>> getToDoProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns, where: 'date_delete > 0');
+    var result =
+        await dbClient.query(_theToDoTableHandler, columns: theToDoColumns, where: 'date_delete > 0');
 
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
 
   Future<int> getToDoProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE date_delete > 0'));
+    return Sqflite.firstIntValue(
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE date_delete > 0'));
   }
 
   Future<ToDo> getToDo(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns,
-        where: 'date_delete > 0 AND id = ?',
-        whereArgs: [id]);
+        columns: theToDoColumns, where: 'date_delete > 0 AND id = ?', whereArgs: [id]);
+
 
     if (result.length > 0) {
       return ToDoProxy.fromMap(result.first);
@@ -115,18 +113,17 @@ mixin ToDoDatabaseHelper {
   Future<int> updateToDo(ToDoProxy instanceToDo) async {
     var dbClient = await db;
 
-    instanceToDo.dateUpdate = DateTime.now();
+instanceToDo.dateUpdate = DateTime.now();
 
     return await dbClient.update(_theToDoTableHandler, instanceToDo.toMap(),
         where: "id = ?", whereArgs: [instanceToDo.id]);
   }
-
   Future<List<ToDo>> getToDoProxiesByAccountId(int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(_theToDoTableHandler,
-        columns: theToDoColumns,
-        where: 'user_account_id = ? AND date_delete > 0',
-        whereArgs: [accountId]);
+    columns: theToDoColumns,
+    where: 'user_account_id = ? AND date_delete > 0',
+    whereArgs: [accountId]);
 
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
   }
@@ -138,6 +135,6 @@ mixin ToDoDatabaseHelper {
     map['date_delete'] = DateTime.now().millisecondsSinceEpoch;
 
     return await dbClient
-        .update(_theToDoTableHandler, map, where: "id = ?", whereArgs: [id]);
+    .update(_theToDoTableHandler, map, where: "id = ?", whereArgs: [id]);
   }
 }

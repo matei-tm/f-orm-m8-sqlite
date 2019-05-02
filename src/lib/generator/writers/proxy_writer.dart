@@ -10,16 +10,17 @@ class ProxyWriter extends EntityWriter {
   String _getTableMetaFields() {
     StringBuffer sb = StringBuffer();
 
-    if (emittedEntity.hasSoftDelete) {
-      sb.writeln("  bool isDeleted;");
-    }
-
     if (emittedEntity.hasTrackCreate) {
-      sb.writeln("  DateTime dateCreate;");
+      sb.writeln("${s002}DateTime dateCreate;");
     }
 
     if (emittedEntity.hasTrackUpdate) {
-      sb.writeln("  DateTime dateUpdate;");
+      sb.writeln("${s002}DateTime dateUpdate;");
+    }
+
+    if (emittedEntity.hasSoftDelete) {
+      sb.writeln(
+          "${s002}DateTime dateDelete;\n${s002}bool get isDeleted => dateDelete.year > 1970;");
     }
 
     return sb.toString();
@@ -34,14 +35,14 @@ class ProxyWriter extends EntityWriter {
     var paramList = candidateAttributes.map((f) => "${f.modelName}").join(", ");
 
     var assignments = candidateAttributes
-        .map((f) => "    this.${f.modelName} = ${f.modelName};")
+        .map((f) => "${s00004}this.${f.modelName} = ${f.modelName};")
         .join("\n");
 
     if (assignments == null || assignments.isEmpty) {
-      return """  ${emittedEntity.modelNameProxy}();""";
+      return """${s002}${emittedEntity.modelNameProxy}();""";
     }
 
-    return """  ${emittedEntity.modelNameProxy}({${paramList}}) {
+    return """${s002}${emittedEntity.modelNameProxy}({${paramList}}) {
 $assignments
   }""";
   }
@@ -49,22 +50,26 @@ $assignments
   String _getToMapMethodBody() {
     String fieldsEmition = emittedEntity.attributes.values
         .map((f) =>
-            "    map['${f.attributeName}'] = ${AttributeWriter(f).modelToEntityMapString};")
+            "${s00004}map['${f.attributeName}'] = ${AttributeWriter(f).modelToEntityMapString};")
         .join("\n");
 
     StringBuffer sb = StringBuffer();
     sb.write(fieldsEmition);
 
-    if (emittedEntity.hasSoftDelete) {
-      sb.writeln("map['is_deleted'] = isDeleted;");
-    }
+    sb.writeln();
 
     if (emittedEntity.hasTrackCreate) {
-      sb.writeln("map['date_create'] = dateCreate.millisecondsSinceEpoch;");
+      sb.writeln(
+          "${s00004}map['date_create'] = dateCreate.millisecondsSinceEpoch;");
     }
 
     if (emittedEntity.hasTrackUpdate) {
-      sb.writeln("map['date_update'] = dateUpdate.millisecondsSinceEpoch;");
+      sb.writeln(
+          "${s00004}map['date_update'] = dateUpdate.millisecondsSinceEpoch;");
+    }
+
+    if (emittedEntity.hasTrackUpdate) {
+      sb.writeln("${s00004}// map['date_delete'] is handled by delete method");
     }
 
     return sb.toString();
@@ -73,24 +78,27 @@ $assignments
   String _getFromMapMethodBody() {
     String fieldsEmition = emittedEntity.attributes.values
         .map((f) =>
-            "    this.${f.modelName} = ${AttributeWriter(f).entityToModelMapString};")
+            "${s00004}this.${f.modelName} = ${AttributeWriter(f).entityToModelMapString};")
         .join("\n");
 
     StringBuffer sb = StringBuffer();
     sb.write(fieldsEmition);
 
-    if (emittedEntity.hasSoftDelete) {
-      sb.writeln("this.isDeleted = map['is_deleted'];");
-    }
+    sb.writeln();
 
     if (emittedEntity.hasTrackCreate) {
       sb.writeln(
-          "this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);");
+          "${s00004}this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);");
     }
 
     if (emittedEntity.hasTrackUpdate) {
       sb.writeln(
-          "this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);");
+          "${s00004}this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);");
+    }
+
+    if (emittedEntity.hasSoftDelete) {
+      sb.writeln(
+          "${s00004}this.dateDelete = DateTime.fromMillisecondsSinceEpoch(map['date_delete']);");
     }
 
     return sb.toString();
@@ -103,18 +111,16 @@ $assignments
     sb.write("""
 class ${emittedEntity.modelNameProxy} extends ${emittedEntity.modelName} {
 ${_getTableMetaFields()}
-
 ${_getDefaultConstructorBody()}
 
-  Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
+${s002}Map<String, dynamic> toMap() {
+${s00004}var map = Map<String, dynamic>();
 ${this._getToMapMethodBody()}
-    return map;
+${s00004}return map;
   }
 
-  ${emittedEntity.modelNameProxy}.fromMap(Map<String, dynamic> map) {
-${this._getFromMapMethodBody()}
-  }
+${s002}${emittedEntity.modelNameProxy}.fromMap(Map<String, dynamic> map) {
+${this._getFromMapMethodBody()}${s002}}
 }
 
 """);

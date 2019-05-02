@@ -23,15 +23,15 @@ class AccountRelatedEntityWriter extends EntityWriter {
     sb.write(getCommonMethods());
 
     sb.write("""
-  Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}ByAccountId(int accountId) async {
-var dbClient = await db;
-var result = await dbClient.query(${theTableHandler},
-    columns: the${emittedEntity.modelName}Columns,
-    where: '${getAttributeStringAccountId()} = ? AND ${getSoftdeleteCondition()}',
-    whereArgs: [accountId]);
+${s002}Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}ByAccountId(int accountId) async {
+${s00004}var dbClient = await db;
+${s00004}var result = await dbClient.query(${theTableHandler},
+${s00004}columns: the${emittedEntity.modelName}Columns,
+${s00004}where: '${getAttributeStringAccountId()} = ? AND ${getSoftdeleteCondition()}',
+${s00004}whereArgs: [accountId]);
 
-return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
-  }
+${s00004}return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
+${s002}}
 
 """);
 

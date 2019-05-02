@@ -14,10 +14,6 @@ class EntityWriter extends SqlDefinitionWriter {
     var columnList =
         emittedEntity.attributes.values.map((f) => f.attributeName).toList();
 
-    if (emittedEntity.hasSoftDelete) {
-      columnList.add("is_deleted");
-    }
-
     if (emittedEntity.hasTrackCreate) {
       columnList.add("date_create");
     }
@@ -26,11 +22,15 @@ class EntityWriter extends SqlDefinitionWriter {
       columnList.add("date_update");
     }
 
+    if (emittedEntity.hasSoftDelete) {
+      columnList.add("date_delete");
+    }
+
     return columnList;
   }
 
   String _getColumnsListString() {
-    return _getColumnsList().join("\", \"");
+    return _getColumnsList().join("\",\n    \"");
   }
 
   String _getGeneralImports() {
@@ -47,10 +47,10 @@ import '${emittedEntity.packageIdentifier}';
 
   String _getMixinBodyCommonFields() {
     return """
-  Future<Database> db;
-  final the${emittedEntity.modelName}Columns = ["${_getColumnsListString()}"];
+${s002}Future<Database> db;
+${s002}final the${emittedEntity.modelName}Columns = [\n    "${_getColumnsListString()}"\n  ];
 
-  final String ${theTableHandler} = '${theTableHandlerValue}';""";
+${s002}final String ${theTableHandler} = '${theTableHandlerValue}';""";
   }
 
   StringBuffer getCommonImports() {
@@ -79,7 +79,7 @@ import '${emittedEntity.packageIdentifier}';
 
     if (emittedEntity.hasTrackUpdate) {
       trackableTimestamp +=
-          "\ninstance${emittedEntity.modelName}.dateUpdate = DateTime.now();";
+          "\n${s00004}instance${emittedEntity.modelName}.dateUpdate = DateTime.now();";
     }
 
     return trackableTimestamp;
@@ -95,7 +95,7 @@ import '${emittedEntity.packageIdentifier}';
 
   String getSoftdeleteCondition() {
     if (emittedEntity.hasSoftDelete) {
-      return 'is_deleted != 1';
+      return 'date_delete > 0';
     }
 
     return '1'; // return a valid SQL expression
@@ -104,15 +104,16 @@ import '${emittedEntity.packageIdentifier}';
   String getSoftdeleteMethod() {
     if (emittedEntity.hasSoftDelete) {
       return '''
-  Future<int> softdelete${emittedEntity.modelName}(int id) async {
-var dbClient = await db;
+${s002}Future<int> softdelete${emittedEntity.modelName}(int id) async {
+${s00004}var dbClient = await db;
 
-var map = Map<String, dynamic>();
-map['is_deleted'] = 1;
+${s00004}var map = Map<String, dynamic>();
+${s00004}map['date_delete'] = DateTime.now().millisecondsSinceEpoch;
 
-return await dbClient
-    .update(${theTableHandler}, map, where: "$thePrimaryKey = ?", whereArgs: [id]);
-  }''';
+${s00004}return await dbClient
+${s00004}.update(${theTableHandler}, map, where: "$thePrimaryKey = ?", whereArgs: [id]);
+${s002}}
+''';
     }
 
     return '';
@@ -120,66 +121,66 @@ return await dbClient
 
   String getCommonMethods() {
     return '''
-  Future create${emittedEntity.modelName}Table(Database db) async {
-await db.execute(${getTableDefinition()});
-  }
+${s002}Future create${emittedEntity.modelName}Table(Database db) async {
+${s00004}await db.execute(${getTableDefinition()});
+${s002}}
 
-  Future<int> save${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
-var dbClient = await db;
+${s002}Future<int> save${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
+${s00004}var dbClient = await db;
 
-${getCreateTrackableTimestampString()}
+${s00004}${getCreateTrackableTimestampString()}
 
-var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap());
-return result;
-  }
+${s00004}var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap());
+${s00004}return result;
+${s002}}
 
-  Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}All() async {
-var dbClient = await db;
-var result =
-    await dbClient.query(${theTableHandler}, columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()}');
+${s002}Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}All() async {
+${s00004}var dbClient = await db;
+${s00004}var result =
+${s00000008}await dbClient.query(${theTableHandler}, columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()}');
 
-return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
-  }
+${s00004}return result.map((e) => ${emittedEntity.modelNameProxy}.fromMap(e)).toList();
+${s002}}
 
-  Future<int> get${emittedEntity.modelNameProxyPlural}Count() async {
-var dbClient = await db;
-return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM \$${theTableHandler}  WHERE ${getSoftdeleteCondition()}'));
-  }
+${s002}Future<int> get${emittedEntity.modelNameProxyPlural}Count() async {
+${s00004}var dbClient = await db;
+${s00004}return Sqflite.firstIntValue(
+${s00004}await dbClient.rawQuery('SELECT COUNT(*) FROM \$${theTableHandler}  WHERE ${getSoftdeleteCondition()}'));
+${s002}}
 
-  Future<${emittedEntity.modelName}> get${emittedEntity.modelName}(int id) async {
-var dbClient = await db;
-List<Map> result = await dbClient.query(${theTableHandler},
-    columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()} AND $thePrimaryKey = ?', whereArgs: [id]);
+${s002}Future<${emittedEntity.modelName}> get${emittedEntity.modelName}(int id) async {
+${s00004}var dbClient = await db;
+${s00004}List<Map> result = await dbClient.query(${theTableHandler},
+${s00004}${s00004}columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()} AND $thePrimaryKey = ?', whereArgs: [id]);
 
 
-if (result.length > 0) {
-  return ${emittedEntity.modelNameProxy}.fromMap(result.first);
-}
+${s00004}if (result.length > 0) {
+${s00004}${s002}return ${emittedEntity.modelNameProxy}.fromMap(result.first);
+${s00004}}
 
-return null;
-  }
+${s00004}return null;
+${s002}}
 
-  Future<int> delete${emittedEntity.modelName}(int id) async {
-var dbClient = await db;
-return await dbClient
-    .delete(${theTableHandler}, where: '$thePrimaryKey = ?', whereArgs: [id]);
-  }
+${s002}Future<int> delete${emittedEntity.modelName}(int id) async {
+${s00004}var dbClient = await db;
+${s00004}return await dbClient
+${s00004}${s00004}.delete(${theTableHandler}, where: '$thePrimaryKey = ?', whereArgs: [id]);
+${s002}}
 
-  Future<bool> delete${emittedEntity.modelNameProxyPlural}All() async {
-var dbClient = await db;
-await dbClient.delete(${theTableHandler});
-return true;
-  }
+${s002}Future<bool> delete${emittedEntity.modelNameProxyPlural}All() async {
+${s00004}var dbClient = await db;
+${s00004}await dbClient.delete(${theTableHandler});
+${s00004}return true;
+${s002}}
 
-  Future<int> update${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
-var dbClient = await db;
+${s002}Future<int> update${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {
+${s00004}var dbClient = await db;
 
 ${getUpdateTrackableTimestampString()}
 
-return await dbClient.update(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap(),
-    where: "$thePrimaryKey = ?", whereArgs: [${emittedEntity.modelInstanceName}.id]);
-  }
+${s00004}return await dbClient.update(${theTableHandler}, ${emittedEntity.modelInstanceName}.toMap(),
+${s00004}${s00004}where: "$thePrimaryKey = ?", whereArgs: [${emittedEntity.modelInstanceName}.id]);
+${s002}}
 ''';
   }
 }
