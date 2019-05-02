@@ -4,12 +4,15 @@ import 'package:test/test.dart';
 import 'test_file_utils.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
-LibraryReader _library;
-
-void main() async {
+void main() {
+  LibraryReader _library;
   final path = testFilePath('test', 'src', 'model');
-  _library = await initializeLibraryReaderForDirectory(
-      path, "no_column_metadata.dart");
+
+  setUp(() async {
+    _library = await initializeLibraryReaderForDirectory(
+        path, "no_column_metadata.dart");
+  });
+
   group('Generator global tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 

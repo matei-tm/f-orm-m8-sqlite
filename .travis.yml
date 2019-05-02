@@ -69,7 +69,7 @@ jobs:
         - pub global activate coverage
       script:
         - ./tool/travis_flutter.sh
-      after_success: bash <(curl -s https://codecov.io/bash) -f coverage/lcov.info
+      after_success: bash <(curl -s https://codecov.io/bash) -f lcov.info
       cache:
         directories:
           - $HOME/.pub-cache
