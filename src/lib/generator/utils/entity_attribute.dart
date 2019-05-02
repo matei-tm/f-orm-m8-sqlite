@@ -1,4 +1,4 @@
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:flutter_sqlite_m8_generator/generator/utils/attribute_metadata_parser.dart';
 import 'package:flutter_sqlite_m8_generator/generator/utils/type_mapper.dart';
 

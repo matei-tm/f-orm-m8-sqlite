@@ -18,14 +18,14 @@ This is a demo application. Do not use for production purposes.
 
 ## Purpose
 
-The only purpose of this example is to be a showcase of `flutter-sqlite-m8 generator` based on the `flutter-orm-m8` annotation framework.
+The only purpose of this example is to be a showcase of `flutter-sqlite-m8 generator` based on the `f_orm_m8` annotation framework.
 
 ![usecase001](docs/usecase000-320.gif)
 
 ## Dependencies
 
 * flutter-sqlite-m8
-* flutter-orm-m8
+* f_orm_m8
 
 ## CRUD showcase
 

@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:flutter_sqlite_m8_generator/exceptions/exception_expander.dart';
 import 'package:flutter_sqlite_m8_generator/generator/core.dart';
 import 'package:flutter_sqlite_m8_generator/generator/writers/entity_writer_factory.dart';

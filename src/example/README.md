@@ -1,7 +1,7 @@
 ## Example - Gymspector application
 
 A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
-The example presents different approaches to solve CRUD functionality for models that adhere to flutter-orm-m8 annotation framework.
+The example presents different approaches to solve CRUD functionality for models that adhere to f_orm_m8 annotation framework.
 
 ### HealthEntry - A DbAccountRelatedEntity implementation
 
@@ -15,7 +15,7 @@ The model detain a composite unique constraint based on accountId and descriptio
 The model file `models/health_entry.dart` has the following content:
 
 ```dart
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable(
     "health_entry", TableMetadata.trackCreate | TableMetadata.trackUpdate)

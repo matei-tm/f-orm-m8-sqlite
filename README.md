@@ -24,11 +24,11 @@
 
 ## Introduction
 
-Dart package to generate SQLite ready-to-go fixture. Uses [Dart Build System](https://github.com/dart-lang/build) builders. Based on [flutter-orm-m8](https://github.com/matei-tm/flutter-orm-m8) annotations convention this package generates proxies and database adapter for SQLite.
+Dart package to generate SQLite ready-to-go fixture. Uses [Dart Build System](https://github.com/dart-lang/build) builders. Based on [f_orm_m8](https://github.com/matei-tm/f-orm-m8) annotations convention this package generates proxies and database adapter for SQLite.
 
 ## Dependencies
 
-It depends on dart package [flutter-orm-m8](https://github.com/matei-tm/flutter-orm-m8). Read [README.md](https://github.com/matei-tm/flutter-orm-m8/blob/master/README.md) for implemented annotation convention.
+It depends on dart package [f_orm_m8](https://github.com/matei-tm/f-orm-m8). Read [README.md](https://github.com/matei-tm/f-orm-m8/blob/master/README.md) for implemented annotation convention.
 
 Supported orm-m8 features:
 
@@ -58,7 +58,7 @@ Supported orm-m8 features:
 ## Usage
 
 1. Create a flutter project
-2. Add flutter_orm_m8, sqflite, build_runner, flutter_sqlite_m8_generator dependencies to `pubspec.yaml`
+2. Add f_orm_m8, sqflite, build_runner, flutter_sqlite_m8_generator dependencies to `pubspec.yaml`
 
     - Before
 
@@ -78,7 +78,7 @@ Supported orm-m8 features:
 
         ```yaml
         dependencies:
-            flutter_orm_m8: ^0.7.1
+            f_orm_m8: ^0.8.0
             sqflite: ^1.1.0
             flutter:
                 sdk: flutter
@@ -113,7 +113,7 @@ Supported orm-m8 features:
 
 5. In the lib folder create a new one named `models`
 6. In the models folder add model classes for your business objects.
-7. Using [flutter-orm-m8](https://github.com/matei-tm/flutter-orm-m8) annotations convention mark:
+7. Using [f_orm_m8](https://github.com/matei-tm/f-orm-m8) annotations convention mark:
 
    - classes with @DataTable
    - fields with @DataColumn
@@ -134,7 +134,7 @@ Supported orm-m8 features:
 ## Example - Gymspector application
 
 A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
-The example presents different approaches to solve CRUD functionality for models that adhere to flutter-orm-m8 annotation framework.
+The example presents different approaches to solve CRUD functionality for models that adhere to f_orm_m8 annotation framework.
 
 ![usecase000](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase000-320.gif)
 
@@ -150,7 +150,7 @@ The example has a common UserAccount model that implements DbAccountEntity
 The model file `models/user_account.dart` has the following content:
 
 ```dart
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable("user_account")
 class UserAccount implements DbAccountEntity {
@@ -343,7 +343,7 @@ The model detain a composite unique constraint based on accountId and descriptio
 The model file `models/health_entry.dart` has the following content:
 
 ```dart
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable(
     "health_entry", TableMetadata.trackCreate | TableMetadata.trackUpdate)
@@ -539,7 +539,7 @@ To demonstrate how to use a generic model, we added a GymLocation model that imp
 The model file `models/gym_location.dart` has the following content:
 
 ```dart
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable(
     "gym_location", TableMetadata.trackCreate | TableMetadata.trackUpdate)
@@ -697,7 +697,7 @@ For a more detailed model with all supported fields type, we added a Receipt mod
 The model file `models/receipt.dart` has the following content:
 
 ```dart
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable("receipt", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class Receipt implements DbEntity {

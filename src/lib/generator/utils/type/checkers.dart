@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:flutter_orm_m8/base/base.dart';
-import 'package:flutter_orm_m8/flutter_orm_m8.dart';
+import 'package:f_orm_m8/base/base.dart';
+import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:source_gen/source_gen.dart';
 
 final isDbEntity = TypeChecker.fromRuntime(DbEntity);
