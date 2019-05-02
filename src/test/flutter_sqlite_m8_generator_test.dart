@@ -5,17 +5,19 @@ import 'test_annotation_utils.dart';
 import 'test_file_utils.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
-LibraryReader _library;
-
-void main() async {
+void main() {
+  LibraryReader library;
   final path = testFilePath('test', 'src', 'model');
-  _library =
-      await initializeLibraryReaderForDirectory(path, "account_related.dart");
+
+  setUp(() async {
+    library =
+        await initializeLibraryReaderForDirectory(path, "account_related.dart");
+  });
   group('Generator global tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 
     test('Test raw output', () async {
-      final output = await generator.generate(_library, null);
+      final output = await generator.generate(library, null);
       final expected = r"""import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:__test__/account_related.dart';
@@ -128,7 +130,7 @@ return result.map((e) => HealthEntryAccountRelatedProxy.fromMap(e)).toList();
     test('Missing test annotation', () async {
       expect(
           () => getEmittedEntityForAnnotation(
-              "this_test_annotation_does_not_exists", _library),
+              "this_test_annotation_does_not_exists", library),
           throwsA(const TypeMatcher<StateError>()));
     });
   });
