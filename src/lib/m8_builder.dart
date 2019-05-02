@@ -30,7 +30,9 @@ class M8Builder extends LibraryBuilder {
     emittedEntities = List<EmittedEntity>();
     annotationBuilder = LibraryBuilder(
         OrmM8GeneratorForAnnotation.withEmitted(emittedEntities),
-        generatedExtension: helpersExtension);
+        generatedExtension: helpersExtension,
+        header:
+            "// GENERATED CODE - DO NOT MODIFY BY HAND\n// Emitted on: ${DateTime.now()}");
   }
   @override
   Future build(BuildStep buildStep) async {
