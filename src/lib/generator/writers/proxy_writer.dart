@@ -68,7 +68,7 @@ $assignments
           "${s00004}map['date_update'] = dateUpdate.millisecondsSinceEpoch;");
     }
 
-    if (emittedEntity.hasTrackUpdate) {
+    if (emittedEntity.hasSoftDelete) {
       sb.writeln("${s00004}// map['date_delete'] is handled by delete method");
     }
 
