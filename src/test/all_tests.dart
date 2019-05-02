@@ -5,7 +5,7 @@ import 'account_related_entity_test.dart' as accountRelatedEntity;
 import 'bad_element_annotation_test.dart' as badElementAnnotation;
 import 'generic_test.dart' as generic;
 import 'independent_entity_test.dart' as independentEntity;
-import 'metadata_level_test.dart' as metadataLevel;
+import 'column_metadata_level_test.dart' as columnMetadataLevel;
 import 'no_column_metadata_test.dart' as noColumnMetadata;
 
 main() {
@@ -15,6 +15,6 @@ main() {
   badElementAnnotation.main();
   generic.main();
   independentEntity.main();
-  metadataLevel.main();
+  columnMetadataLevel.main();
   noColumnMetadata.main();
 }

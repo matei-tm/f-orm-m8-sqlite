@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter_sqlite_m8_generator/orm_m8_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
-import 'test_annotation_utils.dart';
-import 'test_file_utils.dart';
+import 'utils/test_annotation_utils.dart';
+import 'utils/test_file_utils.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
 void main() {
@@ -16,7 +16,7 @@ void main() {
     library =
         await initializeLibraryReaderForDirectory(path, "account_related.dart");
   });
-  group('Generator global tests', () {
+  group('Generic tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 
     test('Test raw output', () async {

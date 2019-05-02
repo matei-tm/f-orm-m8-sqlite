@@ -16,7 +16,8 @@ String _packagePath() {
         .normalizePath()
         .toFilePath(windows: Platform.isWindows);
 
-    _packagePathCache = p.normalize(p.join(p.dirname(currentFilePath), '..'));
+    _packagePathCache =
+        p.normalize(p.join(p.join(p.dirname(currentFilePath), '..'), '..'));
   }
   return _packagePathCache;
 }

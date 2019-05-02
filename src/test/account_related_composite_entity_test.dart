@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter_sqlite_m8_generator/generator/core.dart';
 import 'package:flutter_sqlite_m8_generator/generator/writers/entity_writer_factory.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
-import 'test_annotation_utils.dart';
-import 'test_file_utils.dart';
+import 'utils/test_annotation_utils.dart';
+import 'utils/test_file_utils.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
 void main() {
@@ -13,7 +14,7 @@ void main() {
   final caliber0Path =
       testFilePath('test', 'out', 'account_related_composite.0.caliber');
 
-  var e;
+  EmittedEntity e;
   var entityWriter;
 
   setUp(() async {

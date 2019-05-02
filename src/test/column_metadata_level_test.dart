@@ -1,13 +1,14 @@
+import 'package:flutter_sqlite_m8_generator/generator/core.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
-import 'test_annotation_utils.dart';
-import 'test_file_utils.dart';
+import 'utils/test_annotation_utils.dart';
+import 'utils/test_file_utils.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
 void main() {
   LibraryReader _library;
   final path = testFilePath('test', 'src', 'model');
-  var e;
+  EmittedEntity e;
 
   setUp(() async {
     _library = await initializeLibraryReaderForDirectory(
@@ -15,7 +16,7 @@ void main() {
     e = getEmittedEntityForAnnotation("my_health_entries_table", _library);
   });
 
-  group('Attributes metadata level tests', () {
+  group('Column metadata level tests', () {
     test('Test entity name', () {
       expect(e.entityName, "my_health_entries_table");
     });
