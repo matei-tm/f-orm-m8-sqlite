@@ -1,7 +1,7 @@
 ---
 name: Publish request
 about: Publish master branch
-title: ''
+title: 'Publish version x.x.x'
 labels: 'publish'
 assignees: ''
 
