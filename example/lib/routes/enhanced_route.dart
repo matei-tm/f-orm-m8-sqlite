@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 class EnhancedRoute extends MaterialPageRoute {
   EnhancedRoute(UserAccount userAccount)
       : super(builder: (context) => AccountPage(userAccount));
+
+  EnhancedRoute.addUser() : super(builder: (context) => AccountPage(null));
   EnhancedRoute.editUser(UserAccount userAccount)
       : super(builder: (context) => AccountPage(userAccount));
-  EnhancedRoute.addUser() : super(builder: (context) => AccountPage(null));
+
+  EnhancedRoute.addReceipt() : super(builder: (context) => ReceiptAddPage());
   EnhancedRoute.editReceipt(Receipt receipt)
       : super(builder: (context) => ReceiptEditPage(currentReceipt: receipt));
-  EnhancedRoute.addReceipt() : super(builder: (context) => ReceiptAddPage());
 }
