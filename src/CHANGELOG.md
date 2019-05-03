@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2019-05-03
+
+### Changed
+
+* Switched from `flutter_orm_m8` to the de facto successor `f_orm_m8` 
+* Aligned generators with `f_orm_m8` v0.8.0
+* Softdeletable meta determines the generation of a DateTime dateDelete field
+* The tests were refactored with caliber files
+
+### Added
+
+* A custom header with timestamp on the generated files
+* Test coverage reporting to the CI pipeline
+* The example project integration tests were wired the CI pipeline
+
 ## [0.4.0] - 2019-05-01
 
 ### Changed
