@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.5.0+1] - 2019-05-03
+
+### Changed
+
+* Marked as deprecated. Replaced by [f_orm_m8_sqlite](http://pub.dartlang.org/packages/f_orm_m8_sqlite)
+* See [f_orm_m8_sqlite](http://pub.dartlang.org/packages/f_orm_m8_sqlite) for new updated framework
+
 ## [0.5.0] - 2019-05-03
 
 ### Changed
