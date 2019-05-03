@@ -4,11 +4,9 @@ import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:flutter/material.dart';
 
 class ReceiptAddPage extends StatefulWidget {
-  final Receipt _currentReceipt;
+  ReceiptAddPage();
 
-  ReceiptAddPage(this._currentReceipt);
-
-  _ReceiptAddPageState createState() => _ReceiptAddPageState(_currentReceipt);
+  _ReceiptAddPageState createState() => _ReceiptAddPageState();
 }
 
 class _ReceiptAddPageState extends State<ReceiptAddPage> {
@@ -25,7 +23,7 @@ class _ReceiptAddPageState extends State<ReceiptAddPage> {
 
   DatabaseHelper _db = DatabaseHelper();
 
-  _ReceiptAddPageState(this._stateReceipt);
+  _ReceiptAddPageState();
 
   @override
   void initState() {

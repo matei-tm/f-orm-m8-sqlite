@@ -72,7 +72,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   Future<void> _addReceipt() async {
-    final result = await Navigator.of(context).pushNamed("/receipts/add");
+    final result = await Navigator.of(context).push(EnhancedRoute.addReceipt());
 
     if (result != null) {
       receipts.add(result);

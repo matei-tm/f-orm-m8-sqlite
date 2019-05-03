@@ -186,7 +186,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _addNewAccount() {
-    Navigator.of(context).pushReplacement(EnhancedRoute(null));
+    Navigator.of(context).pushReplacement(EnhancedRoute.addUser());
   }
 
   _onTapDelete(BuildContext context) async {

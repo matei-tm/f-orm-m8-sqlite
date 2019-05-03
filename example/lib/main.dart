@@ -73,7 +73,6 @@ class MyHomePageState extends State<MyHomePage> {
             initialRoute: _currentRoute,
             routes: {
               '/': (context) => HomePage(),
-              '/receipts/add': (context) => ReceiptAddPage(null),
               'start': (context) => AccountPage(null),
             },
           );
