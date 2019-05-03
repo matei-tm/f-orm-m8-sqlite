@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
 
 class DatabaseHelperWriter {
   final List<EmittedEntity> emittedEntities;

@@ -1,5 +1,5 @@
 import 'package:f_orm_m8/f_orm_m8.dart';
-import 'package:flutter_sqlite_m8_generator/generator/core.dart';
+import 'package:f_orm_m8_sqlite/generator/core.dart';
 import 'package:source_gen/source_gen.dart';
 
 EmittedEntity getEmittedEntityForAnnotation(

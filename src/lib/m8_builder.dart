@@ -1,7 +1,7 @@
 import 'package:build/build.dart';
-import 'package:flutter_sqlite_m8_generator/generator/database_helper_generator.dart';
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
-import 'package:flutter_sqlite_m8_generator/generator/orm_m8_generator_for_annotation.dart';
+import 'package:f_orm_m8_sqlite/generator/database_helper_generator.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/orm_m8_generator_for_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
 class M8Builder extends LibraryBuilder {

@@ -1,6 +1,6 @@
-# Full example for `flutter-sqlite-m8-generator` 
+# Full example for `f-orm-m8-sqlite` 
 
-- [Full example for `flutter-sqlite-m8-generator`](#full-example-for-flutter-sqlite-m8-generator)
+- [Full example for `f-orm-m8-sqlite`](#full-example-for-f-orm-m8-sqlite)
   - [Disclaimer](#disclaimer)
   - [Purpose](#purpose)
   - [Dependencies](#dependencies)
@@ -10,7 +10,7 @@
     - [Interface: DbEntity](#interface-dbentity)
     - [Interface: DbEntity](#interface-dbentity-1)
 
-This is a sample showcase for the facets of `flutter-sqlite-m8-generator`
+This is a sample showcase for the facets of `f-orm-m8-sqlite`
 
 ## Disclaimer
 

@@ -1,6 +1,6 @@
 ## Example - Gymspector application
 
-A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
+A full, flutter working example is maintained on [https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example](https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example).  
 The example presents different approaches to solve CRUD functionality for models that adhere to f_orm_m8 annotation framework.
 
 ### HealthEntry - A DbAccountRelatedEntity implementation
@@ -8,7 +8,7 @@ The example presents different approaches to solve CRUD functionality for models
 To demonstrate how to use a model that is dependent to UserAccount, we use a HealthEntry model that implements DbAccountRelatedEntity.
 The model detain a composite unique constraint based on accountId and description.
 
-![usecase002](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase002-320.gif)
+![usecase002](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase002-320.gif)
 
 #### The model
 

@@ -5,9 +5,9 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:f_orm_m8/f_orm_m8.dart';
-import 'package:flutter_sqlite_m8_generator/exceptions/exception_expander.dart';
-import 'package:flutter_sqlite_m8_generator/generator/core.dart';
-import 'package:flutter_sqlite_m8_generator/generator/writers/entity_writer_factory.dart';
+import 'package:f_orm_m8_sqlite/exceptions/exception_expander.dart';
+import 'package:f_orm_m8_sqlite/generator/core.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/entity_writer_factory.dart';
 import 'package:source_gen/source_gen.dart';
 
 class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {

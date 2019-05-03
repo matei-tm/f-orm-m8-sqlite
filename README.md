@@ -1,8 +1,8 @@
-# Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)
+# Sqlite ORM Mate Generator (f-orm-m8-sqlite)
 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/flutter-sqlite-m8-generator.svg) [![pub package](https://img.shields.io/pub/v/flutter_sqlite_m8_generator.svg)](https://pub.dartlang.org/packages/flutter_sqlite_m8_generator) [![Build Status](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator.svg?branch=master)](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator) [![license](https://img.shields.io/github/license/matei-tm/flutter-sqlite-m8-generator.svg)](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/LICENSE)
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) [![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
 
-- [Sqlite ORM Mate Generator (flutter-sqlite-m8-generator)](#sqlite-orm-mate-generator-flutter-sqlite-m8-generator)
+- [Sqlite ORM Mate Generator (f-orm-m8-sqlite)](#sqlite-orm-mate-generator-f-orm-m8-sqlite)
   - [Introduction](#introduction)
   - [Dependencies](#dependencies)
   - [Usage](#usage)
@@ -58,7 +58,7 @@ Supported orm-m8 features:
 ## Usage
 
 1. Create a flutter project
-2. Add f_orm_m8, sqflite, build_runner, flutter_sqlite_m8_generator dependencies to `pubspec.yaml`
+2. Add f_orm_m8, sqflite, build_runner, f_orm_m8_sqlite dependencies to `pubspec.yaml`
 
     - Before
 
@@ -87,7 +87,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            flutter_sqlite_m8_generator: ^0.5.0
+            f_orm_m8_sqlite: ^0.6.0
             flutter_test:
                 sdk: flutter
 
@@ -99,7 +99,7 @@ Supported orm-m8 features:
     targets:
         $default:
             builders:
-                flutter_sqlite_m8_generator|orm_m8:
+                f_orm_m8_sqlite|orm_m8:
                     generate_for:
                         - lib/models/*.dart
                         - lib/main.dart
@@ -133,17 +133,17 @@ Supported orm-m8 features:
 
 ## Example - Gymspector application
 
-A full, flutter working example is maintained on [https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example](https://github.com/matei-tm/flutter-sqlite-m8-generator/tree/master/example).  
+A full, flutter working example is maintained on [https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example](https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example).  
 The example presents different approaches to solve CRUD functionality for models that adhere to f_orm_m8 annotation framework.
 
-![usecase000](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase000-320.gif)
+![usecase000](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase000-320.gif)
 
 
 ### UserAccount - A DbAccountEntity implementation
 
 The example has a common UserAccount model that implements DbAccountEntity
 
-![usecase001](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase001-320.gif)
+![usecase001](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase001-320.gif)
 
 #### The model
 
@@ -336,7 +336,7 @@ mixin UserAccountDatabaseHelper {
 To demonstrate how to use a model that is dependent to UserAccount, we added HealthEntry model that implements DbAccountRelatedEntity.
 The model detain a composite unique constraint based on accountId and description.
 
-![usecase002](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase002-320.gif)
+![usecase002](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase002-320.gif)
 
 #### The model
 
@@ -532,7 +532,7 @@ mixin HealthEntryDatabaseHelper {
 
 To demonstrate how to use a generic model, we added a GymLocation model that implements DbEntity. 
 
-![usecase003](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase003-320.gif)
+![usecase003](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase003-320.gif)
 
 #### The model
 
@@ -690,7 +690,7 @@ mixin GymLocationDatabaseHelper {
 
 For a more detailed model with all supported fields type, we added a Receipt model that implements DbEntity. 
 
-![usecase004](https://github.com/matei-tm/flutter-sqlite-m8-generator/blob/master/example/docs/usecase004-320.gif)
+![usecase004](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase004-320.gif)
 
 #### The model
 

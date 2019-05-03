@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/generator/utils/entity_attribute.dart';
+import 'package:f_orm_m8_sqlite/generator/utils/entity_attribute.dart';
 
 class AttributeWriter {
   EntityAttribute _entityAttribute;

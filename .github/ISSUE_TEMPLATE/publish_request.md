@@ -28,7 +28,7 @@ assignees: ''
   - [ ] ```cd ..```
 - [ ] Commit with message `#xxxx. Publish review completed`
 - [ ] Merge develop changes into master
-  - [ ] Check CI [results](https://travis-ci.org/matei-tm/flutter-sqlite-m8-generator) 
+  - [ ] Check CI [results](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) 
 - [ ] Dry run
   - [ ] ```cd src```
   - [ ] ```pub publish --dry-run```

@@ -1,8 +1,8 @@
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
-import 'package:flutter_sqlite_m8_generator/generator/entity_writer.dart';
-import 'package:flutter_sqlite_m8_generator/generator/utils/type_utils.dart';
-import 'package:flutter_sqlite_m8_generator/generator/utils/utils.dart';
-import 'package:flutter_sqlite_m8_generator/generator/writers/attribute_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/entity_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/utils/type_utils.dart';
+import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/attribute_writer.dart';
 
 class ProxyWriter extends EntityWriter {
   ProxyWriter(EmittedEntity emittedEntity) : super(emittedEntity);

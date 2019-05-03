@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_sqlite_m8_generator/orm_m8_generator.dart';
+import 'package:f_orm_m8_sqlite/orm_m8_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 import 'utils/test_file_utils.dart';

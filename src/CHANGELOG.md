@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2019-05-03
+
+### Changed
+
+* The github project was renamed from **flutter-sqlite-m8-generator** to **f-orm-m8-sqlite**
+* It package was renamed from flutter_sqlite_m8_generator to f_orm_m8_sqlite
+* The dart package was published as [f_orm_m8_sqlite](http://pub.dartlang.org/packages/f_orm_m8_sqlite)
+* See [f_orm_m8_sqlite](http://pub.dartlang.org/packages/f_orm_m8_sqlite) for new updated framework
+
 ## [0.5.0] - 2019-05-03
 
 ### Changed

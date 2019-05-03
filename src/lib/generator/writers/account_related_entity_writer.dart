@@ -1,6 +1,6 @@
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
-import 'package:flutter_sqlite_m8_generator/generator/entity_writer.dart';
-import 'package:flutter_sqlite_m8_generator/generator/writers/proxy_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/entity_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/proxy_writer.dart';
 
 class AccountRelatedEntityWriter extends EntityWriter {
   AccountRelatedEntityWriter(EmittedEntity emittedEntity)

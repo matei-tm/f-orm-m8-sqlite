@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/generator/utils/utils.dart';
+import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 
 class EmittedEntity {
   final String modelName;

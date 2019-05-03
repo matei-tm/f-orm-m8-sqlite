@@ -1,3 +1,3 @@
-export 'package:flutter_sqlite_m8_generator/generator/utils/type/table_assertions.dart';
-export 'package:flutter_sqlite_m8_generator/generator/utils/type/column_assertions.dart';
-export 'package:flutter_sqlite_m8_generator/generator/utils/type/checkers.dart';
+export 'package:f_orm_m8_sqlite/generator/utils/type/table_assertions.dart';
+export 'package:f_orm_m8_sqlite/generator/utils/type/column_assertions.dart';
+export 'package:f_orm_m8_sqlite/generator/utils/type/checkers.dart';

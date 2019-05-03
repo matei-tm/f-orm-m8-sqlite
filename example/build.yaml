@@ -1,7 +1,7 @@
 targets:
   $default:
     builders:
-      flutter_sqlite_m8_generator|orm_m8:
+      f_orm_m8_sqlite|orm_m8:
         generate_for:
           - lib/models/*.dart
           - lib/main.dart

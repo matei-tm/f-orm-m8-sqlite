@@ -2,9 +2,9 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:f_orm_m8/f_orm_m8.dart';
-import 'package:flutter_sqlite_m8_generator/exceptions/field_parse_exception.dart';
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
-import 'package:flutter_sqlite_m8_generator/generator/utils/utils.dart';
+import 'package:f_orm_m8_sqlite/exceptions/field_parse_exception.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 import 'package:source_gen/source_gen.dart';
 
 class ModelParser {

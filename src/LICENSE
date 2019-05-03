@@ -1,4 +1,4 @@
-flutter-sqlite-m8-generator is licensed for use as follows:
+f-orm-m8-sqlite is licensed for use as follows:
 
 """
 MIT License
@@ -23,12 +23,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The flutter-sqlite-m8-generator license applies to all parts of 
-flutter-sqlite-m8-generator that are not externally maintained libraries.
+The f-orm-m8-sqlite license applies to all parts of 
+f-orm-m8-sqlite that are not externally maintained libraries.
 """
 
-This license applies to parts of flutter-sqlite-m8-generator originating from the
-https://github.com/matei-tm/flutter-sqlite-m8-generator repository:
+This license applies to parts of f-orm-m8-sqlite originating from the
+https://github.com/matei-tm/f-orm-m8-sqlite repository:
 
 
 """
@@ -54,11 +54,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The flutter-sqlite-m8-generator license applies to all parts of 
-flutter-sqlite-m8-generator that are not externally maintained libraries.
+The f-orm-m8-sqlite license applies to all parts of 
+f-orm-m8-sqlite that are not externally maintained libraries.
 """
 
-The externally maintained sources used by flutter-sqlite-m8-generator are:
+The externally maintained sources used by f-orm-m8-sqlite are:
 
 - test_file_utils.dart located at test/test_file_utils.dart, is licensed as follows:
 

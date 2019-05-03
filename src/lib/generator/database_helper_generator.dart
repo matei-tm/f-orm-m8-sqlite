@@ -3,8 +3,8 @@ library orm_m8_generator.wrapper;
 import 'dart:async';
 
 import 'package:build/build.dart';
-import 'package:flutter_sqlite_m8_generator/generator/emitted_entity.dart';
-import 'package:flutter_sqlite_m8_generator/generator/writers/database_helper_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/database_helper_writer.dart';
 import 'package:source_gen/source_gen.dart';
 
 class DatabaseHelperGenerator extends Generator {

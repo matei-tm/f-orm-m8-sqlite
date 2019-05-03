@@ -1,4 +1,4 @@
-import 'package:flutter_sqlite_m8_generator/generator/writers/sql_definition_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/sql_definition_writer.dart';
 
 class EntityWriter extends SqlDefinitionWriter {
   EntityWriter(emittedEntity) : super(emittedEntity);
