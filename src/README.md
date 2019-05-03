@@ -1,8 +1,12 @@
-# Sqlite ORM Mate Generator (f-orm-m8-sqlite)
+# Sqlite Scaffolding Generator @ Dart Framework ORM M8
 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) [![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
+[![Gitter](https://img.shields.io/gitter/room/flutter-orm-m8/community.svg?style=flat-square)](https://gitter.im/flutter-orm-m8/community)
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite)
+ [![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
 
-- [Sqlite ORM Mate Generator (f-orm-m8-sqlite)](#sqlite-orm-mate-generator-f-orm-m8-sqlite)
+> f_orm_m8_sqlite - \fɔːrm meɪt Ess-kjuː-ɛl-aɪ\ A [f_orm_m8](https://github.com/matei-tm/f-orm-m8) implementation for Sqlite, with mapping capability out of the box. Part of Dart Framework ORM **M8**
+
+- [Sqlite Scaffolding Generator @ Dart Framework ORM M8](#sqlite-scaffolding-generator--dart-framework-orm-m8)
   - [Introduction](#introduction)
   - [Dependencies](#dependencies)
   - [Usage](#usage)
@@ -113,7 +117,7 @@ Supported orm-m8 features:
 
 5. In the lib folder create a new one named `models`
 6. In the models folder add model classes for your business objects.
-7. Using [f_orm_m8](https://github.com/matei-tm/f-orm-m8) annotations convention mark:
+7. Using [f_orm_m8](https://github.com/matei-tm/f-orm-m8) annotations convention, mark:
 
    - classes with @DataTable
    - fields with @DataColumn
@@ -126,10 +130,10 @@ Supported orm-m8 features:
 
    The build_runner will generate:
 
-    - in models folder, a *.g.m8.dart file for each model file
-    - in lib folder, a main.adapter.g.m8.dart file
+    - in models folder, a `*.g.m8.dart` file for each model file
+    - in lib folder, a `main.adapter.g.m8.dart` file
 
-9. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example for a trivial usage.
+9. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example project for a trivial usage.
 
 ## Example - Gymspector application
 

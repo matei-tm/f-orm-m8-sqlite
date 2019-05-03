@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.6.0+1] - 2019-05-03
+
+### Changed
+
+* README.md reviewed
+
 ## [0.6.0] - 2019-05-03
 
 ### Changed
