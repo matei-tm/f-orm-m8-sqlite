@@ -1,4 +1,5 @@
 import 'package:sqlite_m8_demo/models/user_account.dart';
+import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ typedef AccountActionCallback = Future<bool> Function(int);
 
 abstract class GuardedAccountState<T extends StatefulWidget>
     extends DbAdapterState<T> {
-  UserAccount guardedCurrentAccount;
-  List<UserAccount> guardedUserAccounts;
+  UserAccountProxy guardedCurrentAccount;
+  List<UserAccountProxy> guardedUserAccounts;
 
   AccountActionCallback callExtraLoad;
 
@@ -61,8 +62,8 @@ abstract class GuardedAccountState<T extends StatefulWidget>
   }
 
   Future _loadNonCurrentAccounts() async {
-    guardedUserAccounts = (await databaseAdapter.getUserAccountProxiesAll())
-        .where((t) => t.isCurrent != true && t.id != null);
+    guardedUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
+    guardedUserAccounts.removeWhere((a) => a.isCurrent == true);
   }
 
   void goToStartPage() {

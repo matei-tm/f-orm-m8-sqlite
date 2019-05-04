@@ -15,7 +15,6 @@ class MockDatabaseHelper extends Mock implements DatabaseHelper {}
 
 MockDatabaseHelper buildMockDatabaseAdapter() {
   MockDatabaseHelper mockDatabaseHelper = MockDatabaseHelper();
-  mockDatabaseHelper.extremeDevelopmentMode = false;
 
   enableCurrentUserAccount(mockDatabaseHelper);
 
@@ -32,14 +31,16 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   firstUser.isCurrent = true;
 
   UserAccountProxy secondUser = UserAccountProxy();
-  firstUser.id = 2;
-  firstUser.email = "John@Nash.com";
-  firstUser.abbreviation = "JN";
-  firstUser.description = "Tester Nash";
-  firstUser.userName = "John Nash";
-  firstUser.isCurrent = false;
+  secondUser.id = 2;
+  secondUser.email = "John@Nash.com";
+  secondUser.abbreviation = "JN";
+  secondUser.description = "Tester Nash";
+  secondUser.userName = "John Nash";
+  secondUser.isCurrent = false;
 
-  List<UserAccountProxy> usersList = [firstUser, secondUser];
+  List<UserAccountProxy> usersList = List<UserAccountProxy>()
+    ..add(firstUser)
+    ..add(secondUser);
 
   when(mockDatabaseHelper.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
@@ -53,9 +54,6 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
   testWidgets('Navigate to drawer entry test', (WidgetTester tester) async {
-    mockDatabaseHelper.extremeDevelopmentMode = false;
-    enableCurrentUserAccount(mockDatabaseHelper);
-
     await drawerOpenedWithAccounts(tester, mockDatabaseHelper);
   });
 }
@@ -72,5 +70,6 @@ Future drawerOpenedWithAccounts(
   await tester.tap(find.byTooltip('Navigation menu'));
   await tester.pumpAndSettle();
 
+  expect(find.text('JD'), findsOneWidget);
   expect(find.text('JN'), findsOneWidget);
 }
