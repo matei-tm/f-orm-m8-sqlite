@@ -1,4 +1,3 @@
-import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 import 'package:sqlite_m8_demo/routes/enhanced_route.dart';

@@ -70,6 +70,11 @@ Future drawerOpenedWithAccounts(
   await tester.tap(find.byTooltip('Navigation menu'));
   await tester.pumpAndSettle();
 
+  //look for current account
   expect(find.text('JD'), findsOneWidget);
+  expect(find.text('John Doe'), findsOneWidget);
+  expect(find.text('John@Doe.com'), findsOneWidget);
+
+  //look for other account
   expect(find.text('JN'), findsOneWidget);
 }
