@@ -17,7 +17,7 @@ class Receipt implements DbEntity {
   @DataColumn("expiration_date", metadataLevel: ColumnMetadata.notNull)
   DateTime expirationDate;
 
-  @DataColumn("price", metadataLevel: ColumnMetadata.notNull)
+  @DataColumn("quantity", metadataLevel: ColumnMetadata.notNull)
   double quantity;
 
   //@DataColumn("decomposing_duration", ColumnMetadata.notNull)

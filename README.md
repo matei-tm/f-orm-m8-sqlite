@@ -718,7 +718,7 @@ class Receipt implements DbEntity {
   @DataColumn("expiration_date", ColumnMetadata.notNull)
   DateTime expirationDate;
 
-  @DataColumn("price", ColumnMetadata.notNull)
+  @DataColumn("quantity", ColumnMetadata.notNull)
   double quantity;
 
   @DataColumn("number_of_items", ColumnMetadata.notNull)
@@ -775,7 +775,7 @@ class ReceiptProxy extends Receipt {
     map['id'] = id;
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
-    map['price'] = quantity;
+    map['quantity'] = quantity;
     map['number_of_items'] = numberOfItems;
     map['storage_temperature'] = storageTemperature;
     map['description'] = description;
@@ -790,7 +790,7 @@ class ReceiptProxy extends Receipt {
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
-    this.quantity = map['price'];
+    this.quantity = map['quantity'];
     this.numberOfItems = map['number_of_items'];
     this.storageTemperature = map['storage_temperature'];
     this.description = map['description'];
@@ -805,7 +805,7 @@ mixin ReceiptDatabaseHelper {
     "id",
     "is_bio",
     "expiration_date",
-    "price",
+    "quantity",
     "number_of_items",
     "storage_temperature",
     "description",
@@ -819,7 +819,7 @@ mixin ReceiptDatabaseHelper {
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
-    price REAL  NOT NULL,
+    quantity REAL  NOT NULL,
     number_of_items INTEGER  NOT NULL,
     storage_temperature NUMERIC  NOT NULL,
     description TEXT  NOT NULL UNIQUE,

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-03 02:18:31.120724
+// Emitted on: 2019-05-05 00:12:16.670229
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -33,7 +33,7 @@ class ReceiptProxy extends Receipt {
     map['id'] = id;
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
-    map['price'] = quantity;
+    map['quantity'] = quantity;
     map['number_of_items'] = numberOfItems;
     map['storage_temperature'] = storageTemperature;
     map['description'] = description;
@@ -48,7 +48,7 @@ class ReceiptProxy extends Receipt {
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
-    this.quantity = map['price'];
+    this.quantity = map['quantity'];
     this.numberOfItems = map['number_of_items'];
     this.storageTemperature = map['storage_temperature'];
     this.description = map['description'];
@@ -63,7 +63,7 @@ mixin ReceiptDatabaseHelper {
     "id",
     "is_bio",
     "expiration_date",
-    "price",
+    "quantity",
     "number_of_items",
     "storage_temperature",
     "description",
@@ -77,7 +77,7 @@ mixin ReceiptDatabaseHelper {
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
-    price REAL  NOT NULL,
+    quantity REAL  NOT NULL,
     number_of_items INTEGER  NOT NULL,
     storage_temperature NUMERIC  NOT NULL,
     description TEXT  NOT NULL UNIQUE,
