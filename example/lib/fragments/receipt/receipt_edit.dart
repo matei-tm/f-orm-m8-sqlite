@@ -1,7 +1,7 @@
-import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/receipt.dart';
 import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:flutter/material.dart';
+import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 
 class ReceiptEditPage extends StatefulWidget {
   final Receipt currentReceipt;
@@ -11,7 +11,7 @@ class ReceiptEditPage extends StatefulWidget {
   _ReceiptEditPageState createState() => _ReceiptEditPageState(currentReceipt);
 }
 
-class _ReceiptEditPageState extends State<ReceiptEditPage> {
+class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
   final _formKey = GlobalKey<FormState>();
   final _descriptionKey = Key("receiptDescriptionField");
   final _expirationKey = Key("receiptExpirationDateField");
@@ -22,8 +22,6 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
 
   Receipt _stateReceipt;
   String title;
-
-  DatabaseHelper _db = DatabaseHelper();
 
   _ReceiptEditPageState(this._stateReceipt);
 
@@ -45,9 +43,7 @@ class _ReceiptEditPageState extends State<ReceiptEditPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      _db = DatabaseHelper();
-
-      int id = await _db.updateReceipt(_stateReceipt);
+      int id = await databaseAdapter.updateReceipt(_stateReceipt);
       _stateReceipt.id = id;
 
       Navigator.of(context).pop(_stateReceipt);

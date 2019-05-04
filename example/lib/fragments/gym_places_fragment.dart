@@ -110,7 +110,6 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return _container();
   }
 

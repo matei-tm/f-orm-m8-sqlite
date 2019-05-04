@@ -1,5 +1,4 @@
 import 'package:sqlite_m8_demo/fragments/health/health_entry_row.dart';
-import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:sqlite_m8_demo/pages/helpers/snack_presenter.dart';
 import 'package:sqlite_m8_demo/pages/helpers/guarded_account_state.dart';
@@ -20,7 +19,6 @@ class _HealthRecordsFragmentState
 
   final TextEditingController _healthEntryController = TextEditingController();
 
-  var _db = DatabaseHelper();
   bool _validate = false;
 
   var _parentScaffoldKey;
@@ -37,7 +35,8 @@ class _HealthRecordsFragmentState
   }
 
   Future<bool> _loadAsyncCurrentData(int accountId) async {
-    healthEntries = await _db.getHealthEntryProxiesByAccountId(accountId);
+    healthEntries =
+        await databaseAdapter.getHealthEntryProxiesByAccountId(accountId);
     healthEntries = healthEntries ?? [];
     return true;
   }
@@ -127,7 +126,7 @@ class _HealthRecordsFragmentState
       var tempHealthEntry = HealthEntryProxy(
           description: text, accountId: guardedCurrentAccount.id);
       tempHealthEntry.diagnosysDate = DateTime.now();
-      var newId = await _db.saveHealthEntry(tempHealthEntry);
+      var newId = await databaseAdapter.saveHealthEntry(tempHealthEntry);
       tempHealthEntry.id = newId;
 
       healthEntries.add(tempHealthEntry);
@@ -143,7 +142,7 @@ class _HealthRecordsFragmentState
 
   Future<void> _deleteHealthEntry(HealthEntryProxy h) async {
     try {
-      await _db.deleteHealthEntry(h.id);
+      await databaseAdapter.deleteHealthEntry(h.id);
       healthEntries.remove(h);
 
       setState(() {});

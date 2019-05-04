@@ -1,15 +1,13 @@
-import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.dart';
+import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
 typedef AccountActionCallback = Future<bool> Function(int);
 
-abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
+abstract class GuardedAccountState<T extends StatefulWidget> extends DbAdapterState<T> {
   UserAccount guardedCurrentAccount;
   List<UserAccount> guardedUserAccounts;
-
-  var _db = DatabaseHelper();
 
   AccountActionCallback callExtraLoad;
 
@@ -34,7 +32,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
   }
 
   Future switchAccount(UserAccount userAccount, BuildContext context) async {
-    await _db.setCurrentUserAccount(userAccount.id);
+    await databaseAdapter.setCurrentUserAccount(userAccount.id);
     guardedUserAccounts.remove(userAccount);
     guardedUserAccounts.add(guardedCurrentAccount);
     guardedCurrentAccount = userAccount;
@@ -48,7 +46,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
 
   Future<int> _loadAsyncData() async {
     try {
-      guardedCurrentAccount = await _db.getCurrentUserAccount();
+      guardedCurrentAccount = await databaseAdapter.getCurrentUserAccount();
       if (guardedCurrentAccount == null) {
         goToStartPage();
       }
@@ -62,7 +60,7 @@ abstract class GuardedAccountState<T extends StatefulWidget> extends State<T> {
   }
 
   Future _loadNonCurrentAccounts() async {
-    guardedUserAccounts = await _db.getUserAccountProxiesAll();
+    guardedUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
     guardedUserAccounts.removeWhere((a) => a.isCurrent == true);
   }
 

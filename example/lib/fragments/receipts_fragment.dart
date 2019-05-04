@@ -1,6 +1,6 @@
 import 'package:sqlite_m8_demo/fragments/receipt/receipt_row.dart';
-import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/receipt.dart';
+import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 import 'package:sqlite_m8_demo/pages/helpers/snack_presenter.dart';
 import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class ReceiptsFragment extends StatefulWidget {
       _ReceiptsFragmentState(_parentScaffoldKey);
 }
 
-class _ReceiptsFragmentState extends State<ReceiptsFragment> {
+class _ReceiptsFragmentState extends DbAdapterState<ReceiptsFragment> {
   List<Receipt> receipts = [];
 
   var _parentScaffoldKey;
@@ -27,9 +27,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   Future<List<Receipt>> _loadAsyncCurrentData() async {
-    var db = DatabaseHelper();
-
-    return await db.getReceiptProxiesAll();
+    return await databaseAdapter.getReceiptProxiesAll();
   }
 
   @override
@@ -119,9 +117,7 @@ class _ReceiptsFragmentState extends State<ReceiptsFragment> {
   }
 
   Future<void> _deleteReceiptFromDatabase(Receipt h) async {
-    var db = DatabaseHelper();
-
-    await db.deleteReceipt(h.id);
+    await databaseAdapter.deleteReceipt(h.id);
     receipts.remove(h);
     setState(() {});
 

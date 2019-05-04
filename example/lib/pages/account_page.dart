@@ -1,5 +1,6 @@
 import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
+import 'package:sqlite_m8_demo/pages/helpers/db_adapter_state.dart';
 import 'package:sqlite_m8_demo/routes/enhanced_route.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class AccountPage extends StatefulWidget {
   _AccountPageState createState() => _AccountPageState(_stateAccount);
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends DbAdapterState<AccountPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _accountNameKey = Key('accountNameTextFormField');
@@ -23,7 +24,6 @@ class _AccountPageState extends State<AccountPage> {
 
   UserAccountProxy _stateAccount;
   String title;
-  DatabaseHelper _db = DatabaseHelper();
 
   _AccountPageState(UserAccountProxy stateAccount) {
     if (stateAccount == null) {
@@ -40,18 +40,16 @@ class _AccountPageState extends State<AccountPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      _db = DatabaseHelper();
-
       int id;
       _stateAccount.isCurrent = true;
 
       if (_stateAccount.id == null) {
-        id = await _db.saveUserAccount(_stateAccount);
+        id = await databaseAdapter.saveUserAccount(_stateAccount);
       } else {
-        id = await _db.updateUserAccount(_stateAccount);
+        id = await databaseAdapter.updateUserAccount(_stateAccount);
       }
 
-      await _db.setCurrentUserAccount(id);
+      await databaseAdapter.setCurrentUserAccount(id);
 
       Navigator.of(context).pushReplacementNamed("/");
     }
@@ -293,7 +291,7 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<bool> testIfMaxAccountsCountWasReached(BuildContext context) async {
     bool maxAccountsCountReached;
-    var accountsCount = await _db.getUserAccountProxiesCount();
+    var accountsCount = await databaseAdapter.getUserAccountProxiesCount();
     if (accountsCount > 3) {
       showDialog<void>(
         context: context,
@@ -321,8 +319,8 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<bool> testIfAccountHasDependents(BuildContext context) async {
     bool hasDependents;
-    var dependentsCount =
-        await _db.getHealthEntryProxiesByAccountId(_stateAccount.id);
+    var dependentsCount = await databaseAdapter
+        .getHealthEntryProxiesByAccountId(_stateAccount.id);
     if (dependentsCount.length > 0) {
       showDialog<void>(
         context: context,
@@ -350,13 +348,12 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Future _deleteAccount() async {
-    _db = DatabaseHelper();
-    _db.deleteUserAccount(this._stateAccount.id);
+    databaseAdapter.deleteUserAccount(this._stateAccount.id);
 
-    var reminingUserAccounts = await _db.getUserAccountProxiesAll();
+    var reminingUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
 
     if (reminingUserAccounts.length > 0) {
-      _db.setCurrentUserAccount(reminingUserAccounts.first.id);
+      databaseAdapter.setCurrentUserAccount(reminingUserAccounts.first.id);
       Navigator.of(context).pushReplacementNamed("/");
     } else {
       Navigator.of(context).pop();
