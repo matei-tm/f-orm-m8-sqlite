@@ -51,15 +51,17 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
-  testWidgets('Navigate to Receipts entry test', (WidgetTester tester) async {
-    mockDatabaseHelper.extremeDevelopmentMode = false;
-    enableCurrentUserAccount(mockDatabaseHelper);
+  testWidgets('Navigate to Receipts test', (WidgetTester tester) async {
+    await navigateToReceipt(tester, mockDatabaseHelper);
+  });
 
-    await gymLocationSubmit(tester, mockDatabaseHelper);
+  testWidgets('Add new receipt test', (WidgetTester tester) async {
+    await navigateToReceipt(tester, mockDatabaseHelper);
+    await addNewReceipt(tester, mockDatabaseHelper);
   });
 }
 
-Future gymLocationSubmit(
+Future navigateToReceipt(
     WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
 
@@ -77,10 +79,79 @@ Future gymLocationSubmit(
 
   expect(find.text('Receipts'), findsOneWidget);
   expect(find.text('Happiness'), findsNothing);
+}
 
+Future addNewReceipt(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   expect(find.byKey(Key('addReceiptButton')), findsOneWidget);
   await tester.tap(find.byKey(Key('addReceiptButton')));
   await tester.pumpAndSettle();
 
+  final receiptDescriptionTextFieldFinder =
+      find.byKey(Key('receiptDescriptionField'));
+  final receiptExpirationDateFieldFinder =
+      find.byKey(Key('receiptExpirationDateField'));
+  final receiptIsBioSwitchFinder = find.byKey(Key('receiptIsBioSwitch'));
+  final receiptNumberOfItemsFieldFinder =
+      find.byKey(Key('receiptNumberOfItemsField'));
+  final receiptQuantityFieldFinder = find.byKey(Key('receiptQuantityField'));
+  final receiptStorageTemperatureFieldFinder =
+      find.byKey(Key('receiptStorageTemperatureField'));
+  final saveReceiptButtonFinder = find.byKey(Key('saveReceiptButton'));
+
   expect(find.text('Add Receipt'), findsOneWidget);
+
+  expect(receiptDescriptionTextFieldFinder, findsOneWidget);
+  await tester.tap(receiptDescriptionTextFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptDescriptionTextFieldFinder, "Happiness");
+  expect(find.text('Happiness'), findsOneWidget);
+
+  expect(receiptExpirationDateFieldFinder, findsOneWidget);
+  await tester.tap(receiptExpirationDateFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(
+      receiptExpirationDateFieldFinder, "2061-07-28 17:50:03");
+  expect(find.text('2061-07-28 17:50:03'), findsOneWidget);
+
+  expect(receiptIsBioSwitchFinder, findsOneWidget);
+  await tester.tap(receiptIsBioSwitchFinder);
+  await tester.pump();
+
+  expect(receiptNumberOfItemsFieldFinder, findsOneWidget);
+  await tester.tap(receiptNumberOfItemsFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptNumberOfItemsFieldFinder, "42");
+  expect(find.text('42'), findsOneWidget);
+
+  expect(receiptQuantityFieldFinder, findsOneWidget);
+  await tester.tap(receiptQuantityFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptQuantityFieldFinder, "1.6180");
+  expect(find.text('1.6180'), findsOneWidget);
+
+  expect(receiptStorageTemperatureFieldFinder, findsOneWidget);
+  await tester.tap(receiptStorageTemperatureFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptStorageTemperatureFieldFinder, "-38.83");
+  expect(find.text('-38.83'), findsOneWidget);
+
+  expect(saveReceiptButtonFinder, findsOneWidget);
+  await tester.tap(saveReceiptButtonFinder);
+  await tester.pumpAndSettle();
+
+  expect(find.text('Happiness'), findsOneWidget);
+
+  expect(find.text('Expiration Date: 2061-07-28 17:50:03.000'), findsOneWidget);
+  expect(find.text('Is Bio: false'), findsOneWidget);
+  expect(find.text('Number of Items: 42'), findsOneWidget);
+
+  //find truncated text
+  expect(find.text('Quantity: 1.618'), findsOneWidget);
+  expect(find.text('Storage Temperature: -38.83\u00b0'), findsOneWidget);
 }
