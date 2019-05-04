@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 typedef AccountActionCallback = Future<bool> Function(int);
 
-abstract class GuardedAccountState<T extends StatefulWidget> extends DbAdapterState<T> {
+abstract class GuardedAccountState<T extends StatefulWidget>
+    extends DbAdapterState<T> {
   UserAccount guardedCurrentAccount;
   List<UserAccount> guardedUserAccounts;
 
