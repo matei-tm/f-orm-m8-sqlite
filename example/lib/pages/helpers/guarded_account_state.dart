@@ -61,8 +61,8 @@ abstract class GuardedAccountState<T extends StatefulWidget>
   }
 
   Future _loadNonCurrentAccounts() async {
-    guardedUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
-    guardedUserAccounts.removeWhere((a) => a.isCurrent == true);
+    guardedUserAccounts = (await databaseAdapter.getUserAccountProxiesAll())
+        .where((t) => t.isCurrent != true && t.id != null);
   }
 
   void goToStartPage() {
