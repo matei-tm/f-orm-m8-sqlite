@@ -1,13 +1,14 @@
-import 'package:sqlite_m8_demo/fragments/receipt/receipt_add.dart';
 import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
 import 'package:sqlite_m8_demo/pages/account_page.dart';
 import 'package:sqlite_m8_demo/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(GymspectorApp());
+void main() => runApp(GymspectorApp(DatabaseHelper()));
 
 class GymspectorApp extends StatelessWidget {
-  GymspectorApp();
+  final databaseHelper;
+
+  GymspectorApp(this.databaseHelper);
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +17,25 @@ class GymspectorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'orm-m8 Demo Home Page'),
+      home: MyHomePage(
+          title: 'orm-m8 Demo Home Page', databaseHelper: databaseHelper),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  static MyHomePageState myState;
+
+  MyHomePage({Key key, this.title, this.databaseHelper}) : super(key: key);
 
   final String title;
+  final DatabaseHelper databaseHelper;
 
   @override
-  MyHomePageState createState() => MyHomePageState();
+  MyHomePageState createState() {
+    myState = MyHomePageState();
+    return myState;
+  }
 }
 
 class MyHomePageState extends State<MyHomePage> {
@@ -48,7 +56,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> _getInitialRoute() async {
-    var _db = DatabaseHelper();
+    var _db = widget.databaseHelper;
     if (_db.extremeDevelopmentMode) {
       return 'start';
     }

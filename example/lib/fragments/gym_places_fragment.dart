@@ -1,5 +1,6 @@
 import 'package:sqlite_m8_demo/fragments/gym/gym_place_row.dart';
 import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
 import 'package:sqlite_m8_demo/pages/helpers/snack_presenter.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,11 @@ class GymPlacesFragment extends StatefulWidget {
       _GymPlacesFragmentState(_parentScaffoldKey);
 }
 
-class _GymPlacesFragmentState extends State<GymPlacesFragment> {
+class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
   List<GymLocationProxy> healthEntries;
 
   final TextEditingController _gymLocationController = TextEditingController();
 
-  var _db = DatabaseHelper();
   bool _validate = false;
 
   var _parentScaffoldKey;
@@ -41,7 +41,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    healthEntries = await _db.getGymLocationProxiesAll();
+    healthEntries = await databaseAdapter.getGymLocationProxiesAll();
     return true;
   }
 
@@ -111,6 +111,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return _container();
   }
 
@@ -125,7 +126,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
 
       var tempGymLocation = GymLocationProxy();
       tempGymLocation.description = text;
-      var newId = await _db.saveGymLocation(tempGymLocation);
+      var newId = await databaseAdapter.saveGymLocation(tempGymLocation);
       tempGymLocation.id = newId;
 
       healthEntries.add(tempGymLocation);
@@ -141,7 +142,7 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
 
   Future<void> _deleteGymLocation(GymLocationProxy h) async {
     try {
-      await _db.deleteGymLocation(h.id);
+      await databaseAdapter.deleteGymLocation(h.id);
       healthEntries.remove(h);
 
       setState(() {});
@@ -152,5 +153,15 @@ class _GymPlacesFragmentState extends State<GymPlacesFragment> {
 
   void _showError(String message) {
     SnackPresenter.showError(message, _parentScaffoldKey);
+  }
+}
+
+class DbAdapterState<T extends StatefulWidget> extends State<T> {
+  DatabaseHelper databaseAdapter;
+  @override
+  Widget build(BuildContext context) {
+    final MyHomePage widget = context.ancestorWidgetOfExactType(MyHomePage);
+    databaseAdapter = widget.databaseHelper;
+    return null;
   }
 }

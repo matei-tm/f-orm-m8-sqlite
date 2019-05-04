@@ -51,7 +51,7 @@ class _AccountPageState extends State<AccountPage> {
         id = await _db.updateUserAccount(_stateAccount);
       }
 
-      _db.setCurrentUserAccount(id);
+      await _db.setCurrentUserAccount(id);
 
       Navigator.of(context).pushReplacementNamed("/");
     }
