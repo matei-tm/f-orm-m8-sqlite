@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:sqlite_m8_demo/main.dart';
+import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
 class MockDatabaseHelper extends Mock implements DatabaseHelper {}
@@ -41,7 +42,7 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
       .thenAnswer((_) => Future.value(usersList));
 
   when(mockDatabaseHelper.getGymLocationProxiesAll())
-      .thenAnswer((_) => Future.value(null));
+      .thenAnswer((_) => Future.value(List<GymLocationProxy>()));
 
   when(mockDatabaseHelper.saveGymLocation(any))
       .thenAnswer((_) => Future.value(1));

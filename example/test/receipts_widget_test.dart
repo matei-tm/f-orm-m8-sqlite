@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:sqlite_m8_demo/main.dart';
-import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
 class MockDatabaseHelper extends Mock implements DatabaseHelper {}
@@ -41,27 +40,26 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   when(mockDatabaseHelper.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 
-  when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(1))
-      .thenAnswer((_) => Future.value(List<HealthEntryProxy>()));
+  when(mockDatabaseHelper.getReceiptProxiesAll())
+      .thenAnswer((_) => Future.value([]));
 
-  when(mockDatabaseHelper.saveHealthEntry(any))
-      .thenAnswer((_) => Future.value(1));
+  when(mockDatabaseHelper.saveReceipt(any)).thenAnswer((_) => Future.value(1));
 
-  when(mockDatabaseHelper.deleteHealthEntry(any))
+  when(mockDatabaseHelper.deleteReceipt(any))
       .thenAnswer((_) => Future.value(1));
 }
 
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
-  testWidgets('Navigate to health entry test', (WidgetTester tester) async {
+  testWidgets('Navigate to Receipts entry test', (WidgetTester tester) async {
     mockDatabaseHelper.extremeDevelopmentMode = false;
     enableCurrentUserAccount(mockDatabaseHelper);
 
-    await healthEntrySubmit(tester, mockDatabaseHelper);
+    await gymLocationSubmit(tester, mockDatabaseHelper);
   });
 }
 
-Future healthEntrySubmit(
+Future gymLocationSubmit(
     WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
 
@@ -73,35 +71,16 @@ Future healthEntrySubmit(
   await tester.tap(find.byTooltip('Navigation menu'));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(Key('healthRecordsMenuButton')), findsOneWidget);
-  await tester.tap(find.byKey(Key('healthRecordsMenuButton')));
+  expect(find.byKey(Key('receiptsMenuButton')), findsOneWidget);
+  await tester.tap(find.byKey(Key('receiptsMenuButton')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Health Records'), findsOneWidget);
-  expect(find.text('Healthy'), findsNothing);
+  expect(find.text('Receipts'), findsOneWidget);
+  expect(find.text('Happiness'), findsNothing);
 
-  await tester.showKeyboard(find.byType(TextField));
-
-  tester.testTextInput.updateEditingValue(const TextEditingValue(
-    text: 'Healthy',
-    selection: TextSelection.collapsed(offset: 1),
-  ));
-
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-  await tester.pump();
-
-  expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
-
-  await tester.tap(find.byKey(Key('addHealthEntryButton')));
+  expect(find.byKey(Key('addReceiptButton')), findsOneWidget);
+  await tester.tap(find.byKey(Key('addReceiptButton')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('delBtnHealth1')), findsOneWidget);
-
-  //delete the entry
-  await tester.tap(find.byKey(Key('delBtnHealth1')));
-  await tester.pumpAndSettle();
-
-  expect(find.text('Healthy'), findsNothing);
+  expect(find.text('Add Receipt'), findsOneWidget);
 }

@@ -14,7 +14,7 @@ class GymPlacesFragment extends StatefulWidget {
 }
 
 class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
-  List<GymLocationProxy> healthEntries;
+  List<GymLocationProxy> gymLocations;
 
   final TextEditingController _gymLocationController = TextEditingController();
 
@@ -28,9 +28,9 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
   void initState() {
     super.initState();
 
-    if (healthEntries == null) {
+    if (gymLocations == null) {
       print("Init State load is called");
-      healthEntries = [];
+      gymLocations = [];
       _loadAsyncCurrentData().then((result) {
         setState(() {
           print("Loading database result is $result");
@@ -40,7 +40,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    healthEntries = await databaseAdapter.getGymLocationProxiesAll();
+    gymLocations = await databaseAdapter.getGymLocationProxiesAll();
     return true;
   }
 
@@ -92,10 +92,10 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: healthEntries.length,
+              itemCount: gymLocations.length,
               itemBuilder: (BuildContext ctxt, int index) {
                 return GymLocationRow(
-                  gymLocation: healthEntries[index],
+                  gymLocation: gymLocations[index],
                   onPressed: (h) {
                     _deleteGymLocation(h);
                   },
@@ -127,7 +127,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
       var newId = await databaseAdapter.saveGymLocation(tempGymLocation);
       tempGymLocation.id = newId;
 
-      healthEntries.add(tempGymLocation);
+      gymLocations.add(tempGymLocation);
       _gymLocationController.clear();
 
       setState(() {
@@ -141,7 +141,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
   Future<void> _deleteGymLocation(GymLocationProxy h) async {
     try {
       await databaseAdapter.deleteGymLocation(h.id);
-      healthEntries.remove(h);
+      gymLocations.remove(h);
 
       setState(() {});
     } catch (e) {
