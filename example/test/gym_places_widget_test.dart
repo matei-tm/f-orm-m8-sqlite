@@ -40,24 +40,27 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   when(mockDatabaseHelper.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 
-  when(mockDatabaseHelper.saveHealthEntry(any))
+  when(mockDatabaseHelper.getGymLocationProxiesAll())
+      .thenAnswer((_) => Future.value(null));
+
+  when(mockDatabaseHelper.saveGymLocation(any))
       .thenAnswer((_) => Future.value(1));
 
-  when(mockDatabaseHelper.deleteHealthEntry(any))
+  when(mockDatabaseHelper.deleteGymLocation(any))
       .thenAnswer((_) => Future.value(1));
 }
 
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
-  testWidgets('Navigate to health entry test', (WidgetTester tester) async {
+  testWidgets('Navigate to Gym Places entry test', (WidgetTester tester) async {
     mockDatabaseHelper.extremeDevelopmentMode = false;
     enableCurrentUserAccount(mockDatabaseHelper);
 
-    await healthEntrySubmit(tester, mockDatabaseHelper);
+    await gymLocationSubmit(tester, mockDatabaseHelper);
   });
 }
 
-Future healthEntrySubmit(
+Future gymLocationSubmit(
     WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
 
@@ -69,35 +72,35 @@ Future healthEntrySubmit(
   await tester.tap(find.byTooltip('Navigation menu'));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(Key('healthRecordsMenuButton')), findsOneWidget);
-  await tester.tap(find.byKey(Key('healthRecordsMenuButton')));
+  expect(find.byKey(Key('gymPlacesMenuButton')), findsOneWidget);
+  await tester.tap(find.byKey(Key('gymPlacesMenuButton')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Health Records'), findsOneWidget);
-  expect(find.text('Healthy'), findsNothing);
+  expect(find.text('Gym Places'), findsOneWidget);
+  expect(find.text('Silva'), findsNothing);
 
   await tester.showKeyboard(find.byType(TextField));
 
   tester.testTextInput.updateEditingValue(const TextEditingValue(
-    text: 'Healthy',
+    text: 'Silva',
     selection: TextSelection.collapsed(offset: 1),
   ));
 
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pump();
 
-  expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
+  expect(find.text('Silva'), findsOneWidget);
+  expect(find.byKey(Key('addGymPlaceButton')), findsOneWidget);
 
-  await tester.tap(find.byKey(Key('addHealthEntryButton')));
+  await tester.tap(find.byKey(Key('addGymPlaceButton')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('delBtnHealth1')), findsOneWidget);
+  expect(find.text('Silva'), findsOneWidget);
+  expect(find.byKey(Key('delBtnGymPlace1')), findsOneWidget);
 
   //delete the entry
-  await tester.tap(find.byKey(Key('delBtnHealth1')));
+  await tester.tap(find.byKey(Key('delBtnGymPlace1')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Healthy'), findsNothing);
+  expect(find.text('Silva'), findsNothing);
 }
