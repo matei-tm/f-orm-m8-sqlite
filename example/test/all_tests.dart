@@ -7,11 +7,11 @@ import 'start_widget_test.dart' as startWidget;
 import 'account_widget_test.dart' as accountWidget;
 
 main() {
-  // drawerWidget.main();
-  // startWidget.main();
+  mockGenerics.main();
+  drawerWidget.main();
+  startWidget.main();
   accountWidget.main();
-  // gymPlacesWidget.main();
-  // healthEntryWidget.main();
-  // mockGenerics.main();
-  // receiptsWidget.main();
+  gymPlacesWidget.main();
+  healthEntryWidget.main();
+  receiptsWidget.main();
 }
