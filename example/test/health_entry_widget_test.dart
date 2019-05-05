@@ -54,14 +54,34 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
   testWidgets('Navigate to health entry test', (WidgetTester tester) async {
-    mockDatabaseHelper.extremeDevelopmentMode = false;
-    enableCurrentUserAccount(mockDatabaseHelper);
+    await navigateToHealthEntries(tester, mockDatabaseHelper);
+  });
 
-    await healthEntrySubmit(tester, mockDatabaseHelper);
+  testWidgets('Add valid Health Entry and delete test',
+      (WidgetTester tester) async {
+    await navigateToHealthEntries(tester, mockDatabaseHelper);
+    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+    await expectValidText(tester, mockDatabaseHelper);
+    await deleteHealthEntry(tester, mockDatabaseHelper, 1);
+  });
+
+  testWidgets('Add invalid Health Entry test', (WidgetTester tester) async {
+    await navigateToHealthEntries(tester, mockDatabaseHelper);
+    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+  });
+
+  testWidgets('Add duplicate Health entry test', (WidgetTester tester) async {
+    await navigateToHealthEntries(tester, mockDatabaseHelper);
+    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+    await expectValidText(tester, mockDatabaseHelper);
+    when(mockDatabaseHelper.saveHealthEntry(any))
+        .thenThrow(Exception("Duplicate entry"));
+    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsNWidgets(2));
+    await expectErrorText(tester, mockDatabaseHelper);
   });
 }
 
-Future healthEntrySubmit(
+Future navigateToHealthEntries(
     WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
 
@@ -79,7 +99,10 @@ Future healthEntrySubmit(
 
   expect(find.text('Health Records'), findsOneWidget);
   expect(find.text('Healthy'), findsNothing);
+}
 
+Future healthEntryFillAndSave(WidgetTester tester,
+    MockDatabaseHelper mockDatabaseHelper, Matcher matcher) async {
   await tester.showKeyboard(find.byType(TextField));
 
   tester.testTextInput.updateEditingValue(const TextEditingValue(
@@ -90,17 +113,41 @@ Future healthEntrySubmit(
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pump();
 
+  expect(find.text('Healthy'), matcher);
+  expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
+
+  await tester.tap(find.byKey(Key('addHealthEntryButton')));
+  await tester.pumpAndSettle();
+}
+
+Future expectValidText(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   expect(find.text('Healthy'), findsOneWidget);
+}
+
+Future expectErrorText(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+  expect(find.byKey(Key('errorSnack')), findsOneWidget);
+}
+
+Future healthEntryEmptySave(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+  expect(find.text('Error'), findsNothing);
+
   expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
 
   await tester.tap(find.byKey(Key('addHealthEntryButton')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Healthy'), findsOneWidget);
-  expect(find.byKey(Key('delBtnHealth1')), findsOneWidget);
+  expect(find.text("Value Can't Be Empty"), findsOneWidget);
+}
+
+Future deleteHealthEntry(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+  expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
 
   //delete the entry
-  await tester.tap(find.byKey(Key('delBtnHealth1')));
+  await tester.tap(find.byKey(Key('delBtnHealth$id')));
   await tester.pumpAndSettle();
 
   expect(find.text('Healthy'), findsNothing);
