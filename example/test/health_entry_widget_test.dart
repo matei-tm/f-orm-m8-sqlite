@@ -174,6 +174,4 @@ Future failToDeleteHealthEntry(
 
   await tester.tap(find.byKey(Key('delBtnHealth$id')));
   await tester.pumpAndSettle();
-
-  //expect(find.text('Healthy'), findsOneWidget);
 }

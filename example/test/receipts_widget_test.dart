@@ -88,29 +88,42 @@ void main() {
   });
 
   testWidgets('Add new receipt test', (WidgetTester tester) async {
-    await navigateToReceipt(tester, mockDatabaseHelper);
-    await addNewReceipt(tester, mockDatabaseHelper);
-    await fillReceipt(tester, mockDatabaseHelper, receiptNewProbe);
-    await saveAndCheckReceipt(tester, mockDatabaseHelper, receiptNewProbe);
+    await navigateToReceiptAddFillSaveCheck(tester, mockDatabaseHelper);
   });
 
   testWidgets('Update receipt test', (WidgetTester tester) async {
-    await navigateToReceipt(tester, mockDatabaseHelper);
-    await addNewReceipt(tester, mockDatabaseHelper);
-    await fillReceipt(tester, mockDatabaseHelper, receiptNewProbe);
-    await saveAndCheckReceipt(tester, mockDatabaseHelper, receiptNewProbe);
+    await navigateToReceiptAddFillSaveCheck(tester, mockDatabaseHelper);
     await hitUpdateReceipt(tester, mockDatabaseHelper, 1);
     await fillReceipt(tester, mockDatabaseHelper, receiptUpdateProbe);
     await saveAndCheckReceipt(tester, mockDatabaseHelper, receiptUpdateProbe);
   });
 
-  testWidgets('Delete receipt test', (WidgetTester tester) async {
-    await navigateToReceipt(tester, mockDatabaseHelper);
-    await addNewReceipt(tester, mockDatabaseHelper);
-    await fillReceipt(tester, mockDatabaseHelper, receiptNewProbe);
-    await saveAndCheckReceipt(tester, mockDatabaseHelper, receiptNewProbe);
-    await deleteReceipt(tester, mockDatabaseHelper);
+  testWidgets('Tap Delete receipt test', (WidgetTester tester) async {
+    await navigateToReceiptAddFillSaveCheck(tester, mockDatabaseHelper);
+    await tapDeleteReceipt(tester, mockDatabaseHelper);
   });
+
+  testWidgets('Tap Delete receipt and Confirm test',
+      (WidgetTester tester) async {
+    await navigateToReceiptAddFillSaveCheck(tester, mockDatabaseHelper);
+    await tapDeleteReceipt(tester, mockDatabaseHelper);
+    await confirmDeleteReceipt(tester, mockDatabaseHelper);
+  });
+
+  testWidgets('Tap Delete receipt and Cancel test',
+      (WidgetTester tester) async {
+    await navigateToReceiptAddFillSaveCheck(tester, mockDatabaseHelper);
+    await tapDeleteReceipt(tester, mockDatabaseHelper);
+    await cancelDeleteReceipt(tester, mockDatabaseHelper);
+  });
+}
+
+Future navigateToReceiptAddFillSaveCheck(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+  await navigateToReceipt(tester, mockDatabaseHelper);
+  await addNewReceipt(tester, mockDatabaseHelper);
+  await fillReceipt(tester, mockDatabaseHelper, receiptNewProbe);
+  await saveAndCheckReceipt(tester, mockDatabaseHelper, receiptNewProbe);
 }
 
 Future navigateToReceipt(
@@ -234,10 +247,28 @@ Future saveAndCheckReceipt(WidgetTester tester,
       findsOneWidget);
 }
 
-Future deleteReceipt(
+Future tapDeleteReceipt(
     WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
   expect(find.byKey(Key('delBtnReceipt1')), findsOneWidget);
 
   await tester.tap(find.byKey(Key('delBtnReceipt1')));
+  await tester.pumpAndSettle();
+}
+
+Future confirmDeleteReceipt(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+  expect(find.byKey(Key('confirmDeleteReceiptButton')), findsOneWidget);
+
+  await tester.tap(find.byKey(Key('confirmDeleteReceiptButton')));
+  await tester.pumpAndSettle();
+
+  expect(find.byKey(Key('infoSnack')), findsOneWidget);
+}
+
+Future cancelDeleteReceipt(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+  expect(find.byKey(Key('cancelDeleteReceiptButton')), findsOneWidget);
+
+  await tester.tap(find.byKey(Key('cancelDeleteReceiptButton')));
   await tester.pumpAndSettle();
 }
