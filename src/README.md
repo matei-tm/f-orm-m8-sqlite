@@ -1,7 +1,7 @@
 # Sqlite Scaffolding Generator @ Dart Framework ORM M8
 
-[![Gitter](https://img.shields.io/gitter/room/flutter-orm-m8/community.svg?style=flat-square)](https://gitter.im/flutter-orm-m8/community)
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite)
+[![Gitter](https://img.shields.io/gitter/room/flutter-orm-m8/community.svg)](https://gitter.im/flutter-orm-m8/community) 
+![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) ![Codecov](https://img.shields.io/codecov/c/github/matei-tm/f-orm-m8-sqlite.svg)
  [![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
 
 > f_orm_m8_sqlite - \fɔːrm meɪt Ess-kjuː-ɛl-aɪ\ A [f_orm_m8](https://github.com/matei-tm/f-orm-m8) implementation for Sqlite, with mapping capability out of the box. Part of Dart Framework ORM **M8**
@@ -48,12 +48,12 @@ Supported orm-m8 features:
 | ColumnMetadata.      | unique                 | ColumnMetadata      | v0.1.0            |                    |
 | ColumnMetadata.      | notNull                | ColumnMetadata      | v0.1.0            |                    |
 | ColumnMetadata.      | autoIncrement          | ColumnMetadata      | v0.3.0            |                    |
-| ColumnMetadata.      | indexed                | ColumnMetadata      | -                 | Planned for v0.6.0 |
+| ColumnMetadata.      | indexed                | ColumnMetadata      | -                 | Planned for v0.7.0 |
 | CompositeConstraint. | unique                 | CompositeConstraint | v0.4.0            |                    |
 | CompositeConstraint. | primaryKey             | CompositeConstraint | v0.4.0            |                    |
-| CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.6.0 |
-| CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.6.0 |
-| implements           | DbOpenEntity           | entity helper       | -                 | Planned for v0.6.0 |
+| CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.7.0 |
+| CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.7.0 |
+| implements           | DbOpenEntity           | entity helper       | -                 | Planned for v0.7.0 |
 | implements           | DbEntity               | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountEntity        | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountRelatedEntity | entity helper       | v0.1.0            |                    |

@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.6.0+2] - 2019-05-05
+
+### Changed
+
+* README.md reviewed. Typo fixes. Updating dependencies table. Adding codecov badge
+
+### Added
+
+* Widget tests on example project
+
 ## [0.6.0+1] - 2019-05-03
 
 ### Changed
