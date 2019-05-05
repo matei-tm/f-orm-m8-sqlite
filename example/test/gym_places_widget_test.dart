@@ -51,6 +51,11 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
       .thenAnswer((_) => Future.value(1));
 }
 
+void enableThrowOnDeleteGymLocation(MockDatabaseHelper mockDatabaseHelper) {
+  when(mockDatabaseHelper.deleteGymLocation(any))
+      .thenThrow(Exception("Invalid database. Could not delete"));
+}
+
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
 
@@ -78,6 +83,14 @@ void main() {
     when(mockDatabaseHelper.saveGymLocation(any))
         .thenThrow(Exception("Duplicate entry"));
     await gymLocationFillAndSave(tester, mockDatabaseHelper, findsNWidgets(2));
+    await expectErrorText(tester, mockDatabaseHelper);
+  });
+
+  testWidgets('Throw error when delete test', (WidgetTester tester) async {
+    await navigateToGymPlaces(tester, mockDatabaseHelper);
+    await gymLocationFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+    await expectValidText(tester, mockDatabaseHelper);
+    await failToDeleteLocation(tester, mockDatabaseHelper, 1);
     await expectErrorText(tester, mockDatabaseHelper);
   });
 }
@@ -152,4 +165,14 @@ Future deleteLocation(
   await tester.pumpAndSettle();
 
   expect(find.text('Silva'), findsNothing);
+}
+
+Future failToDeleteLocation(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+  expect(find.byKey(Key('delBtnGymPlace$id')), findsOneWidget);
+
+  enableThrowOnDeleteGymLocation(mockDatabaseHelper);
+
+  await tester.tap(find.byKey(Key('delBtnGymPlace$id')));
+  await tester.pumpAndSettle();
 }

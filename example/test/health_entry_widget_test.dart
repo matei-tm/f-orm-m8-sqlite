@@ -51,6 +51,11 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
       .thenAnswer((_) => Future.value(1));
 }
 
+void enableThrowOnDeleteHealthEntry(MockDatabaseHelper mockDatabaseHelper) {
+  when(mockDatabaseHelper.deleteHealthEntry(any))
+      .thenThrow(Exception("Invalid database. Could not delete"));
+}
+
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
   testWidgets('Navigate to health entry test', (WidgetTester tester) async {
@@ -77,6 +82,14 @@ void main() {
     when(mockDatabaseHelper.saveHealthEntry(any))
         .thenThrow(Exception("Duplicate entry"));
     await healthEntryFillAndSave(tester, mockDatabaseHelper, findsNWidgets(2));
+    await expectErrorText(tester, mockDatabaseHelper);
+  });
+
+  testWidgets('Throw error when delete test', (WidgetTester tester) async {
+    await navigateToHealthEntries(tester, mockDatabaseHelper);
+    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+    await expectValidText(tester, mockDatabaseHelper);
+    await failToDeleteHealthEntry(tester, mockDatabaseHelper, 1);
     await expectErrorText(tester, mockDatabaseHelper);
   });
 }
@@ -151,4 +164,16 @@ Future deleteHealthEntry(
   await tester.pumpAndSettle();
 
   expect(find.text('Healthy'), findsNothing);
+}
+
+Future failToDeleteHealthEntry(
+    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+  expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
+
+  enableThrowOnDeleteHealthEntry(mockDatabaseHelper);
+
+  await tester.tap(find.byKey(Key('delBtnHealth$id')));
+  await tester.pumpAndSettle();
+
+  //expect(find.text('Healthy'), findsOneWidget);
 }
