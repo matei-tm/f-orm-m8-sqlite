@@ -57,7 +57,7 @@ void enableThrowOnDeleteHealthEntry(MockDatabaseHelper mockDatabaseHelper) {
 }
 
 void main() {
-  final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
   testWidgets('Navigate to health entry test', (WidgetTester tester) async {
     await navigateToHealthEntries(tester, mockDatabaseHelper);
   });
@@ -86,6 +86,7 @@ void main() {
   });
 
   testWidgets('Throw error when delete test', (WidgetTester tester) async {
+    mockDatabaseHelper = buildMockDatabaseAdapter();
     await navigateToHealthEntries(tester, mockDatabaseHelper);
     await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
     await expectValidText(tester, mockDatabaseHelper);

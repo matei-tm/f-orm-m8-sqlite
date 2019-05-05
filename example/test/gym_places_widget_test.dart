@@ -57,7 +57,7 @@ void enableThrowOnDeleteGymLocation(MockDatabaseHelper mockDatabaseHelper) {
 }
 
 void main() {
-  final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
 
   testWidgets('Navigate to Gym Places test', (WidgetTester tester) async {
     await navigateToGymPlaces(tester, mockDatabaseHelper);
@@ -87,6 +87,7 @@ void main() {
   });
 
   testWidgets('Throw error when delete test', (WidgetTester tester) async {
+    mockDatabaseHelper = buildMockDatabaseAdapter();
     await navigateToGymPlaces(tester, mockDatabaseHelper);
     await gymLocationFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
     await expectValidText(tester, mockDatabaseHelper);
