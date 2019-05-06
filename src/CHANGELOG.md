@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.6.1] - 2019-05-06
+
+### Added
+
+* Default name generation when DataTable name is missing. The name is the model name prefixed with "M8"
+* Tests for generator exceptions handling
+
 ## [0.6.0+2] - 2019-05-05
 
 ### Changed
