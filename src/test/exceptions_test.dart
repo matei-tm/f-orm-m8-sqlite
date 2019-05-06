@@ -16,7 +16,7 @@ void main() {
     library_2 = await initializeLibraryReaderForDirectory(
         path, "bad_no_datatable_annotation_probe.dart");
     library_3 = await initializeLibraryReaderForDirectory(
-        path, "bad_multiple_datacolumns_on_field_test.dart");
+        path, "bad_multiple_datacolumns_on_field.dart");
   });
 
   group('Exceptions tests', () {
