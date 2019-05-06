@@ -28,8 +28,11 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       checkAllowedElementType(element);
 
       final String modelName = element.name;
+
+      String defaultTableName = "M8$modelName";
       final String entityName =
-          annotation.objectValue.getField('name').toStringValue();
+          annotation.objectValue.getField('name')?.toStringValue() ??
+              defaultTableName;
       print("Generating entity for $modelName ... $entityName");
 
       ModelParser modelParser = ModelParser(element, entityName);
