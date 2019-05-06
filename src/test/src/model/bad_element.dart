@@ -1,5 +1,6 @@
 import 'package:f_orm_m8/f_orm_m8.dart';
 
+// The DataTable is placed incorrectly on a field
 @DataTable("my_account_related_table")
 int croco;
 
