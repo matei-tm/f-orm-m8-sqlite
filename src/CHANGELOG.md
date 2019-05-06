@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+* Test for Account entity raw output generation
+
 ## [0.6.1] - 2019-05-06
 
 ### Added

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:f_orm_m8_sqlite/generator/core.dart';
+import 'package:f_orm_m8_sqlite/orm_m8_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 import 'utils/test_annotation_utils.dart';
@@ -8,11 +11,23 @@ import 'package:source_gen_test/source_gen_test.dart';
 void main() {
   LibraryReader library;
   final path = testFilePath('test', 'src', 'model');
+  final caliber0Path = testFilePath('test', 'out', 'account.0.caliber');
+
   EmittedEntity e;
 
   setUp(() async {
     library = await initializeLibraryReaderForDirectory(path, "account.dart");
     e = getEmittedEntityForAnnotation("my_account_table", library);
+  });
+
+  group('Account entity raw output test', () {
+    final generator = OrmM8GeneratorForAnnotation();
+
+    test('Test raw output', () async {
+      final output = await generator.generate(library, null);
+      final expected = await File(caliber0Path).readAsString();
+      expect(output, expected);
+    });
   });
 
   group('Account entity tests', () {
