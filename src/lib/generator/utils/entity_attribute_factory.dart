@@ -21,21 +21,36 @@ class EntityAttributeFactory {
     if (isBool.isExactlyType(field.type))
       return EntityAttributeFromBool(modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
-    else if (isInt.isExactlyType(field.type))
+    else if (isDouble.isExactlyType(field.type))
       return EntityAttributeFromDouble(modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
     else if (isInt.isExactlyType(field.type))
       return EntityAttributeFromInt(modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
-    else if (isInt.isExactlyType(field.type))
+    else if (isNum.isExactlyType(field.type))
       return EntityAttributeFromNum(modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
-    else if (isInt.isExactlyType(field.type))
+    else if (isDateTime.isExactlyType(field.type))
       return EntityAttributeFromDateTime(
           modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
-    else if (isInt.isExactlyType(field.type))
+    else if (isString.isExactlyType(field.type))
       return EntityAttributeFromString(modelTypeName, modelName, attributeName,
+          metadataLevel: metadataLevel, compositeConstraints: comp);
+    else if (isBigInt.isExactlyType(field.type))
+      return EntityAttributeFromBigint(modelTypeName, modelName, attributeName,
+          metadataLevel: metadataLevel, compositeConstraints: comp);
+    else if (isDuration.isExactlyType(field.type))
+      return EntityAttributeFromDuration(
+          modelTypeName, modelName, attributeName,
+          metadataLevel: metadataLevel, compositeConstraints: comp);
+    else if (isList.isExactlyType(field.type)) // todo
+      return EntityAttributeFromNotImplemented(
+          modelTypeName, modelName, attributeName,
+          metadataLevel: metadataLevel, compositeConstraints: comp);
+    else if (isMap.isExactlyType(field.type)) // todo
+      return EntityAttributeFromNotImplemented(
+          modelTypeName, modelName, attributeName,
           metadataLevel: metadataLevel, compositeConstraints: comp);
     else
       return EntityAttributeFromNotImplemented(

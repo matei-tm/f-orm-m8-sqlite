@@ -17,8 +17,11 @@ final isDouble = TypeChecker.fromRuntime(double);
 final isInt = TypeChecker.fromRuntime(int);
 final isNum = TypeChecker.fromRuntime(num);
 
+final isBigInt = TypeChecker.fromRuntime(BigInt);
 final isDateTime = TypeChecker.fromRuntime(DateTime);
+final isDuration = TypeChecker.fromRuntime(Duration);
 final isString = TypeChecker.fromRuntime(String);
+
 final isList = TypeChecker.fromRuntime(List);
 final isMap = TypeChecker.fromRuntime(Map);
 
