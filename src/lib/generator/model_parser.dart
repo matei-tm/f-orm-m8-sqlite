@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/exceptions/field_parse_exception.dart';
 import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
+
 import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -12,6 +12,8 @@ class ModelParser {
   EntityType entityType;
   ConstantReader reader;
   int entityMetadataLevel;
+
+  EntityAttributeFactory entityAttributeFactory;
 
   String get packageIdentifier => modelClassElement.library.identifier;
 
@@ -23,6 +25,7 @@ class ModelParser {
 
   ModelParser(this.modelClassElement, this.entityName) {
     modelName = this.modelClassElement.name;
+    entityAttributeFactory = EntityAttributeFactory();
   }
 
   EmittedEntity getEmittedEntity() {
@@ -89,24 +92,9 @@ class ModelParser {
 
       List<EntityAttribute> rawEntityAttributes = valuesList
           .where((DartObject d) => isDataColumn.isExactlyType(d.type))
-          .map((DartObject obj) {
-        return EntityAttribute(
-            field.type.name, field.name, obj.getField('name').toStringValue(),
-            metadataLevel: obj.getField('metadataLevel').toIntValue() ?? 0,
-            compositeConstraints: obj
-                ?.getField('compositeConstraints')
-                ?.toListValue()
-                ?.map((s) => CompositeConstraint(
-                    name: s.getField('name').toString(),
-                    constraintType: CompositeConstraintType.values.firstWhere(
-                        (t) =>
-                            t.toString().split('.')[1] ==
-                            s
-                                .getField('constraintType')
-                                .toString()
-                                .split(' ')[1]
-                                .replaceFirst('(', ''))))
-                ?.toList());
+          .map((DartObject dataColumnAnnotation) {
+        return entityAttributeFactory.extractEntityAttribute(
+            field, dataColumnAnnotation);
       }).toList();
 
       if (rawEntityAttributes.length > 1) {

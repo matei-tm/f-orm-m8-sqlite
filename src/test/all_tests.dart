@@ -3,6 +3,7 @@ import 'account_related_composite_entity_test.dart'
     as accountRelatedCompositeEntity;
 import 'account_related_entity_test.dart' as accountRelatedEntity;
 import 'bad_element_annotation_test.dart' as badElementAnnotation;
+import 'checkers_test.dart' as checkers;
 import 'column_metadata_level_test.dart' as columnMetadataLevel;
 import 'exceptions_test.dart' as exceptions;
 import 'generic_test.dart' as generic;
@@ -15,6 +16,7 @@ main() {
   accountRelatedCompositeEntity.main();
   accountRelatedEntity.main();
   badElementAnnotation.main();
+  checkers.main();
   columnMetadataLevel.main();
   exceptions.main();
   generic.main();
