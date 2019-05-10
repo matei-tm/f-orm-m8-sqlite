@@ -102,7 +102,10 @@ class ModelParser {
       }).toList();
 
       if (rawEntityAttributes.length > 1) {
-        validationIssues.add(ValidationIssue());
+        validationIssues.add(ValidationIssue(
+            isError: true,
+            message:
+                "Multiple DataColumn Attribute on ${field.name} of ${modelName}"));
         return;
       }
 
