@@ -6,3 +6,4 @@ export 'package:f_orm_m8_sqlite/generator/utils/entity_attribute.dart';
 export 'package:f_orm_m8_sqlite/generator/utils/format_utils.dart';
 export 'package:f_orm_m8_sqlite/generator/utils/entity_attribute_types/entity_attribute_types.dart';
 export 'package:f_orm_m8_sqlite/generator/utils/entity_attribute_factory.dart';
+export 'package:f_orm_m8_sqlite/generator/utils/validators/validation_issue.dart';

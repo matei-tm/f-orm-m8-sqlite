@@ -5,6 +5,7 @@ import 'package:f_orm_m8_sqlite/exceptions/field_parse_exception.dart';
 import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
 
 import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
+
 import 'package:source_gen/source_gen.dart';
 
 class ModelParser {
@@ -12,6 +13,7 @@ class ModelParser {
   EntityType entityType;
   ConstantReader reader;
   int entityMetadataLevel;
+  List<ValidationIssue> validationIssues;
 
   EntityAttributeFactory entityAttributeFactory;
 
@@ -27,6 +29,8 @@ class ModelParser {
     modelName = this.modelClassElement.name;
     entityAttributeFactory = EntityAttributeFactory();
   }
+
+  bool get hasValidatorIssues => validationIssues.any((v) => v.isError);
 
   EmittedEntity getEmittedEntity() {
     _extractEntityMeta();
@@ -98,20 +102,26 @@ class ModelParser {
       }).toList();
 
       if (rawEntityAttributes.length > 1) {
-        throw Exception('Only one Column annotation is allowed on a Field!');
+        validationIssues.add(ValidationIssue());
+        return;
       }
 
-      if (rawEntityAttributes.isEmpty) return;
+      if (rawEntityAttributes.isEmpty) {
+        return;
+      }
 
       var firstField = rawEntityAttributes.first;
 
-      if (mustIgnore(firstField.metadataLevel)) return;
+      if (mustIgnore(firstField.metadataLevel)) {
+        return;
+      }
 
       if (firstField is EntityAttribute) {
         entityAttributes[firstField.modelName] = firstField;
       }
     } catch (exception, stack) {
-      throw FieldParseException(field.name, exception, stack);
+      throw FieldParseException(field.name, modelName,
+          inner: exception, trace: stack, message: "Parser exception");
     }
   }
 }

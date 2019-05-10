@@ -7,15 +7,24 @@ class FieldParseException implements Exception {
 
   StackTrace trace;
 
-  FieldParseException(this.fieldName, this.inner, this.trace, {this.message});
+  String modelName;
+
+  FieldParseException(this.fieldName, this.modelName,
+      {this.inner, this.trace, this.message});
 
   String toString() {
     StringBuffer stringBuffer = StringBuffer();
-    stringBuffer.writeln('Exception while parsing field: $fieldName!');
+    stringBuffer
+        .writeln('Exception while parsing field "$fieldName" on "$modelName!');
+
     if (message != null) {
       stringBuffer.writeln("Message: $message");
     }
-    stringBuffer.writeln(inner);
+
+    if (inner != null) {
+      stringBuffer.writeln(inner);
+    }
+
     stringBuffer.writeln(trace);
     return stringBuffer.toString();
   }
