@@ -33,6 +33,14 @@ class Receipt implements DbEntity {
       metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
   String description;
 
+  @DataColumn("map_memo",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
+  Map<String, String> mapMemo;
+
+  @DataColumn("list_memo",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
+  List<String> listMemo;
+
   @DataColumn("future_data",
       metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;

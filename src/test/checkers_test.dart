@@ -25,7 +25,7 @@ void main() async {
     });
 
     test('Test attributes count', () {
-      expect(e.attributes.length, 9);
+      expect(e.attributes.length, 7);
     });
 
     test('Has attribute id', () {
@@ -34,39 +34,55 @@ void main() async {
     });
 
     test('Has attribute isBio', () {
-      var hasDescription = e.attributes.containsKey("isBio");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("isBio");
+      expect(hasField, true);
     });
     test('Has attribute expirationDate', () {
-      var hasDescription = e.attributes.containsKey("expirationDate");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("expirationDate");
+      expect(hasField, true);
     });
     test('Has attribute quantity', () {
-      var hasDescription = e.attributes.containsKey("quantity");
-      expect(hasDescription, true);
-    });
-    test('Has attribute decomposingDuration', () {
-      var hasDescription = e.attributes.containsKey("decomposingDuration");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("quantity");
+      expect(hasField, true);
     });
     test('Has attribute numberOfItems', () {
-      var hasDescription = e.attributes.containsKey("numberOfItems");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("numberOfItems");
+      expect(hasField, true);
     });
 
     test('Has attribute storageTemperature', () {
-      var hasDescription = e.attributes.containsKey("storageTemperature");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("storageTemperature");
+      expect(hasField, true);
     });
 
     test('Has attribute description', () {
-      var hasDescription = e.attributes.containsKey("description");
-      expect(hasDescription, true);
+      var hasField = e.attributes.containsKey("description");
+      expect(hasField, true);
     });
 
-    test('Has Ignored attribute futureData', () {
-      var hasFutureData = e.attributes.containsKey("futureData");
-      expect(hasFutureData, false);
+    test('Hasn\'t Ignored attribute futureData', () {
+      var hasField = e.attributes.containsKey("futureData");
+      expect(hasField, false);
+    });
+
+    test('Hasn\'t NotImplemented attribute mapMemo', () {
+      var hasField = e.attributes.containsKey("mapMemo");
+      expect(hasField, false);
+    });
+
+    test('Hasn\'t NotImplemented attribute listMemo', () {
+      var hasField = e.attributes.containsKey("listMemo");
+      expect(hasField, false);
+    });
+
+    test('Hasn\'t attribute decomposingDuration', () {
+      var hasField = e.attributes.containsKey("decomposingDuration");
+      expect(hasField, false);
+    });
+
+    test('Hasn\'t NotImplemented attribute numberOfMolecules', () {
+      var hasField = e.attributes.containsKey("numberOfMolecules");
+      expect(hasField, false);
     });
   });
 }

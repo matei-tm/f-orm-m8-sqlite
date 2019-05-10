@@ -121,6 +121,14 @@ class ModelParser {
         return;
       }
 
+      if (firstField is EntityAttributeFromNotImplemented) {
+        validationIssues.add(ValidationIssue(
+            isError: true,
+            message:
+                "The type of ${modelName}.${field.name} is not implemented. Remove it from the model."));
+        return;
+      }
+
       if (firstField is EntityAttribute) {
         entityAttributes[firstField.modelName] = firstField;
       }

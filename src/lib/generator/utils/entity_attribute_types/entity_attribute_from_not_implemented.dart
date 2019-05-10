@@ -7,7 +7,5 @@ class EntityAttributeFromNotImplemented extends EntityAttribute {
       {int metadataLevel, List<CompositeConstraint> compositeConstraints})
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
-            compositeConstraints: compositeConstraints) {
-    //throw Exception("$modelTypeName is not implemented yet");
-  }
+            compositeConstraints: compositeConstraints) {}
 }

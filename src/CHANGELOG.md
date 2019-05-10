@@ -7,6 +7,10 @@
 * Test for Account entity raw output generation
 * Test the multiple DataColumn annotations on the same field!
 
+### Changed
+
+* Throw Exception switched to Validation design pattern
+
 ## [0.6.1] - 2019-05-06
 
 ### Added

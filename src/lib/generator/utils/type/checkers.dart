@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:f_orm_m8/base/base.dart';
 import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:source_gen/source_gen.dart';
@@ -23,15 +22,3 @@ final isString = TypeChecker.fromRuntime(String);
 
 final isList = TypeChecker.fromRuntime(List);
 final isMap = TypeChecker.fromRuntime(Map);
-
-bool isNativeType(DartType dartType) {
-  if (isBool.isExactlyType(dartType) ||
-      isDouble.isExactlyType(dartType) ||
-      isInt.isExactlyType(dartType) ||
-      isNum.isExactlyType(dartType) ||
-      isString.isExactlyType(dartType)) {
-    return true;
-  }
-
-  return false;
-}
