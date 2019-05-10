@@ -7,7 +7,6 @@ import 'package:build/src/builder/build_step.dart';
 import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/exceptions/exception_expander.dart';
 import 'package:f_orm_m8_sqlite/generator/core.dart';
-import 'package:f_orm_m8_sqlite/generator/utils/validators/validation_issue.dart';
 import 'package:f_orm_m8_sqlite/generator/writers/entity_writer_factory.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -37,12 +36,13 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
       print("Generating entity for $modelName ... $entityName");
 
       ModelParser modelParser = ModelParser(element, entityName);
-      if (modelParser.hasValidatorIssues) {
-        return ValidatorWriter(modelParser.validationIssues).toString();
-      }
 
       final EmittedEntity emittedEntityCandidate =
           modelParser.getEmittedEntity();
+
+      if (modelParser.hasValidatorIssues) {
+        return ValidatorWriter(modelParser.validationIssues).toString();
+      }
 
       // we add it to emitted entity collection in order to build dbAdapter
       emittedEntities.add(emittedEntityCandidate);
@@ -62,8 +62,4 @@ class OrmM8GeneratorForAnnotation extends GeneratorForAnnotation<DataTable> {
           "@DataTable annotation must be defined on a class. '$element' is misplaced");
     }
   }
-}
-
-class ValidatorWriter {
-  ValidatorWriter(List<ValidationIssue> validationIssues);
 }

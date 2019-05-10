@@ -10,6 +10,7 @@ import 'generic_test.dart' as generic;
 import 'independent_entity_test.dart' as independentEntity;
 import 'no_column_metadata_test.dart' as noColumnMetadata;
 import 'softdelete_test.dart' as softdelete;
+import 'validation_test.dart' as validation;
 
 main() {
   accountEntity.main();
@@ -23,4 +24,5 @@ main() {
   independentEntity.main();
   noColumnMetadata.main();
   softdelete.main();
+  validation.main();
 }

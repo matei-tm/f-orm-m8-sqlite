@@ -28,9 +28,11 @@ class ModelParser {
   ModelParser(this.modelClassElement, this.entityName) {
     modelName = this.modelClassElement.name;
     entityAttributeFactory = EntityAttributeFactory();
+    validationIssues = List<ValidationIssue>();
   }
 
-  bool get hasValidatorIssues => validationIssues.any((v) => v.isError);
+  bool get hasValidatorIssues =>
+      validationIssues?.any((v) => v.isError) ?? false;
 
   EmittedEntity getEmittedEntity() {
     _extractEntityMeta();
@@ -105,7 +107,7 @@ class ModelParser {
         validationIssues.add(ValidationIssue(
             isError: true,
             message:
-                "Multiple DataColumn Attribute on ${field.name} of ${modelName}"));
+                "Multiple DataColumn annotations on field ${modelName}.${field.name}"));
         return;
       }
 
