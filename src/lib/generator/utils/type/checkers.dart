@@ -10,7 +10,6 @@ final isDbAccountEntity = TypeChecker.fromRuntime(DbAccountEntity);
 
 final isDataTable = TypeChecker.fromRuntime(DataTable);
 final isDataColumn = TypeChecker.fromRuntime(DataColumn);
-final isColumnMetadata = TypeChecker.fromRuntime(ColumnMetadata);
 
 final isBool = TypeChecker.fromRuntime(bool);
 final isDouble = TypeChecker.fromRuntime(double);
