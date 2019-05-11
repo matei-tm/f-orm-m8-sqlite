@@ -6,6 +6,7 @@
 
 * Test for Account entity raw output generation
 * Test the multiple DataColumn annotations on the same field!
+* Validation on post extraction for models with fields that do not pass validation at all
 
 ### Changed
 

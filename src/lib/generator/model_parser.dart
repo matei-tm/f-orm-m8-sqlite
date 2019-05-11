@@ -38,6 +38,8 @@ class ModelParser {
     _extractEntityMeta();
     _extractEntityAttributes();
 
+    _validatePostExtraction();
+
     final EmittedEntity resultEntity = EmittedEntity(modelName, entityName,
         entityType, entityMetadataLevel, entityAttributes, packageIdentifier);
 
@@ -135,6 +137,16 @@ class ModelParser {
     } catch (exception, stack) {
       throw FieldParseException(field.name, modelName,
           inner: exception, trace: stack, message: "Parser exception");
+    }
+  }
+
+  void _validatePostExtraction() {
+    if (entityAttributes.length == 0) {
+      validationIssues.add(ValidationIssue(
+          isError: true,
+          message:
+              "The type ${modelName} does not contain valid fields at all"));
+      return;
     }
   }
 }

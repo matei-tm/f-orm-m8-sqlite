@@ -15,7 +15,7 @@ class FieldParseException implements Exception {
   String toString() {
     StringBuffer stringBuffer = StringBuffer();
     stringBuffer
-        .writeln('Exception while parsing field "$fieldName" on "$modelName!');
+        .writeln('Exception while parsing field "$fieldName" on "$modelName"!');
 
     if (message != null) {
       stringBuffer.writeln("Message: $message");

@@ -1,5 +1,5 @@
 /*
 Not all the models have passed the validation process. Review the following issues, fix them and rerun the builder:
 
-Error: Multiple DataColumn annotations on field GymLocation.description
+Error: The type AModelWithoutFields does not contain valid fields at all
 */

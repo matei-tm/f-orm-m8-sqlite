@@ -9,17 +9,27 @@ import 'package:source_gen_test/source_gen_test.dart';
 void main() {
   LibraryReader library_1;
   LibraryReader library_2;
+  LibraryReader library_3;
+  LibraryReader library_4;
+
   final path = testFilePath('test', 'src', 'model');
-  final caliber0Path =
-      testFilePath('test', 'out', 'multiple_datacolumn_on_field.0.caliber');
   final caliber1Path =
+      testFilePath('test', 'out', 'multiple_datacolumn_on_field.0.caliber');
+  final caliber2Path =
       testFilePath('test', 'out', 'type_checker_validation.0.caliber');
+  final caliber3Path = testFilePath('test', 'out', 'no_fields.0.caliber');
+  final caliber4Path =
+      testFilePath('test', 'out', 'custom_type_field.0.caliber');
 
   setUp(() async {
     library_1 = await initializeLibraryReaderForDirectory(
         path, "bad_multiple_datacolumns_on_field.dart");
     library_2 = await initializeLibraryReaderForDirectory(
         path, "type_checkers_probe.dart");
+    library_3 =
+        await initializeLibraryReaderForDirectory(path, "no_fields_probe.dart");
+    library_4 = await initializeLibraryReaderForDirectory(
+        path, "custom_type_field_probe.dart");
   });
 
   group('Validation tests', () {
@@ -29,14 +39,28 @@ void main() {
         () async {
       String output = await generator.generate(library_1, null);
 
-      final expected = await File(caliber0Path).readAsString();
+      final expected = await File(caliber1Path).readAsString();
       expect(output, expected);
     });
 
     test('Test the not Implemented validations field!', () async {
       String output = await generator.generate(library_2, null);
 
-      final expected = await File(caliber1Path).readAsString();
+      final expected = await File(caliber2Path).readAsString();
+      expect(output, expected);
+    });
+
+    test('Test validation of a model without annotated fields!', () async {
+      String output = await generator.generate(library_3, null);
+
+      final expected = await File(caliber3Path).readAsString();
+      expect(output, expected);
+    });
+
+    test('Test validation of a model with custom type fields!', () async {
+      String output = await generator.generate(library_4, null);
+
+      final expected = await File(caliber4Path).readAsString();
       expect(output, expected);
     });
   });

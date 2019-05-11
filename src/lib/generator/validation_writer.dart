@@ -17,7 +17,8 @@ class ValidatorWriter {
     String header =
         "Not all the models have passed the validation process. Review the following issues, fix them and rerun the builder:";
     return '''/*
-    $header
-    ${expandValidationIssues()}*/''';
+$header
+
+${expandValidationIssues()}*/''';
   }
 }
