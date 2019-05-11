@@ -18,10 +18,11 @@ class M8Builder extends LibraryBuilder {
   M8Builder.withWrapper(
       {String generatedAdapterExtension = '.adapter.g.m8.dart',
       String helpersExtension = '.g.m8.dart',
-      String databaseFileStamp = '0.2.0'})
+      String databaseFileStamp = '0.2.0',
+      String header})
       : super(
-            databaseHelperGenerator ??=
-                DatabaseHelperGenerator(databaseFileStamp, helpersExtension),
+            databaseHelperGenerator ??= DatabaseHelperGenerator(
+                databaseFileStamp, helpersExtension, header),
             generatedExtension: generatedAdapterExtension,
             additionalOutputExtensions: [helpersExtension]) {
     this.generatedAdapterExtension = generatedAdapterExtension;
@@ -31,8 +32,7 @@ class M8Builder extends LibraryBuilder {
     annotationBuilder = LibraryBuilder(
         OrmM8GeneratorForAnnotation.withEmitted(emittedEntities),
         generatedExtension: helpersExtension,
-        header:
-            "// GENERATED CODE - DO NOT MODIFY BY HAND\n// Emitted on: ${DateTime.now()}");
+        header: header);
   }
   @override
   Future build(BuildStep buildStep) async {

@@ -12,8 +12,10 @@ class DatabaseHelperGenerator extends Generator {
 
   final String databaseFileStamp;
   final String helpersExtension;
+  final String header;
 
-  DatabaseHelperGenerator(this.databaseFileStamp, this.helpersExtension);
+  DatabaseHelperGenerator(
+      this.databaseFileStamp, this.helpersExtension, this.header);
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
@@ -27,8 +29,16 @@ class DatabaseHelperGenerator extends Generator {
 
     //sort emittedEntities by modelName
     emittedEntities.sort((l, r) => l.modelName.compareTo(r.modelName));
-    return DatabaseHelperWriter(
+
+    StringBuffer sb = StringBuffer();
+    sb.writeln(header);
+
+    String databaseHelperBody = DatabaseHelperWriter(
             emittedEntities, databaseFileStamp, helpersExtension)
         .toString();
+
+    sb.write(databaseHelperBody);
+
+    return sb.toString();
   }
 }
