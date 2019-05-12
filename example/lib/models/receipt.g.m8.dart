@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-12 23:54:55.076240
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation

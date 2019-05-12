@@ -237,6 +237,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                 "The account is not saved. Instead a reset will be triggered."),
             actions: <Widget>[
               FlatButton(
+                key: Key('acceptResetAccount'),
                 child: Text("Accept"),
                 onPressed: () {
                   this._formKey.currentState.reset();
@@ -244,6 +245,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                 },
               ),
               FlatButton(
+                key: Key('cancelResetAccount'),
                 child: Text("Cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -299,6 +301,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
               title: Text("The accounts max limit was reached"),
               actions: <Widget>[
                 FlatButton(
+                  key: Key('okLimitReached'),
                   child: Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -329,6 +332,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                   "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health Records' and delete all entries"),
               actions: <Widget>[
                 FlatButton(
+                  key: Key('acceptHasDependents'),
                   child: Text("Accept"),
                   onPressed: () {
                     Navigator.of(context).pop();
