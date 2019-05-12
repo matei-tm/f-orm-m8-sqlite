@@ -24,6 +24,7 @@ class M8Builder extends LibraryBuilder {
             databaseHelperGenerator ??= DatabaseHelperGenerator(
                 databaseFileStamp, helpersExtension, header),
             generatedExtension: generatedAdapterExtension,
+            header: header,
             additionalOutputExtensions: [helpersExtension]) {
     this.generatedAdapterExtension = generatedAdapterExtension;
     this.helpersExtension = helpersExtension;

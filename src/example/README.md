@@ -63,6 +63,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation

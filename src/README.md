@@ -122,18 +122,25 @@ Supported orm-m8 features:
    - classes with @DataTable
    - fields with @DataColumn
   
-8. Run the build_runner
-   
-   ```bash
-   flutter packages pub run build_runner build --delete-conflicting-outputs
-   ```
+8. Run the build_runner clean. This step is absolutely mandatory.
 
-   The build_runner will generate:
+  ```bash
+  flutter packages pub run build_runner clean
+  ```
+  
 
-    - in models folder, a `*.g.m8.dart` file for each model file
-    - in lib folder, a `main.adapter.g.m8.dart` file
+9. Run the build_runner build
 
-9. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example project for a trivial usage.
+  ```bash
+  flutter packages pub run build_runner build --delete-conflicting-outputs
+  ```
+
+  The build_runner will generate:
+
+  - in models folder, a `*.g.m8.dart` file for each model file
+  - in lib folder, a `main.adapter.g.m8.dart` file
+
+10. Use the generated proxies and adapter in order to easily develop CRUD behavior. See the example project for a trivial usage.
 
 ## Example - Gymspector application
 
@@ -192,6 +199,7 @@ From the model, the builder creates `models/user_account.g.m8.dart` file with fo
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -395,6 +403,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -573,6 +582,7 @@ From the model, the builder creates `models/gym_location.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -742,6 +752,7 @@ From the model, the builder creates `models/receipt.g.m8.dart` file with content
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -895,6 +906,7 @@ For the all models the builder will generate a common database adapter file `mai
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // DatabaseHelperGenerator

@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
 // DatabaseHelperGenerator
@@ -26,7 +27,7 @@ class DatabaseHelper
   static Database _db;
 
   /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
-  bool extremeDevelopmentMode = true;
+  bool extremeDevelopmentMode = false;
 
   factory DatabaseHelper() => _instance;
   DatabaseHelper.internal();

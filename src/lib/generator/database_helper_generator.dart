@@ -26,12 +26,11 @@ class DatabaseHelperGenerator extends Generator {
 
     //if not main.dart then generate nothing
     if (name != 'main.dart') return '';
-
+    print('Generating Database Helper Adapter...');
     //sort emittedEntities by modelName
     emittedEntities.sort((l, r) => l.modelName.compareTo(r.modelName));
 
     StringBuffer sb = StringBuffer();
-    sb.writeln(header);
 
     String databaseHelperBody = DatabaseHelperWriter(
             emittedEntities, databaseFileStamp, helpersExtension)
