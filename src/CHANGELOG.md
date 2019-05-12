@@ -7,10 +7,12 @@
 * Test for Account entity raw output generation
 * Test the multiple DataColumn annotations on the same field!
 * Validation on post extraction for models with fields that do not pass validation at all
+* A unified header to all generated files
 
 ### Changed
 
 * Throw Exception switched to Validation design pattern
+* If the model is not valid, then the generated file will contain the validation issues in a comment block
 
 ## [0.6.1] - 2019-05-06
 
