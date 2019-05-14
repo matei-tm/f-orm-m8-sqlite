@@ -237,7 +237,7 @@ class UserAccountProxy extends UserAccount {
   }
 }
 
-mixin UserAccountDatabaseHelper {
+mixin UserAccountDatabaseProvider {
   Future<Database> db;
   final theUserAccountColumns = [
     "id",
@@ -445,7 +445,7 @@ class HealthEntryProxy extends HealthEntry {
   }
 }
 
-mixin HealthEntryDatabaseHelper {
+mixin HealthEntryDatabaseProvider {
   Future<Database> db;
   final theHealthEntryColumns = [
     "id",
@@ -618,7 +618,7 @@ class GymLocationProxy extends GymLocation {
   }
 }
 
-mixin GymLocationDatabaseHelper {
+mixin GymLocationDatabaseProvider {
   Future<Database> db;
   final theGymLocationColumns = [
     "id",
@@ -810,7 +810,7 @@ class ReceiptProxy extends Receipt {
   }
 }
 
-mixin ReceiptDatabaseHelper {
+mixin ReceiptDatabaseProvider {
   Future<Database> db;
   final theReceiptColumns = [
     "id",
@@ -909,7 +909,7 @@ For the all models the builder will generate a common database adapter file `mai
 // Emitted on: 2019-05-12 22:58:06.362172
 
 // **************************************************************************
-// DatabaseHelperGenerator
+// DatabaseProviderGenerator
 // **************************************************************************
 
 import 'dart:async';
@@ -923,21 +923,21 @@ import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:sqlite_m8_demo/models/to_do.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class DatabaseHelper
+class DatabaseProvider
     with
-        GymLocationDatabaseHelper,
-        HealthEntryDatabaseHelper,
-        ReceiptDatabaseHelper,
-        ToDoDatabaseHelper,
-        UserAccountDatabaseHelper {
-  static final DatabaseHelper _instance = DatabaseHelper.internal();
+        GymLocationDatabaseProvider,
+        HealthEntryDatabaseProvider,
+        ReceiptDatabaseProvider,
+        ToDoDatabaseProvider,
+        UserAccountDatabaseProvider {
+  static final DatabaseProvider _instance = DatabaseProvider.internal();
   static Database _db;
 
   /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
   bool extremeDevelopmentMode = false;
 
-  factory DatabaseHelper() => _instance;
-  DatabaseHelper.internal();
+  factory DatabaseProvider() => _instance;
+  DatabaseProvider.internal();
 
   Future<Database> get db async {
     if (_db != null) {

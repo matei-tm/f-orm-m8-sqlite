@@ -13,20 +13,20 @@ import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {
-  MockDatabaseHelper(InitMode testingMockDb);
+class MockDatabaseProvider extends Mock implements DatabaseProvider {
+  MockDatabaseProvider(InitMode testingMockDb);
 }
 
-MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper =
-      MockDatabaseHelper(InitMode.testingMockDb);
+MockDatabaseProvider buildMockDatabaseAdapter() {
+  MockDatabaseProvider mockDatabaseProvider =
+      MockDatabaseProvider(InitMode.testingMockDb);
 
-  enableCurrentUserAccount(mockDatabaseHelper);
+  enableCurrentUserAccount(mockDatabaseProvider);
 
-  return mockDatabaseHelper;
+  return mockDatabaseProvider;
 }
 
-void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   UserAccountProxy firstUser = UserAccountProxy();
   firstUser.id = 1;
   firstUser.email = "John@Doe.com";
@@ -37,69 +37,69 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
   List<UserAccountProxy> usersList = [firstUser];
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 
-  when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(1))
+  when(mockDatabaseProvider.getHealthEntryProxiesByAccountId(1))
       .thenAnswer((_) => Future.value(List<HealthEntryProxy>()));
 
-  when(mockDatabaseHelper.saveHealthEntry(any))
+  when(mockDatabaseProvider.saveHealthEntry(any))
       .thenAnswer((_) => Future.value(1));
 
-  when(mockDatabaseHelper.deleteHealthEntry(any))
+  when(mockDatabaseProvider.deleteHealthEntry(any))
       .thenAnswer((_) => Future.value(1));
 }
 
-void enableThrowOnDeleteHealthEntry(MockDatabaseHelper mockDatabaseHelper) {
-  when(mockDatabaseHelper.deleteHealthEntry(any))
+void enableThrowOnDeleteHealthEntry(MockDatabaseProvider mockDatabaseProvider) {
+  when(mockDatabaseProvider.deleteHealthEntry(any))
       .thenThrow(Exception("Invalid database. Could not delete"));
 }
 
 void main() {
-  MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
   testWidgets('Navigate to health entry test', (WidgetTester tester) async {
-    await navigateToHealthEntries(tester, mockDatabaseHelper);
+    await navigateToHealthEntries(tester, mockDatabaseProvider);
   });
 
   testWidgets('Add valid Health Entry and delete test',
       (WidgetTester tester) async {
-    await navigateToHealthEntries(tester, mockDatabaseHelper);
-    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    await deleteHealthEntry(tester, mockDatabaseHelper, 1);
+    await navigateToHealthEntries(tester, mockDatabaseProvider);
+    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    await deleteHealthEntry(tester, mockDatabaseProvider, 1);
   });
 
   testWidgets('Add invalid Health Entry test', (WidgetTester tester) async {
-    await navigateToHealthEntries(tester, mockDatabaseHelper);
-    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
+    await navigateToHealthEntries(tester, mockDatabaseProvider);
+    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
   });
 
   testWidgets('Add duplicate Health entry test', (WidgetTester tester) async {
-    await navigateToHealthEntries(tester, mockDatabaseHelper);
-    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    when(mockDatabaseHelper.saveHealthEntry(any))
+    await navigateToHealthEntries(tester, mockDatabaseProvider);
+    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    when(mockDatabaseProvider.saveHealthEntry(any))
         .thenThrow(Exception("Duplicate entry"));
-    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsNWidgets(2));
-    await expectErrorText(tester, mockDatabaseHelper);
+    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsNWidgets(2));
+    await expectErrorText(tester, mockDatabaseProvider);
   });
 
   testWidgets('Throw error when delete test', (WidgetTester tester) async {
-    mockDatabaseHelper = buildMockDatabaseAdapter();
-    await navigateToHealthEntries(tester, mockDatabaseHelper);
-    await healthEntryFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    await failToDeleteHealthEntry(tester, mockDatabaseHelper, 1);
-    await expectErrorText(tester, mockDatabaseHelper);
+    mockDatabaseProvider = buildMockDatabaseAdapter();
+    await navigateToHealthEntries(tester, mockDatabaseProvider);
+    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    await failToDeleteHealthEntry(tester, mockDatabaseProvider, 1);
+    await expectErrorText(tester, mockDatabaseProvider);
   });
 }
 
 Future navigateToHealthEntries(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
 
   await tester.pump();
 
@@ -118,7 +118,7 @@ Future navigateToHealthEntries(
 }
 
 Future healthEntryFillAndSave(WidgetTester tester,
-    MockDatabaseHelper mockDatabaseHelper, Matcher matcher) async {
+    MockDatabaseProvider mockDatabaseProvider, Matcher matcher) async {
   await tester.showKeyboard(find.byType(TextField));
 
   tester.testTextInput.updateEditingValue(const TextEditingValue(
@@ -137,17 +137,17 @@ Future healthEntryFillAndSave(WidgetTester tester,
 }
 
 Future expectValidText(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.text('Healthy'), findsOneWidget);
 }
 
 Future expectErrorText(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('errorSnack')), findsOneWidget);
 }
 
 Future healthEntryEmptySave(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.text('Error'), findsNothing);
 
   expect(find.byKey(Key('addHealthEntryButton')), findsOneWidget);
@@ -159,7 +159,7 @@ Future healthEntryEmptySave(
 }
 
 Future deleteHealthEntry(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
 
   //delete the entry
@@ -170,10 +170,10 @@ Future deleteHealthEntry(
 }
 
 Future failToDeleteHealthEntry(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
 
-  enableThrowOnDeleteHealthEntry(mockDatabaseHelper);
+  enableThrowOnDeleteHealthEntry(mockDatabaseProvider);
 
   await tester.tap(find.byKey(Key('delBtnHealth$id')));
   await tester.pumpAndSettle();

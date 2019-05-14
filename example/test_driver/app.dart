@@ -7,5 +7,5 @@ void main() {
   enableFlutterDriverExtension();
 
   runApp(GymspectorApp(
-      DatabaseHelper(DatabaseBuilder(InitMode.developmentAlwaysReinitDb))));
+      DatabaseProvider(DatabaseBuilder(InitMode.developmentAlwaysReinitDb))));
 }

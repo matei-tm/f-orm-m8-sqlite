@@ -3,12 +3,12 @@ import 'package:sqlite_m8_demo/pages/account_page.dart';
 import 'package:sqlite_m8_demo/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(GymspectorApp(DatabaseHelper(DatabaseBuilder())));
+void main() => runApp(GymspectorApp(DatabaseProvider(DatabaseBuilder())));
 
 class GymspectorApp extends StatelessWidget {
-  final databaseHelper;
+  final databaseProvider;
 
-  GymspectorApp(this.databaseHelper);
+  GymspectorApp(this.databaseProvider);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class GymspectorApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: MyHomePage(
-          title: 'orm-m8 Demo Home Page', databaseHelper: databaseHelper),
+          title: 'orm-m8 Demo Home Page', databaseProvider: databaseProvider),
     );
   }
 }
@@ -26,10 +26,10 @@ class GymspectorApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   static MyHomePageState myState;
 
-  MyHomePage({Key key, this.title, this.databaseHelper}) : super(key: key);
+  MyHomePage({Key key, this.title, this.databaseProvider}) : super(key: key);
 
   final String title;
-  final DatabaseHelper databaseHelper;
+  final DatabaseProvider databaseProvider;
 
   @override
   MyHomePageState createState() {
@@ -56,7 +56,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> _getInitialRoute() async {
-    var _db = widget.databaseHelper;
+    var _db = widget.databaseProvider;
 
     var _currentAccount = await _db.getCurrentUserAccount();
     if (_currentAccount == null) {

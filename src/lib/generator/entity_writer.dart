@@ -42,7 +42,7 @@ import '${emittedEntity.packageIdentifier}';
   }
 
   String _getMixinHead() {
-    return """mixin ${emittedEntity.modelName}DatabaseHelper {""";
+    return """mixin ${emittedEntity.modelName}DatabaseProvider {""";
   }
 
   String _getMixinBodyCommonFields() {

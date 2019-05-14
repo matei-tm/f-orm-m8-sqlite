@@ -12,20 +12,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {}
+class MockDatabaseProvider extends Mock implements DatabaseProvider {}
 
-MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper = MockDatabaseHelper();
+MockDatabaseProvider buildMockDatabaseAdapter() {
+  MockDatabaseProvider mockDatabaseProvider = MockDatabaseProvider();
 
-  enableCurrentUserAccount(mockDatabaseHelper);
+  enableCurrentUserAccount(mockDatabaseProvider);
 
-  return mockDatabaseHelper;
+  return mockDatabaseProvider;
 }
 
 UserAccountProxy firstUser;
 UserAccountProxy secondUser;
 
-void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   firstUser = UserAccountProxy();
   firstUser.id = 1;
   firstUser.email = "John@Doe.com";
@@ -46,14 +46,14 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
     ..add(firstUser)
     ..add(secondUser);
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
-  when(mockDatabaseHelper.getUserAccountProxiesCount())
+  when(mockDatabaseProvider.getUserAccountProxiesCount())
       .thenAnswer((_) => Future.value(2));
-  when(mockDatabaseHelper.setCurrentUserAccount(any)).thenAnswer((_) {
+  when(mockDatabaseProvider.setCurrentUserAccount(any)).thenAnswer((_) {
     firstUser.isCurrent = false;
     secondUser.isCurrent = true;
     Future.value(2);
@@ -61,21 +61,21 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 }
 
 void main() {
-  final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  final MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
   testWidgets('Navigate to drawer entry test', (WidgetTester tester) async {
-    await drawerOpenedWithAccounts(tester, mockDatabaseHelper);
+    await drawerOpenedWithAccounts(tester, mockDatabaseProvider);
   });
 
   testWidgets('Switch account test', (WidgetTester tester) async {
-    await drawerOpenedWithAccounts(tester, mockDatabaseHelper);
-    await drawerCancelSwitchAccount(tester, mockDatabaseHelper, 2);
-    await drawerConfirmSwitchAccount(tester, mockDatabaseHelper, 2);
+    await drawerOpenedWithAccounts(tester, mockDatabaseProvider);
+    await drawerCancelSwitchAccount(tester, mockDatabaseProvider, 2);
+    await drawerConfirmSwitchAccount(tester, mockDatabaseProvider, 2);
   });
 }
 
 Future drawerOpenedWithAccounts(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
 
   await tester.pump();
 
@@ -95,7 +95,7 @@ Future drawerOpenedWithAccounts(
 }
 
 Future drawerCancelSwitchAccount(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('accountAvatar$id')), findsOneWidget);
   await tester.tap(find.byKey(Key('accountAvatar$id')));
   await tester.pumpAndSettle();
@@ -107,7 +107,7 @@ Future drawerCancelSwitchAccount(
 }
 
 Future drawerConfirmSwitchAccount(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('accountAvatar$id')), findsOneWidget);
   await tester.tap(find.byKey(Key('accountAvatar$id')));
   await tester.pumpAndSettle();

@@ -6,7 +6,7 @@ import 'package:source_gen/source_gen.dart';
 
 class M8Builder extends LibraryBuilder {
   static List<EmittedEntity> emittedEntities;
-  static DatabaseHelperGenerator databaseHelperGenerator;
+  static DatabaseProviderGenerator databaseProviderGenerator;
 
   LibraryBuilder annotationBuilder;
   OrmM8GeneratorForAnnotation ormM8GeneratorForAnnotation;
@@ -21,7 +21,7 @@ class M8Builder extends LibraryBuilder {
       String databaseFileStamp = '0.2.0',
       String header})
       : super(
-            databaseHelperGenerator ??= DatabaseHelperGenerator(
+            databaseProviderGenerator ??= DatabaseProviderGenerator(
                 databaseFileStamp, helpersExtension, header),
             generatedExtension: generatedAdapterExtension,
             header: header,
@@ -40,7 +40,7 @@ class M8Builder extends LibraryBuilder {
     await annotationBuilder.build(buildStep);
 
     //nothing to be emmitted regarding to entities, after annotationBuilder finished build
-    databaseHelperGenerator.emittedEntities ??= emittedEntities;
+    databaseProviderGenerator.emittedEntities ??= emittedEntities;
 
     return super.build(buildStep);
   }

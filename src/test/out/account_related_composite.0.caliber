@@ -22,7 +22,7 @@ class HealthEntryAccountRelatedProxy extends HealthEntryAccountRelated {
   }
 }
 
-mixin HealthEntryAccountRelatedDatabaseHelper {
+mixin HealthEntryAccountRelatedDatabaseProvider {
   Future<Database> db;
   final theHealthEntryAccountRelatedColumns = [
     "my_id_column",

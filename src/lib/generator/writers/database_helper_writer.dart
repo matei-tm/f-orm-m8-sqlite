@@ -1,11 +1,11 @@
 import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
 
-class DatabaseHelperWriter {
+class DatabaseProviderWriter {
   final List<EmittedEntity> emittedEntities;
   final String databaseFileStamp;
   final String helpersExtension;
 
-  DatabaseHelperWriter(
+  DatabaseProviderWriter(
       this.emittedEntities, this.databaseFileStamp, this.helpersExtension);
 
   String getImportList() {
@@ -19,7 +19,7 @@ class DatabaseHelperWriter {
 
   String getMixinList() {
     String returnValue =
-        emittedEntities.map((f) => "${f.modelName}DatabaseHelper").join(",");
+        emittedEntities.map((f) => "${f.modelName}DatabaseProvider").join(",");
     if (returnValue.isNotEmpty) {
       return " with $returnValue";
     }
@@ -103,19 +103,19 @@ class DatabaseBuilder {
   }
 }
 
-class DatabaseHelper ${getMixinList()}
+class DatabaseProvider ${getMixinList()}
          {
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  static final DatabaseProvider _instance = DatabaseProvider._internal();
   static Database _db;
 
   static DatabaseBuilder _dbBuilder;
 
-  factory DatabaseHelper(DatabaseBuilder dbBuilder) {
+  factory DatabaseProvider(DatabaseBuilder dbBuilder) {
     _dbBuilder = dbBuilder;
     return _instance;
   }
 
-  DatabaseHelper._internal();
+  DatabaseProvider._internal();
 
   Future<Database> get db async {
     if (_db != null) {

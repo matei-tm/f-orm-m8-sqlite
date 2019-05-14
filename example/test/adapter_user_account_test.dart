@@ -10,7 +10,7 @@ import 'utils/sample_repo.dart';
 main() {
   Database database = MockDatabase();
   DatabaseBuilder databaseBuilder = MockDatabaseBuilder();
-  DatabaseHelper databaseAdapter = DatabaseHelper(databaseBuilder);
+  DatabaseProvider databaseAdapter = DatabaseProvider(databaseBuilder);
 
   UserAccountProxy proxySample01 = userAccountProxySample01;
   UserAccountProxy proxySample02 = userAccountProxySample02;

@@ -57,7 +57,7 @@ class ReceiptProxy extends Receipt {
   }
 }
 
-mixin ReceiptDatabaseHelper {
+mixin ReceiptDatabaseProvider {
   Future<Database> db;
   final theReceiptColumns = [
     "id",

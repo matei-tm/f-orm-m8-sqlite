@@ -13,7 +13,7 @@
 
 * Throw Exception switched to Validation design pattern
 * If the model is not valid, then the generated file will contain the validation issues in a comment block
-* In `*DatabaseHelper` mixins, the `the*TableHandler` fields to public
+* In `*DatabaseProvider` mixins, the `the*TableHandler` fields to public
 
 ## [0.6.1] - 2019-05-06
 
@@ -127,7 +127,7 @@
 
 * Bidirectional mapping for Model DateTime to Database Integer
 * Complete implementation for trackable, update and create, fields
-* Boolean extremeDevelopmentMode field to DatabaseHelper to control regeneration of database in dev mode
+* Boolean extremeDevelopmentMode field to DatabaseProvider to control regeneration of database in dev mode
 
 ## [0.2.1] - 2019-04-09
 

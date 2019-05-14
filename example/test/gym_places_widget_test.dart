@@ -13,20 +13,20 @@ import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {
-  MockDatabaseHelper(InitMode testingMockDb);
+class MockDatabaseProvider extends Mock implements DatabaseProvider {
+  MockDatabaseProvider(InitMode testingMockDb);
 }
 
-MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper =
-      MockDatabaseHelper(InitMode.testingMockDb);
+MockDatabaseProvider buildMockDatabaseAdapter() {
+  MockDatabaseProvider mockDatabaseProvider =
+      MockDatabaseProvider(InitMode.testingMockDb);
 
-  enableCurrentUserAccount(mockDatabaseHelper);
+  enableCurrentUserAccount(mockDatabaseProvider);
 
-  return mockDatabaseHelper;
+  return mockDatabaseProvider;
 }
 
-void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   UserAccountProxy firstUser = UserAccountProxy();
   firstUser.id = 1;
   firstUser.email = "John@Doe.com";
@@ -37,70 +37,70 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
   List<UserAccountProxy> usersList = [firstUser];
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 
-  when(mockDatabaseHelper.getGymLocationProxiesAll())
+  when(mockDatabaseProvider.getGymLocationProxiesAll())
       .thenAnswer((_) => Future.value(List<GymLocationProxy>()));
 
-  when(mockDatabaseHelper.saveGymLocation(any))
+  when(mockDatabaseProvider.saveGymLocation(any))
       .thenAnswer((_) => Future.value(1));
 
-  when(mockDatabaseHelper.deleteGymLocation(any))
+  when(mockDatabaseProvider.deleteGymLocation(any))
       .thenAnswer((_) => Future.value(1));
 }
 
-void enableThrowOnDeleteGymLocation(MockDatabaseHelper mockDatabaseHelper) {
-  when(mockDatabaseHelper.deleteGymLocation(any))
+void enableThrowOnDeleteGymLocation(MockDatabaseProvider mockDatabaseProvider) {
+  when(mockDatabaseProvider.deleteGymLocation(any))
       .thenThrow(Exception("Invalid database. Could not delete"));
 }
 
 void main() {
-  MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
 
   testWidgets('Navigate to Gym Places test', (WidgetTester tester) async {
-    await navigateToGymPlaces(tester, mockDatabaseHelper);
+    await navigateToGymPlaces(tester, mockDatabaseProvider);
   });
 
   testWidgets('Add valid Gym place and delete test',
       (WidgetTester tester) async {
-    await navigateToGymPlaces(tester, mockDatabaseHelper);
-    await gymLocationFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    await deleteLocation(tester, mockDatabaseHelper, 1);
+    await navigateToGymPlaces(tester, mockDatabaseProvider);
+    await gymLocationFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    await deleteLocation(tester, mockDatabaseProvider, 1);
   });
 
   testWidgets('Add invalid Gym place test', (WidgetTester tester) async {
-    await navigateToGymPlaces(tester, mockDatabaseHelper);
-    await gymLocationEmptySave(tester, mockDatabaseHelper);
+    await navigateToGymPlaces(tester, mockDatabaseProvider);
+    await gymLocationEmptySave(tester, mockDatabaseProvider);
   });
 
   testWidgets('Add duplicate Gym place test', (WidgetTester tester) async {
-    await navigateToGymPlaces(tester, mockDatabaseHelper);
-    await gymLocationFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    when(mockDatabaseHelper.saveGymLocation(any))
+    await navigateToGymPlaces(tester, mockDatabaseProvider);
+    await gymLocationFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    when(mockDatabaseProvider.saveGymLocation(any))
         .thenThrow(Exception("Duplicate entry"));
-    await gymLocationFillAndSave(tester, mockDatabaseHelper, findsNWidgets(2));
-    await expectErrorText(tester, mockDatabaseHelper);
+    await gymLocationFillAndSave(tester, mockDatabaseProvider, findsNWidgets(2));
+    await expectErrorText(tester, mockDatabaseProvider);
   });
 
   testWidgets('Throw error when delete test', (WidgetTester tester) async {
-    mockDatabaseHelper = buildMockDatabaseAdapter();
-    await navigateToGymPlaces(tester, mockDatabaseHelper);
-    await gymLocationFillAndSave(tester, mockDatabaseHelper, findsOneWidget);
-    await expectValidText(tester, mockDatabaseHelper);
-    await failToDeleteLocation(tester, mockDatabaseHelper, 1);
-    await expectErrorText(tester, mockDatabaseHelper);
+    mockDatabaseProvider = buildMockDatabaseAdapter();
+    await navigateToGymPlaces(tester, mockDatabaseProvider);
+    await gymLocationFillAndSave(tester, mockDatabaseProvider, findsOneWidget);
+    await expectValidText(tester, mockDatabaseProvider);
+    await failToDeleteLocation(tester, mockDatabaseProvider, 1);
+    await expectErrorText(tester, mockDatabaseProvider);
   });
 }
 
 Future navigateToGymPlaces(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
 
   await tester.pump();
 
@@ -119,7 +119,7 @@ Future navigateToGymPlaces(
 }
 
 Future gymLocationFillAndSave(WidgetTester tester,
-    MockDatabaseHelper mockDatabaseHelper, Matcher matcher) async {
+    MockDatabaseProvider mockDatabaseProvider, Matcher matcher) async {
   await tester.showKeyboard(find.byType(TextField));
 
   tester.testTextInput.updateEditingValue(const TextEditingValue(
@@ -138,17 +138,17 @@ Future gymLocationFillAndSave(WidgetTester tester,
 }
 
 Future expectValidText(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.text('Silva'), findsOneWidget);
 }
 
 Future expectErrorText(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('errorSnack')), findsOneWidget);
 }
 
 Future gymLocationEmptySave(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.text("Value Can't Be Empty"), findsNothing);
 
   expect(find.byKey(Key('addGymPlaceButton')), findsOneWidget);
@@ -160,7 +160,7 @@ Future gymLocationEmptySave(
 }
 
 Future deleteLocation(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnGymPlace$id')), findsOneWidget);
 
   //delete the entry
@@ -171,10 +171,10 @@ Future deleteLocation(
 }
 
 Future failToDeleteLocation(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper, int id) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnGymPlace$id')), findsOneWidget);
 
-  enableThrowOnDeleteGymLocation(mockDatabaseHelper);
+  enableThrowOnDeleteGymLocation(mockDatabaseProvider);
 
   await tester.tap(find.byKey(Key('delBtnGymPlace$id')));
   await tester.pumpAndSettle();

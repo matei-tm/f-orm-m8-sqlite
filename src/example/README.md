@@ -105,7 +105,7 @@ class HealthEntryProxy extends HealthEntry {
   }
 }
 
-mixin HealthEntryDatabaseHelper {
+mixin HealthEntryDatabaseProvider {
   Future<Database> db;
   final theHealthEntryColumns = [
     "id",

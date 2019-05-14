@@ -44,7 +44,7 @@ class ToDoProxy extends ToDo {
   }
 }
 
-mixin ToDoDatabaseHelper {
+mixin ToDoDatabaseProvider {
   Future<Database> db;
   final theToDoColumns = [
     "id",

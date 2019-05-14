@@ -2,7 +2,7 @@
 // Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
-// DatabaseHelperGenerator
+// DatabaseProviderGenerator
 // **************************************************************************
 
 import 'dart:async';
@@ -57,24 +57,24 @@ class DatabaseBuilder {
   }
 }
 
-class DatabaseHelper
+class DatabaseProvider
     with
-        GymLocationDatabaseHelper,
-        HealthEntryDatabaseHelper,
-        ReceiptDatabaseHelper,
-        ToDoDatabaseHelper,
-        UserAccountDatabaseHelper {
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
+        GymLocationDatabaseProvider,
+        HealthEntryDatabaseProvider,
+        ReceiptDatabaseProvider,
+        ToDoDatabaseProvider,
+        UserAccountDatabaseProvider {
+  static final DatabaseProvider _instance = DatabaseProvider._internal();
   static Database _db;
 
   static DatabaseBuilder _dbBuilder;
 
-  factory DatabaseHelper(DatabaseBuilder dbBuilder) {
+  factory DatabaseProvider(DatabaseBuilder dbBuilder) {
     _dbBuilder = dbBuilder;
     return _instance;
   }
 
-  DatabaseHelper._internal();
+  DatabaseProvider._internal();
 
   Future<Database> get db async {
     if (_db != null) {

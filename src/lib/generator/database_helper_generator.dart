@@ -7,14 +7,14 @@ import 'package:f_orm_m8_sqlite/generator/emitted_entity.dart';
 import 'package:f_orm_m8_sqlite/generator/writers/database_helper_writer.dart';
 import 'package:source_gen/source_gen.dart';
 
-class DatabaseHelperGenerator extends Generator {
+class DatabaseProviderGenerator extends Generator {
   List<EmittedEntity> emittedEntities;
 
   final String databaseFileStamp;
   final String helpersExtension;
   final String header;
 
-  DatabaseHelperGenerator(
+  DatabaseProviderGenerator(
       this.databaseFileStamp, this.helpersExtension, this.header);
 
   @override
@@ -32,11 +32,11 @@ class DatabaseHelperGenerator extends Generator {
 
     StringBuffer sb = StringBuffer();
 
-    String databaseHelperBody = DatabaseHelperWriter(
+    String databaseProviderBody = DatabaseProviderWriter(
             emittedEntities, databaseFileStamp, helpersExtension)
         .toString();
 
-    sb.write(databaseHelperBody);
+    sb.write(databaseProviderBody);
 
     return sb.toString();
   }

@@ -13,30 +13,30 @@ import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {}
+class MockDatabaseProvider extends Mock implements DatabaseProvider {}
 
-MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper = MockDatabaseHelper();
-  enableCurrentUserAccount(mockDatabaseHelper);
+MockDatabaseProvider buildMockDatabaseAdapter() {
+  MockDatabaseProvider mockDatabaseProvider = MockDatabaseProvider();
+  enableCurrentUserAccount(mockDatabaseProvider);
 
-  return mockDatabaseHelper;
+  return mockDatabaseProvider;
 }
 
 UserAccountProxy firstUser;
 UserAccountProxy secondUser;
 
-void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   firstUser = getFirstUser();
 
   List<UserAccountProxy> usersList = List<UserAccountProxy>()..add(firstUser);
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
-  when(mockDatabaseHelper.getUserAccountProxiesCount())
+  when(mockDatabaseProvider.getUserAccountProxiesCount())
       .thenAnswer((_) => Future.value(1));
-  when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(any))
+  when(mockDatabaseProvider.getHealthEntryProxiesByAccountId(any))
       .thenAnswer((_) => Future.value(List<HealthEntryProxy>()));
 }
 
@@ -65,168 +65,168 @@ UserAccountProxy getSecondUser() {
   return user;
 }
 
-void enableSecondUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableSecondUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   secondUser = getSecondUser();
 
   List<UserAccountProxy> usersList = List<UserAccountProxy>()..add(secondUser);
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(secondUser));
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
-  when(mockDatabaseHelper.getUserAccountProxiesCount())
+  when(mockDatabaseProvider.getUserAccountProxiesCount())
       .thenAnswer((_) => Future.value(1));
-  when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(any))
+  when(mockDatabaseProvider.getHealthEntryProxiesByAccountId(any))
       .thenAnswer((_) => Future.value(List<HealthEntryProxy>()));
 }
 
-void enableNoUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableNoUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   secondUser = getSecondUser();
 
   List<UserAccountProxy> usersList = List<UserAccountProxy>();
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(null));
-  when(mockDatabaseHelper.getUserAccountProxiesAll())
+  when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
-  when(mockDatabaseHelper.getUserAccountProxiesCount())
+  when(mockDatabaseProvider.getUserAccountProxiesCount())
       .thenAnswer((_) => Future.value(0));
-  when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(any))
+  when(mockDatabaseProvider.getHealthEntryProxiesByAccountId(any))
       .thenAnswer((_) => Future.value(List<HealthEntryProxy>()));
 }
 
 void main() {
-  final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  final MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
   testWidgets('Navigate to account page test', (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page update test', (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
-    await accountPageFormSubmit(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
+    await accountPageFormSubmit(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page add new test', (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    await accountPageAddNew(tester, mockDatabaseHelper);
-    await accountPageCancelAddNew(tester, mockDatabaseHelper);
+    await accountPageAddNew(tester, mockDatabaseProvider);
+    await accountPageCancelAddNew(tester, mockDatabaseProvider);
 
-    await accountPageAddNew(tester, mockDatabaseHelper);
-    await accountPageConfirmAddNew(tester, mockDatabaseHelper);
+    await accountPageAddNew(tester, mockDatabaseProvider);
+    await accountPageConfirmAddNew(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page add new over limit test',
       (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    when(mockDatabaseHelper.getUserAccountProxiesCount())
+    when(mockDatabaseProvider.getUserAccountProxiesCount())
         .thenAnswer((_) => Future.value(4));
 
-    await accountPageAddNew(tester, mockDatabaseHelper);
-    await accountPageAcceptLimitReached(tester, mockDatabaseHelper);
+    await accountPageAddNew(tester, mockDatabaseProvider);
+    await accountPageAcceptLimitReached(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page delete current test', (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
-    await accountPageCancelDelete(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
+    await accountPageCancelDelete(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
-    await accountPageConfirmDelete(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
+    await accountPageConfirmDelete(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page try delete current with dependents test',
       (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(any)).thenAnswer(
+    when(mockDatabaseProvider.getHealthEntryProxiesByAccountId(any)).thenAnswer(
         (_) => Future.value(
             List<HealthEntryProxy>()..add(HealthEntryProxy()..id = 1)));
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
 
-    await accountPageAcceptHasDependents(tester, mockDatabaseHelper);
+    await accountPageAcceptHasDependents(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page delete last user test',
       (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
 
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
-    await accountPageConfirmDelete(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
+    await accountPageConfirmDelete(tester, mockDatabaseProvider);
 
-    when(mockDatabaseHelper.deleteUserAccount(1))
+    when(mockDatabaseProvider.deleteUserAccount(1))
         .thenAnswer((_) => Future.value(1));
-    when(mockDatabaseHelper.getUserAccountProxiesAll())
+    when(mockDatabaseProvider.getUserAccountProxiesAll())
         .thenAnswer((_) => Future.value(List<UserAccountProxy>()));
   });
 
   testWidgets('Account page delete non-last user test',
       (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
 
-    await navigateToAccountPage(tester, mockDatabaseHelper);
-    await accountPageEnteredCheck(tester, mockDatabaseHelper);
+    await navigateToAccountPage(tester, mockDatabaseProvider);
+    await accountPageEnteredCheck(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
 
-    when(mockDatabaseHelper.deleteUserAccount(1))
+    when(mockDatabaseProvider.deleteUserAccount(1))
         .thenAnswer((_) => Future.value(1));
-    enableSecondUserAccount(mockDatabaseHelper);
+    enableSecondUserAccount(mockDatabaseProvider);
 
-    await accountPageConfirmDelete(tester, mockDatabaseHelper);
+    await accountPageConfirmDelete(tester, mockDatabaseProvider);
     expect(find.text('Gymspector'), findsOneWidget);
   });
 
   testWidgets('Account page delete unsaved user with reset test',
       (WidgetTester tester) async {
-    enableNoUserAccount(mockDatabaseHelper);
+    enableNoUserAccount(mockDatabaseProvider);
 
-    await startPageEntered(tester, mockDatabaseHelper);
+    await startPageEntered(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
 
-    await accountPageAcceptReset(tester, mockDatabaseHelper);
+    await accountPageAcceptReset(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page try delete unsaved user with reject reset test',
       (WidgetTester tester) async {
-    enableNoUserAccount(mockDatabaseHelper);
+    enableNoUserAccount(mockDatabaseProvider);
 
-    await startPageEntered(tester, mockDatabaseHelper);
+    await startPageEntered(tester, mockDatabaseProvider);
 
-    await accountPageDeleteExisting(tester, mockDatabaseHelper);
+    await accountPageDeleteExisting(tester, mockDatabaseProvider);
 
-    await accountPageCancelReset(tester, mockDatabaseHelper);
+    await accountPageCancelReset(tester, mockDatabaseProvider);
   });
 }
 
 Future startPageEntered(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
   await tester.pump();
 }
 
 Future navigateToAccountPage(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
 
   await tester.pump();
 
@@ -242,7 +242,7 @@ Future navigateToAccountPage(
 }
 
 Future accountPageEnteredCheck(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byType(TextFormField), findsNWidgets(3));
 
   expect(find.byKey(Key('accountNameTextFormField')), findsOneWidget);
@@ -251,7 +251,7 @@ Future accountPageEnteredCheck(
 }
 
 Future accountPageFormSubmit(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byType(TextFormField), findsNWidgets(3));
 
   await tester.showKeyboard(find.byKey(Key('accountNameTextFormField')));
@@ -287,7 +287,7 @@ Future accountPageFormSubmit(
 }
 
 Future accountPageAddNew(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('addNewAccountButton')), findsOneWidget);
 
   await tester.tap(find.byKey(Key('addNewAccountButton')));
@@ -295,21 +295,21 @@ Future accountPageAddNew(
 }
 
 Future accountPageCancelAddNew(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('cancelAddingAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('cancelAddingAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageConfirmAddNew(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('confirmAddingAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('confirmAddingAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageDeleteExisting(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('deleteAccountButton')), findsOneWidget);
 
   await tester.tap(find.byKey(Key('deleteAccountButton')));
@@ -317,42 +317,42 @@ Future accountPageDeleteExisting(
 }
 
 Future accountPageCancelDelete(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('cancelDeleteAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('cancelDeleteAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageConfirmDelete(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('confirmDeleteAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('confirmDeleteAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageAcceptReset(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('acceptResetAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('acceptResetAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageCancelReset(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('cancelResetAccount')), findsOneWidget);
   await tester.tap(find.byKey(Key('cancelResetAccount')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageAcceptLimitReached(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('okLimitReached')), findsOneWidget);
   await tester.tap(find.byKey(Key('okLimitReached')));
   await tester.pumpAndSettle();
 }
 
 Future accountPageAcceptHasDependents(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
   expect(find.byKey(Key('acceptHasDependents')), findsOneWidget);
   await tester.tap(find.byKey(Key('acceptHasDependents')));
   await tester.pumpAndSettle();

@@ -38,7 +38,7 @@ class UserAccountProxy extends UserAccount {
   }
 }
 
-mixin UserAccountDatabaseHelper {
+mixin UserAccountDatabaseProvider {
   Future<Database> db;
   final theUserAccountColumns = [
     "id",

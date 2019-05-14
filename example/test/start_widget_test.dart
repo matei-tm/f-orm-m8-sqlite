@@ -12,20 +12,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {
-  MockDatabaseHelper(InitMode testingMockDb);
+class MockDatabaseProvider extends Mock implements DatabaseProvider {
+  MockDatabaseProvider(InitMode testingMockDb);
 }
 
-MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper =
-      MockDatabaseHelper(InitMode.testingMockDb);
+MockDatabaseProvider buildMockDatabaseAdapter() {
+  MockDatabaseProvider mockDatabaseProvider =
+      MockDatabaseProvider(InitMode.testingMockDb);
 
-  enableCurrentUserAccount(mockDatabaseHelper);
+  enableCurrentUserAccount(mockDatabaseProvider);
 
-  return mockDatabaseHelper;
+  return mockDatabaseProvider;
 }
 
-void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
+void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   UserAccountProxy firstUser = UserAccountProxy();
   firstUser.id = 1;
   firstUser.email = "John@Doe.com";
@@ -34,36 +34,36 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   firstUser.userName = "John Doe";
   firstUser.isCurrent = true;
 
-  when(mockDatabaseHelper.getCurrentUserAccount())
+  when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
+  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
 }
 
 void main() {
-  final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
+  final MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
   testWidgets('Start page without account test', (WidgetTester tester) async {
-    //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-    when(mockDatabaseHelper.getCurrentUserAccount())
+    //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+    when(mockDatabaseProvider.getCurrentUserAccount())
         .thenAnswer((_) => Future.value(null));
-    await accountPageEntered(tester, mockDatabaseHelper);
+    await accountPageEntered(tester, mockDatabaseProvider);
   });
 
   testWidgets('Account page on start test', (WidgetTester tester) async {
-    when(mockDatabaseHelper.getCurrentUserAccount())
+    when(mockDatabaseProvider.getCurrentUserAccount())
         .thenAnswer((_) => Future.value(null));
-    await accountPageFormSubmit(tester, mockDatabaseHelper);
+    await accountPageFormSubmit(tester, mockDatabaseProvider);
   });
 
   testWidgets('Root page with account is Disclaimer test',
       (WidgetTester tester) async {
-    enableCurrentUserAccount(mockDatabaseHelper);
-    await disclaimerPageEntered(tester, mockDatabaseHelper);
+    enableCurrentUserAccount(mockDatabaseProvider);
+    await disclaimerPageEntered(tester, mockDatabaseProvider);
   });
 }
 
 Future disclaimerPageEntered(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
   await tester.pump();
 
   expect(find.text('Gymspector'), findsOneWidget);
@@ -71,8 +71,8 @@ Future disclaimerPageEntered(
 }
 
 Future accountPageEntered(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
   await tester.pump();
 
   expect(find.byType(TextFormField), findsNWidgets(3));
@@ -82,8 +82,8 @@ Future accountPageEntered(
 }
 
 Future accountPageFormSubmit(
-    WidgetTester tester, MockDatabaseHelper mockDatabaseHelper) async {
-  await tester.pumpWidget(GymspectorApp(mockDatabaseHelper));
+    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider) async {
+  await tester.pumpWidget(GymspectorApp(mockDatabaseProvider));
   await tester.pump();
 
   expect(find.byType(TextFormField), findsNWidgets(3));

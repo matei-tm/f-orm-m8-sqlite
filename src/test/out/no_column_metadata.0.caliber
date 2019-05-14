@@ -22,7 +22,7 @@ class AModelWithoutExplicitColumnMetadataProxy extends AModelWithoutExplicitColu
   }
 }
 
-mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
+mixin AModelWithoutExplicitColumnMetadataDatabaseProvider {
   Future<Database> db;
   final theAModelWithoutExplicitColumnMetadataColumns = [
     "my_id_column",

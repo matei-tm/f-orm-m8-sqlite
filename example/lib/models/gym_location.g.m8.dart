@@ -35,7 +35,7 @@ class GymLocationProxy extends GymLocation {
   }
 }
 
-mixin GymLocationDatabaseHelper {
+mixin GymLocationDatabaseProvider {
   Future<Database> db;
   final theGymLocationColumns = [
     "id",
