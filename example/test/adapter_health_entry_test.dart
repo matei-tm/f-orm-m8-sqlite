@@ -40,20 +40,20 @@ main() {
       expect(newId, 1);
     });
 
-    test('get Entity All test', () async {
-      var fullList = await databaseAdapter.getHealthEntryProxiesAll();
-      expect(fullList.length, 2);
-    });
+    // test('get Entity All test', () async {
+    //   var fullList = await databaseAdapter.getHealthEntryProxiesAll();
+    //   expect(fullList.length, 2);
+    // });
 
     test('get Entity Count test', () async {
       var result = await databaseAdapter.getHealthEntryProxiesCount();
       expect(result, 9);
     });
 
-    test('get Entity test', () async {
-      var result = await databaseAdapter.getHealthEntry(1);
-      expect(result.id, 1);
-    });
+    // test('get Entity test', () async {
+    //   var result = await databaseAdapter.getHealthEntry(1);
+    //   expect(result.id, 1);
+    // });
 
     test('delete Entity test', () async {
       var deletedId = await databaseAdapter.deleteHealthEntry(proxySample01.id);

@@ -41,20 +41,20 @@ main() {
       expect(newGymId, 1);
     });
 
-    test('get GymLocationProxies All test', () async {
-      var gymList = await databaseAdapter.getGymLocationProxiesAll();
-      expect(gymList.length, 2);
-    });
+    // test('get GymLocationProxies All test', () async {
+    //   var gymList = await databaseAdapter.getGymLocationProxiesAll();
+    //   expect(gymList.length, 2);
+    // });
 
     test('get GymLocationProxies Count test', () async {
       var result = await databaseAdapter.getGymLocationProxiesCount();
       expect(result, 9);
     });
 
-    test('get GymLocation test', () async {
-      var gymLocation = await databaseAdapter.getGymLocation(1);
-      expect(gymLocation.id, 1);
-    });
+    // test('get GymLocation test', () async {
+    //   var gymLocation = await databaseAdapter.getGymLocation(1);
+    //   expect(gymLocation.id, 1);
+    // });
 
     test('delete GymLocation test', () async {
       var deletedId = await databaseAdapter.deleteGymLocation(proxySample01.id);

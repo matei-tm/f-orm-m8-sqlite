@@ -13,21 +13,25 @@ import 'to_do_proxy_test.dart' as toDoProxyTest;
 import 'adapter_gym_location_test.dart' as adapterGymLocation;
 import 'adapter_health_entry_test.dart' as adapterHealthEntry;
 import 'adapter_receipt_test.dart' as adapterReceipt;
+import 'adapter_to_do_test.dart' as adapterToDo;
+import 'adapter_user_account_test.dart' as adapterUserAccount;
 
 main() {
-  mockGenerics.main();
-  drawerWidget.main();
-  startWidget.main();
-  accountWidget.main();
-  gymPlacesWidget.main();
-  healthEntryWidget.main();
-  receiptsWidget.main();
-  gymLocationProxyTest.main();
-  healthEntryProxyTest.main();
-  userAccountProxyTest.main();
-  receiptProxyTest.main();
-  toDoProxyTest.main();
+  // mockGenerics.main();
+  // drawerWidget.main();
+  // startWidget.main();
+  // accountWidget.main();
+  // gymPlacesWidget.main();
+  // healthEntryWidget.main();
+  // receiptsWidget.main();
+  // gymLocationProxyTest.main();
+  // healthEntryProxyTest.main();
+  // userAccountProxyTest.main();
+  // receiptProxyTest.main();
+  // toDoProxyTest.main();
   adapterGymLocation.main();
   adapterReceipt.main();
   adapterHealthEntry.main();
+  adapterToDo.main();
+  adapterUserAccount.main();
 }
