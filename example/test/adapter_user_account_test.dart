@@ -10,7 +10,7 @@ import 'utils/sample_repo.dart';
 main() {
   Database database = MockDatabase();
   DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
+  DatabaseProvider databaseProvider = DatabaseProvider(databaseAdapter);
 
   UserAccountProxy proxySample01 = userAccountProxySample01;
   UserAccountProxy proxySample02 = userAccountProxySample02;
@@ -22,14 +22,12 @@ main() {
   tearDown(() async {
     reset(database);
     reset(databaseAdapter);
-    clearInteractions(database);
-    clearInteractions(databaseAdapter);
   });
 
   group('adapter UserAccount tests', () {
     test('create UserAccount test', () async {
       final createResult = () async {
-        await databaseAdapter.createUserAccountTable(database);
+        await databaseProvider.createUserAccountTable(database);
         return true;
       };
 
@@ -37,37 +35,38 @@ main() {
     });
 
     test('save UserAccount test', () async {
-      var newGymId = await databaseAdapter.saveUserAccount(proxySample01);
+      var newGymId = await databaseProvider.saveUserAccount(proxySample01);
       expect(newGymId, 1);
     });
 
     // test('get UserAccountProxies All test', () async {
-    //   var gymList = await databaseAdapter.getUserAccountProxiesAll();
+    //   var gymList = await databaseProvider.getUserAccountProxiesAll();
     //   expect(gymList.length, 2);
     // });
 
     test('get UserAccountProxies Count test', () async {
-      var result = await databaseAdapter.getUserAccountProxiesCount();
+      var result = await databaseProvider.getUserAccountProxiesCount();
       expect(result, 9);
     });
 
     // test('get UserAccount test', () async {
-    //   var userAccount = await databaseAdapter.getUserAccount(1);
+    //   var userAccount = await databaseProvider.getUserAccount(1);
     //   expect(userAccount.id, 1);
     // });
 
     test('delete UserAccount test', () async {
-      var deletedId = await databaseAdapter.deleteUserAccount(proxySample01.id);
+      var deletedId =
+          await databaseProvider.deleteUserAccount(proxySample01.id);
       expect(deletedId, proxySample01.id);
     });
 
     test('delete UserAccount all test', () async {
-      var result = await databaseAdapter.deleteUserAccountProxiesAll();
+      var result = await databaseProvider.deleteUserAccountProxiesAll();
       expect(result, true);
     });
 
     test('update UserAccount test', () async {
-      var updatedId = await databaseAdapter.updateUserAccount(proxySample01);
+      var updatedId = await databaseProvider.updateUserAccount(proxySample01);
       expect(updatedId, proxySample01.id);
     });
   });

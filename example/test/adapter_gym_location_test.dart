@@ -10,7 +10,7 @@ import 'utils/sample_repo.dart';
 main() {
   Database database = MockDatabase();
   DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
+  DatabaseProvider databaseProvider = DatabaseProvider(databaseAdapter);
 
   GymLocationProxy proxySample01 = gymLocationProxySample01;
   GymLocationProxy proxySample02 = gymLocationProxySample02;
@@ -22,14 +22,12 @@ main() {
   tearDown(() async {
     reset(database);
     reset(databaseAdapter);
-    clearInteractions(database);
-    clearInteractions(databaseAdapter);
   });
 
   group('adapter GymLocation tests', () {
     test('create GymLocation test', () async {
       final createResult = () async {
-        await databaseAdapter.createGymLocationTable(database);
+        await databaseProvider.createGymLocationTable(database);
         return true;
       };
 
@@ -37,37 +35,38 @@ main() {
     });
 
     test('save GymLocation test', () async {
-      var newGymId = await databaseAdapter.saveGymLocation(proxySample01);
+      var newGymId = await databaseProvider.saveGymLocation(proxySample01);
       expect(newGymId, 1);
     });
 
     // test('get GymLocationProxies All test', () async {
-    //   var gymList = await databaseAdapter.getGymLocationProxiesAll();
+    //   var gymList = await databaseProvider.getGymLocationProxiesAll();
     //   expect(gymList.length, 2);
     // });
 
     test('get GymLocationProxies Count test', () async {
-      var result = await databaseAdapter.getGymLocationProxiesCount();
+      var result = await databaseProvider.getGymLocationProxiesCount();
       expect(result, 9);
     });
 
     // test('get GymLocation test', () async {
-    //   var gymLocation = await databaseAdapter.getGymLocation(1);
+    //   var gymLocation = await databaseProvider.getGymLocation(1);
     //   expect(gymLocation.id, 1);
     // });
 
     test('delete GymLocation test', () async {
-      var deletedId = await databaseAdapter.deleteGymLocation(proxySample01.id);
+      var deletedId =
+          await databaseProvider.deleteGymLocation(proxySample01.id);
       expect(deletedId, proxySample01.id);
     });
 
     test('delete GymLocation all test', () async {
-      var result = await databaseAdapter.deleteGymLocationProxiesAll();
+      var result = await databaseProvider.deleteGymLocationProxiesAll();
       expect(result, true);
     });
 
     test('update GymLocation test', () async {
-      var updatedId = await databaseAdapter.updateGymLocation(proxySample01);
+      var updatedId = await databaseProvider.updateGymLocation(proxySample01);
       expect(updatedId, proxySample01.id);
     });
   });

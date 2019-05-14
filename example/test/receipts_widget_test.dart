@@ -74,7 +74,8 @@ void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   when(mockDatabaseProvider.getReceiptProxiesAll())
       .thenAnswer((_) => Future.value(List<ReceiptProxy>()));
 
-  when(mockDatabaseProvider.saveReceipt(any)).thenAnswer((_) => Future.value(1));
+  when(mockDatabaseProvider.saveReceipt(any))
+      .thenAnswer((_) => Future.value(1));
 
   when(mockDatabaseProvider.getReceipt(1))
       .thenAnswer((_) => Future.value(receiptNewProbe));
@@ -156,15 +157,17 @@ Future addNewReceipt(
   expect(find.text('Add Receipt'), findsOneWidget);
 }
 
-Future hitUpdateReceipt(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future hitUpdateReceipt(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('updBtnReceipt$id')), findsOneWidget);
   await tester.tap(find.byKey(Key('updBtnReceipt$id')));
   await tester.pumpAndSettle();
   expect(find.text('Edit Receipt'), findsOneWidget);
 }
 
-Future fillReceipt(WidgetTester tester, MockDatabaseProvider mockDatabaseProvider,
+Future fillReceipt(
+    WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider,
     ReceiptProxy currentReceipt) async {
   final receiptDescriptionTextFieldFinder =
       find.byKey(Key('receiptDescriptionField'));
@@ -226,8 +229,10 @@ Future fillReceipt(WidgetTester tester, MockDatabaseProvider mockDatabaseProvide
   expect(find.text('${currentReceipt.storageTemperature}'), findsOneWidget);
 }
 
-Future saveAndCheckReceipt(WidgetTester tester,
-    MockDatabaseProvider mockDatabaseProvider, ReceiptProxy currentReceipt) async {
+Future saveAndCheckReceipt(
+    WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider,
+    ReceiptProxy currentReceipt) async {
   final saveReceiptButtonFinder = find.byKey(Key('saveReceiptButton'));
   expect(saveReceiptButtonFinder, findsOneWidget);
   await tester.tap(saveReceiptButtonFinder);

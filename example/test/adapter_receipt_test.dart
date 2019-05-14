@@ -10,7 +10,7 @@ import 'utils/sample_repo.dart';
 main() {
   Database database = MockDatabase();
   DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
+  DatabaseProvider databaseProvider = DatabaseProvider(databaseAdapter);
 
   ReceiptProxy proxySample01 = receiptProxySample01;
   ReceiptProxy proxySample02 = receiptProxySample02;
@@ -26,7 +26,7 @@ main() {
   group('adapter Receipt tests', () {
     test('create Entity test', () async {
       final createResult = () async {
-        await databaseAdapter.createReceiptTable(database);
+        await databaseProvider.createReceiptTable(database);
         return true;
       };
 
@@ -34,39 +34,39 @@ main() {
     });
 
     test('save Entity test', () async {
-      var newId = await databaseAdapter.saveReceipt(proxySample01);
+      var newId = await databaseProvider.saveReceipt(proxySample01);
       expect(newId, 1);
     });
 
 // // todo
     // test('get Entity All test', () async {
-    //   var fullList = await databaseAdapter.getReceiptProxiesAll();
+    //   var fullList = await databaseProvider.getReceiptProxiesAll();
     //   expect(fullList.length, 2);
     // });
 
     test('get Entity Count test', () async {
-      var result = await databaseAdapter.getReceiptProxiesCount();
+      var result = await databaseProvider.getReceiptProxiesCount();
       expect(result, 9);
     });
 
 // // todo
     // test('get Entity test', () async {
-    //   var result = await databaseAdapter.getReceipt(1);
+    //   var result = await databaseProvider.getReceipt(1);
     //   expect(result.id, 1);
     // });
 
     test('delete Entity test', () async {
-      var deletedId = await databaseAdapter.deleteReceipt(proxySample01.id);
+      var deletedId = await databaseProvider.deleteReceipt(proxySample01.id);
       expect(deletedId, proxySample01.id);
     });
 
     test('delete Entity all test', () async {
-      var result = await databaseAdapter.deleteReceiptProxiesAll();
+      var result = await databaseProvider.deleteReceiptProxiesAll();
       expect(result, true);
     });
 
     test('update Entity test', () async {
-      var updatedId = await databaseAdapter.updateReceipt(proxySample01);
+      var updatedId = await databaseProvider.updateReceipt(proxySample01);
       expect(updatedId, proxySample01.id);
     });
   });

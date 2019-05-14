@@ -10,7 +10,7 @@ import 'utils/sample_repo.dart';
 main() {
   Database database = MockDatabase();
   DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
+  DatabaseProvider databaseProvider = DatabaseProvider(databaseAdapter);
 
   HealthEntryProxy proxySample01 = healthEntryProxySample01;
   HealthEntryProxy proxySample02 = healthEntryProxySample02;
@@ -22,13 +22,11 @@ main() {
   tearDown(() async {
     reset(database);
     reset(databaseAdapter);
-    clearInteractions(database);
-    clearInteractions(databaseAdapter);
   });
   group('adapter HealthEntry tests', () {
     test('create Entity test', () async {
       final createResult = () async {
-        await databaseAdapter.createHealthEntryTable(database);
+        await databaseProvider.createHealthEntryTable(database);
         return true;
       };
 
@@ -36,37 +34,38 @@ main() {
     });
 
     test('save Entity test', () async {
-      var newId = await databaseAdapter.saveHealthEntry(proxySample01);
+      var newId = await databaseProvider.saveHealthEntry(proxySample01);
       expect(newId, 1);
     });
 
     // test('get Entity All test', () async {
-    //   var fullList = await databaseAdapter.getHealthEntryProxiesAll();
+    //   var fullList = await databaseProvider.getHealthEntryProxiesAll();
     //   expect(fullList.length, 2);
     // });
 
     test('get Entity Count test', () async {
-      var result = await databaseAdapter.getHealthEntryProxiesCount();
+      var result = await databaseProvider.getHealthEntryProxiesCount();
       expect(result, 9);
     });
 
     // test('get Entity test', () async {
-    //   var result = await databaseAdapter.getHealthEntry(1);
+    //   var result = await databaseProvider.getHealthEntry(1);
     //   expect(result.id, 1);
     // });
 
     test('delete Entity test', () async {
-      var deletedId = await databaseAdapter.deleteHealthEntry(proxySample01.id);
+      var deletedId =
+          await databaseProvider.deleteHealthEntry(proxySample01.id);
       expect(deletedId, proxySample01.id);
     });
 
     test('delete Entity all test', () async {
-      var result = await databaseAdapter.deleteHealthEntryProxiesAll();
+      var result = await databaseProvider.deleteHealthEntryProxiesAll();
       expect(result, true);
     });
 
     test('update Entity test', () async {
-      var updatedId = await databaseAdapter.updateHealthEntry(proxySample01);
+      var updatedId = await databaseProvider.updateHealthEntry(proxySample01);
       expect(updatedId, proxySample01.id);
     });
   });

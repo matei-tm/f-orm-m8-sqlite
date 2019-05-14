@@ -84,7 +84,8 @@ void main() {
     await expectValidText(tester, mockDatabaseProvider);
     when(mockDatabaseProvider.saveGymLocation(any))
         .thenThrow(Exception("Duplicate entry"));
-    await gymLocationFillAndSave(tester, mockDatabaseProvider, findsNWidgets(2));
+    await gymLocationFillAndSave(
+        tester, mockDatabaseProvider, findsNWidgets(2));
     await expectErrorText(tester, mockDatabaseProvider);
   });
 
@@ -159,8 +160,8 @@ Future gymLocationEmptySave(
   expect(find.text("Value Can't Be Empty"), findsOneWidget);
 }
 
-Future deleteLocation(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future deleteLocation(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnGymPlace$id')), findsOneWidget);
 
   //delete the entry
@@ -170,8 +171,8 @@ Future deleteLocation(
   expect(find.text('Silva'), findsNothing);
 }
 
-Future failToDeleteLocation(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future failToDeleteLocation(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnGymPlace$id')), findsOneWidget);
 
   enableThrowOnDeleteGymLocation(mockDatabaseProvider);

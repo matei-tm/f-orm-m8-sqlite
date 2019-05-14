@@ -94,8 +94,8 @@ Future drawerOpenedWithAccounts(
   expect(find.text('JN'), findsOneWidget);
 }
 
-Future drawerCancelSwitchAccount(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future drawerCancelSwitchAccount(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('accountAvatar$id')), findsOneWidget);
   await tester.tap(find.byKey(Key('accountAvatar$id')));
   await tester.pumpAndSettle();
@@ -106,8 +106,8 @@ Future drawerCancelSwitchAccount(
   await tester.pumpAndSettle();
 }
 
-Future drawerConfirmSwitchAccount(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future drawerConfirmSwitchAccount(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('accountAvatar$id')), findsOneWidget);
   await tester.tap(find.byKey(Key('accountAvatar$id')));
   await tester.pumpAndSettle();

@@ -83,7 +83,8 @@ void main() {
     await expectValidText(tester, mockDatabaseProvider);
     when(mockDatabaseProvider.saveHealthEntry(any))
         .thenThrow(Exception("Duplicate entry"));
-    await healthEntryFillAndSave(tester, mockDatabaseProvider, findsNWidgets(2));
+    await healthEntryFillAndSave(
+        tester, mockDatabaseProvider, findsNWidgets(2));
     await expectErrorText(tester, mockDatabaseProvider);
   });
 
@@ -158,8 +159,8 @@ Future healthEntryEmptySave(
   expect(find.text("Value Can't Be Empty"), findsOneWidget);
 }
 
-Future deleteHealthEntry(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future deleteHealthEntry(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
 
   //delete the entry
@@ -169,8 +170,8 @@ Future deleteHealthEntry(
   expect(find.text('Healthy'), findsNothing);
 }
 
-Future failToDeleteHealthEntry(
-    WidgetTester tester, MockDatabaseProvider mockDatabaseProvider, int id) async {
+Future failToDeleteHealthEntry(WidgetTester tester,
+    MockDatabaseProvider mockDatabaseProvider, int id) async {
   expect(find.byKey(Key('delBtnHealth$id')), findsOneWidget);
 
   enableThrowOnDeleteHealthEntry(mockDatabaseProvider);
