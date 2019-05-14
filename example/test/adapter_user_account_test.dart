@@ -9,21 +9,21 @@ import 'utils/sample_repo.dart';
 
 main() {
   Database database = MockDatabase();
-  DatabaseBuilder databaseBuilder = MockDatabaseBuilder();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseBuilder);
+  DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
+  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
 
   UserAccountProxy proxySample01 = userAccountProxySample01;
   UserAccountProxy proxySample02 = userAccountProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseBuilder, database, proxySample01, proxySample02);
+    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
   });
 
   tearDown(() async {
     reset(database);
-    reset(databaseBuilder);
+    reset(databaseAdapter);
     clearInteractions(database);
-    clearInteractions(databaseBuilder);
+    clearInteractions(databaseAdapter);
   });
 
   group('adapter UserAccount tests', () {

@@ -9,19 +9,19 @@ import 'utils/sample_repo.dart';
 
 main() {
   Database database = MockDatabase();
-  DatabaseBuilder databaseBuilder = MockDatabaseBuilder();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseBuilder);
+  DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
+  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
 
   ReceiptProxy proxySample01 = receiptProxySample01;
   ReceiptProxy proxySample02 = receiptProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseBuilder, database, proxySample01, proxySample02);
+    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
   });
 
   tearDown(() async {
     reset(database);
-    reset(databaseBuilder);
+    reset(databaseAdapter);
   });
   group('adapter Receipt tests', () {
     test('create Entity test', () async {

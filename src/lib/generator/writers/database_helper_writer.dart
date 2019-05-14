@@ -64,22 +64,22 @@ ${getImportList()}
 
 enum InitMode { developmentAlwaysReinitDb, testingMockDb, production }
 
-class DatabaseBuilder {
+class DatabaseAdapter {
   InitMode _initMode;
   static InitMode _startInitMode;
-  static final DatabaseBuilder _instance = DatabaseBuilder._internal();
+  static final DatabaseAdapter _instance = DatabaseAdapter._internal();
   static Database _db;
 
   /// Default initMode is production
   /// [developmentAlwaysReinitDb] then the database will be deleteted on each init
   /// [testingMockDb] then the database will be initialized as mock
   /// [production] then the database will be initialized as production
-  factory DatabaseBuilder([InitMode initMode = InitMode.production]) {
+  factory DatabaseAdapter([InitMode initMode = InitMode.production]) {
     _startInitMode = initMode;
     return _instance;
   }
 
-  DatabaseBuilder._internal() {
+  DatabaseAdapter._internal() {
     if (_initMode == null) {
       _initMode = _startInitMode;
     }
@@ -108,9 +108,9 @@ class DatabaseProvider ${getMixinList()}
   static final DatabaseProvider _instance = DatabaseProvider._internal();
   static Database _db;
 
-  static DatabaseBuilder _dbBuilder;
+  static DatabaseAdapter _dbBuilder;
 
-  factory DatabaseProvider(DatabaseBuilder dbBuilder) {
+  factory DatabaseProvider(DatabaseAdapter dbBuilder) {
     _dbBuilder = dbBuilder;
     return _instance;
   }

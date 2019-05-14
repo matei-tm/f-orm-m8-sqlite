@@ -9,21 +9,21 @@ import 'utils/sample_repo.dart';
 
 main() {
   Database database = MockDatabase();
-  DatabaseBuilder databaseBuilder = MockDatabaseBuilder();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseBuilder);
+  DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
+  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
 
   HealthEntryProxy proxySample01 = healthEntryProxySample01;
   HealthEntryProxy proxySample02 = healthEntryProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseBuilder, database, proxySample01, proxySample02);
+    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
   });
 
   tearDown(() async {
     reset(database);
-    reset(databaseBuilder);
+    reset(databaseAdapter);
     clearInteractions(database);
-    clearInteractions(databaseBuilder);
+    clearInteractions(databaseAdapter);
   });
   group('adapter HealthEntry tests', () {
     test('create Entity test', () async {

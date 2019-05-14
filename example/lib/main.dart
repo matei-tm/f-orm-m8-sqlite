@@ -3,7 +3,7 @@ import 'package:sqlite_m8_demo/pages/account_page.dart';
 import 'package:sqlite_m8_demo/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(GymspectorApp(DatabaseProvider(DatabaseBuilder())));
+void main() => runApp(GymspectorApp(DatabaseProvider(DatabaseAdapter())));
 
 class GymspectorApp extends StatelessWidget {
   final databaseProvider;

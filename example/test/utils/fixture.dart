@@ -6,13 +6,13 @@ class MockDatabase extends Mock implements Database {}
 
 class MockDatabaseFactory extends Mock implements DatabaseFactory {}
 
-class MockDatabaseBuilder extends Mock implements DatabaseBuilder {}
+class MockDatabaseAdapter extends Mock implements DatabaseAdapter {}
 
-void initTestFixture(MockDatabaseBuilder mockDatabaseBuilder,
+void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
     MockDatabase database, dynamic sample01, dynamic sample02) {
   reset(database);
-  reset(mockDatabaseBuilder);
-  when(mockDatabaseBuilder.getDb(any)).thenAnswer((_) async => database);
+  reset(mockDatabaseAdapter);
+  when(mockDatabaseAdapter.getDb(any)).thenAnswer((_) async => database);
 
   when(database.close()).thenAnswer((_) async {
     return;

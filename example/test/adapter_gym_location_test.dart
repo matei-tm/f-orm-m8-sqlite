@@ -9,21 +9,21 @@ import 'utils/sample_repo.dart';
 
 main() {
   Database database = MockDatabase();
-  DatabaseBuilder databaseBuilder = MockDatabaseBuilder();
-  DatabaseProvider databaseAdapter = DatabaseProvider(databaseBuilder);
+  DatabaseAdapter databaseAdapter = MockDatabaseAdapter();
+  DatabaseProvider databaseAdapter = DatabaseProvider(databaseAdapter);
 
   GymLocationProxy proxySample01 = gymLocationProxySample01;
   GymLocationProxy proxySample02 = gymLocationProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseBuilder, database, proxySample01, proxySample02);
+    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
   });
 
   tearDown(() async {
     reset(database);
-    reset(databaseBuilder);
+    reset(databaseAdapter);
     clearInteractions(database);
-    clearInteractions(databaseBuilder);
+    clearInteractions(databaseAdapter);
   });
 
   group('adapter GymLocation tests', () {
