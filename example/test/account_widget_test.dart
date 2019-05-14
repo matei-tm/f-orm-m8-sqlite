@@ -155,7 +155,8 @@ void main() {
     await accountPageEnteredCheck(tester, mockDatabaseHelper);
 
     when(mockDatabaseHelper.getHealthEntryProxiesByAccountId(any)).thenAnswer(
-        (_) => Future.value(List<HealthEntry>()..add(HealthEntry()..id = 1)));
+        (_) => Future.value(
+            List<HealthEntryProxy>()..add(HealthEntryProxy()..id = 1)));
 
     await accountPageDeleteExisting(tester, mockDatabaseHelper);
 
