@@ -30,9 +30,9 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
     "description"
   ];
 
-  final String _theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
+  final String theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
   Future createHealthEntryAccountRelatedTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theHealthEntryAccountRelatedTableHandler (
+    await db.execute('''CREATE TABLE $theHealthEntryAccountRelatedTableHandler (
     my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     account_id INTEGER ,
     description TEXT     ,
@@ -45,14 +45,14 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
 
     
 
-    var result = await dbClient.insert(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap());
+    var result = await dbClient.insert(theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap());
     return result;
   }
 
-  Future<List<HealthEntryAccountRelated>> getHealthEntryAccountRelatedProxiesAll() async {
+  Future<List<HealthEntryAccountRelatedProxy>> getHealthEntryAccountRelatedProxiesAll() async {
     var dbClient = await db;
     var result =
-        await dbClient.query(_theHealthEntryAccountRelatedTableHandler, columns: theHealthEntryAccountRelatedColumns, where: '1');
+        await dbClient.query(theHealthEntryAccountRelatedTableHandler, columns: theHealthEntryAccountRelatedColumns, where: '1');
 
     return result.map((e) => HealthEntryAccountRelatedProxy.fromMap(e)).toList();
   }
@@ -60,12 +60,12 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
   Future<int> getHealthEntryAccountRelatedProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theHealthEntryAccountRelatedTableHandler  WHERE 1'));
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theHealthEntryAccountRelatedTableHandler  WHERE 1'));
   }
 
-  Future<HealthEntryAccountRelated> getHealthEntryAccountRelated(int id) async {
+  Future<HealthEntryAccountRelatedProxy> getHealthEntryAccountRelated(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
+    List<Map> result = await dbClient.query(theHealthEntryAccountRelatedTableHandler,
         columns: theHealthEntryAccountRelatedColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
 
 
@@ -79,12 +79,12 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
   Future<int> deleteHealthEntryAccountRelated(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theHealthEntryAccountRelatedTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
+        .delete(theHealthEntryAccountRelatedTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteHealthEntryAccountRelatedProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theHealthEntryAccountRelatedTableHandler);
+    await dbClient.delete(theHealthEntryAccountRelatedTableHandler);
     return true;
   }
 
@@ -93,12 +93,12 @@ mixin HealthEntryAccountRelatedDatabaseHelper {
 
 
 
-    return await dbClient.update(_theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
+    return await dbClient.update(theHealthEntryAccountRelatedTableHandler, instanceHealthEntryAccountRelated.toMap(),
         where: "my_id_column = ?", whereArgs: [instanceHealthEntryAccountRelated.id]);
   }
-  Future<List<HealthEntryAccountRelated>> getHealthEntryAccountRelatedProxiesByAccountId(int accountId) async {
+  Future<List<HealthEntryAccountRelatedProxy>> getHealthEntryAccountRelatedProxiesByAccountId(int accountId) async {
     var dbClient = await db;
-    var result = await dbClient.query(_theHealthEntryAccountRelatedTableHandler,
+    var result = await dbClient.query(theHealthEntryAccountRelatedTableHandler,
     columns: theHealthEntryAccountRelatedColumns,
     where: 'account_id = ? AND 1',
     whereArgs: [accountId]);

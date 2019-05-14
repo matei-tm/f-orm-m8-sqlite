@@ -30,9 +30,9 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
     "my_future_column"
   ];
 
-  final String _theAModelWithoutExplicitColumnMetadataTableHandler = 'my_account_related_table';
+  final String theAModelWithoutExplicitColumnMetadataTableHandler = 'my_account_related_table';
   Future createAModelWithoutExplicitColumnMetadataTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theAModelWithoutExplicitColumnMetadataTableHandler (
+    await db.execute('''CREATE TABLE $theAModelWithoutExplicitColumnMetadataTableHandler (
     my_id_column INTEGER ,
     my_description_column TEXT ,
     my_future_column INTEGER 
@@ -44,14 +44,14 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
 
     
 
-    var result = await dbClient.insert(_theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap());
+    var result = await dbClient.insert(theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap());
     return result;
   }
 
-  Future<List<AModelWithoutExplicitColumnMetadata>> getAModelWithoutExplicitColumnMetadataProxiesAll() async {
+  Future<List<AModelWithoutExplicitColumnMetadataProxy>> getAModelWithoutExplicitColumnMetadataProxiesAll() async {
     var dbClient = await db;
     var result =
-        await dbClient.query(_theAModelWithoutExplicitColumnMetadataTableHandler, columns: theAModelWithoutExplicitColumnMetadataColumns, where: '1');
+        await dbClient.query(theAModelWithoutExplicitColumnMetadataTableHandler, columns: theAModelWithoutExplicitColumnMetadataColumns, where: '1');
 
     return result.map((e) => AModelWithoutExplicitColumnMetadataProxy.fromMap(e)).toList();
   }
@@ -59,12 +59,12 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
   Future<int> getAModelWithoutExplicitColumnMetadataProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theAModelWithoutExplicitColumnMetadataTableHandler  WHERE 1'));
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theAModelWithoutExplicitColumnMetadataTableHandler  WHERE 1'));
   }
 
-  Future<AModelWithoutExplicitColumnMetadata> getAModelWithoutExplicitColumnMetadata(int id) async {
+  Future<AModelWithoutExplicitColumnMetadataProxy> getAModelWithoutExplicitColumnMetadata(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theAModelWithoutExplicitColumnMetadataTableHandler,
+    List<Map> result = await dbClient.query(theAModelWithoutExplicitColumnMetadataTableHandler,
         columns: theAModelWithoutExplicitColumnMetadataColumns, where: '1 AND null = ?', whereArgs: [id]);
 
 
@@ -78,12 +78,12 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
   Future<int> deleteAModelWithoutExplicitColumnMetadata(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theAModelWithoutExplicitColumnMetadataTableHandler, where: 'null = ?', whereArgs: [id]);
+        .delete(theAModelWithoutExplicitColumnMetadataTableHandler, where: 'null = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteAModelWithoutExplicitColumnMetadataProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theAModelWithoutExplicitColumnMetadataTableHandler);
+    await dbClient.delete(theAModelWithoutExplicitColumnMetadataTableHandler);
     return true;
   }
 
@@ -92,7 +92,7 @@ mixin AModelWithoutExplicitColumnMetadataDatabaseHelper {
 
 
 
-    return await dbClient.update(_theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap(),
+    return await dbClient.update(theAModelWithoutExplicitColumnMetadataTableHandler, instanceAModelWithoutExplicitColumnMetadata.toMap(),
         where: "null = ?", whereArgs: [instanceAModelWithoutExplicitColumnMetadata.id]);
   }
 }

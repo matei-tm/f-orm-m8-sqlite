@@ -44,9 +44,9 @@ mixin UserAccountDatabaseHelper {
     "my_is_current"
   ];
 
-  final String _theUserAccountTableHandler = 'my_account_table';
+  final String theUserAccountTableHandler = 'my_account_table';
   Future createUserAccountTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theUserAccountTableHandler (
+    await db.execute('''CREATE TABLE $theUserAccountTableHandler (
     my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     my_description_column TEXT  UNIQUE,
     my_abbreviation_column TEXT  NOT NULL,
@@ -61,14 +61,14 @@ mixin UserAccountDatabaseHelper {
 
     
 
-    var result = await dbClient.insert(_theUserAccountTableHandler, instanceUserAccount.toMap());
+    var result = await dbClient.insert(theUserAccountTableHandler, instanceUserAccount.toMap());
     return result;
   }
 
-  Future<List<UserAccount>> getUserAccountProxiesAll() async {
+  Future<List<UserAccountProxy>> getUserAccountProxiesAll() async {
     var dbClient = await db;
     var result =
-        await dbClient.query(_theUserAccountTableHandler, columns: theUserAccountColumns, where: '1');
+        await dbClient.query(theUserAccountTableHandler, columns: theUserAccountColumns, where: '1');
 
     return result.map((e) => UserAccountProxy.fromMap(e)).toList();
   }
@@ -76,12 +76,12 @@ mixin UserAccountDatabaseHelper {
   Future<int> getUserAccountProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(
-    await dbClient.rawQuery('SELECT COUNT(*) FROM $_theUserAccountTableHandler  WHERE 1'));
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theUserAccountTableHandler  WHERE 1'));
   }
 
-  Future<UserAccount> getUserAccount(int id) async {
+  Future<UserAccountProxy> getUserAccount(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+    List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
 
 
@@ -95,12 +95,12 @@ mixin UserAccountDatabaseHelper {
   Future<int> deleteUserAccount(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theUserAccountTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
+        .delete(theUserAccountTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteUserAccountProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theUserAccountTableHandler);
+    await dbClient.delete(theUserAccountTableHandler);
     return true;
   }
 
@@ -109,12 +109,12 @@ mixin UserAccountDatabaseHelper {
 
 
 
-    return await dbClient.update(_theUserAccountTableHandler, instanceUserAccount.toMap(),
+    return await dbClient.update(theUserAccountTableHandler, instanceUserAccount.toMap(),
         where: "my_id_column = ?", whereArgs: [instanceUserAccount.id]);
   }
-  Future<UserAccount> getCurrentUserAccount() async {
+  Future<UserAccountProxy> getCurrentUserAccount() async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+    List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND is_current = 1');
 
     if (result.length > 0) {
@@ -130,11 +130,11 @@ mixin UserAccountDatabaseHelper {
     var map = Map<String, dynamic>();
     map['is_current'] = 0;
 
-    await dbClient.update(_theUserAccountTableHandler, map,
+    await dbClient.update(theUserAccountTableHandler, map,
         where: "is_current = 1");
 
     map['is_current'] = 1;
-    return await dbClient.update(_theUserAccountTableHandler, map,
+    return await dbClient.update(theUserAccountTableHandler, map,
         where: "1 AND id = ?", whereArgs: [id]);
   }
 
