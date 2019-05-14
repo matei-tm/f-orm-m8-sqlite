@@ -13,6 +13,7 @@
 
 * Throw Exception switched to Validation design pattern
 * If the model is not valid, then the generated file will contain the validation issues in a comment block
+* In `*DatabaseHelper` mixins, the `the*TableHandler` fields to public
 
 ## [0.6.1] - 2019-05-06
 
