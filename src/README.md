@@ -1,8 +1,11 @@
 # Sqlite Scaffolding Generator @ Dart Framework ORM M8
 
 [![Gitter](https://img.shields.io/gitter/room/flutter-orm-m8/community.svg)](https://gitter.im/flutter-orm-m8/community) 
-![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg) [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) ![Codecov](https://img.shields.io/codecov/c/github/matei-tm/f-orm-m8-sqlite.svg)
- [![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release-pre/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/releases/) 
+[![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) 
+[![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) 
+[![Codecov](https://img.shields.io/codecov/c/github/matei-tm/f-orm-m8-sqlite.svg)](https://codecov.io/gh/matei-tm/f-orm-m8-sqlite) 
+[![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
 
 > f_orm_m8_sqlite - \fɔːrm meɪt Ess-kjuː-ɛl-aɪ\ A [f_orm_m8](https://github.com/matei-tm/f-orm-m8) implementation for Sqlite, with mapping capability out of the box. Part of Dart Framework ORM **M8**
 
@@ -91,7 +94,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            f_orm_m8_sqlite: ^0.6.1
+            f_orm_m8_sqlite: ^0.6.2
             flutter_test:
                 sdk: flutter
 
@@ -199,7 +202,7 @@ From the model, the builder creates `models/user_account.g.m8.dart` file with fo
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -224,6 +227,7 @@ class UserAccountProxy extends UserAccount {
     map['email'] = email;
     map['user_name'] = userName;
     map['is_current'] = isCurrent ? 1 : 0;
+
     return map;
   }
 
@@ -248,29 +252,29 @@ mixin UserAccountDatabaseProvider {
     "is_current"
   ];
 
-  final String _theUserAccountTableHandler = 'user_account';
+  final String theUserAccountTableHandler = 'user_account';
   Future createUserAccountTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theUserAccountTableHandler (
+    await db.execute('''CREATE TABLE $theUserAccountTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     description TEXT ,
     abbreviation TEXT  NOT NULL UNIQUE,
     email TEXT  NOT NULL,
     user_name TEXT  NOT NULL UNIQUE,
-    is_current INTEGER         
-)''');
+    is_current INTEGER 
+    )''');
   }
 
   Future<int> saveUserAccount(UserAccountProxy instanceUserAccount) async {
     var dbClient = await db;
 
     var result = await dbClient.insert(
-        _theUserAccountTableHandler, instanceUserAccount.toMap());
+        theUserAccountTableHandler, instanceUserAccount.toMap());
     return result;
   }
 
-  Future<List<UserAccount>> getUserAccountProxiesAll() async {
+  Future<List<UserAccountProxy>> getUserAccountProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theUserAccountTableHandler,
+    var result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1');
 
     return result.map((e) => UserAccountProxy.fromMap(e)).toList();
@@ -278,13 +282,13 @@ mixin UserAccountDatabaseProvider {
 
   Future<int> getUserAccountProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theUserAccountTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $theUserAccountTableHandler  WHERE 1'));
   }
 
-  Future<UserAccount> getUserAccount(int id) async {
+  Future<UserAccountProxy> getUserAccount(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+    List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -297,12 +301,12 @@ mixin UserAccountDatabaseProvider {
   Future<int> deleteUserAccount(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theUserAccountTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theUserAccountTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteUserAccountProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theUserAccountTableHandler);
+    await dbClient.delete(theUserAccountTableHandler);
     return true;
   }
 
@@ -310,13 +314,13 @@ mixin UserAccountDatabaseProvider {
     var dbClient = await db;
 
     return await dbClient.update(
-        _theUserAccountTableHandler, instanceUserAccount.toMap(),
+        theUserAccountTableHandler, instanceUserAccount.toMap(),
         where: "id = ?", whereArgs: [instanceUserAccount.id]);
   }
 
-  Future<UserAccount> getCurrentUserAccount() async {
+  Future<UserAccountProxy> getCurrentUserAccount() async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theUserAccountTableHandler,
+    List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND is_current = 1');
 
     if (result.length > 0) {
@@ -332,11 +336,11 @@ mixin UserAccountDatabaseProvider {
     var map = Map<String, dynamic>();
     map['is_current'] = 0;
 
-    await dbClient.update(_theUserAccountTableHandler, map,
+    await dbClient.update(theUserAccountTableHandler, map,
         where: "is_current = 1");
 
     map['is_current'] = 1;
-    return await dbClient.update(_theUserAccountTableHandler, map,
+    return await dbClient.update(theUserAccountTableHandler, map,
         where: "1 AND id = ?", whereArgs: [id]);
   }
 }
@@ -403,7 +407,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -456,9 +460,9 @@ mixin HealthEntryDatabaseProvider {
     "date_update"
   ];
 
-  final String _theHealthEntryTableHandler = 'health_entry';
+  final String theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theHealthEntryTableHandler (
+    await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     diagnosys_date INTEGER ,
     account_id INTEGER  NOT NULL,
@@ -466,7 +470,7 @@ mixin HealthEntryDatabaseProvider {
     date_create INTEGER,
     date_update INTEGER    ,
     UNIQUE(account_id, description)
-)''');
+    )''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -476,13 +480,13 @@ mixin HealthEntryDatabaseProvider {
     instanceHealthEntry.dateUpdate = DateTime.now();
 
     var result = await dbClient.insert(
-        _theHealthEntryTableHandler, instanceHealthEntry.toMap());
+        theHealthEntryTableHandler, instanceHealthEntry.toMap());
     return result;
   }
 
-  Future<List<HealthEntry>> getHealthEntryProxiesAll() async {
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theHealthEntryTableHandler,
+    var result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
 
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
@@ -490,13 +494,13 @@ mixin HealthEntryDatabaseProvider {
 
   Future<int> getHealthEntryProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $theHealthEntryTableHandler  WHERE 1'));
   }
 
-  Future<HealthEntry> getHealthEntry(int id) async {
+  Future<HealthEntryProxy> getHealthEntry(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theHealthEntryTableHandler,
+    List<Map> result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -509,12 +513,12 @@ mixin HealthEntryDatabaseProvider {
   Future<int> deleteHealthEntry(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteHealthEntryProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theHealthEntryTableHandler);
+    await dbClient.delete(theHealthEntryTableHandler);
     return true;
   }
 
@@ -524,14 +528,14 @@ mixin HealthEntryDatabaseProvider {
     instanceHealthEntry.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theHealthEntryTableHandler, instanceHealthEntry.toMap(),
+        theHealthEntryTableHandler, instanceHealthEntry.toMap(),
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 
-  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesByAccountId(
       int accountId) async {
     var dbClient = await db;
-    var result = await dbClient.query(_theHealthEntryTableHandler,
+    var result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns,
         where: 'account_id = ? AND 1',
         whereArgs: [accountId]);
@@ -539,6 +543,7 @@ mixin HealthEntryDatabaseProvider {
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
   }
 }
+
 ```
 
 ### GymLocation - A DbEntity implementation
@@ -582,7 +587,7 @@ From the model, the builder creates `models/gym_location.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -628,15 +633,15 @@ mixin GymLocationDatabaseProvider {
     "date_update"
   ];
 
-  final String _theGymLocationTableHandler = 'gym_location';
+  final String theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theGymLocationTableHandler (
+    await db.execute('''CREATE TABLE $theGymLocationTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     description TEXT  UNIQUE,
     rating INTEGER ,
     date_create INTEGER,
-    date_update INTEGER        
-)''');
+    date_update INTEGER
+    )''');
   }
 
   Future<int> saveGymLocation(GymLocationProxy instanceGymLocation) async {
@@ -646,13 +651,13 @@ mixin GymLocationDatabaseProvider {
     instanceGymLocation.dateUpdate = DateTime.now();
 
     var result = await dbClient.insert(
-        _theGymLocationTableHandler, instanceGymLocation.toMap());
+        theGymLocationTableHandler, instanceGymLocation.toMap());
     return result;
   }
 
-  Future<List<GymLocation>> getGymLocationProxiesAll() async {
+  Future<List<GymLocationProxy>> getGymLocationProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theGymLocationTableHandler,
+    var result = await dbClient.query(theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1');
 
     return result.map((e) => GymLocationProxy.fromMap(e)).toList();
@@ -660,13 +665,13 @@ mixin GymLocationDatabaseProvider {
 
   Future<int> getGymLocationProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theGymLocationTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $theGymLocationTableHandler  WHERE 1'));
   }
 
-  Future<GymLocation> getGymLocation(int id) async {
+  Future<GymLocationProxy> getGymLocation(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theGymLocationTableHandler,
+    List<Map> result = await dbClient.query(theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -679,12 +684,12 @@ mixin GymLocationDatabaseProvider {
   Future<int> deleteGymLocation(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteGymLocationProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theGymLocationTableHandler);
+    await dbClient.delete(theGymLocationTableHandler);
     return true;
   }
 
@@ -694,10 +699,11 @@ mixin GymLocationDatabaseProvider {
     instanceGymLocation.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theGymLocationTableHandler, instanceGymLocation.toMap(),
+        theGymLocationTableHandler, instanceGymLocation.toMap(),
         where: "id = ?", whereArgs: [instanceGymLocation.id]);
   }
 }
+
 ```
 
 ### Receipt - A DbEntity implementation
@@ -752,7 +758,7 @@ From the model, the builder creates `models/receipt.g.m8.dart` file with content
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -824,9 +830,9 @@ mixin ReceiptDatabaseProvider {
     "date_update"
   ];
 
-  final String _theReceiptTableHandler = 'receipt';
+  final String theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theReceiptTableHandler (
+    await db.execute('''CREATE TABLE $theReceiptTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
@@ -835,8 +841,8 @@ mixin ReceiptDatabaseProvider {
     storage_temperature NUMERIC  NOT NULL,
     description TEXT  NOT NULL UNIQUE,
     date_create INTEGER,
-    date_update INTEGER        
-)''');
+    date_update INTEGER
+    )''');
   }
 
   Future<int> saveReceipt(ReceiptProxy instanceReceipt) async {
@@ -846,13 +852,13 @@ mixin ReceiptDatabaseProvider {
     instanceReceipt.dateUpdate = DateTime.now();
 
     var result =
-        await dbClient.insert(_theReceiptTableHandler, instanceReceipt.toMap());
+        await dbClient.insert(theReceiptTableHandler, instanceReceipt.toMap());
     return result;
   }
 
-  Future<List<Receipt>> getReceiptProxiesAll() async {
+  Future<List<ReceiptProxy>> getReceiptProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theReceiptTableHandler,
+    var result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1');
 
     return result.map((e) => ReceiptProxy.fromMap(e)).toList();
@@ -861,12 +867,12 @@ mixin ReceiptDatabaseProvider {
   Future<int> getReceiptProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient
-        .rawQuery('SELECT COUNT(*) FROM $_theReceiptTableHandler  WHERE 1'));
+        .rawQuery('SELECT COUNT(*) FROM $theReceiptTableHandler  WHERE 1'));
   }
 
-  Future<Receipt> getReceipt(int id) async {
+  Future<ReceiptProxy> getReceipt(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theReceiptTableHandler,
+    List<Map> result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -879,12 +885,12 @@ mixin ReceiptDatabaseProvider {
   Future<int> deleteReceipt(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theReceiptTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theReceiptTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteReceiptProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theReceiptTableHandler);
+    await dbClient.delete(theReceiptTableHandler);
     return true;
   }
 
@@ -894,19 +900,23 @@ mixin ReceiptDatabaseProvider {
     instanceReceipt.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theReceiptTableHandler, instanceReceipt.toMap(),
+        theReceiptTableHandler, instanceReceipt.toMap(),
         where: "id = ?", whereArgs: [instanceReceipt.id]);
   }
 }
+
 ```
 
 ### The database adapter
 
-For the all models the builder will generate a common database adapter file `main.adapter.g.m8.dart`
+For the all models the builder will generate a common database adapter file `main.adapter.g.m8.dart`. The file contains two classes:
+
+- DatabaseAdapter to handle the initialization of the database singleton 
+- DatabaseProvider to handle the models CRUD methods
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 22:58:06.362172
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // DatabaseProviderGenerator
@@ -923,6 +933,47 @@ import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:sqlite_m8_demo/models/to_do.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
+enum InitMode { developmentAlwaysReinitDb, testingMockDb, production }
+
+class DatabaseAdapter {
+  InitMode _initMode;
+  static InitMode _startInitMode;
+  static final DatabaseAdapter _instance = DatabaseAdapter._internal();
+  static Database _db;
+
+  /// Default initMode is production
+  /// [developmentAlwaysReinitDb] then the database will be deleteted on each init
+  /// [testingMockDb] then the database will be initialized as mock
+  /// [production] then the database will be initialized as production
+  factory DatabaseAdapter([InitMode initMode = InitMode.production]) {
+    _startInitMode = initMode;
+    return _instance;
+  }
+
+  DatabaseAdapter._internal() {
+    if (_initMode == null) {
+      _initMode = _startInitMode;
+    }
+  }
+
+  InitMode get initMode => _initMode;
+
+  Future<Database> getDb(dynamic _onCreate) async {
+    if (_db != null) {
+      return _db;
+    }
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'm8_store_0.2.0.db');
+
+    if (_startInitMode == InitMode.developmentAlwaysReinitDb) {
+      await deleteDatabase(path);
+    }
+
+    _db = await openDatabase(path, version: 2, onCreate: _onCreate);
+    return _db;
+  }
+}
+
 class DatabaseProvider
     with
         GymLocationDatabaseProvider,
@@ -930,34 +981,25 @@ class DatabaseProvider
         ReceiptDatabaseProvider,
         ToDoDatabaseProvider,
         UserAccountDatabaseProvider {
-  static final DatabaseProvider _instance = DatabaseProvider.internal();
+  static final DatabaseProvider _instance = DatabaseProvider._internal();
   static Database _db;
 
-  /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
-  bool extremeDevelopmentMode = false;
+  static DatabaseAdapter _dbBuilder;
 
-  factory DatabaseProvider() => _instance;
-  DatabaseProvider.internal();
+  factory DatabaseProvider(DatabaseAdapter dbBuilder) {
+    _dbBuilder = dbBuilder;
+    return _instance;
+  }
+
+  DatabaseProvider._internal();
 
   Future<Database> get db async {
     if (_db != null) {
       return _db;
     }
-    _db = await initDb();
+    _db = await _dbBuilder.getDb(_onCreate);
 
     return _db;
-  }
-
-  initDb() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'm8_store_0.2.0.db');
-
-    if (extremeDevelopmentMode) {
-      await deleteDatabase(path);
-    }
-
-    var db = await openDatabase(path, version: 2, onCreate: _onCreate);
-    return db;
   }
 
   void _onCreate(Database db, int newVersion) async {
@@ -981,4 +1023,5 @@ class DatabaseProvider
     await deleteUserAccountProxiesAll();
   }
 }
+
 ```
