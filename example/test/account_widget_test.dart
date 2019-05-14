@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:sqlite_m8_demo/main.dart';
-import 'package:sqlite_m8_demo/models/health_entry.dart';
 import 'package:sqlite_m8_demo/models/health_entry.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 

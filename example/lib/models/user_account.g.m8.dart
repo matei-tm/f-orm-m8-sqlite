@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 17:31:00.890559
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -69,7 +69,7 @@ mixin UserAccountDatabaseHelper {
     return result;
   }
 
-  Future<List<UserAccount>> getUserAccountProxiesAll() async {
+  Future<List<UserAccountProxy>> getUserAccountProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1');
@@ -83,7 +83,7 @@ mixin UserAccountDatabaseHelper {
         .rawQuery('SELECT COUNT(*) FROM $theUserAccountTableHandler  WHERE 1'));
   }
 
-  Future<UserAccount> getUserAccount(int id) async {
+  Future<UserAccountProxy> getUserAccount(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND id = ?', whereArgs: [id]);
@@ -115,7 +115,7 @@ mixin UserAccountDatabaseHelper {
         where: "id = ?", whereArgs: [instanceUserAccount.id]);
   }
 
-  Future<UserAccount> getCurrentUserAccount() async {
+  Future<UserAccountProxy> getCurrentUserAccount() async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(theUserAccountTableHandler,
         columns: theUserAccountColumns, where: '1 AND is_current = 1');

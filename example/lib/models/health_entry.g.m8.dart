@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 17:31:00.890559
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -76,7 +76,7 @@ mixin HealthEntryDatabaseHelper {
     return result;
   }
 
-  Future<List<HealthEntry>> getHealthEntryProxiesAll() async {
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
@@ -90,7 +90,7 @@ mixin HealthEntryDatabaseHelper {
         .rawQuery('SELECT COUNT(*) FROM $theHealthEntryTableHandler  WHERE 1'));
   }
 
-  Future<HealthEntry> getHealthEntry(int id) async {
+  Future<HealthEntryProxy> getHealthEntry(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1 AND id = ?', whereArgs: [id]);
@@ -124,7 +124,7 @@ mixin HealthEntryDatabaseHelper {
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 
-  Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesByAccountId(
       int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(theHealthEntryTableHandler,

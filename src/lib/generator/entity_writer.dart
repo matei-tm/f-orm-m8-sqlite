@@ -134,7 +134,7 @@ ${s00004}var result = await dbClient.insert(${theTableHandler}, ${emittedEntity.
 ${s00004}return result;
 ${s002}}
 
-${s002}Future<List<${emittedEntity.modelName}>> get${emittedEntity.modelNameProxyPlural}All() async {
+${s002}Future<List<${emittedEntity.modelNameProxy}>> get${emittedEntity.modelNameProxyPlural}All() async {
 ${s00004}var dbClient = await db;
 ${s00004}var result =
 ${s00000008}await dbClient.query(${theTableHandler}, columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()}');
@@ -148,7 +148,7 @@ ${s00004}return Sqflite.firstIntValue(
 ${s00004}await dbClient.rawQuery('SELECT COUNT(*) FROM \$${theTableHandler}  WHERE ${getSoftdeleteCondition()}'));
 ${s002}}
 
-${s002}Future<${emittedEntity.modelName}> get${emittedEntity.modelName}(int id) async {
+${s002}Future<${emittedEntity.modelNameProxy}> get${emittedEntity.modelName}(int id) async {
 ${s00004}var dbClient = await db;
 ${s00004}List<Map> result = await dbClient.query(${theTableHandler},
 ${s00004}${s00004}columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()} AND $thePrimaryKey = ?', whereArgs: [id]);

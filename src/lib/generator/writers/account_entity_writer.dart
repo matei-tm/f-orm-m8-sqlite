@@ -22,7 +22,7 @@ class AccountEntityWriter extends EntityWriter {
     sb.write(getCommonMethods());
 
     sb.write("""
-  Future<${emittedEntity.modelName}> getCurrent${emittedEntity.modelName}() async {
+  Future<${emittedEntity.modelNameProxy}> getCurrent${emittedEntity.modelName}() async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(${theTableHandler},
         columns: the${emittedEntity.modelName}Columns, where: '${getSoftdeleteCondition()} AND ${getAttributeStringIsCurrent()} = 1');

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 17:31:00.890559
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -97,7 +97,7 @@ mixin ReceiptDatabaseHelper {
     return result;
   }
 
-  Future<List<Receipt>> getReceiptProxiesAll() async {
+  Future<List<ReceiptProxy>> getReceiptProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1');
@@ -111,7 +111,7 @@ mixin ReceiptDatabaseHelper {
         .rawQuery('SELECT COUNT(*) FROM $theReceiptTableHandler  WHERE 1'));
   }
 
-  Future<Receipt> getReceipt(int id) async {
+  Future<ReceiptProxy> getReceipt(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1 AND id = ?', whereArgs: [id]);

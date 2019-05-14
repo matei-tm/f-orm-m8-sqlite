@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 17:31:00.890559
+// Emitted on: 2019-05-15 00:33:16.415844
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -80,7 +80,7 @@ mixin ToDoDatabaseHelper {
     return result;
   }
 
-  Future<List<ToDo>> getToDoProxiesAll() async {
+  Future<List<ToDoProxy>> getToDoProxiesAll() async {
     var dbClient = await db;
     var result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns, where: 'date_delete > 0');
@@ -94,7 +94,7 @@ mixin ToDoDatabaseHelper {
         'SELECT COUNT(*) FROM $theToDoTableHandler  WHERE date_delete > 0'));
   }
 
-  Future<ToDo> getToDo(int id) async {
+  Future<ToDoProxy> getToDo(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns,
@@ -129,7 +129,7 @@ mixin ToDoDatabaseHelper {
         where: "id = ?", whereArgs: [instanceToDo.id]);
   }
 
-  Future<List<ToDo>> getToDoProxiesByAccountId(int accountId) async {
+  Future<List<ToDoProxy>> getToDoProxiesByAccountId(int accountId) async {
     var dbClient = await db;
     var result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns,
