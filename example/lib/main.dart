@@ -3,7 +3,7 @@ import 'package:sqlite_m8_demo/pages/account_page.dart';
 import 'package:sqlite_m8_demo/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(GymspectorApp(DatabaseHelper()));
+void main() => runApp(GymspectorApp(DatabaseHelper(DatabaseBuilder())));
 
 class GymspectorApp extends StatelessWidget {
   final databaseHelper;
@@ -57,9 +57,6 @@ class MyHomePageState extends State<MyHomePage> {
 
   Future<String> _getInitialRoute() async {
     var _db = widget.databaseHelper;
-    if (_db.extremeDevelopmentMode) {
-      return 'start';
-    }
 
     var _currentAccount = await _db.getCurrentUserAccount();
     if (_currentAccount == null) {

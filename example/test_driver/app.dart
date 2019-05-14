@@ -6,5 +6,6 @@ import 'package:flutter_driver/driver_extension.dart';
 void main() {
   enableFlutterDriverExtension();
 
-  runApp(GymspectorApp(DatabaseHelper()));
+  runApp(GymspectorApp(
+      DatabaseHelper(DatabaseBuilder(InitMode.developmentAlwaysReinitDb))));
 }

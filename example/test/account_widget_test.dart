@@ -29,8 +29,6 @@ UserAccountProxy secondUser;
 void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   firstUser = getFirstUser();
 
-  when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-
   List<UserAccountProxy> usersList = List<UserAccountProxy>()..add(firstUser);
 
   when(mockDatabaseHelper.getCurrentUserAccount())
@@ -71,8 +69,6 @@ UserAccountProxy getSecondUser() {
 void enableSecondUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   secondUser = getSecondUser();
 
-  when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
-
   List<UserAccountProxy> usersList = List<UserAccountProxy>()..add(secondUser);
 
   when(mockDatabaseHelper.getCurrentUserAccount())
@@ -87,8 +83,6 @@ void enableSecondUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
 void enableNoUserAccount(MockDatabaseHelper mockDatabaseHelper) {
   secondUser = getSecondUser();
-
-  when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
 
   List<UserAccountProxy> usersList = List<UserAccountProxy>();
 

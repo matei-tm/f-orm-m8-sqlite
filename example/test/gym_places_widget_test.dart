@@ -13,11 +13,13 @@ import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/gym_location.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {}
+class MockDatabaseHelper extends Mock implements DatabaseHelper {
+  MockDatabaseHelper(InitMode testingMockDb);
+}
 
 MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper = MockDatabaseHelper();
-  mockDatabaseHelper.extremeDevelopmentMode = false;
+  MockDatabaseHelper mockDatabaseHelper =
+      MockDatabaseHelper(InitMode.testingMockDb);
 
   enableCurrentUserAccount(mockDatabaseHelper);
 
@@ -37,7 +39,7 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
   when(mockDatabaseHelper.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
+  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
   when(mockDatabaseHelper.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 

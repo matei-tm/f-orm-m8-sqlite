@@ -12,11 +12,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
-class MockDatabaseHelper extends Mock implements DatabaseHelper {}
+class MockDatabaseHelper extends Mock implements DatabaseHelper {
+  MockDatabaseHelper(InitMode testingMockDb);
+}
 
 MockDatabaseHelper buildMockDatabaseAdapter() {
-  MockDatabaseHelper mockDatabaseHelper = MockDatabaseHelper();
-  mockDatabaseHelper.extremeDevelopmentMode = false;
+  MockDatabaseHelper mockDatabaseHelper =
+      MockDatabaseHelper(InitMode.testingMockDb);
 
   enableCurrentUserAccount(mockDatabaseHelper);
 
@@ -34,24 +36,19 @@ void enableCurrentUserAccount(MockDatabaseHelper mockDatabaseHelper) {
 
   when(mockDatabaseHelper.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
+  //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
 }
 
 void main() {
   final MockDatabaseHelper mockDatabaseHelper = buildMockDatabaseAdapter();
-  testWidgets('Start page on extreme dev test', (WidgetTester tester) async {
-    when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => true);
-    await accountPageEntered(tester, mockDatabaseHelper);
-  });
   testWidgets('Start page without account test', (WidgetTester tester) async {
-    when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
+    //when(mockDatabaseHelper.extremeDevelopmentMode).thenAnswer((_) => false);
     when(mockDatabaseHelper.getCurrentUserAccount())
         .thenAnswer((_) => Future.value(null));
     await accountPageEntered(tester, mockDatabaseHelper);
   });
 
   testWidgets('Account page on start test', (WidgetTester tester) async {
-    mockDatabaseHelper.extremeDevelopmentMode = false;
     when(mockDatabaseHelper.getCurrentUserAccount())
         .thenAnswer((_) => Future.value(null));
     await accountPageFormSubmit(tester, mockDatabaseHelper);
@@ -59,7 +56,6 @@ void main() {
 
   testWidgets('Root page with account is Disclaimer test',
       (WidgetTester tester) async {
-    mockDatabaseHelper.extremeDevelopmentMode = false;
     enableCurrentUserAccount(mockDatabaseHelper);
     await disclaimerPageEntered(tester, mockDatabaseHelper);
   });

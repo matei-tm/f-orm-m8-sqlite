@@ -4,7 +4,6 @@
 // **************************************************************************
 // DatabaseHelperGenerator
 // **************************************************************************
-
 import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
@@ -16,6 +15,47 @@ import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:sqlite_m8_demo/models/to_do.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
+enum InitMode { developmentAlwaysReinitDb, testingMockDb, production }
+
+class DatabaseBuilder {
+  InitMode _initMode;
+  static InitMode _startInitMode;
+  static final DatabaseBuilder _instance = DatabaseBuilder._internal();
+  static Database _db;
+
+  /// Default initMode is production
+  /// [developmentAlwaysReinitDb] then the database will be deleteted on each init
+  /// [testingMockDb] then the database will be initialized as mock
+  /// [production] then the database will be initialized as production
+  factory DatabaseBuilder([InitMode initMode = InitMode.production]) {
+    _startInitMode = initMode;
+    return _instance;
+  }
+
+  DatabaseBuilder._internal() {
+    if (_initMode == null) {
+      _initMode = _startInitMode;
+    }
+  }
+
+  InitMode get initMode => _initMode;
+
+  Future<Database> getDb(dynamic _onCreate) async {
+    if (_db != null) {
+      return _db;
+    }
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'm8_store_0.2.0.db');
+
+    if (_startInitMode == InitMode.developmentAlwaysReinitDb) {
+      await deleteDatabase(path);
+    }
+
+    _db = await openDatabase(path, version: 2, onCreate: _onCreate);
+    return _db;
+  }
+}
+
 class DatabaseHelper
     with
         GymLocationDatabaseHelper,
@@ -23,34 +63,29 @@ class DatabaseHelper
         ReceiptDatabaseHelper,
         ToDoDatabaseHelper,
         UserAccountDatabaseHelper {
-  static final DatabaseHelper _instance = DatabaseHelper.internal();
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database _db;
 
-  /// if [extremeDevelopmentMode] is true then the database will be deleteted on each init
-  bool extremeDevelopmentMode = false;
+  static DatabaseBuilder _dbBuilder;
 
-  factory DatabaseHelper() => _instance;
-  DatabaseHelper.internal();
+  /// Default initMode is production
+  /// [developmentAlwaysReinitDb] then the database will be deleteted on each init
+  /// [testingMockDb] then the database will be initialized as mock
+  /// [production] then the database will be initialized as production
+  factory DatabaseHelper(DatabaseBuilder dbBuilder) {
+    _dbBuilder = dbBuilder;
+    return _instance;
+  }
+
+  DatabaseHelper._internal();
 
   Future<Database> get db async {
     if (_db != null) {
       return _db;
     }
-    _db = await initDb();
+    _db = await _dbBuilder.getDb(_onCreate);
 
     return _db;
-  }
-
-  initDb() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'm8_store_0.2.0.db');
-
-    if (extremeDevelopmentMode) {
-      await deleteDatabase(path);
-    }
-
-    var db = await openDatabase(path, version: 2, onCreate: _onCreate);
-    return db;
   }
 
   void _onCreate(Database db, int newVersion) async {
