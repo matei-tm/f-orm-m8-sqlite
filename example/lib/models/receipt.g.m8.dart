@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 04:04:16.639815
+// Emitted on: 2019-05-14 17:31:00.890559
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -71,9 +71,9 @@ mixin ReceiptDatabaseHelper {
     "date_update"
   ];
 
-  final String _theReceiptTableHandler = 'receipt';
+  final String theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theReceiptTableHandler (
+    await db.execute('''CREATE TABLE $theReceiptTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
@@ -93,13 +93,13 @@ mixin ReceiptDatabaseHelper {
     instanceReceipt.dateUpdate = DateTime.now();
 
     var result =
-        await dbClient.insert(_theReceiptTableHandler, instanceReceipt.toMap());
+        await dbClient.insert(theReceiptTableHandler, instanceReceipt.toMap());
     return result;
   }
 
   Future<List<Receipt>> getReceiptProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theReceiptTableHandler,
+    var result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1');
 
     return result.map((e) => ReceiptProxy.fromMap(e)).toList();
@@ -108,12 +108,12 @@ mixin ReceiptDatabaseHelper {
   Future<int> getReceiptProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient
-        .rawQuery('SELECT COUNT(*) FROM $_theReceiptTableHandler  WHERE 1'));
+        .rawQuery('SELECT COUNT(*) FROM $theReceiptTableHandler  WHERE 1'));
   }
 
   Future<Receipt> getReceipt(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theReceiptTableHandler,
+    List<Map> result = await dbClient.query(theReceiptTableHandler,
         columns: theReceiptColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -126,12 +126,12 @@ mixin ReceiptDatabaseHelper {
   Future<int> deleteReceipt(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theReceiptTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theReceiptTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteReceiptProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theReceiptTableHandler);
+    await dbClient.delete(theReceiptTableHandler);
     return true;
   }
 
@@ -141,7 +141,7 @@ mixin ReceiptDatabaseHelper {
     instanceReceipt.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theReceiptTableHandler, instanceReceipt.toMap(),
+        theReceiptTableHandler, instanceReceipt.toMap(),
         where: "id = ?", whereArgs: [instanceReceipt.id]);
   }
 }

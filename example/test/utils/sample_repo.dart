@@ -6,3 +6,10 @@ GymLocationProxy gymLocationProxySample01 = GymLocationProxy()
   ..dateUpdate = DateTime.fromMillisecondsSinceEpoch(1557701763038)
   ..rating = 5
   ..description = "silva";
+
+GymLocationProxy gymLocationProxySample02 = GymLocationProxy()
+  ..id = 2
+  ..dateCreate = DateTime.fromMillisecondsSinceEpoch(1557701763031)
+  ..dateUpdate = DateTime.fromMillisecondsSinceEpoch(1557701763032)
+  ..rating = 2
+  ..description = "montis";

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 04:04:16.639815
+// Emitted on: 2019-05-14 17:31:00.890559
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -45,9 +45,9 @@ mixin GymLocationDatabaseHelper {
     "date_update"
   ];
 
-  final String _theGymLocationTableHandler = 'gym_location';
+  final String theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theGymLocationTableHandler (
+    await db.execute('''CREATE TABLE $theGymLocationTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     description TEXT  UNIQUE,
     rating INTEGER ,
@@ -63,13 +63,13 @@ mixin GymLocationDatabaseHelper {
     instanceGymLocation.dateUpdate = DateTime.now();
 
     var result = await dbClient.insert(
-        _theGymLocationTableHandler, instanceGymLocation.toMap());
+        theGymLocationTableHandler, instanceGymLocation.toMap());
     return result;
   }
 
   Future<List<GymLocation>> getGymLocationProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theGymLocationTableHandler,
+    var result = await dbClient.query(theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1');
 
     return result.map((e) => GymLocationProxy.fromMap(e)).toList();
@@ -77,13 +77,13 @@ mixin GymLocationDatabaseHelper {
 
   Future<int> getGymLocationProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theGymLocationTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $theGymLocationTableHandler  WHERE 1'));
   }
 
   Future<GymLocation> getGymLocation(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theGymLocationTableHandler,
+    List<Map> result = await dbClient.query(theGymLocationTableHandler,
         columns: theGymLocationColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -96,12 +96,12 @@ mixin GymLocationDatabaseHelper {
   Future<int> deleteGymLocation(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theGymLocationTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteGymLocationProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theGymLocationTableHandler);
+    await dbClient.delete(theGymLocationTableHandler);
     return true;
   }
 
@@ -111,7 +111,7 @@ mixin GymLocationDatabaseHelper {
     instanceGymLocation.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theGymLocationTableHandler, instanceGymLocation.toMap(),
+        theGymLocationTableHandler, instanceGymLocation.toMap(),
         where: "id = ?", whereArgs: [instanceGymLocation.id]);
   }
 }

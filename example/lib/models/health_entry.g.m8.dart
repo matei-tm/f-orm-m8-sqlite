@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 04:04:16.639815
+// Emitted on: 2019-05-14 17:31:00.890559
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -52,9 +52,9 @@ mixin HealthEntryDatabaseHelper {
     "date_update"
   ];
 
-  final String _theHealthEntryTableHandler = 'health_entry';
+  final String theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theHealthEntryTableHandler (
+    await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     diagnosys_date INTEGER ,
     account_id INTEGER  NOT NULL,
@@ -72,13 +72,13 @@ mixin HealthEntryDatabaseHelper {
     instanceHealthEntry.dateUpdate = DateTime.now();
 
     var result = await dbClient.insert(
-        _theHealthEntryTableHandler, instanceHealthEntry.toMap());
+        theHealthEntryTableHandler, instanceHealthEntry.toMap());
     return result;
   }
 
   Future<List<HealthEntry>> getHealthEntryProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theHealthEntryTableHandler,
+    var result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1');
 
     return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
@@ -86,13 +86,13 @@ mixin HealthEntryDatabaseHelper {
 
   Future<int> getHealthEntryProxiesCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theHealthEntryTableHandler  WHERE 1'));
+    return Sqflite.firstIntValue(await dbClient
+        .rawQuery('SELECT COUNT(*) FROM $theHealthEntryTableHandler  WHERE 1'));
   }
 
   Future<HealthEntry> getHealthEntry(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theHealthEntryTableHandler,
+    List<Map> result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns, where: '1 AND id = ?', whereArgs: [id]);
 
     if (result.length > 0) {
@@ -105,12 +105,12 @@ mixin HealthEntryDatabaseHelper {
   Future<int> deleteHealthEntry(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theHealthEntryTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteHealthEntryProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theHealthEntryTableHandler);
+    await dbClient.delete(theHealthEntryTableHandler);
     return true;
   }
 
@@ -120,14 +120,14 @@ mixin HealthEntryDatabaseHelper {
     instanceHealthEntry.dateUpdate = DateTime.now();
 
     return await dbClient.update(
-        _theHealthEntryTableHandler, instanceHealthEntry.toMap(),
+        theHealthEntryTableHandler, instanceHealthEntry.toMap(),
         where: "id = ?", whereArgs: [instanceHealthEntry.id]);
   }
 
   Future<List<HealthEntry>> getHealthEntryProxiesByAccountId(
       int accountId) async {
     var dbClient = await db;
-    var result = await dbClient.query(_theHealthEntryTableHandler,
+    var result = await dbClient.query(theHealthEntryTableHandler,
         columns: theHealthEntryColumns,
         where: 'account_id = ? AND 1',
         whereArgs: [accountId]);

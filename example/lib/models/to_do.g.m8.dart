@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-14 04:04:16.639815
+// Emitted on: 2019-05-14 17:31:00.890559
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -56,9 +56,9 @@ mixin ToDoDatabaseHelper {
     "date_delete"
   ];
 
-  final String _theToDoTableHandler = 'to_do';
+  final String theToDoTableHandler = 'to_do';
   Future createToDoTable(Database db) async {
-    await db.execute('''CREATE TABLE $_theToDoTableHandler (
+    await db.execute('''CREATE TABLE $theToDoTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
     description TEXT  UNIQUE,
     diagnosys_date INTEGER ,
@@ -76,13 +76,13 @@ mixin ToDoDatabaseHelper {
     instanceToDo.dateUpdate = DateTime.now();
 
     var result =
-        await dbClient.insert(_theToDoTableHandler, instanceToDo.toMap());
+        await dbClient.insert(theToDoTableHandler, instanceToDo.toMap());
     return result;
   }
 
   Future<List<ToDo>> getToDoProxiesAll() async {
     var dbClient = await db;
-    var result = await dbClient.query(_theToDoTableHandler,
+    var result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns, where: 'date_delete > 0');
 
     return result.map((e) => ToDoProxy.fromMap(e)).toList();
@@ -91,12 +91,12 @@ mixin ToDoDatabaseHelper {
   Future<int> getToDoProxiesCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(await dbClient.rawQuery(
-        'SELECT COUNT(*) FROM $_theToDoTableHandler  WHERE date_delete > 0'));
+        'SELECT COUNT(*) FROM $theToDoTableHandler  WHERE date_delete > 0'));
   }
 
   Future<ToDo> getToDo(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(_theToDoTableHandler,
+    List<Map> result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns,
         where: 'date_delete > 0 AND id = ?',
         whereArgs: [id]);
@@ -111,12 +111,12 @@ mixin ToDoDatabaseHelper {
   Future<int> deleteToDo(int id) async {
     var dbClient = await db;
     return await dbClient
-        .delete(_theToDoTableHandler, where: 'id = ?', whereArgs: [id]);
+        .delete(theToDoTableHandler, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> deleteToDoProxiesAll() async {
     var dbClient = await db;
-    await dbClient.delete(_theToDoTableHandler);
+    await dbClient.delete(theToDoTableHandler);
     return true;
   }
 
@@ -125,13 +125,13 @@ mixin ToDoDatabaseHelper {
 
     instanceToDo.dateUpdate = DateTime.now();
 
-    return await dbClient.update(_theToDoTableHandler, instanceToDo.toMap(),
+    return await dbClient.update(theToDoTableHandler, instanceToDo.toMap(),
         where: "id = ?", whereArgs: [instanceToDo.id]);
   }
 
   Future<List<ToDo>> getToDoProxiesByAccountId(int accountId) async {
     var dbClient = await db;
-    var result = await dbClient.query(_theToDoTableHandler,
+    var result = await dbClient.query(theToDoTableHandler,
         columns: theToDoColumns,
         where: 'user_account_id = ? AND date_delete > 0',
         whereArgs: [accountId]);
@@ -146,6 +146,6 @@ mixin ToDoDatabaseHelper {
     map['date_delete'] = DateTime.now().millisecondsSinceEpoch;
 
     return await dbClient
-        .update(_theToDoTableHandler, map, where: "id = ?", whereArgs: [id]);
+        .update(theToDoTableHandler, map, where: "id = ?", whereArgs: [id]);
   }
 }

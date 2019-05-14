@@ -8,7 +8,7 @@ class EmittedEntity {
   final String packageIdentifier;
   final int entityMetadataLevel;
 
-  String get theTableHandler => "_the${modelName}TableHandler";
+  String get theTableHandler => "the${modelName}TableHandler";
   bool get hasSoftDelete => isSoftDeletable(entityMetadataLevel);
   bool get hasTrackCreate => isCreateTrackable(entityMetadataLevel);
   bool get hasTrackUpdate => isUpdateTrackable(entityMetadataLevel);
