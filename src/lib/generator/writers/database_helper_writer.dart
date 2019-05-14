@@ -105,7 +105,7 @@ class DatabaseBuilder {
 
 class DatabaseHelper ${getMixinList()}
          {
-  static final DatabaseHelper _instance = DatabaseHelper.internal();
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database _db;
 
   static DatabaseBuilder _dbBuilder;

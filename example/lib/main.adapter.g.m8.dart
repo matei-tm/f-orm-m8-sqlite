@@ -1,9 +1,10 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-12 23:54:55.076240
+// Emitted on: 2019-05-14 04:04:16.639815
 
 // **************************************************************************
 // DatabaseHelperGenerator
 // **************************************************************************
+
 import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
@@ -68,10 +69,6 @@ class DatabaseHelper
 
   static DatabaseBuilder _dbBuilder;
 
-  /// Default initMode is production
-  /// [developmentAlwaysReinitDb] then the database will be deleteted on each init
-  /// [testingMockDb] then the database will be initialized as mock
-  /// [production] then the database will be initialized as production
   factory DatabaseHelper(DatabaseBuilder dbBuilder) {
     _dbBuilder = dbBuilder;
     return _instance;
