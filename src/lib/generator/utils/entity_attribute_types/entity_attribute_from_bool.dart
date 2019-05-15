@@ -13,4 +13,14 @@ class EntityAttributeFromBool extends EntityAttribute {
   String getAttributeTypeDefinition() {
     return "INTEGER";
   }
+
+  @override
+  String get modelToEntityMapString {
+    return "${modelName} ? 1 : 0";
+  }
+
+  @override
+  String get entityToModelMapString {
+    return "map['${attributeName}'] == 1 ? true : false";
+  }
 }

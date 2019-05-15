@@ -13,4 +13,14 @@ class EntityAttributeFromDateTime extends EntityAttribute {
   String getAttributeTypeDefinition() {
     return "INTEGER";
   }
+
+  @override
+  String get modelToEntityMapString {
+    return "${modelName}.millisecondsSinceEpoch";
+  }
+
+  @override
+  String get entityToModelMapString {
+    return "DateTime.fromMillisecondsSinceEpoch(map['${attributeName}'])";
+  }
 }

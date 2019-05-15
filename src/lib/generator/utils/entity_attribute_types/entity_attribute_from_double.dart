@@ -12,5 +12,6 @@ class EntityAttributeFromDouble extends EntityAttribute {
   @override
   String getAttributeTypeDefinition() {
     return "REAL";
-  }
+  } 
+ 
 }
