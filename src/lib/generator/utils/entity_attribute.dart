@@ -1,6 +1,5 @@
 import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/generator/utils/attribute_metadata_parser.dart';
-import 'package:f_orm_m8_sqlite/generator/utils/type_mapper.dart';
 
 abstract class EntityAttribute {
   final String modelTypeName;
@@ -19,9 +18,7 @@ abstract class EntityAttribute {
     return AttributeMetadataParser.getDefinition(metadataLevel);
   }
 
-  String getAttributeTypeDefinition() {
-    return TypeMapper.getTypeDefinition(modelTypeName);
-  }
+  String getAttributeTypeDefinition();
 
   String getAttributeFullDefinition() {
     return "${attributeName} ${getAttributeTypeDefinition()} ${getMetadataAsDefinition()}";

@@ -8,4 +8,9 @@ class EntityAttributeFromNotImplemented extends EntityAttribute {
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
             compositeConstraints: compositeConstraints) {}
+
+  @override
+  String getAttributeTypeDefinition() {
+    throw Exception("$modelTypeName is not implemented yet");
+  }
 }

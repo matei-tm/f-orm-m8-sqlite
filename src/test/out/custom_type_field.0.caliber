@@ -1,5 +1,5 @@
 /*
 Not all the models have passed the validation process. Review the following issues, fix them and rerun the builder:
 
-Error: The type of AModelWithoutFields.myCustomType is not implemented. Remove it from the model.
+Error: The type MyCustomType of AModelWithoutFields.myCustomType is not implemented. Remove it from the model.
 */

@@ -10,4 +10,10 @@ class EntityAttributeFromDuration extends EntityAttributeFromNotImplemented {
             compositeConstraints: compositeConstraints) {
     //throw Exception("Duration is not implemented yet");
   }
+
+  @override
+  String getAttributeTypeDefinition() {
+    throw Exception("Duration is not implemented yet");
+    //return "INTEGER";
+  }
 }

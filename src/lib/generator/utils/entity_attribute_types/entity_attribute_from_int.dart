@@ -8,4 +8,9 @@ class EntityAttributeFromInt extends EntityAttribute {
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
             compositeConstraints: compositeConstraints);
+
+  @override
+  String getAttributeTypeDefinition() {
+    return "INTEGER";
+  }
 }

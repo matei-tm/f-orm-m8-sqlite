@@ -8,4 +8,9 @@ class EntityAttributeFromBigint extends EntityAttributeFromNotImplemented {
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
             compositeConstraints: compositeConstraints) {}
+
+  @override
+  String getAttributeTypeDefinition() {
+    throw Exception("Duration is not implemented yet");
+  }
 }
