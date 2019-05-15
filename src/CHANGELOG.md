@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.6.2+1] - 2019-05-15
+
+### Changed
+
+* Refactoring entity attribute classes to closer OOP
+
+### Fixed
+
+* Analysis warnings
+
 ## [0.6.2] - 2019-05-15
 
 ### Added
