@@ -15,12 +15,12 @@ class EntityAttributeFromBool extends EntityAttribute {
   }
 
   @override
-  String get modelToEntityMapString {
+  String get modelToEntityConversionString {
     return "${modelName} ? 1 : 0";
   }
 
   @override
-  String get entityToModelMapString {
+  String get entityToModelConversionString {
     return "map['${attributeName}'] == 1 ? true : false";
   }
 }

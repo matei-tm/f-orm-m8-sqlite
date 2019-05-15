@@ -24,11 +24,11 @@ abstract class EntityAttribute {
     return "${attributeName} ${getAttributeTypeDefinition()} ${getMetadataAsDefinition()}";
   }
 
-  String get modelToEntityMapString {
+  String get modelToEntityConversionString {
     return modelName;
   }
 
-  String get entityToModelMapString {
+  String get entityToModelConversionString {
     return "map['${attributeName}']";
   }
 }

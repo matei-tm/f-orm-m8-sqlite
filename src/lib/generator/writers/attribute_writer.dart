@@ -5,7 +5,9 @@ class AttributeWriter {
 
   AttributeWriter(this._entityAttribute);
 
-  String get modelToEntityMapString => _entityAttribute.modelToEntityMapString;
+  String get modelToEntityMapString =>
+      "map['${_entityAttribute.attributeName}'] = ${_entityAttribute.modelToEntityConversionString}";
 
-  String get entityToModelMapString => _entityAttribute.entityToModelMapString;
+  String get entityToModelMapString =>
+      "this.${_entityAttribute.modelName} = ${_entityAttribute.entityToModelConversionString}";
 }

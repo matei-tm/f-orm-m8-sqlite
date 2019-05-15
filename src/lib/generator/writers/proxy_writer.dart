@@ -49,8 +49,7 @@ $assignments
 
   String _getToMapMethodBody() {
     String fieldsEmition = emittedEntity.attributes.values
-        .map((f) =>
-            "${s00004}map['${f.attributeName}'] = ${AttributeWriter(f).modelToEntityMapString};")
+        .map((f) => "${s00004}${AttributeWriter(f).modelToEntityMapString};")
         .join("\n");
 
     StringBuffer sb = StringBuffer();
@@ -77,8 +76,7 @@ $assignments
 
   String _getFromMapMethodBody() {
     String fieldsEmition = emittedEntity.attributes.values
-        .map((f) =>
-            "${s00004}this.${f.modelName} = ${AttributeWriter(f).entityToModelMapString};")
+        .map((f) => "${s00004}${AttributeWriter(f).entityToModelMapString};")
         .join("\n");
 
     StringBuffer sb = StringBuffer();

@@ -15,12 +15,12 @@ class EntityAttributeFromDateTime extends EntityAttribute {
   }
 
   @override
-  String get modelToEntityMapString {
+  String get modelToEntityConversionString {
     return "${modelName}.millisecondsSinceEpoch";
   }
 
   @override
-  String get entityToModelMapString {
+  String get entityToModelConversionString {
     return "DateTime.fromMillisecondsSinceEpoch(map['${attributeName}'])";
   }
 }
