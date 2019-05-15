@@ -127,7 +127,7 @@ class ModelParser {
         validationIssues.add(ValidationIssue(
             isError: true,
             message:
-                "The type of ${modelName}.${field.name} is not implemented. Remove it from the model."));
+                "The type ${firstField.modelTypeName} of ${modelName}.${field.name} is not implemented. Remove it from the model."));
         return;
       }
 
@@ -141,7 +141,7 @@ class ModelParser {
   }
 
   void _validatePostExtraction() {
-    if (entityAttributes.length == 0) {
+    if (entityAttributes.isEmpty) {
       validationIssues.add(ValidationIssue(
           isError: true,
           message:

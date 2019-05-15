@@ -7,7 +7,7 @@ class EntityAttributeFromBigint extends EntityAttributeFromNotImplemented {
       {int metadataLevel, List<CompositeConstraint> compositeConstraints})
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
-            compositeConstraints: compositeConstraints) {}
+            compositeConstraints: compositeConstraints);
 
   @override
   String getAttributeTypeDefinition() {

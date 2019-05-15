@@ -7,13 +7,10 @@ class EntityAttributeFromDuration extends EntityAttributeFromNotImplemented {
       {int metadataLevel, List<CompositeConstraint> compositeConstraints})
       : super(modelTypeName, modelName, attributeName,
             metadataLevel: metadataLevel,
-            compositeConstraints: compositeConstraints) {
-    //throw Exception("Duration is not implemented yet");
-  }
+            compositeConstraints: compositeConstraints);
 
   @override
   String getAttributeTypeDefinition() {
-    throw Exception("Duration is not implemented yet");
-    //return "INTEGER";
+    return "INTEGER";
   }
 }
