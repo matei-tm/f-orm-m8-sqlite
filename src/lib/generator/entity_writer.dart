@@ -130,7 +130,7 @@ ${s002}}
   String getCommonMethods() {
     return '''
 ${s002}Future create${emittedEntity.modelName}Table(Database db) async {
-${s00004}${getTableFullDefinitionBlock()}
+${s00004}${getTableFullDefinitionBlock()}${getIndexStringBlock()}
 ${s002}}
 
 ${s002}Future<int> save${emittedEntity.modelName}(${emittedEntity.modelNameProxy} ${emittedEntity.modelInstanceName}) async {

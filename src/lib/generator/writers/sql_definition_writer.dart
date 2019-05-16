@@ -88,9 +88,22 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
         _primaryKeyCompositesMap, ",\n${s00004}PRIMARY KEY");
   }
 
-  String getIndexCompositeString() {
-    return getCompositeString(_primaryKeyCompositesMap,
-        ",\n${s00004}CREATE INDEX tag_title_desc ON tags (title, description);");
+  String getIndexStringBlock() {
+    String collectedString = "";
+
+    emittedEntity.attributes.values
+        .where((ea) => isIndexed(ea.metadataLevel))
+        .forEach((attributeWithIndex) {
+      collectedString +=
+          "\n${s00004}await db.execute('''CREATE INDEX ix_\$\{${theTableHandler}\}_${attributeWithIndex.attributeName} ON \$${theTableHandler} (${attributeWithIndex.attributeName})''');";
+    });
+
+    _indexCompositesMap.forEach((k, v) {
+      collectedString +=
+          "\n${s00004}await db.execute('''CREATE INDEX ix_\$\{${theTableHandler}\}_${k} ON \$${theTableHandler} ($v)''');";
+    });
+
+    return collectedString == "" ? collectedString : "$collectedString";
   }
 
   void collectCompositeConstraints() {
@@ -111,11 +124,12 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
     v?.compositeConstraints
         ?.where((d) => d.constraintType == compositeConstraintType)
         ?.forEach((compositeConstraint) {
-      if (!constraintMap.containsKey(compositeConstraint.name)) {
+      String compositeConstraintname = compositeConstraint.name.split("'")[1];
+      if (!constraintMap.containsKey(compositeConstraintname)) {
         constraintMap.putIfAbsent(
-            compositeConstraint.name, () => v.attributeName);
+            compositeConstraintname, () => v.attributeName);
       } else {
-        constraintMap[compositeConstraint.name] += ", ${v.attributeName}";
+        constraintMap[compositeConstraintname] += ", ${v.attributeName}";
       }
     });
   }
