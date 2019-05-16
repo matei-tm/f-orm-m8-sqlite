@@ -12,6 +12,7 @@ void main() {
   LibraryReader library_3;
   LibraryReader library_4;
   LibraryReader library_5;
+  LibraryReader library_6;
 
   final path = testFilePath('test', 'src', 'model');
   final caliber1Path =
@@ -23,6 +24,7 @@ void main() {
       testFilePath('test', 'out', 'custom_type_field.0.caliber');
   final caliber5Path =
       testFilePath('test', 'out', 'non_dbentity_or_dbopenentity.0.caliber');
+  final caliber6Path = testFilePath('test', 'out', 'multiple_pk.0.caliber');
 
   setUp(() async {
     library_1 = await initializeLibraryReaderForDirectory(
@@ -35,6 +37,8 @@ void main() {
         path, "custom_type_field_probe.dart");
     library_5 = await initializeLibraryReaderForDirectory(
         path, "not_allowed_entity_probe.dart");
+    library_6 = await initializeLibraryReaderForDirectory(
+        path, "bad_multiple_pk_probe.dart");
   });
 
   group('Validation tests', () {
@@ -42,40 +46,38 @@ void main() {
 
     test('Test the multiple DataColumn annotations on the same field!',
         () async {
-      String output = await generator.generate(library_1, null);
-
-      final expected = await File(caliber1Path).readAsString();
-      expect(output, expected);
+      await matchProbeOnCaliber(generator, library_1, caliber1Path);
     });
 
     test('Test the not Implemented validations field!', () async {
-      String output = await generator.generate(library_2, null);
-
-      final expected = await File(caliber2Path).readAsString();
-      expect(output, expected);
+      await matchProbeOnCaliber(generator, library_2, caliber2Path);
     });
 
     test('Test validation of a model without annotated fields!', () async {
-      String output = await generator.generate(library_3, null);
-
-      final expected = await File(caliber3Path).readAsString();
-      expect(output, expected);
+      await matchProbeOnCaliber(generator, library_3, caliber3Path);
     });
 
     test('Test validation of a model with custom type fields!', () async {
-      String output = await generator.generate(library_4, null);
-
-      final expected = await File(caliber4Path).readAsString();
-      expect(output, expected);
+      await matchProbeOnCaliber(generator, library_4, caliber4Path);
     });
 
     test(
         'Test validation Database models must implement DbEntity or DbOpenEntity',
         () async {
-      String output = await generator.generate(library_5, null);
+      await matchProbeOnCaliber(generator, library_5, caliber5Path);
+    });
 
-      final expected = await File(caliber5Path).readAsString();
-      expect(output, expected);
+    test('Test validation multiple, non composite, PKs on the same model',
+        () async {
+      await matchProbeOnCaliber(generator, library_6, caliber6Path);
     });
   });
+}
+
+Future matchProbeOnCaliber(OrmM8GeneratorForAnnotation generator,
+    LibraryReader library, String caliberPath) async {
+  String output = await generator.generate(library, null);
+
+  final expected = await File(caliberPath).readAsString();
+  expect(output, expected);
 }
