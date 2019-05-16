@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+* Validation for Primary Key combination
+
 ## [0.6.3] - 2019-05-16
 
 ### Added
