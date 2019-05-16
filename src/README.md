@@ -56,7 +56,7 @@ Supported orm-m8 features:
 | CompositeConstraint. | primaryKey             | CompositeConstraint | v0.4.0            |                    |
 | CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.7.0 |
 | CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.7.0 |
-| implements           | DbOpenEntity           | entity helper       | -                 | Planned for v0.7.0 |
+| implements           | DbOpenEntity           | entity helper       | v0.6.3            |                    |
 | implements           | DbEntity               | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountEntity        | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountRelatedEntity | entity helper       | v0.1.0            |                    |
@@ -94,7 +94,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            f_orm_m8_sqlite: ^0.6.2
+            f_orm_m8_sqlite: ^0.6.3
             flutter_test:
                 sdk: flutter
 

@@ -47,7 +47,13 @@ class ModelParser {
   }
 
   void _extractEntityMeta() {
-    validatePreExtractionConditions();
+    if (!validatePreExtractionConditions()) {
+      validationIssues.add(ValidationIssue(
+          isError: true,
+          message:
+              "Model ${modelName} does not implement `DbEntity` or `DbOpenEntity` interface!"));
+      return;
+    }
 
     final ElementAnnotation elementAnnotationMetadata =
         modelClassElement.metadata.firstWhere(
@@ -80,17 +86,16 @@ class ModelParser {
     }
   }
 
-  void validatePreExtractionConditions() {
+  bool validatePreExtractionConditions() {
     if (isDbEntity.isAssignableFromType(modelClassElement.type)) {
-      return;
+      return true;
     }
 
     if (isDbOpenEntity.isAssignableFromType(modelClassElement.type)) {
-      return;
+      return true;
     }
 
-    throw Exception(
-        "Database models must implement `DbEntity` or `DbOpenEntity` interface!");
+    return false;
   }
 
   void _extractEntityAttributes() {

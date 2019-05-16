@@ -1,0 +1,5 @@
+/*
+Not all the models have passed the validation process. Review the following issues, fix them and rerun the builder:
+
+Error: Model BadNonDbEntityProbe does not implement `DbEntity` or `DbOpenEntity` interface!
+*/

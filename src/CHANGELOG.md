@@ -2,10 +2,17 @@
 
 ## [Unreleased]
 
+## [0.6.3] - 2019-05-16
+
 ### Added
 
 * Implementation for mapping Duration fields. Currently handled in milliseconds and saved to database as INTEGER
 * Implementation for mapping BigInt fields. Saved to database as TEXT to keep precision
+* Implementation for DbOpenEntity scaffolding
+
+### Changed
+
+* If the Model class does not implement allowed interfaces (DbEntity or DbOpenEntity) the parser will handle as validation error (not Exception)
 
 ## [0.6.2+1] - 2019-05-15
 

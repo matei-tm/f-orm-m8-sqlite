@@ -11,6 +11,7 @@ void main() {
   LibraryReader library_2;
   LibraryReader library_3;
   LibraryReader library_4;
+  LibraryReader library_5;
 
   final path = testFilePath('test', 'src', 'model');
   final caliber1Path =
@@ -20,6 +21,8 @@ void main() {
   final caliber3Path = testFilePath('test', 'out', 'no_fields.0.caliber');
   final caliber4Path =
       testFilePath('test', 'out', 'custom_type_field.0.caliber');
+  final caliber5Path =
+      testFilePath('test', 'out', 'non_dbentity_or_dbopenentity.0.caliber');
 
   setUp(() async {
     library_1 = await initializeLibraryReaderForDirectory(
@@ -30,6 +33,8 @@ void main() {
         await initializeLibraryReaderForDirectory(path, "no_fields_probe.dart");
     library_4 = await initializeLibraryReaderForDirectory(
         path, "custom_type_field_probe.dart");
+    library_5 = await initializeLibraryReaderForDirectory(
+        path, "not_allowed_entity_probe.dart");
   });
 
   group('Validation tests', () {
@@ -61,6 +66,15 @@ void main() {
       String output = await generator.generate(library_4, null);
 
       final expected = await File(caliber4Path).readAsString();
+      expect(output, expected);
+    });
+
+    test(
+        'Test validation Database models must implement DbEntity or DbOpenEntity',
+        () async {
+      String output = await generator.generate(library_5, null);
+
+      final expected = await File(caliber5Path).readAsString();
       expect(output, expected);
     });
   });
