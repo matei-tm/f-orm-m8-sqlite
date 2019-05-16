@@ -11,16 +11,16 @@ class EntityAttributeFromBigint extends EntityAttribute {
 
   @override
   String getAttributeTypeDefinition() {
-    return "INTEGER";
+    return "TEXT";
   }
 
   @override
   String get modelToEntityConversionString {
-    return "${modelName}.toInt()";
+    return "${modelName}.toString()";
   }
 
   @override
   String get entityToModelConversionString {
-    return "BigInt.from(map['${attributeName}'])";
+    return "BigInt.parse(map['${attributeName}'])";
   }
 }

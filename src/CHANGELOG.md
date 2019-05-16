@@ -4,8 +4,8 @@
 
 ### Added
 
-* Implementation for mapping Duration fields. Currently handled in milliseconds
-* Implementation for mapping BigInt fields. Temporary handled as integer
+* Implementation for mapping Duration fields. Currently handled in milliseconds and saved to database as INTEGER
+* Implementation for mapping BigInt fields. Saved to database as TEXT to keep precision
 
 ## [0.6.2+1] - 2019-05-15
 

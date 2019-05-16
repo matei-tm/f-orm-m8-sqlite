@@ -34,6 +34,32 @@ HealthEntryProxy healthEntryProxySample02 = HealthEntryProxy()
   ..dateCreate = DateTime.fromMillisecondsSinceEpoch(1557701763043)
   ..dateUpdate = DateTime.fromMillisecondsSinceEpoch(1557701763044);
 
+ReceiptProxy receiptNewProbe = ReceiptProxy()
+  ..id = 1
+  ..isBio = false
+  ..expirationDate = DateTime.fromMillisecondsSinceEpoch(2889787803000)
+  ..quantity = 1.618
+  ..numberOfItems = 42
+  ..storageTemperature = -38.83
+  ..description = "Happiness"
+  ..dateCreate = DateTime.fromMillisecondsSinceEpoch(1557701763037)
+  ..dateUpdate = DateTime.fromMillisecondsSinceEpoch(1557701763038)
+  ..decomposingDuration = Duration(milliseconds: 123456789)
+  ..numberOfMolecules = BigInt.from(987654321);
+
+ReceiptProxy receiptUpdateProbe = ReceiptProxy()
+  ..id = 1
+  ..isBio = true
+  ..expirationDate = DateTime.fromMillisecondsSinceEpoch(3205320603000)
+  ..quantity = 3.1415
+  ..numberOfItems = 44
+  ..storageTemperature = 106
+  ..description = "Happiness forever"
+  ..dateCreate = DateTime.fromMillisecondsSinceEpoch(1557701763037)
+  ..dateUpdate = DateTime.fromMillisecondsSinceEpoch(1557701763038)
+  ..decomposingDuration = Duration(milliseconds: 123456788)
+  ..numberOfMolecules = BigInt.from(987654322);
+
 ReceiptProxy receiptProxySample01 = ReceiptProxy()
   ..id = 1
   ..isBio = true
@@ -71,7 +97,7 @@ var receiptMapSample01 = {
   "date_create": 1557701763037,
   "date_update": 1557701763038,
   "decomposing_duration": 123456789,
-  "number_of_molecules": 987654321
+  "number_of_molecules": '987654321'
 };
 
 ToDoProxy toDoProxySample01 = ToDoProxy()

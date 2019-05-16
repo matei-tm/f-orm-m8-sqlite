@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-16 02:23:34.320239
+// Emitted on: 2019-05-16 12:47:12.529398
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -35,7 +35,7 @@ class ReceiptProxy extends Receipt {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
-    map['number_of_molecules'] = numberOfMolecules.toInt();
+    map['number_of_molecules'] = numberOfMolecules.toString();
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
     map['quantity'] = quantity;
@@ -51,7 +51,7 @@ class ReceiptProxy extends Receipt {
 
   ReceiptProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.numberOfMolecules = BigInt.from(map['number_of_molecules']);
+    this.numberOfMolecules = BigInt.parse(map['number_of_molecules']);
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
@@ -86,7 +86,7 @@ mixin ReceiptDatabaseProvider {
   Future createReceiptTable(Database db) async {
     await db.execute('''CREATE TABLE $theReceiptTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
-    number_of_molecules INTEGER  NOT NULL,
+    number_of_molecules TEXT  NOT NULL,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
     quantity REAL  NOT NULL,

@@ -13,37 +13,8 @@ import 'package:sqlite_m8_demo/main.dart';
 import 'package:sqlite_m8_demo/models/receipt.g.m8.dart';
 import 'package:sqlite_m8_demo/models/user_account.g.m8.dart';
 
+import 'utils/sample_repo.dart';
 import 'utils/toggle_checker.dart';
-
-ReceiptProxy receiptNewProbe = ReceiptProxy.fromMap({
-  "id": 1,
-  "is_bio": 0,
-  "expiration_date":
-      DateTime.parse("2061-07-28 17:50:03.000").millisecondsSinceEpoch,
-  "quantity": 1.618,
-  "number_of_items": 42,
-  "storage_temperature": -38.83,
-  "description": "Happiness",
-  "date_create": DateTime.now().millisecondsSinceEpoch,
-  "date_update": DateTime.now().millisecondsSinceEpoch,
-  "decomposing_duration": 123456789,
-  "number_of_molecules": 987654321
-});
-
-ReceiptProxy receiptUpdateProbe = ReceiptProxy.fromMap({
-  "id": 1,
-  "is_bio": 1,
-  "expiration_date":
-      DateTime.parse("2071-07-28 17:50:03.000").millisecondsSinceEpoch,
-  "quantity": 3.1415,
-  "number_of_items": 44,
-  "storage_temperature": 106,
-  "description": "Happiness forever",
-  "date_create": DateTime.now().millisecondsSinceEpoch,
-  "date_update": DateTime.now().millisecondsSinceEpoch,
-  "decomposing_duration": 123456788,
-  "number_of_molecules": 987654322
-});
 
 class MockDatabaseProvider extends Mock implements DatabaseProvider {
   MockDatabaseProvider(InitMode testingMockDb);
@@ -71,7 +42,7 @@ void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
 
   when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+
   when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
 
