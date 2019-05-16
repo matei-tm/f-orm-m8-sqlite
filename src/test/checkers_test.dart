@@ -25,7 +25,7 @@ void main() async {
     });
 
     test('Test attributes count', () {
-      expect(e.attributes.length, 7);
+      expect(e.attributes.length, 9);
     });
 
     test('Has attribute id', () {
@@ -75,14 +75,14 @@ void main() async {
       expect(hasField, false);
     });
 
-    test('Hasn\'t attribute decomposingDuration', () {
+    test('Has attribute decomposingDuration', () {
       var hasField = e.attributes.containsKey("decomposingDuration");
-      expect(hasField, false);
+      expect(hasField, true);
     });
 
-    test('Hasn\'t NotImplemented attribute numberOfMolecules', () {
+    test('Has NotImplemented attribute numberOfMolecules', () {
       var hasField = e.attributes.containsKey("numberOfMolecules");
-      expect(hasField, false);
+      expect(hasField, true);
     });
   });
 }
