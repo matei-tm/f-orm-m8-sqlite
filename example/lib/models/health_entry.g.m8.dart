@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-16 12:47:12.529398
+// Emitted on: 2019-05-17 01:14:54.736273
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -63,6 +63,8 @@ mixin HealthEntryDatabaseProvider {
     date_update INTEGER    ,
     UNIQUE(account_id, description)
     )''');
+    await db.execute(
+        '''CREATE INDEX ix_${theHealthEntryTableHandler}_ix_account_entry ON $theHealthEntryTableHandler (account_id)''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {

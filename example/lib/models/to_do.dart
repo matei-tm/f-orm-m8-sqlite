@@ -12,10 +12,18 @@ class ToDo implements DbAccountRelatedEntity {
           ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", metadataLevel: ColumnMetadata.unique)
+  @DataColumn("description",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.indexed,
+      compositeConstraints: [
+        CompositeConstraint(
+            name: "group1", constraintType: CompositeConstraintType.indexed)
+      ])
   String description;
 
-  @DataColumn("diagnosys_date")
+  @DataColumn("diagnosys_date", compositeConstraints: [
+    CompositeConstraint(
+        name: "group1", constraintType: CompositeConstraintType.indexed)
+  ])
   DateTime diagnosysDate;
 
   @DataColumn("my_future_column7",

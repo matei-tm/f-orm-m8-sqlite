@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-16 12:47:12.529398
+// Emitted on: 2019-05-17 01:14:54.736273
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -67,6 +67,10 @@ mixin ToDoDatabaseProvider {
     date_update INTEGER,
     date_delete INTEGER DEFAULT 0
     )''');
+    await db.execute(
+        '''CREATE INDEX ix_${theToDoTableHandler}_description ON $theToDoTableHandler (description)''');
+    await db.execute(
+        '''CREATE INDEX ix_${theToDoTableHandler}_group1 ON $theToDoTableHandler (description, diagnosys_date)''');
   }
 
   Future<int> saveToDo(ToDoProxy instanceToDo) async {
