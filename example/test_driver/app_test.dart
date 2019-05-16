@@ -408,6 +408,10 @@ void main() {
     final receiptQuantityFieldFinder = find.byValueKey('receiptQuantityField');
     final receiptStorageTemperatureFieldFinder =
         find.byValueKey('receiptStorageTemperatureField');
+    final receiptNumberOfMoleculesFieldFinder =
+        find.byValueKey('receiptNumberOfMoleculesField');
+    final receiptDecompositionDurationFieldFinder =
+        find.byValueKey('receiptDecompositionDurationField');
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -439,6 +443,12 @@ void main() {
       await driver.enterText("Happiness");
       await driver.waitFor(find.text('Happiness'));
 
+      await driver.waitFor(receiptDecompositionDurationFieldFinder);
+      await driver.tap(receiptDecompositionDurationFieldFinder);
+
+      await driver.enterText("123456789");
+      await driver.waitFor(find.text('123456789'));
+
       await driver.waitFor(receiptExpirationDateFieldFinder);
       await driver.tap(receiptExpirationDateFieldFinder);
 
@@ -453,6 +463,12 @@ void main() {
 
       await driver.enterText("42");
       await driver.waitFor(find.text('42'));
+
+      await driver.waitFor(receiptNumberOfMoleculesFieldFinder);
+      await driver.tap(receiptNumberOfMoleculesFieldFinder);
+
+      await driver.enterText("987654321");
+      await driver.waitFor(find.text('987654321'));
 
       await driver.waitFor(receiptQuantityFieldFinder);
       await driver.tap(receiptQuantityFieldFinder);
@@ -492,6 +508,12 @@ void main() {
       await driver.enterText("Happiness forever");
       await driver.waitFor(find.text('Happiness forever'));
 
+      await driver.waitFor(receiptDecompositionDurationFieldFinder);
+      await driver.tap(receiptDecompositionDurationFieldFinder);
+
+      await driver.enterText("123000789");
+      await driver.waitFor(find.text('123000789'));
+
       await driver.waitFor(receiptExpirationDateFieldFinder);
       await driver.tap(receiptExpirationDateFieldFinder);
 
@@ -506,6 +528,12 @@ void main() {
 
       await driver.enterText("52");
       await driver.waitFor(find.text('52'));
+
+      await driver.waitFor(receiptNumberOfMoleculesFieldFinder);
+      await driver.tap(receiptNumberOfMoleculesFieldFinder);
+
+      await driver.enterText("987000321");
+      await driver.waitFor(find.text('987000321'));
 
       await driver.waitFor(receiptQuantityFieldFinder);
       await driver.tap(receiptQuantityFieldFinder);
@@ -545,6 +573,12 @@ void main() {
       await driver.enterText("Joy");
       await driver.waitFor(find.text('Joy'));
 
+      await driver.waitFor(receiptDecompositionDurationFieldFinder);
+      await driver.tap(receiptDecompositionDurationFieldFinder);
+
+      await driver.enterText("44444444");
+      await driver.waitFor(find.text('44444444'));
+
       await driver.waitFor(receiptExpirationDateFieldFinder);
       await driver.tap(receiptExpirationDateFieldFinder);
 
@@ -556,6 +590,12 @@ void main() {
 
       await driver.enterText("34866");
       await driver.waitFor(find.text('34866'));
+
+      await driver.waitFor(receiptNumberOfMoleculesFieldFinder);
+      await driver.tap(receiptNumberOfMoleculesFieldFinder);
+
+      await driver.enterText("88888888");
+      await driver.waitFor(find.text('88888888'));
 
       await driver.waitFor(receiptQuantityFieldFinder);
       await driver.tap(receiptQuantityFieldFinder);
@@ -584,6 +624,7 @@ void main() {
 
     test('try delete Joy receipt with cancel', () async {
       await driver.waitFor(deleteReceipt02ButtonFinder);
+      await driver.scrollIntoView(deleteReceipt02ButtonFinder);
       await driver.tap(deleteReceipt02ButtonFinder);
 
       await driver.waitFor(cancelDeleteReceiptButtonFinder);
@@ -592,6 +633,7 @@ void main() {
 
     test('delete Joy receipt with confirm', () async {
       await driver.waitFor(deleteReceipt02ButtonFinder);
+      await driver.scrollIntoView(deleteReceipt02ButtonFinder);
       await driver.tap(deleteReceipt02ButtonFinder);
 
       await driver.waitFor(confirmDeleteReceiptButtonFinder);
