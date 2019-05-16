@@ -2,7 +2,7 @@ import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/generator/core.dart';
 import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 
-class SqlDefinitionWriter with Spacers {
+class SqlDefinitionWriter extends ValidationCollectable with Spacers {
   final EmittedEntity emittedEntity;
 
   String get theTableHandler => this.emittedEntity.theTableHandler;
@@ -38,10 +38,22 @@ class SqlDefinitionWriter with Spacers {
 
     collectCompositeConstraints();
 
+    if (_primaryKeyCompositesMap.length > 1) {
+      validationIssues.add(ValidationIssue(
+          isError: true,
+          message:
+              "The type ${emittedEntity.modelName} has more than one Primary Key groups"));
+      return '';
+    }
+
     String tableDefinition =
         """'''CREATE TABLE \$${theTableHandler} (\n$s00004${columnList.join(",\n$s00004")}${getPrimaryKeyCompositeString()}${getUniqueCompositeString()}\n${s00004})'''""";
 
     return tableDefinition;
+  }
+
+  String getTableFullDefinitionBlock() {
+    return "await db.execute(${getTableDefinition()});";
   }
 
   String getCompositeString(

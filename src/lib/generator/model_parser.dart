@@ -8,12 +8,11 @@ import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 
 import 'package:source_gen/source_gen.dart';
 
-class ModelParser {
+class ModelParser extends ValidationCollectable {
   String modelName;
   EntityType entityType;
   ConstantReader reader;
   int entityMetadataLevel;
-  List<ValidationIssue> validationIssues;
 
   EntityAttributeFactory entityAttributeFactory;
 
@@ -28,11 +27,7 @@ class ModelParser {
   ModelParser(this.modelClassElement, this.entityName) {
     modelName = this.modelClassElement.name;
     entityAttributeFactory = EntityAttributeFactory();
-    validationIssues = List<ValidationIssue>();
   }
-
-  bool get hasValidatorIssues =>
-      validationIssues?.any((v) => v.isError) ?? false;
 
   EmittedEntity getEmittedEntity() {
     _extractEntityMeta();
