@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 typedef ReceiptRowActionCallback = void Function(Receipt receipt);
 
 class ReceiptRow extends StatelessWidget {
-  static const double height = 260.0;
+  static const double height = 300.0;
 
   final RoundedRectangleBorder shape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
@@ -70,7 +70,8 @@ class ReceiptRow extends StatelessWidget {
                             style: titleStyle,
                           ),
                         ),
-                        //Text("${receipt.decomposingDuration}"),
+                        Text("Decomposing: ${receipt?.decomposingDuration}"),
+                        Text("Nr of molecules: ${receipt?.numberOfMolecules}"),
                         Text("Id: ${receipt?.id}"),
                         Text("Expiration Date: ${receipt?.expirationDate}"),
                         Text("Is Bio: ${receipt?.isBio}"),

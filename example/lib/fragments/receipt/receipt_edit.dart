@@ -19,6 +19,8 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
   final _isBioKey = Key("receiptIsBioSwitch");
   final _quantityKey = Key("receiptQuantityField");
   final _temperatureKey = Key("receiptStorageTemperatureField");
+  final _numberOfMoleculesKey = Key("receiptNumberOfMoleculesField");
+  final _decompositionDurationKey = Key("receiptDecompositionDurationField");
 
   Receipt _stateReceipt;
   String title;
@@ -89,21 +91,22 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       _stateReceipt.description = value;
                     },
                   ),
-                  // TextFormField(
-                  //   decoration: new InputDecoration(
-                  //     hintText: "decomposing Duration as Duration",
-                  //     labelText: "decomposing Duration*",
-                  //   ),
-                  //   validator: (value) {
-                  //     if (value.isEmpty) {
-                  //       return "Please enter decomposingDuration";
-                  //     }
-                  //   },
-                  //   onSaved: (String value) {
-                  //     _stateReceipt.decomposingDuration =
-                  //         Duration(hours: int.parse(value));
-                  //   },
-                  // ),
+                  TextFormField(
+                    key: _decompositionDurationKey,
+                    decoration: InputDecoration(
+                      hintText: "decomposing Duration as Duration",
+                      labelText: "decomposing Duration*",
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Please enter decomposingDuration";
+                      }
+                    },
+                    onSaved: (String value) {
+                      _stateReceipt.decomposingDuration =
+                          Duration(milliseconds: int.parse(value));
+                    },
+                  ),
                   TextFormField(
                     key: _expirationKey,
                     initialValue:
@@ -143,20 +146,21 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       _stateReceipt.numberOfItems = int.parse(value);
                     },
                   ),
-                  // TextFormField(
-                  //   decoration: new InputDecoration(
-                  //     hintText: "numberOfMolecules as bigInt",
-                  //     labelText: "numberOfMolecules*",
-                  //   ),
-                  //   validator: (value) {
-                  //     if (value.isEmpty) {
-                  //       return "Please enter numberOfMolecules";
-                  //     }
-                  //   },
-                  //   onSaved: (String value) {
-                  //     _stateReceipt.numberOfMolecules = BigInt.parse(value);
-                  //   },
-                  // ),
+                  TextFormField(
+                    key: _numberOfMoleculesKey,
+                    decoration: InputDecoration(
+                      hintText: "numberOfMolecules as bigInt",
+                      labelText: "numberOfMolecules*",
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Please enter numberOfMolecules";
+                      }
+                    },
+                    onSaved: (String value) {
+                      _stateReceipt.numberOfMolecules = BigInt.parse(value);
+                    },
+                  ),
                   TextFormField(
                     key: _quantityKey,
                     initialValue: _stateReceipt.quantity.toString(),
