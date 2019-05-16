@@ -1,7 +1,7 @@
 import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 
-class EntityAttributeFromBigint extends EntityAttributeFromNotImplemented {
+class EntityAttributeFromBigint extends EntityAttribute {
   EntityAttributeFromBigint(
       String modelTypeName, String modelName, String attributeName,
       {int metadataLevel, List<CompositeConstraint> compositeConstraints})
@@ -11,6 +11,16 @@ class EntityAttributeFromBigint extends EntityAttributeFromNotImplemented {
 
   @override
   String getAttributeTypeDefinition() {
-    throw Exception("Duration is not implemented yet");
+    return "INTEGER";
+  }
+
+  @override
+  String get modelToEntityConversionString {
+    return "${modelName}.toInt()";
+  }
+
+  @override
+  String get entityToModelConversionString {
+    return "BigInt.from(map['${attributeName}'])";
   }
 }

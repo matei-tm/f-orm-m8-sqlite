@@ -1,7 +1,7 @@
 import 'package:f_orm_m8/f_orm_m8.dart';
 import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 
-class EntityAttributeFromDuration extends EntityAttributeFromNotImplemented {
+class EntityAttributeFromDuration extends EntityAttribute {
   EntityAttributeFromDuration(
       String modelTypeName, String modelName, String attributeName,
       {int metadataLevel, List<CompositeConstraint> compositeConstraints})
@@ -12,5 +12,15 @@ class EntityAttributeFromDuration extends EntityAttributeFromNotImplemented {
   @override
   String getAttributeTypeDefinition() {
     return "INTEGER";
+  }
+
+  @override
+  String get modelToEntityConversionString {
+    return "${modelName}.inMilliseconds";
+  }
+
+  @override
+  String get entityToModelConversionString {
+    return "Duration(milliseconds: map['${attributeName}'])";
   }
 }
