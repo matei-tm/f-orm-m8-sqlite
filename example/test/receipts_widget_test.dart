@@ -26,6 +26,8 @@ ReceiptProxy receiptNewProbe = ReceiptProxy.fromMap({
   "description": "Happiness",
   "date_create": DateTime.now().millisecondsSinceEpoch,
   "date_update": DateTime.now().millisecondsSinceEpoch,
+  "decomposing_duration": 123456789,
+  "number_of_molecules": 987654321
 });
 
 ReceiptProxy receiptUpdateProbe = ReceiptProxy.fromMap({
@@ -39,6 +41,8 @@ ReceiptProxy receiptUpdateProbe = ReceiptProxy.fromMap({
   "description": "Happiness forever",
   "date_create": DateTime.now().millisecondsSinceEpoch,
   "date_update": DateTime.now().millisecondsSinceEpoch,
+  "decomposing_duration": 123456788,
+  "number_of_molecules": 987654322
 });
 
 class MockDatabaseProvider extends Mock implements DatabaseProvider {
@@ -179,6 +183,10 @@ Future fillReceipt(
   final receiptQuantityFieldFinder = find.byKey(Key('receiptQuantityField'));
   final receiptStorageTemperatureFieldFinder =
       find.byKey(Key('receiptStorageTemperatureField'));
+  final receiptNumberOfMoleculesFieldFinder =
+      find.byKey(Key('receiptNumberOfMoleculesField'));
+  final receiptDecompositionDurationFieldFinder =
+      find.byKey(Key('receiptDecompositionDurationField'));
 
   expect(receiptDescriptionTextFieldFinder, findsOneWidget);
   await tester.tap(receiptDescriptionTextFieldFinder);
@@ -187,6 +195,23 @@ Future fillReceipt(
   await tester.enterText(
       receiptDescriptionTextFieldFinder, currentReceipt.description);
   expect(find.text(currentReceipt.description), findsOneWidget);
+
+  await tester.tap(receiptNumberOfMoleculesFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptNumberOfMoleculesFieldFinder,
+      currentReceipt.numberOfMolecules.toString());
+  expect(
+      find.text(currentReceipt.numberOfMolecules.toString()), findsOneWidget);
+
+  await tester.tap(receiptDecompositionDurationFieldFinder);
+  await tester.pump();
+
+  await tester.enterText(receiptDecompositionDurationFieldFinder,
+      currentReceipt.decomposingDuration.inMilliseconds.toString());
+  expect(
+      find.text(currentReceipt.decomposingDuration.inMilliseconds.toString()),
+      findsOneWidget);
 
   expect(receiptExpirationDateFieldFinder, findsOneWidget);
   await tester.tap(receiptExpirationDateFieldFinder);
