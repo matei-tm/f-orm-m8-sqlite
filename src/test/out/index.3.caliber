@@ -1,0 +1,118 @@
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:__test__/index_probe.3.dart';
+
+class IndexProbeProxy extends IndexProbe {
+
+  IndexProbeProxy();
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['my_id_column'] = id;
+    map['short_name3'] = shortName3;
+    map['short_name4'] = shortName4;
+    map['score1'] = score1;
+    map['description1'] = description1;
+    map['score2'] = score2;
+    map['description2'] = description2;
+
+    return map;
+  }
+
+  IndexProbeProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['my_id_column'];
+    this.shortName3 = map['short_name3'];
+    this.shortName4 = map['short_name4'];
+    this.score1 = map['score1'];
+    this.description1 = map['description1'];
+    this.score2 = map['score2'];
+    this.description2 = map['description2'];
+  }
+}
+
+mixin IndexProbeDatabaseProvider {
+  Future<Database> db;
+  final theIndexProbeColumns = [
+    "my_id_column",
+    "short_name3",
+    "short_name4",
+    "score1",
+    "description1",
+    "score2",
+    "description2"
+  ];
+
+  final String theIndexProbeTableHandler = 'my_index_probe_table';
+  Future createIndexProbeTable(Database db) async {
+    await db.execute('''CREATE TABLE $theIndexProbeTableHandler (
+    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    short_name3 TEXT ,
+    short_name4 TEXT ,
+    score1 INTEGER ,
+    description1 TEXT ,
+    score2 INTEGER ,
+    description2 TEXT 
+    )''');
+    await db.execute('''CREATE INDEX ix_${theIndexProbeTableHandler}_short_name3 ON $theIndexProbeTableHandler (short_name3)''');
+    await db.execute('''CREATE INDEX ix_${theIndexProbeTableHandler}_short_name4 ON $theIndexProbeTableHandler (short_name4)''');
+    await db.execute('''CREATE INDEX ix_${theIndexProbeTableHandler}_group1 ON $theIndexProbeTableHandler (score1, description1)''');
+    await db.execute('''CREATE INDEX ix_${theIndexProbeTableHandler}_group2 ON $theIndexProbeTableHandler (score2, description2)''');
+  }
+
+  Future<int> saveIndexProbe(IndexProbeProxy instanceIndexProbe) async {
+    var dbClient = await db;
+
+    
+
+    var result = await dbClient.insert(theIndexProbeTableHandler, instanceIndexProbe.toMap());
+    return result;
+  }
+
+  Future<List<IndexProbeProxy>> getIndexProbeProxiesAll() async {
+    var dbClient = await db;
+    var result =
+        await dbClient.query(theIndexProbeTableHandler, columns: theIndexProbeColumns, where: '1');
+
+    return result.map((e) => IndexProbeProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getIndexProbeProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theIndexProbeTableHandler  WHERE 1'));
+  }
+
+  Future<IndexProbeProxy> getIndexProbe(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(theIndexProbeTableHandler,
+        columns: theIndexProbeColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
+
+
+    if (result.length > 0) {
+      return IndexProbeProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteIndexProbe(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(theIndexProbeTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteIndexProbeProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(theIndexProbeTableHandler);
+    return true;
+  }
+
+  Future<int> updateIndexProbe(IndexProbeProxy instanceIndexProbe) async {
+    var dbClient = await db;
+
+
+
+    return await dbClient.update(theIndexProbeTableHandler, instanceIndexProbe.toMap(),
+        where: "my_id_column = ?", whereArgs: [instanceIndexProbe.id]);
+  }
+}

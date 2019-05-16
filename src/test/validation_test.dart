@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:f_orm_m8_sqlite/orm_m8_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
@@ -82,12 +80,4 @@ void main() {
       await matchProbeOnCaliber(generator, library_7, caliber7Path);
     });
   });
-}
-
-Future matchProbeOnCaliber(OrmM8GeneratorForAnnotation generator,
-    LibraryReader library, String caliberPath) async {
-  String output = await generator.generate(library, null);
-
-  final expected = await File(caliberPath).readAsString();
-  expect(output, expected);
 }

@@ -38,6 +38,7 @@ mixin HealthEntryAccountRelatedDatabaseProvider {
     description TEXT     ,
     UNIQUE(account_id, description)
     )''');
+    await db.execute('''CREATE INDEX ix_${theHealthEntryAccountRelatedTableHandler}_ix_account_entry ON $theHealthEntryAccountRelatedTableHandler (account_id)''');
   }
 
   Future<int> saveHealthEntryAccountRelated(HealthEntryAccountRelatedProxy instanceHealthEntryAccountRelated) async {
