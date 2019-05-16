@@ -8,8 +8,8 @@ class Receipt implements DbEntity {
           ColumnMetadata.autoIncrement)
   int id;
 
-  //@DataColumn("number_of_molecules", ColumnMetadata.notNull)
-  //BigInt numberOfMolecules;
+  @DataColumn("number_of_molecules", metadataLevel: ColumnMetadata.notNull)
+  BigInt numberOfMolecules;
 
   @DataColumn("is_bio", metadataLevel: ColumnMetadata.notNull)
   bool isBio;
@@ -20,8 +20,8 @@ class Receipt implements DbEntity {
   @DataColumn("quantity", metadataLevel: ColumnMetadata.notNull)
   double quantity;
 
-  //@DataColumn("decomposing_duration", ColumnMetadata.notNull)
-  //Duration decomposingDuration;
+  @DataColumn("decomposing_duration", metadataLevel: ColumnMetadata.notNull)
+  Duration decomposingDuration;
 
   @DataColumn("number_of_items", metadataLevel: ColumnMetadata.notNull)
   int numberOfItems;

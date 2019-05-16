@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-16 02:23:34.320239
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -14,15 +14,19 @@ class ReceiptProxy extends Receipt {
   DateTime dateUpdate;
 
   ReceiptProxy(
-      {isBio,
+      {numberOfMolecules,
+      isBio,
       expirationDate,
       quantity,
+      decomposingDuration,
       numberOfItems,
       storageTemperature,
       description}) {
+    this.numberOfMolecules = numberOfMolecules;
     this.isBio = isBio;
     this.expirationDate = expirationDate;
     this.quantity = quantity;
+    this.decomposingDuration = decomposingDuration;
     this.numberOfItems = numberOfItems;
     this.storageTemperature = storageTemperature;
     this.description = description;
@@ -31,9 +35,11 @@ class ReceiptProxy extends Receipt {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
+    map['number_of_molecules'] = numberOfMolecules.toInt();
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
     map['quantity'] = quantity;
+    map['decomposing_duration'] = decomposingDuration.inMilliseconds;
     map['number_of_items'] = numberOfItems;
     map['storage_temperature'] = storageTemperature;
     map['description'] = description;
@@ -45,10 +51,13 @@ class ReceiptProxy extends Receipt {
 
   ReceiptProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
+    this.numberOfMolecules = BigInt.from(map['number_of_molecules']);
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
     this.quantity = map['quantity'];
+    this.decomposingDuration =
+        Duration(milliseconds: map['decomposing_duration']);
     this.numberOfItems = map['number_of_items'];
     this.storageTemperature = map['storage_temperature'];
     this.description = map['description'];
@@ -61,9 +70,11 @@ mixin ReceiptDatabaseProvider {
   Future<Database> db;
   final theReceiptColumns = [
     "id",
+    "number_of_molecules",
     "is_bio",
     "expiration_date",
     "quantity",
+    "decomposing_duration",
     "number_of_items",
     "storage_temperature",
     "description",
@@ -75,9 +86,11 @@ mixin ReceiptDatabaseProvider {
   Future createReceiptTable(Database db) async {
     await db.execute('''CREATE TABLE $theReceiptTableHandler (
     id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    number_of_molecules INTEGER  NOT NULL,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
     quantity REAL  NOT NULL,
+    decomposing_duration INTEGER  NOT NULL,
     number_of_items INTEGER  NOT NULL,
     storage_temperature NUMERIC  NOT NULL,
     description TEXT  NOT NULL UNIQUE,
