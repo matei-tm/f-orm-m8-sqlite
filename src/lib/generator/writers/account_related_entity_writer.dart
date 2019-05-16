@@ -4,7 +4,9 @@ import 'package:f_orm_m8_sqlite/generator/writers/proxy_writer.dart';
 
 class AccountRelatedEntityWriter extends EntityWriter {
   AccountRelatedEntityWriter(EmittedEntity emittedEntity)
-      : super(emittedEntity);
+      : super(emittedEntity) {
+    uniqueAppendedCombinationList.add(getAttributeStringAccountId());
+  }
 
   String getAttributeStringAccountId() {
     return emittedEntity.attributes["accountId"].attributeName;

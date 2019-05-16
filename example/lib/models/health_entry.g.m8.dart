@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 01:14:54.736273
+// Emitted on: 2019-05-17 02:19:31.672985
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -55,13 +55,14 @@ mixin HealthEntryDatabaseProvider {
   final String theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
     await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
     diagnosys_date INTEGER ,
     account_id INTEGER  NOT NULL,
     description TEXT  NOT NULL,
     date_create INTEGER,
-    date_update INTEGER    ,
-    UNIQUE(account_id, description)
+    date_update INTEGER,
+    UNIQUE (id, account_id) ON CONFLICT REPLACE,
+    UNIQUE (account_id, description, account_id) ON CONFLICT REPLACE
     )''');
     await db.execute(
         '''CREATE INDEX ix_${theHealthEntryTableHandler}_ix_account_entry ON $theHealthEntryTableHandler (account_id)''');

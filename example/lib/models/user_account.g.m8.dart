@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 01:14:54.736273
+// Emitted on: 2019-05-17 02:19:31.672985
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -52,12 +52,15 @@ mixin UserAccountDatabaseProvider {
   final String theUserAccountTableHandler = 'user_account';
   Future createUserAccountTable(Database db) async {
     await db.execute('''CREATE TABLE $theUserAccountTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
     description TEXT ,
-    abbreviation TEXT  NOT NULL UNIQUE,
+    abbreviation TEXT  NOT NULL,
     email TEXT  NOT NULL,
-    user_name TEXT  NOT NULL UNIQUE,
-    is_current INTEGER 
+    user_name TEXT  NOT NULL,
+    is_current INTEGER ,
+    UNIQUE (id) ON CONFLICT REPLACE,
+    UNIQUE (abbreviation) ON CONFLICT REPLACE,
+    UNIQUE (user_name) ON CONFLICT REPLACE
     )''');
   }
 

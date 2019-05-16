@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 01:14:54.736273
+// Emitted on: 2019-05-17 02:19:31.672985
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -59,13 +59,16 @@ mixin ToDoDatabaseProvider {
   final String theToDoTableHandler = 'to_do';
   Future createToDoTable(Database db) async {
     await db.execute('''CREATE TABLE $theToDoTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
-    description TEXT  UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    description TEXT ,
     diagnosys_date INTEGER ,
-    user_account_id INTEGER  NOT NULL UNIQUE,
+    user_account_id INTEGER  NOT NULL,
     date_create INTEGER,
     date_update INTEGER,
-    date_delete INTEGER DEFAULT 0
+    date_delete INTEGER DEFAULT 0,
+    UNIQUE (id, date_delete, user_account_id) ON CONFLICT REPLACE,
+    UNIQUE (description, date_delete, user_account_id) ON CONFLICT REPLACE,
+    UNIQUE (user_account_id, date_delete, user_account_id) ON CONFLICT REPLACE
     )''');
     await db.execute(
         '''CREATE INDEX ix_${theToDoTableHandler}_description ON $theToDoTableHandler (description)''');

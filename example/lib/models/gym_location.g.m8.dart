@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 01:14:54.736273
+// Emitted on: 2019-05-17 02:19:31.672985
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -48,11 +48,13 @@ mixin GymLocationDatabaseProvider {
   final String theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
     await db.execute('''CREATE TABLE $theGymLocationTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
-    description TEXT  UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    description TEXT ,
     rating INTEGER ,
     date_create INTEGER,
-    date_update INTEGER
+    date_update INTEGER,
+    UNIQUE (id) ON CONFLICT REPLACE,
+    UNIQUE (description) ON CONFLICT REPLACE
     )''');
   }
 

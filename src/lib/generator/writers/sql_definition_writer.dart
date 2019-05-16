@@ -12,7 +12,14 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
     _uniqueCompositesMap = Map<String, String>();
     _primaryKeyCompositesMap = Map<String, String>();
     _indexCompositesMap = Map<String, String>();
+
+    uniqueAppendedCombinationList = List<String>();
+    if (emittedEntity.hasSoftDelete) {
+      uniqueAppendedCombinationList.add("date_delete");
+    }
   }
+
+  List<String> uniqueAppendedCombinationList;
 
   Map<String, String> _uniqueCompositesMap;
   Map<String, String> _primaryKeyCompositesMap;
@@ -45,7 +52,7 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
     }
 
     String tableDefinition =
-        """'''CREATE TABLE \$${theTableHandler} (\n$s00004${columnList.join(",\n$s00004")}${getPrimaryKeyCompositeString()}${getUniqueCompositeString()}\n${s00004})'''""";
+        """'''CREATE TABLE \$${theTableHandler} (\n$s00004${columnList.join(",\n$s00004")}${getPrimaryKeyCompositeString()}${getUniqueConstraintsStringBlock()}\n${s00004})'''""";
 
     return tableDefinition;
   }
@@ -79,10 +86,6 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
     return collectedString == "" ? collectedString : "$s00004$collectedString";
   }
 
-  String getUniqueCompositeString() {
-    return getCompositeString(_uniqueCompositesMap, ",\n${s00004}UNIQUE");
-  }
-
   String getPrimaryKeyCompositeString() {
     return getCompositeString(
         _primaryKeyCompositesMap, ",\n${s00004}PRIMARY KEY");
@@ -101,6 +104,28 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
     _indexCompositesMap.forEach((k, v) {
       collectedString +=
           "\n${s00004}await db.execute('''CREATE INDEX ix_\$\{${theTableHandler}\}_${k} ON \$${theTableHandler} ($v)''');";
+    });
+
+    return collectedString == "" ? collectedString : "$collectedString";
+  }
+
+  String getUniqueConstraintsStringBlock() {
+    String collectedString = "";
+    String uniqueCombinationExtraString =
+        (uniqueAppendedCombinationList?.length ?? 0) > 0
+            ? ", ${uniqueAppendedCombinationList.join(", ")}"
+            : "";
+
+    emittedEntity.attributes.values
+        .where((ea) => isUnique(ea.metadataLevel))
+        .forEach((attributeWithUnique) {
+      collectedString +=
+          ",\n${s00004}UNIQUE (${attributeWithUnique.attributeName}$uniqueCombinationExtraString) ON CONFLICT REPLACE";
+    });
+
+    _uniqueCompositesMap.forEach((k, v) {
+      collectedString +=
+          ",\n${s00004}UNIQUE ($v$uniqueCombinationExtraString) ON CONFLICT REPLACE";
     });
 
     return collectedString == "" ? collectedString : "$collectedString";

@@ -1,7 +1,8 @@
 import 'package:f_orm_m8_sqlite/generator/utils/type_utils.dart';
 
 class AttributeMetadataParser {
-  static String getDefinition(int metadataLevel) {
+  static String getDefinition(int metadataLevel,
+      {String uniqueAttributesComposition = ""}) {
     String definition = "";
 
     if (isNotNull(metadataLevel)) {
@@ -14,10 +15,6 @@ class AttributeMetadataParser {
 
     if (isAutoIncrement(metadataLevel)) {
       definition = "$definition AUTOINCREMENT";
-    }
-
-    if (isUnique(metadataLevel)) {
-      definition = "$definition UNIQUE";
     }
 
     return definition;
