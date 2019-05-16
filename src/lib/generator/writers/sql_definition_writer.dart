@@ -38,11 +38,9 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
 
     collectCompositeConstraints();
 
-    if (_primaryKeyCompositesMap.length > 1) {
-      validationIssues.add(ValidationIssue(
-          isError: true,
-          message:
-              "The type ${emittedEntity.modelName} has more than one Primary Key groups"));
+    validatePrimaryKeys();
+
+    if (hasValidatorIssues) {
       return '';
     }
 
@@ -50,6 +48,21 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
         """'''CREATE TABLE \$${theTableHandler} (\n$s00004${columnList.join(",\n$s00004")}${getPrimaryKeyCompositeString()}${getUniqueCompositeString()}\n${s00004})'''""";
 
     return tableDefinition;
+  }
+
+  void validatePrimaryKeys() {
+    var primaryKeys = emittedEntity.attributes.values
+        .where((ea) => isPrimaryKey(ea.metadataLevel));
+
+    int countOfPrimaryKeys =
+        (_primaryKeyCompositesMap?.length ?? 0) + (primaryKeys?.length ?? 0);
+
+    if (countOfPrimaryKeys > 1) {
+      validationIssues.add(ValidationIssue(
+          isError: true,
+          message:
+              "The type ${emittedEntity.modelName} has more than one Primary Key groups"));
+    }
   }
 
   String getTableFullDefinitionBlock() {
@@ -73,6 +86,11 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
   String getPrimaryKeyCompositeString() {
     return getCompositeString(
         _primaryKeyCompositesMap, ",\n${s00004}PRIMARY KEY");
+  }
+
+  String getIndexCompositeString() {
+    return getCompositeString(_primaryKeyCompositesMap,
+        ",\n${s00004}CREATE INDEX tag_title_desc ON tags (title, description);");
   }
 
   void collectCompositeConstraints() {

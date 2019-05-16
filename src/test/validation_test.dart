@@ -13,6 +13,7 @@ void main() {
   LibraryReader library_4;
   LibraryReader library_5;
   LibraryReader library_6;
+  LibraryReader library_7;
 
   final path = testFilePath('test', 'src', 'model');
   final caliber1Path =
@@ -25,6 +26,7 @@ void main() {
   final caliber5Path =
       testFilePath('test', 'out', 'non_dbentity_or_dbopenentity.0.caliber');
   final caliber6Path = testFilePath('test', 'out', 'multiple_pk.0.caliber');
+  final caliber7Path = testFilePath('test', 'out', 'multiple_pk.0.caliber');
 
   setUp(() async {
     library_1 = await initializeLibraryReaderForDirectory(
@@ -38,7 +40,9 @@ void main() {
     library_5 = await initializeLibraryReaderForDirectory(
         path, "not_allowed_entity_probe.dart");
     library_6 = await initializeLibraryReaderForDirectory(
-        path, "bad_multiple_pk_probe.dart");
+        path, "bad_multiple_pk_probe.0.dart");
+    library_7 = await initializeLibraryReaderForDirectory(
+        path, "bad_multiple_pk_probe.1.dart");
   });
 
   group('Validation tests', () {
@@ -67,9 +71,15 @@ void main() {
       await matchProbeOnCaliber(generator, library_5, caliber5Path);
     });
 
-    test('Test validation multiple, non composite, PKs on the same model',
+    test('Test validation multiple composite groups, PKs on the same model',
         () async {
       await matchProbeOnCaliber(generator, library_6, caliber6Path);
+    });
+
+    test(
+        'Test validation multiple, composite and single, PKs on the same model',
+        () async {
+      await matchProbeOnCaliber(generator, library_7, caliber7Path);
     });
   });
 }
