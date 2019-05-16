@@ -3,6 +3,7 @@ import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 import 'package:f_orm_m8_sqlite/generator/writers/account_entity_writer.dart';
 import 'package:f_orm_m8_sqlite/generator/writers/account_related_entity_writer.dart';
 import 'package:f_orm_m8_sqlite/generator/writers/independent_entity_writer.dart';
+import 'package:f_orm_m8_sqlite/generator/writers/open_entity_writer.dart';
 
 class EntityWriterFactory {
   EntityWriter getWriter(EmittedEntity emittedEntity) {
@@ -15,6 +16,9 @@ class EntityWriterFactory {
         break;
       case EntityType.independent:
         return IndependentEntityWriter(emittedEntity);
+        break;
+      case EntityType.open:
+        return OpenEntityWriter(emittedEntity);
         break;
       default:
         return EntityWriter(emittedEntity);

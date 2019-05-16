@@ -20,12 +20,12 @@ void main() {
   group('Exceptions tests', () {
     final generator = OrmM8GeneratorForAnnotation();
 
-    test('Test Database models must implement DbEntity', () async {
+    test('Test Database models must implement DbEntity or DbOpenEntity', () async {
       String v = await generator.generate(library_1, null);
 
       expect(
           v.contains(
-              '''/*\nException: Database models must implement `DbEntity` interface!'''),
+              '''/*\nException: Database models must implement `DbEntity` or `DbOpenEntity` interface!'''),
           true);
     });
 

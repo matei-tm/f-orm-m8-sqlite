@@ -47,9 +47,7 @@ class ModelParser {
   }
 
   void _extractEntityMeta() {
-    if (!isDbEntity.isAssignableFromType(modelClassElement.type)) {
-      throw Exception("Database models must implement `DbEntity` interface!");
-    }
+    validatePreExtractionConditions();
 
     final ElementAnnotation elementAnnotationMetadata =
         modelClassElement.metadata.firstWhere(
@@ -76,7 +74,23 @@ class ModelParser {
     } else if (modelClassElement.allSupertypes
         .any((InterfaceType i) => isDbEntity.isExactlyType(i))) {
       entityType = EntityType.independent;
+    } else if (modelClassElement.allSupertypes
+        .any((InterfaceType i) => isDbOpenEntity.isExactlyType(i))) {
+      entityType = EntityType.open;
     }
+  }
+
+  void validatePreExtractionConditions() {
+    if (isDbEntity.isAssignableFromType(modelClassElement.type)) {
+      return;
+    }
+
+    if (isDbOpenEntity.isAssignableFromType(modelClassElement.type)) {
+      return;
+    }
+
+    throw Exception(
+        "Database models must implement `DbEntity` or `DbOpenEntity` interface!");
   }
 
   void _extractEntityAttributes() {

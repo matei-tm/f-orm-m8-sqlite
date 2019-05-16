@@ -1,1 +1,1 @@
-enum EntityType { account, accountRelated, independent }
+enum EntityType { account, accountRelated, independent, open }

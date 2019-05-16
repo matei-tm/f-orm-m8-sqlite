@@ -36,7 +36,9 @@ ${s002}}
 """);
 
     sb.write(getSoftdeleteMethod());
-    sb.writeln("}");
+
+    sb.write(getMixinEnd());
+
     return sb.toString();
   }
 }

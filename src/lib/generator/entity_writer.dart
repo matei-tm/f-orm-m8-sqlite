@@ -70,6 +70,14 @@ ${s002}final String ${theTableHandler} = '${theTableHandlerValue}';""";
     return sb.toString();
   }
 
+  String getMixinEnd() {
+    StringBuffer sb = StringBuffer();
+
+    sb.writeln("}");
+
+    return sb.toString();
+  }
+
   String getCreateTrackableTimestampString() {
     String trackableTimestamp = '';
     if (emittedEntity.hasTrackCreate) {

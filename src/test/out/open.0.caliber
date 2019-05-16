@@ -1,0 +1,125 @@
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:__test__/open.dart';
+
+class HealthEntryProxy extends HealthEntry {
+  DateTime dateCreate;
+  DateTime dateUpdate;
+  DateTime dateDelete;
+  bool get isDeleted => dateDelete.year > 1970;
+
+  HealthEntryProxy();
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['pk_part1_column'] = pkPart1;
+    map['pk_part2_column'] = pkPart2;
+    map['my_description_column'] = description;
+    map['date_create'] = dateCreate.millisecondsSinceEpoch;
+    map['date_update'] = dateUpdate.millisecondsSinceEpoch;
+    // map['date_delete'] is handled by delete method
+
+    return map;
+  }
+
+  HealthEntryProxy.fromMap(Map<String, dynamic> map) {
+    this.pkPart1 = map['pk_part1_column'];
+    this.pkPart2 = map['pk_part2_column'];
+    this.description = map['my_description_column'];
+    this.dateCreate = DateTime.fromMillisecondsSinceEpoch(map['date_create']);
+    this.dateUpdate = DateTime.fromMillisecondsSinceEpoch(map['date_update']);
+    this.dateDelete = DateTime.fromMillisecondsSinceEpoch(map['date_delete']);
+  }
+}
+
+mixin HealthEntryDatabaseProvider {
+  Future<Database> db;
+  final theHealthEntryColumns = [
+    "pk_part1_column",
+    "pk_part2_column",
+    "my_description_column",
+    "date_create",
+    "date_update",
+    "date_delete"
+  ];
+
+  final String theHealthEntryTableHandler = 'my_health_entries_table';
+  Future createHealthEntryTable(Database db) async {
+    await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
+    pk_part1_column TEXT ,
+    pk_part2_column TEXT ,
+    my_description_column TEXT  UNIQUE,
+    date_create INTEGER,
+    date_update INTEGER,
+    date_delete INTEGER DEFAULT 0    ,
+    PRIMARY KEY(pk_part1_column, pk_part2_column)
+    )''');
+  }
+
+  Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
+    var dbClient = await db;
+
+    instanceHealthEntry.dateCreate = DateTime.now();
+    instanceHealthEntry.dateUpdate = DateTime.now();
+
+    var result = await dbClient.insert(theHealthEntryTableHandler, instanceHealthEntry.toMap());
+    return result;
+  }
+
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesAll() async {
+    var dbClient = await db;
+    var result =
+        await dbClient.query(theHealthEntryTableHandler, columns: theHealthEntryColumns, where: 'date_delete > 0');
+
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getHealthEntryProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theHealthEntryTableHandler  WHERE date_delete > 0'));
+  }
+
+  Future<HealthEntryProxy> getHealthEntry(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(theHealthEntryTableHandler,
+        columns: theHealthEntryColumns, where: 'date_delete > 0 AND null = ?', whereArgs: [id]);
+
+
+    if (result.length > 0) {
+      return HealthEntryProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteHealthEntry(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(theHealthEntryTableHandler, where: 'null = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteHealthEntryProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(theHealthEntryTableHandler);
+    return true;
+  }
+
+  Future<int> updateHealthEntry(HealthEntryProxy instanceHealthEntry) async {
+    var dbClient = await db;
+
+instanceHealthEntry.dateUpdate = DateTime.now();
+
+    return await dbClient.update(theHealthEntryTableHandler, instanceHealthEntry.toMap(),
+        where: "null = ?", whereArgs: [instanceHealthEntry.id]);
+  }
+  Future<int> softdeleteHealthEntry(int id) async {
+    var dbClient = await db;
+
+    var map = Map<String, dynamic>();
+    map['date_delete'] = DateTime.now().millisecondsSinceEpoch;
+
+    return await dbClient
+    .update(theHealthEntryTableHandler, map, where: "null = ?", whereArgs: [id]);
+  }
+}
