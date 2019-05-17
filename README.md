@@ -17,14 +17,12 @@
     - [UserAccount - A DbAccountEntity implementation](#useraccount---a-dbaccountentity-implementation)
       - [The model](#the-model)
       - [The generated code](#the-generated-code)
-    - [HealthEntry - A DbAccountRelatedEntity implementation](#healthentry---a-dbaccountrelatedentity-implementation)
-      - [The model](#the-model-1)
       - [The generated code](#the-generated-code-1)
     - [GymLocation - A DbEntity implementation](#gymlocation---a-dbentity-implementation)
-      - [The model](#the-model-2)
+      - [The model](#the-model-1)
       - [The generated code](#the-generated-code-2)
     - [Receipt - A DbEntity implementation](#receipt---a-dbentity-implementation)
-      - [The model](#the-model-3)
+      - [The model](#the-model-2)
       - [The generated code](#the-generated-code-3)
     - [The database adapter](#the-database-adapter)
 
@@ -51,11 +49,11 @@ Supported orm-m8 features:
 | ColumnMetadata.      | unique                 | ColumnMetadata      | v0.1.0            |                    |
 | ColumnMetadata.      | notNull                | ColumnMetadata      | v0.1.0            |                    |
 | ColumnMetadata.      | autoIncrement          | ColumnMetadata      | v0.3.0            |                    |
-| ColumnMetadata.      | indexed                | ColumnMetadata      | -                 | Planned for v0.7.0 |
+| ColumnMetadata.      | indexed                | ColumnMetadata      | v0.7.0            |                    |
 | CompositeConstraint. | unique                 | CompositeConstraint | v0.4.0            |                    |
 | CompositeConstraint. | primaryKey             | CompositeConstraint | v0.4.0            |                    |
-| CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.7.0 |
-| CompositeConstraint. | indexed                | CompositeConstraint | -                 | Planned for v0.7.0 |
+| CompositeConstraint. | foreignKey             | CompositeConstraint | -                 | Planned for v0.9.0 |
+| CompositeConstraint. | indexed                | CompositeConstraint | v0.7.0            |                    |
 | implements           | DbOpenEntity           | entity helper       | v0.6.3            |                    |
 | implements           | DbEntity               | entity helper       | v0.1.0            |                    |
 | implements           | DbAccountEntity        | entity helper       | v0.1.0            |                    |
@@ -94,7 +92,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            f_orm_m8_sqlite: ^0.6.3
+            f_orm_m8_sqlite: ^0.7.0
             flutter_test:
                 sdk: flutter
 
@@ -168,9 +166,8 @@ import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable("user_account")
 class UserAccount implements DbAccountEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.primaryKey |
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
           ColumnMetadata.unique |
           ColumnMetadata.autoIncrement)
   int id;
@@ -178,22 +175,25 @@ class UserAccount implements DbAccountEntity {
   @DataColumn("description")
   String description;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 
-  @DataColumn("abbreviation", ColumnMetadata.notNull | ColumnMetadata.unique)
+  @DataColumn("abbreviation",
+      metadataLevel: ColumnMetadata.notNull | ColumnMetadata.unique)
   String abbreviation;
 
-  @DataColumn("email", ColumnMetadata.notNull)
+  @DataColumn("email", metadataLevel: ColumnMetadata.notNull)
   String email;
 
-  @DataColumn("user_name", ColumnMetadata.notNull | ColumnMetadata.unique)
+  @DataColumn("user_name",
+      metadataLevel: ColumnMetadata.notNull | ColumnMetadata.unique)
   String userName;
 
   @DataColumn("is_current")
   bool isCurrent;
 }
+
 ```
 
 #### The generated code
@@ -202,7 +202,7 @@ From the model, the builder creates `models/user_account.g.m8.dart` file with fo
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -255,12 +255,15 @@ mixin UserAccountDatabaseProvider {
   final String theUserAccountTableHandler = 'user_account';
   Future createUserAccountTable(Database db) async {
     await db.execute('''CREATE TABLE $theUserAccountTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
     description TEXT ,
-    abbreviation TEXT  NOT NULL UNIQUE,
+    abbreviation TEXT  NOT NULL,
     email TEXT  NOT NULL,
-    user_name TEXT  NOT NULL UNIQUE,
-    is_current INTEGER 
+    user_name TEXT  NOT NULL,
+    is_current INTEGER ,
+    UNIQUE (id),
+    UNIQUE (abbreviation),
+    UNIQUE (user_name)
     )''');
   }
 
@@ -344,21 +347,6 @@ mixin UserAccountDatabaseProvider {
         where: "1 AND id = ?", whereArgs: [id]);
   }
 }
-
-```
-
-### HealthEntry - A DbAccountRelatedEntity implementation
-
-To demonstrate how to use a model that is dependent to UserAccount, we added HealthEntry model that implements DbAccountRelatedEntity.
-The model detain a composite unique constraint based on accountId and description.
-
-![usecase002](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase002-320.gif)
-
-#### The model
-
-The model file `models/health_entry.dart` has the following content:
-
-```dart
 import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable(
@@ -399,6 +387,7 @@ class HealthEntry implements DbAccountRelatedEntity {
       metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
+
 ```
 
 #### The generated code
@@ -407,7 +396,7 @@ From the model, the builder creates `models/health_entry.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -463,14 +452,17 @@ mixin HealthEntryDatabaseProvider {
   final String theHealthEntryTableHandler = 'health_entry';
   Future createHealthEntryTable(Database db) async {
     await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
     diagnosys_date INTEGER ,
     account_id INTEGER  NOT NULL,
     description TEXT  NOT NULL,
     date_create INTEGER,
-    date_update INTEGER    ,
-    UNIQUE(account_id, description)
+    date_update INTEGER,
+    UNIQUE (id, account_id),
+    UNIQUE (account_id, description, account_id)
     )''');
+    await db.execute(
+        '''CREATE INDEX ix_${theHealthEntryTableHandler}_ix_account_entry ON $theHealthEntryTableHandler (account_id)''');
   }
 
   Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
@@ -562,23 +554,23 @@ import 'package:f_orm_m8/f_orm_m8.dart';
 @DataTable(
     "gym_location", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class GymLocation implements DbEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.primaryKey |
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
           ColumnMetadata.unique |
           ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("description", ColumnMetadata.unique)
+  @DataColumn("description", metadataLevel: ColumnMetadata.unique)
   String description;
 
   @DataColumn("rating")
   int rating;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
+
 ```
 
 #### The generated code
@@ -587,7 +579,7 @@ From the model, the builder creates `models/gym_location.g.m8.dart` file with co
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -636,11 +628,13 @@ mixin GymLocationDatabaseProvider {
   final String theGymLocationTableHandler = 'gym_location';
   Future createGymLocationTable(Database db) async {
     await db.execute('''CREATE TABLE $theGymLocationTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
-    description TEXT  UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    description TEXT ,
     rating INTEGER ,
     date_create INTEGER,
-    date_update INTEGER
+    date_update INTEGER,
+    UNIQUE (id),
+    UNIQUE (description)
     )''');
   }
 
@@ -704,6 +698,7 @@ mixin GymLocationDatabaseProvider {
   }
 }
 
+
 ```
 
 ### Receipt - A DbEntity implementation
@@ -721,35 +716,42 @@ import 'package:f_orm_m8/f_orm_m8.dart';
 
 @DataTable("receipt", TableMetadata.trackCreate | TableMetadata.trackUpdate)
 class Receipt implements DbEntity {
-  @DataColumn(
-      "id",
-      ColumnMetadata.primaryKey |
+  @DataColumn("id",
+      metadataLevel: ColumnMetadata.primaryKey |
           ColumnMetadata.unique |
           ColumnMetadata.autoIncrement)
   int id;
 
-  @DataColumn("is_bio", ColumnMetadata.notNull)
+  @DataColumn("number_of_molecules", metadataLevel: ColumnMetadata.notNull)
+  BigInt numberOfMolecules;
+
+  @DataColumn("is_bio", metadataLevel: ColumnMetadata.notNull)
   bool isBio;
 
-  @DataColumn("expiration_date", ColumnMetadata.notNull)
+  @DataColumn("expiration_date", metadataLevel: ColumnMetadata.notNull)
   DateTime expirationDate;
 
-  @DataColumn("quantity", ColumnMetadata.notNull)
+  @DataColumn("quantity", metadataLevel: ColumnMetadata.notNull)
   double quantity;
 
-  @DataColumn("number_of_items", ColumnMetadata.notNull)
+  @DataColumn("decomposing_duration", metadataLevel: ColumnMetadata.notNull)
+  Duration decomposingDuration;
+
+  @DataColumn("number_of_items", metadataLevel: ColumnMetadata.notNull)
   int numberOfItems;
 
-  @DataColumn("storage_temperature", ColumnMetadata.notNull)
+  @DataColumn("storage_temperature", metadataLevel: ColumnMetadata.notNull)
   num storageTemperature;
 
-  @DataColumn("description", ColumnMetadata.unique | ColumnMetadata.notNull)
+  @DataColumn("description",
+      metadataLevel: ColumnMetadata.unique | ColumnMetadata.notNull)
   String description;
 
-  @DataColumn(
-      "my_future_column7", ColumnMetadata.ignore | ColumnMetadata.unique)
+  @DataColumn("my_future_column7",
+      metadataLevel: ColumnMetadata.ignore | ColumnMetadata.unique)
   int futureData;
 }
+
 ```
 
 #### The generated code
@@ -758,7 +760,7 @@ From the model, the builder creates `models/receipt.g.m8.dart` file with content
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -773,15 +775,19 @@ class ReceiptProxy extends Receipt {
   DateTime dateUpdate;
 
   ReceiptProxy(
-      {isBio,
+      {numberOfMolecules,
+      isBio,
       expirationDate,
       quantity,
+      decomposingDuration,
       numberOfItems,
       storageTemperature,
       description}) {
+    this.numberOfMolecules = numberOfMolecules;
     this.isBio = isBio;
     this.expirationDate = expirationDate;
     this.quantity = quantity;
+    this.decomposingDuration = decomposingDuration;
     this.numberOfItems = numberOfItems;
     this.storageTemperature = storageTemperature;
     this.description = description;
@@ -790,9 +796,11 @@ class ReceiptProxy extends Receipt {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
+    map['number_of_molecules'] = numberOfMolecules.toString();
     map['is_bio'] = isBio ? 1 : 0;
     map['expiration_date'] = expirationDate.millisecondsSinceEpoch;
     map['quantity'] = quantity;
+    map['decomposing_duration'] = decomposingDuration.inMilliseconds;
     map['number_of_items'] = numberOfItems;
     map['storage_temperature'] = storageTemperature;
     map['description'] = description;
@@ -804,10 +812,13 @@ class ReceiptProxy extends Receipt {
 
   ReceiptProxy.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
+    this.numberOfMolecules = BigInt.parse(map['number_of_molecules']);
     this.isBio = map['is_bio'] == 1 ? true : false;
     this.expirationDate =
         DateTime.fromMillisecondsSinceEpoch(map['expiration_date']);
     this.quantity = map['quantity'];
+    this.decomposingDuration =
+        Duration(milliseconds: map['decomposing_duration']);
     this.numberOfItems = map['number_of_items'];
     this.storageTemperature = map['storage_temperature'];
     this.description = map['description'];
@@ -820,9 +831,11 @@ mixin ReceiptDatabaseProvider {
   Future<Database> db;
   final theReceiptColumns = [
     "id",
+    "number_of_molecules",
     "is_bio",
     "expiration_date",
     "quantity",
+    "decomposing_duration",
     "number_of_items",
     "storage_temperature",
     "description",
@@ -833,15 +846,19 @@ mixin ReceiptDatabaseProvider {
   final String theReceiptTableHandler = 'receipt';
   Future createReceiptTable(Database db) async {
     await db.execute('''CREATE TABLE $theReceiptTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    number_of_molecules TEXT  NOT NULL,
     is_bio INTEGER  NOT NULL,
     expiration_date INTEGER  NOT NULL,
     quantity REAL  NOT NULL,
+    decomposing_duration INTEGER  NOT NULL,
     number_of_items INTEGER  NOT NULL,
     storage_temperature NUMERIC  NOT NULL,
-    description TEXT  NOT NULL UNIQUE,
+    description TEXT  NOT NULL,
     date_create INTEGER,
-    date_update INTEGER
+    date_update INTEGER,
+    UNIQUE (id),
+    UNIQUE (description)
     )''');
   }
 
@@ -905,7 +922,10 @@ mixin ReceiptDatabaseProvider {
   }
 }
 
+
 ```
+
+
 
 ### The database adapter
 
@@ -916,7 +936,7 @@ For the all models the builder will generate a common database adapter file `mai
 
 ```dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-15 00:33:16.415844
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // DatabaseProviderGenerator
@@ -1023,5 +1043,6 @@ class DatabaseProvider
     await deleteUserAccountProxiesAll();
   }
 }
+
 
 ```
