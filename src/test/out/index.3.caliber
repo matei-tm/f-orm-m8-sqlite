@@ -45,7 +45,7 @@ mixin IndexProbeDatabaseProvider {
   final String theIndexProbeTableHandler = 'my_index_probe_table';
   Future createIndexProbeTable(Database db) async {
     await db.execute('''CREATE TABLE $theIndexProbeTableHandler (
-    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT,
     short_name3 TEXT ,
     short_name4 TEXT ,
     score1 INTEGER ,

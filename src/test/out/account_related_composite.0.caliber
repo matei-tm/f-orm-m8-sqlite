@@ -33,10 +33,10 @@ mixin HealthEntryAccountRelatedDatabaseProvider {
   final String theHealthEntryAccountRelatedTableHandler = 'my_account_related_table';
   Future createHealthEntryAccountRelatedTable(Database db) async {
     await db.execute('''CREATE TABLE $theHealthEntryAccountRelatedTableHandler (
-    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
+    my_id_column INTEGER  PRIMARY KEY AUTOINCREMENT,
     account_id INTEGER ,
-    description TEXT     ,
-    UNIQUE(account_id, description)
+    description TEXT ,
+    UNIQUE (account_id, description, account_id)
     )''');
     await db.execute('''CREATE INDEX ix_${theHealthEntryAccountRelatedTableHandler}_ix_account_entry ON $theHealthEntryAccountRelatedTableHandler (account_id)''');
   }

@@ -6,9 +6,7 @@ int croco;
 
 class HealthEntryAccountRelated implements DbAccountRelatedEntity {
   @DataColumn("my_id_column",
-      metadataLevel: ColumnMetadata.primaryKey |
-          ColumnMetadata.unique |
-          ColumnMetadata.autoIncrement)
+      metadataLevel: ColumnMetadata.primaryKey | ColumnMetadata.autoIncrement)
   int id;
 
   @DataColumn("my_description_column", metadataLevel: ColumnMetadata.unique)

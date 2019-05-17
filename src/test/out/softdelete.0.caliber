@@ -51,13 +51,16 @@ mixin ToDoDatabaseProvider {
   final String theToDoTableHandler = 'to_do';
   Future createToDoTable(Database db) async {
     await db.execute('''CREATE TABLE $theToDoTableHandler (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE,
-    description TEXT  UNIQUE,
+    id INTEGER  PRIMARY KEY AUTOINCREMENT,
+    description TEXT ,
     diagnosys_date INTEGER ,
-    user_account_id INTEGER  NOT NULL UNIQUE,
+    user_account_id INTEGER  NOT NULL,
     date_create INTEGER,
     date_update INTEGER,
-    date_delete INTEGER DEFAULT 0
+    date_delete INTEGER DEFAULT 0,
+    UNIQUE (id, date_delete, user_account_id),
+    UNIQUE (description, date_delete, user_account_id),
+    UNIQUE (date_delete, user_account_id)
     )''');
   }
 

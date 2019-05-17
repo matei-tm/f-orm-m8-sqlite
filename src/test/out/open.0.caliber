@@ -48,11 +48,12 @@ mixin HealthEntryDatabaseProvider {
     await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
     pk_part1_column TEXT ,
     pk_part2_column TEXT ,
-    my_description_column TEXT  UNIQUE,
+    my_description_column TEXT ,
     date_create INTEGER,
     date_update INTEGER,
     date_delete INTEGER DEFAULT 0    ,
-    PRIMARY KEY(pk_part1_column, pk_part2_column)
+    PRIMARY KEY(pk_part1_column, pk_part2_column),
+    UNIQUE (my_description_column, date_delete)
     )''');
   }
 
