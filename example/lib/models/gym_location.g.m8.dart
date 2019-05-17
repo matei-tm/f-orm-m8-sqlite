@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 02:19:31.672985
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -53,8 +53,8 @@ mixin GymLocationDatabaseProvider {
     rating INTEGER ,
     date_create INTEGER,
     date_update INTEGER,
-    UNIQUE (id) ON CONFLICT REPLACE,
-    UNIQUE (description) ON CONFLICT REPLACE
+    UNIQUE (id),
+    UNIQUE (description)
     )''');
   }
 

@@ -111,24 +111,37 @@ class SqlDefinitionWriter extends ValidationCollectable with Spacers {
 
   String getUniqueConstraintsStringBlock() {
     String collectedString = "";
-    String uniqueCombinationExtraString =
-        (uniqueAppendedCombinationList?.length ?? 0) > 0
-            ? ", ${uniqueAppendedCombinationList.join(", ")}"
-            : "";
 
     emittedEntity.attributes.values
         .where((ea) => isUnique(ea.metadataLevel))
         .forEach((attributeWithUnique) {
       collectedString +=
-          ",\n${s00004}UNIQUE (${attributeWithUnique.attributeName}$uniqueCombinationExtraString) ON CONFLICT REPLACE";
+          ",\n${s00004}UNIQUE (${getUniqueCombinationString(attributeWithUnique.attributeName)})";
     });
 
     _uniqueCompositesMap.forEach((k, v) {
       collectedString +=
-          ",\n${s00004}UNIQUE ($v$uniqueCombinationExtraString) ON CONFLICT REPLACE";
+          ",\n${s00004}UNIQUE (${getUniqueCombinationString(v)})";
     });
 
     return collectedString == "" ? collectedString : "$collectedString";
+  }
+
+  String getUniqueCombinationString(String currentAttribute) {
+    String result;
+
+    if ((uniqueAppendedCombinationList?.length ?? 0) > 0) {
+      if (uniqueAppendedCombinationList.contains(currentAttribute)) {
+        result = uniqueAppendedCombinationList.join(", ");
+      } else {
+        result =
+            "$currentAttribute, ${uniqueAppendedCombinationList.join(", ")}";
+      }
+    } else {
+      result = "$currentAttribute";
+    }
+
+    return result;
   }
 
   void collectCompositeConstraints() {

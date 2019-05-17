@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Emitted on: 2019-05-17 02:19:31.672985
+// Emitted on: 2019-05-17 13:54:19.192616
 
 // **************************************************************************
 // Generator: OrmM8GeneratorForAnnotation
@@ -61,8 +61,8 @@ mixin HealthEntryDatabaseProvider {
     description TEXT  NOT NULL,
     date_create INTEGER,
     date_update INTEGER,
-    UNIQUE (id, account_id) ON CONFLICT REPLACE,
-    UNIQUE (account_id, description, account_id) ON CONFLICT REPLACE
+    UNIQUE (id, account_id),
+    UNIQUE (account_id, description, account_id)
     )''');
     await db.execute(
         '''CREATE INDEX ix_${theHealthEntryTableHandler}_ix_account_entry ON $theHealthEntryTableHandler (account_id)''');
