@@ -1,6 +1,6 @@
 name: f_orm_m8_sqlite
 description: Flutter package to generate SQLite fixture in conjuction with the package f_orm_m8.
-version: 0.6.4
+version: 0.7.0-pre1
 author: Mircea-Tiberiu MATEI<matei_tm@yahoo.com>
 homepage: https://github.com/matei-tm/f-orm-m8-sqlite
 
