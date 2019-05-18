@@ -5,7 +5,7 @@
 [![pub package](https://img.shields.io/pub/v/f_orm_m8_sqlite.svg)](https://pub.dartlang.org/packages/f_orm_m8_sqlite) 
 [![Build Status](https://travis-ci.org/matei-tm/f-orm-m8-sqlite.svg?branch=master)](https://travis-ci.org/matei-tm/f-orm-m8-sqlite) 
 [![Codecov](https://img.shields.io/codecov/c/github/matei-tm/f-orm-m8-sqlite.svg)](https://codecov.io/gh/matei-tm/f-orm-m8-sqlite) 
-[![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/matei-tm/f-orm-m8-sqlite.svg)](LICENSE)
 
 > f_orm_m8_sqlite - \fɔːrm meɪt Ess-kjuː-ɛl-aɪ\ A [f_orm_m8](https://github.com/matei-tm/f-orm-m8) implementation for Sqlite, with mapping capability out of the box. Part of Dart Framework ORM **M8**
 
@@ -148,14 +148,14 @@ Supported orm-m8 features:
 A full, flutter working example is maintained on [https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example](https://github.com/matei-tm/f-orm-m8-sqlite/tree/master/example).  
 The example presents different approaches to solve CRUD functionality for models that adhere to f_orm_m8 annotation framework.
 
-![usecase000](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase000-320.gif)
+![usecase000](example/docs/usecase000-320.gif)
 
 
 ### UserAccount - A DbAccountEntity implementation
 
 The example has a common UserAccount model that implements DbAccountEntity
 
-![usecase001](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase001-320.gif)
+![usecase001](example/docs/usecase001-320.gif)
 
 #### The model
 
@@ -542,7 +542,7 @@ mixin HealthEntryDatabaseProvider {
 
 To demonstrate how to use a generic model, we added a GymLocation model that implements DbEntity. 
 
-![usecase003](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase003-320.gif)
+![usecase003](example/docs/usecase003-320.gif)
 
 #### The model
 
@@ -705,7 +705,7 @@ mixin GymLocationDatabaseProvider {
 
 For a more detailed model with all supported fields type, we added a Receipt model that implements DbEntity. 
 
-![usecase004](https://github.com/matei-tm/f-orm-m8-sqlite/blob/master/example/docs/usecase004-320.gif)
+![usecase004](example/docs/usecase004-320.gif)
 
 #### The model
 
