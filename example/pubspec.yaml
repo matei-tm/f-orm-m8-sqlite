@@ -11,7 +11,7 @@ description: sqlite-m8-generator example.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1
+version: 1.0.2
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -54,10 +54,10 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
-    - docs/usecase001-320.gif
-    - docs/usecase002-320.gif
-    - docs/usecase003-320.gif
-    - docs/usecase004-320.gif
+    - images/usecase001-320-short.gif
+    - images/usecase002-320-short.gif
+    - images/usecase003-320-short.gif
+    - images/usecase004-320-short.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

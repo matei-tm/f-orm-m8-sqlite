@@ -76,7 +76,7 @@ class DisclaimerFragment extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
-                    child: Image.asset("docs/usecase001-320.gif"),
+                    child: Image.asset("images/usecase001-320-short.gif"),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -99,7 +99,7 @@ class DisclaimerFragment extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
-                    child: Image.asset("docs/usecase002-320.gif"),
+                    child: Image.asset("images/usecase002-320-short.gif"),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -122,7 +122,7 @@ class DisclaimerFragment extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
-                    child: Image.asset("docs/usecase003-320.gif"),
+                    child: Image.asset("images/usecase003-320-short.gif"),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -136,7 +136,7 @@ class DisclaimerFragment extends StatelessWidget {
                           TextSpan(
                             style: contentTextStyle,
                             text:
-                                '\nExample: Receipts\nModel: Receipt\nField types: bool, DateTime, double, int, num, String',
+                                '\nExample: Receipts\nModel: Receipt\nField types: bool, DateTime, double, int, num, String, Duration, BigInt',
                           ),
                         ],
                       ),
@@ -145,7 +145,7 @@ class DisclaimerFragment extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 30.0, bottom: 50.0),
-                    child: Image.asset("docs/usecase004-320.gif"),
+                    child: Image.asset("images/usecase004-320-short.gif"),
                   ),
                 ],
               ),

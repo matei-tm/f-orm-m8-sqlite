@@ -14,11 +14,12 @@ class GymspectorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'orm-m8 Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.lightBlue,
       ),
       home: MyHomePage(
-          title: 'orm-m8 Demo Home Page', databaseProvider: databaseProvider),
+          title: 'orm-m8 Demo Home Page3', databaseProvider: databaseProvider),
     );
   }
 }
@@ -72,9 +73,7 @@ class MyHomePageState extends State<MyHomePage> {
         ? Container()
         : MaterialApp(
             key: const ValueKey<String>('OrmM8Example'),
-            theme: ThemeData(
-              primarySwatch: Colors.red,
-            ),
+            debugShowCheckedModeBanner: false,
             initialRoute: _currentRoute,
             routes: {
               '/': (context) => HomePage(),

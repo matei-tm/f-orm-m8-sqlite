@@ -133,7 +133,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                       ),
                       Flexible(
                         child: CircleAvatar(
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.black,
                           child: Text("??"),
                         ),
                       ),
