@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.7.0+1] - 2019-05-18
+
+### Changed
+
+* Update to Example project. Change the theme color, updating docs animated gif's
+
 ## [0.7.0] - 2019-05-17
 
 ### Fixed
