@@ -1,0 +1,118 @@
+import 'package:sqflite/sqflite.dart';
+import 'dart:async';
+import 'package:__test__/supported_types_probe.0.dart';
+
+class HealthEntryProxy extends HealthEntry {
+
+  HealthEntryProxy();
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['my_id_column'] = id;
+    map['my_bigint_column'] = bigintField.toString();
+    map['my_bool_column'] = boolField ? 1 : 0;
+    map['my_datetime_column'] = datetimeField.millisecondsSinceEpoch;
+    map['my_double_column'] = doubleField;
+    map['my_duration_column'] = durationField.inMilliseconds;
+    map['my_num_column'] = numField;
+    map['my_string_column'] = stringField;
+
+    return map;
+  }
+
+  HealthEntryProxy.fromMap(Map<String, dynamic> map) {
+    this.id = map['my_id_column'];
+    this.bigintField = BigInt.parse(map['my_bigint_column']);
+    this.boolField = map['my_bool_column'] == 1 ? true : false;
+    this.datetimeField = DateTime.fromMillisecondsSinceEpoch(map['my_datetime_column']);
+    this.doubleField = map['my_double_column'];
+    this.durationField = Duration(milliseconds: map['my_duration_column']);
+    this.numField = map['my_num_column'];
+    this.stringField = map['my_string_column'];
+  }
+}
+
+mixin HealthEntryDatabaseProvider {
+  Future<Database> db;
+  final theHealthEntryColumns = [
+    "my_id_column",
+    "my_bigint_column",
+    "my_bool_column",
+    "my_datetime_column",
+    "my_double_column",
+    "my_duration_column",
+    "my_num_column",
+    "my_string_column"
+  ];
+
+  final String theHealthEntryTableHandler = 'my_supported_types_table';
+  Future createHealthEntryTable(Database db) async {
+    await db.execute('''CREATE TABLE $theHealthEntryTableHandler (
+    my_id_column INTEGER  PRIMARY KEY,
+    my_bigint_column TEXT ,
+    my_bool_column INTEGER ,
+    my_datetime_column INTEGER ,
+    my_double_column REAL ,
+    my_duration_column INTEGER ,
+    my_num_column NUMERIC ,
+    my_string_column TEXT 
+    )''');
+  }
+
+  Future<int> saveHealthEntry(HealthEntryProxy instanceHealthEntry) async {
+    var dbClient = await db;
+
+    
+
+    var result = await dbClient.insert(theHealthEntryTableHandler, instanceHealthEntry.toMap());
+    return result;
+  }
+
+  Future<List<HealthEntryProxy>> getHealthEntryProxiesAll() async {
+    var dbClient = await db;
+    var result =
+        await dbClient.query(theHealthEntryTableHandler, columns: theHealthEntryColumns, where: '1');
+
+    return result.map((e) => HealthEntryProxy.fromMap(e)).toList();
+  }
+
+  Future<int> getHealthEntryProxiesCount() async {
+    var dbClient = await db;
+    return Sqflite.firstIntValue(
+    await dbClient.rawQuery('SELECT COUNT(*) FROM $theHealthEntryTableHandler  WHERE 1'));
+  }
+
+  Future<HealthEntryProxy> getHealthEntry(int id) async {
+    var dbClient = await db;
+    List<Map> result = await dbClient.query(theHealthEntryTableHandler,
+        columns: theHealthEntryColumns, where: '1 AND my_id_column = ?', whereArgs: [id]);
+
+
+    if (result.length > 0) {
+      return HealthEntryProxy.fromMap(result.first);
+    }
+
+    return null;
+  }
+
+  Future<int> deleteHealthEntry(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(theHealthEntryTableHandler, where: 'my_id_column = ?', whereArgs: [id]);
+  }
+
+  Future<bool> deleteHealthEntryProxiesAll() async {
+    var dbClient = await db;
+    await dbClient.delete(theHealthEntryTableHandler);
+    return true;
+  }
+
+  Future<int> updateHealthEntry(HealthEntryProxy instanceHealthEntry) async {
+    var dbClient = await db;
+
+
+
+    return await dbClient.update(theHealthEntryTableHandler, instanceHealthEntry.toMap(),
+        where: "my_id_column = ?", whereArgs: [instanceHealthEntry.id]);
+  }
+}
