@@ -1,6 +1,7 @@
 import 'package:mockito/mockito.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqlite_m8_demo/main.adapter.g.m8.dart';
+import 'package:test/test.dart';
 
 class MockDatabase extends Mock implements Database {}
 
@@ -15,17 +16,13 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
   when(mockDatabaseAdapter.getDb(any))
       .thenAnswer((_) async => Future.value(database));
 
-  when(database.close()).thenAnswer((_) async {
-    return;
-  });
+  when(database.close()).thenAnswer((_) async => Future<void>.value());
 
-  when(database.execute(any)).thenAnswer((_) async {
-    return;
-  });
+  when(database.execute(any)).thenAnswer((_) => Future<void>.value());
 
   when(database.insert(any, any)).thenAnswer((_) async => Future.value(1));
 
-  dynamic twoProxiesList = List<Map<String, dynamic>>();
+  var twoProxiesList = List<Map<String, dynamic>>();
 
   twoProxiesList.add(sample01.toMap());
   twoProxiesList.add(sample02.toMap());
@@ -33,7 +30,11 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
   when(database.query(any, columns: anyNamed('columns'), where: "1"))
       .thenAnswer((_) async => Future.value(twoProxiesList));
 
-  dynamic oneProxyList = List<Map<String, dynamic>>();
+  when(database.query(argThat(equals("to_do")),
+          columns: anyNamed('columns'), where: "date_delete > 0"))
+      .thenAnswer((_) async => Future.value(twoProxiesList));
+
+  var oneProxyList = List<Map<String, dynamic>>();
 
   oneProxyList.add(sample01.toMap());
 
@@ -41,6 +42,20 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
       columns: anyNamed('columns'),
       where: "1 AND id = ?",
       whereArgs: [1])).thenAnswer((_) async => Future.value(oneProxyList));
+
+  when(database.query(any,
+      columns: anyNamed('columns'),
+      where: "date_delete > 0 AND id = ?",
+      whereArgs: [1])).thenAnswer((_) async => Future.value(oneProxyList));
+
+  when(database.query(any,
+      columns: anyNamed('columns'),
+      where: "account_id = ? AND 1",
+      whereArgs: [2])).thenAnswer((_) async => Future.value(twoProxiesList));
+
+  when(database.query(any,
+          columns: anyNamed('columns'), where: "1 AND is_current = 1"))
+      .thenAnswer((_) async => Future.value(oneProxyList));
 
   when(database.delete(any, where: 'id = ?', whereArgs: [1]))
       .thenAnswer((_) async => Future.value(1));

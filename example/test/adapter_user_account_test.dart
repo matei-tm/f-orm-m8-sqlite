@@ -39,20 +39,20 @@ main() {
       expect(newGymId, 1);
     });
 
-    // test('get UserAccountProxies All test', () async {
-    //   var gymList = await databaseProvider.getUserAccountProxiesAll();
-    //   expect(gymList.length, 2);
-    // });
+    test('get UserAccountProxies All test', () async {
+      var gymList = await databaseProvider.getUserAccountProxiesAll();
+      expect(gymList.length, 2);
+    });
 
     test('get UserAccountProxies Count test', () async {
       var result = await databaseProvider.getUserAccountProxiesCount();
       expect(result, 9);
     });
 
-    // test('get UserAccount test', () async {
-    //   var userAccount = await databaseProvider.getUserAccount(1);
-    //   expect(userAccount.id, 1);
-    // });
+    test('get UserAccount test', () async {
+      var userAccount = await databaseProvider.getUserAccount(1);
+      expect(userAccount.id, 1);
+    });
 
     test('delete UserAccount test', () async {
       var deletedId =
@@ -68,6 +68,11 @@ main() {
     test('update UserAccount test', () async {
       var updatedId = await databaseProvider.updateUserAccount(proxySample01);
       expect(updatedId, proxySample01.id);
+    });
+
+    test('get current UserAccount test', () async {
+      var userAccount = await databaseProvider.getCurrentUserAccount();
+      expect(userAccount.id, 1);
     });
   });
 }

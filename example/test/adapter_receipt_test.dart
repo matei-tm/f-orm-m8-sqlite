@@ -38,22 +38,20 @@ main() {
       expect(newId, 1);
     });
 
-// // todo
-    // test('get Entity All test', () async {
-    //   var fullList = await databaseProvider.getReceiptProxiesAll();
-    //   expect(fullList.length, 2);
-    // });
+    test('get Entity All test', () async {
+      var fullList = await databaseProvider.getReceiptProxiesAll();
+      expect(fullList.length, 2);
+    });
 
     test('get Entity Count test', () async {
       var result = await databaseProvider.getReceiptProxiesCount();
       expect(result, 9);
     });
 
-// // todo
-    // test('get Entity test', () async {
-    //   var result = await databaseProvider.getReceipt(1);
-    //   expect(result.id, 1);
-    // });
+    test('get Entity test', () async {
+      var result = await databaseProvider.getReceipt(1);
+      expect(result.id, 1);
+    });
 
     test('delete Entity test', () async {
       var deletedId = await databaseProvider.deleteReceipt(proxySample01.id);

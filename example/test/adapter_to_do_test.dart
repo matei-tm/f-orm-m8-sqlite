@@ -68,5 +68,10 @@ main() {
       var updatedId = await databaseProvider.updateToDo(proxySample01);
       expect(updatedId, proxySample01.id);
     });
+
+    // test('get Entities by Account id test', () async {
+    //   var result = await databaseProvider.getToDoProxiesByAccountId(2);
+    //   expect(result.length, 2);
+    // });
   });
 }
