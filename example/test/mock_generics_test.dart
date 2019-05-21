@@ -11,7 +11,7 @@ main() {
       final databaseProvider = MockDatabaseProvider();
 
       when(databaseProvider.getGymLocationProxiesAll())
-          .thenAnswer((_) async => List<GymLocationProxy>());
+          .thenAnswer((_) async => Future.value(List<GymLocationProxy>()));
 
       expect(await databaseProvider.getGymLocationProxiesAll(),
           TypeMatcher<List<GymLocationProxy>>());

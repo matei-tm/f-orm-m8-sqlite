@@ -36,13 +36,11 @@ void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
 
   when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
 }
 
 void main() {
   final MockDatabaseProvider mockDatabaseProvider = buildMockDatabaseAdapter();
   testWidgets('Start page without account test', (WidgetTester tester) async {
-    //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
     when(mockDatabaseProvider.getCurrentUserAccount())
         .thenAnswer((_) => Future.value(null));
     await accountPageEntered(tester, mockDatabaseProvider);

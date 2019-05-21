@@ -12,7 +12,8 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
     MockDatabase database, dynamic sample01, dynamic sample02) {
   reset(database);
   reset(mockDatabaseAdapter);
-  when(mockDatabaseAdapter.getDb(any)).thenAnswer((_) async => database);
+  when(mockDatabaseAdapter.getDb(any))
+      .thenAnswer((_) async => Future.value(database));
 
   when(database.close()).thenAnswer((_) async {
     return;
@@ -22,7 +23,7 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
     return;
   });
 
-  when(database.insert(any, any)).thenAnswer((_) async => 1);
+  when(database.insert(any, any)).thenAnswer((_) async => Future.value(1));
 
   dynamic twoProxiesList = List<Map<String, dynamic>>();
 
@@ -30,7 +31,7 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
   twoProxiesList.add(sample02.toMap());
 
   when(database.query(any, columns: anyNamed('columns'), where: "1"))
-      .thenAnswer((_) async => twoProxiesList);
+      .thenAnswer((_) async => Future.value(twoProxiesList));
 
   dynamic oneProxyList = List<Map<String, dynamic>>();
 
@@ -39,17 +40,17 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
   when(database.query(any,
       columns: anyNamed('columns'),
       where: "1 AND id = ?",
-      whereArgs: [1])).thenAnswer((_) async => oneProxyList);
+      whereArgs: [1])).thenAnswer((_) async => Future.value(oneProxyList));
 
   when(database.delete(any, where: 'id = ?', whereArgs: [1]))
-      .thenAnswer((_) async => 1);
+      .thenAnswer((_) async => Future.value(1));
 
-  when(database.delete(any)).thenAnswer((_) async => 1);
+  when(database.delete(any)).thenAnswer((_) async => Future.value(1));
 
   when(database.update(any, any, where: 'id = ?', whereArgs: [1]))
-      .thenAnswer((_) async => 1);
+      .thenAnswer((_) async => Future.value(1));
 
-  when(database.rawQuery(any)).thenAnswer((_) async => [
+  when(database.rawQuery(any)).thenAnswer((_) async => Future.value([
         {"count": 9}
-      ]);
+      ]));
 }

@@ -48,7 +48,7 @@ void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
 
   when(mockDatabaseProvider.getCurrentUserAccount())
       .thenAnswer((_) => Future.value(firstUser));
-  //when(mockDatabaseProvider.extremeDevelopmentMode).thenAnswer((_) => false);
+
   when(mockDatabaseProvider.getUserAccountProxiesAll())
       .thenAnswer((_) => Future.value(usersList));
   when(mockDatabaseProvider.getUserAccountProxiesCount())
