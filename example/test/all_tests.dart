@@ -10,11 +10,7 @@ import 'health_entry_proxy_test.dart' as healthEntryProxyTest;
 import 'user_account_proxy_test.dart' as userAccountProxyTest;
 import 'receipt_proxy_test..dart' as receiptProxyTest;
 import 'to_do_proxy_test.dart' as toDoProxyTest;
-import 'adapter_gym_location_test.dart' as adapterGymLocation;
-import 'adapter_health_entry_test.dart' as adapterHealthEntry;
-import 'adapter_receipt_test.dart' as adapterReceipt;
-import 'adapter_to_do_test.dart' as adapterToDo;
-import 'adapter_user_account_test.dart' as adapterUserAccount;
+import 'adapter_test.dart' as adapter;
 
 main() {
   mockGenerics.main();
@@ -29,9 +25,5 @@ main() {
   userAccountProxyTest.main();
   receiptProxyTest.main();
   toDoProxyTest.main();
-  adapterGymLocation.main();
-  adapterReceipt.main();
-  adapterHealthEntry.main();
-  adapterToDo.main();
-  adapterUserAccount.main();
+  adapter.main();
 }
