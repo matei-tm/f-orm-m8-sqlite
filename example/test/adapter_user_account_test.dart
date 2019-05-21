@@ -16,7 +16,8 @@ main() {
   UserAccountProxy proxySample02 = userAccountProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
+    initTestFixture<Map<String, dynamic>>(databaseAdapter, database,
+        proxySample01.toMap(), proxySample02.toMap());
   });
 
   tearDown(() async {

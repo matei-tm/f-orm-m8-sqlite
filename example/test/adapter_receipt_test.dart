@@ -16,7 +16,8 @@ main() {
   ReceiptProxy proxySample02 = receiptProxySample02;
 
   setUp(() async {
-    initTestFixture(databaseAdapter, database, proxySample01, proxySample02);
+    initTestFixture<Map<String, dynamic>>(databaseAdapter, database,
+        proxySample01.toMap(), proxySample02.toMap());
   });
 
   tearDown(() async {

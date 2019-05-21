@@ -9,8 +9,11 @@ class MockDatabaseFactory extends Mock implements DatabaseFactory {}
 
 class MockDatabaseAdapter extends Mock implements DatabaseAdapter {}
 
-void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
-    MockDatabase database, dynamic sample01, dynamic sample02) {
+void initTestFixture<T extends Map<String, dynamic>>(
+    MockDatabaseAdapter mockDatabaseAdapter,
+    MockDatabase database,
+    T sample01toMap,
+    T sample02toMap) {
   reset(database);
   reset(mockDatabaseAdapter);
   when(mockDatabaseAdapter.getDb(any))
@@ -22,10 +25,10 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
 
   when(database.insert(any, any)).thenAnswer((_) async => Future.value(1));
 
-  var twoProxiesList = List<Map<String, dynamic>>();
+  var twoProxiesList = List<T>();
 
-  twoProxiesList.add(sample01.toMap());
-  twoProxiesList.add(sample02.toMap());
+  twoProxiesList.add(sample01toMap);
+  twoProxiesList.add(sample02toMap);
 
   when(database.query(any, columns: anyNamed('columns'), where: "1"))
       .thenAnswer((_) async => Future.value(twoProxiesList));
@@ -36,7 +39,7 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
 
   var oneProxyList = List<Map<String, dynamic>>();
 
-  oneProxyList.add(sample01.toMap());
+  oneProxyList.add(sample01toMap);
 
   when(database.query(any,
       columns: anyNamed('columns'),
@@ -51,6 +54,11 @@ void initTestFixture(MockDatabaseAdapter mockDatabaseAdapter,
   when(database.query(any,
       columns: anyNamed('columns'),
       where: "account_id = ? AND 1",
+      whereArgs: [2])).thenAnswer((_) async => Future.value(twoProxiesList));
+
+  when(database.query(any,
+      columns: anyNamed('columns'),
+      where: "user_account_id = ? AND date_delete > 0",
       whereArgs: [2])).thenAnswer((_) async => Future.value(twoProxiesList));
 
   when(database.query(any,
