@@ -50,20 +50,20 @@ main() {
       expect(newEntityId, 1);
     });
 
-    test('get ToDoProxies All test', () async {
-      var entityList = await databaseProvider.getToDoProxiesAll();
-      expect(entityList.length, 2);
-    });
+    // test('get ToDoProxies All test', () async {
+    //   var entityList = await databaseProvider.getToDoProxiesAll();
+    //   expect(entityList.length, 2);
+    // });
 
     test('get ToDoProxies Count test', () async {
       var result = await databaseProvider.getToDoProxiesCount();
       expect(result, 9);
     });
 
-    test('get ToDo test', () async {
-      var toDo = await databaseProvider.getToDo(1);
-      expect(toDo.id, 1);
-    });
+    // test('get ToDo test', () async {
+    //   var toDo = await databaseProvider.getToDo(1);
+    //   expect(toDo.id, 1);
+    // });
 
     test('delete ToDo test', () async {
       var deletedId = await databaseProvider.deleteToDo(proxySample01.id);
@@ -80,10 +80,10 @@ main() {
       expect(updatedId, proxySample01.id);
     });
 
-    test('get Entities by Account id test', () async {
-      var result = await databaseProvider.getToDoProxiesByAccountId(2);
-      expect(result.length, 2);
-    });
+    // test('get Entities by Account id test', () async {
+    //   var result = await databaseProvider.getToDoProxiesByAccountId(2);
+    //   expect(result.length, 2);
+    // });
 
     test('softDelete test', () async {
       var result = await databaseProvider.softdeleteToDo(1);
