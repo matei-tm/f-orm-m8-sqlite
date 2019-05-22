@@ -13,14 +13,6 @@ class ReceiptEditPage extends StatefulWidget {
 
 class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
   final _formKey = GlobalKey<FormState>();
-  final _descriptionKey = Key("receiptDescriptionField");
-  final _expirationKey = Key("receiptExpirationDateField");
-  final _numberOfItemsKey = Key("receiptNumberOfItemsField");
-  final _isBioKey = Key("receiptIsBioSwitch");
-  final _quantityKey = Key("receiptQuantityField");
-  final _temperatureKey = Key("receiptStorageTemperatureField");
-  final _numberOfMoleculesKey = Key("receiptNumberOfMoleculesField");
-  final _decompositionDurationKey = Key("receiptDecompositionDurationField");
 
   Receipt _stateReceipt;
   String title;
@@ -76,7 +68,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                 shrinkWrap: true,
                 children: <Widget>[
                   TextFormField(
-                    key: _descriptionKey,
+                    key: Key("receiptDescriptionField"),
                     initialValue: _stateReceipt.description,
                     decoration: InputDecoration(
                       hintText: "Description",
@@ -92,7 +84,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
-                    key: _decompositionDurationKey,
+                    key: Key("receiptDecompositionDurationField"),
                     decoration: InputDecoration(
                       hintText: "decomposing Duration as Duration",
                       labelText: "decomposing Duration*",
@@ -108,7 +100,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
-                    key: _expirationKey,
+                    key: Key("receiptExpirationDateField"),
                     initialValue:
                         _stateReceipt.expirationDate.toIso8601String(),
                     decoration: InputDecoration(
@@ -125,13 +117,13 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   SwitchListTile(
-                      key: _isBioKey,
+                      key: Key("receiptIsBioSwitch"),
                       title: const Text('Is Bio'),
                       value: _stateReceipt.isBio,
                       onChanged: (bool val) =>
                           setState(() => _stateReceipt.isBio = val)),
                   TextFormField(
-                    key: _numberOfItemsKey,
+                    key: Key("receiptNumberOfItemsField"),
                     initialValue: _stateReceipt.numberOfItems.toString(),
                     decoration: InputDecoration(
                       hintText: "number of Items as int",
@@ -147,7 +139,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
-                    key: _numberOfMoleculesKey,
+                    key: Key("receiptNumberOfMoleculesField"),
                     decoration: InputDecoration(
                       hintText: "numberOfMolecules as bigInt",
                       labelText: "numberOfMolecules*",
@@ -162,7 +154,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
-                    key: _quantityKey,
+                    key: Key("receiptQuantityField"),
                     initialValue: _stateReceipt.quantity.toString(),
                     decoration: InputDecoration(
                       hintText: "quantity as double",
@@ -178,7 +170,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                     },
                   ),
                   TextFormField(
-                    key: _temperatureKey,
+                    key: Key("receiptStorageTemperatureField"),
                     initialValue: _stateReceipt.storageTemperature.toString(),
                     decoration: InputDecoration(
                       hintText: "storage Temperature as num",
