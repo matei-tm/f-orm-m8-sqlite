@@ -21,7 +21,32 @@ main() {
     reset(databaseAdapter);
   });
 
+  group('provider initialization tests', () {
+    test('_onCreate test', () async {
+      final createResult = () async {
+        database = await databaseProvider.db;
+        Function a = verify(databaseAdapter.getDb(captureAny)).captured.single;
+        a(database, 2);
+        return true;
+      };
+
+      expect(createResult(), completion(equals(true)));
+    });
+  });
+
   group('adapter GymLocation tests', () {
+    test('the columns list test', () async {
+      expect(
+          databaseProvider.theGymLocationColumns,
+          equals(
+              ["id", "description", "rating", "date_create", "date_update"]));
+    });
+
+    test('the tableHandler test', () async {
+      expect(
+          databaseProvider.theGymLocationTableHandler, equals('gym_location'));
+    });
+
     test('create GymLocation test', () async {
       final createResult = () async {
         await databaseProvider.createGymLocationTable(database);
@@ -71,6 +96,24 @@ main() {
   });
 
   group('adapter HealthEntry tests', () {
+    test('the columns list test', () async {
+      expect(
+          databaseProvider.theHealthEntryColumns,
+          equals([
+            "id",
+            "diagnosys_date",
+            "account_id",
+            "description",
+            "date_create",
+            "date_update"
+          ]));
+    });
+
+    test('the tableHandler test', () async {
+      expect(
+          databaseProvider.theHealthEntryTableHandler, equals('health_entry'));
+    });
+
     test('create Entity test', () async {
       final createResult = () async {
         await databaseProvider.createHealthEntryTable(database);
@@ -125,6 +168,28 @@ main() {
   });
 
   group('adapter Receipt tests', () {
+    test('the columns list test', () async {
+      expect(
+          databaseProvider.theReceiptColumns,
+          equals([
+            "id",
+            "number_of_molecules",
+            "is_bio",
+            "expiration_date",
+            "quantity",
+            "decomposing_duration",
+            "number_of_items",
+            "storage_temperature",
+            "description",
+            "date_create",
+            "date_update"
+          ]));
+    });
+
+    test('the tableHandler test', () async {
+      expect(databaseProvider.theReceiptTableHandler, equals('receipt'));
+    });
+
     test('create Entity test', () async {
       final createResult = () async {
         await databaseProvider.createReceiptTable(database);
@@ -173,6 +238,24 @@ main() {
   });
 
   group('adapter ToDo tests', () {
+    test('the columns list test', () async {
+      expect(
+          databaseProvider.theToDoColumns,
+          equals([
+            "id",
+            "description",
+            "diagnosys_date",
+            "user_account_id",
+            "date_create",
+            "date_update",
+            "date_delete"
+          ]));
+    });
+
+    test('the tableHandler test', () async {
+      expect(databaseProvider.theToDoTableHandler, equals('to_do'));
+    });
+
     test('create ToDo test', () async {
       final createResult = () async {
         await databaseProvider.createToDoTable(database);
@@ -229,6 +312,24 @@ main() {
   });
 
   group('adapter UserAccount tests', () {
+    test('the columns list test', () async {
+      expect(
+          databaseProvider.theUserAccountColumns,
+          equals([
+            "id",
+            "description",
+            "abbreviation",
+            "email",
+            "user_name",
+            "is_current"
+          ]));
+    });
+
+    test('the tableHandler test', () async {
+      expect(
+          databaseProvider.theUserAccountTableHandler, equals('user_account'));
+    });
+
     test('create UserAccount test', () async {
       final createResult = () async {
         await databaseProvider.createUserAccountTable(database);
@@ -284,6 +385,37 @@ main() {
     test('set current UserAccount test', () async {
       var result = await databaseProvider.setCurrentUserAccount(2);
       expect(result, 2);
+    });
+  });
+
+  group('provider edge tests', () {
+    test('initMode default test', () async {
+      DatabaseAdapter newDatabaseAdapter = DatabaseAdapter();
+      expect(newDatabaseAdapter.initMode, InitMode.production);
+    });
+
+    test('initMode singleton test', () async {
+      DatabaseAdapter newDatabaseAdapter =
+          DatabaseAdapter(InitMode.developmentAlwaysReinitDb);
+      expect(newDatabaseAdapter.initMode, InitMode.production);
+    });
+
+    test('deleteAll test', () async {
+      final createResult = () async {
+        databaseProvider.deleteAll();
+        return true;
+      };
+
+      expect(createResult(), completion(equals(true)));
+    });
+
+    test('close test', () async {
+      final createResult = () async {
+        databaseProvider.close();
+        return true;
+      };
+
+      expect(createResult(), completion(equals(true)));
     });
   });
 }

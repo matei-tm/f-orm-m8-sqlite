@@ -14,8 +14,9 @@ void initTestFixture(
     MockDatabaseAdapter mockDatabaseAdapter, MockDatabase database) {
   reset(database);
   reset(mockDatabaseAdapter);
-  when(mockDatabaseAdapter.getDb(any))
-      .thenAnswer((_) async => Future.value(database));
+
+  when(mockDatabaseAdapter.getDb(captureAny))
+      .thenAnswer((_) => Future.value(database));
 
   when(database.close()).thenAnswer((_) async => Future<void>.value());
 

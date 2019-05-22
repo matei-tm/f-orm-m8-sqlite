@@ -51,5 +51,9 @@ main() {
 
       expect(toDoToMap, testMap);
     });
+
+    test('isDeleted', () async {
+      expect(toDoProxy.isDeleted, true);
+    });
   });
 }
