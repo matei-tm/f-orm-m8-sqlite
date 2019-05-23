@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.7.0+2] - 2019-05-23
+
+### Fixed
+
+* Dartlang publish warnings
+
+### Added
+
+* More tests on `example` project in order to obtain a test coverage greater than 95%
+
+
 ## [0.7.0+1] - 2019-05-18
 
 ### Changed
