@@ -3,7 +3,7 @@ import 'package:f_orm_m8_sqlite/generator/utils/utils.dart';
 class ValidatorWriter {
   List<ValidationIssue> validationIssues;
 
-  ValidatorWriter(List<ValidationIssue> this.validationIssues);
+  ValidatorWriter(this.validationIssues);
 
   String expandValidationIssues() {
     StringBuffer result = StringBuffer();

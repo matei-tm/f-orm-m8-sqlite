@@ -5,7 +5,7 @@ class ExceptionExpander {
 
   StackTrace stack;
 
-  ExceptionExpander(this.exception, StackTrace this.stack);
+  ExceptionExpander(this.exception, this.stack);
 
   @override
   String toString() {
