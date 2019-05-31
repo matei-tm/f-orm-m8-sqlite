@@ -353,7 +353,8 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
   Future _deleteAccount() async {
     databaseProvider.deleteUserAccount(this._stateAccount.id);
 
-    var reminingUserAccounts = await databaseProvider.getUserAccountProxiesAll();
+    var reminingUserAccounts =
+        await databaseProvider.getUserAccountProxiesAll();
 
     if (reminingUserAccounts.length > 0) {
       databaseProvider.setCurrentUserAccount(reminingUserAccounts.first.id);
