@@ -34,7 +34,7 @@ abstract class GuardedAccountState<T extends StatefulWidget>
   }
 
   Future switchAccount(UserAccount userAccount, BuildContext context) async {
-    await databaseAdapter.setCurrentUserAccount(userAccount.id);
+    await databaseProvider.setCurrentUserAccount(userAccount.id);
     guardedUserAccounts.remove(userAccount);
     guardedUserAccounts.add(guardedCurrentAccount);
     guardedCurrentAccount = userAccount;
@@ -48,7 +48,7 @@ abstract class GuardedAccountState<T extends StatefulWidget>
 
   Future<int> _loadAsyncData() async {
     try {
-      guardedCurrentAccount = await databaseAdapter.getCurrentUserAccount();
+      guardedCurrentAccount = await databaseProvider.getCurrentUserAccount();
       if (guardedCurrentAccount == null) {
         goToStartPage();
       }
@@ -62,7 +62,7 @@ abstract class GuardedAccountState<T extends StatefulWidget>
   }
 
   Future _loadNonCurrentAccounts() async {
-    guardedUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
+    guardedUserAccounts = await databaseProvider.getUserAccountProxiesAll();
     guardedUserAccounts.removeWhere((a) => a.isCurrent == true);
   }
 

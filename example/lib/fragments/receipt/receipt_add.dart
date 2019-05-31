@@ -35,7 +35,7 @@ class _ReceiptAddPageState extends DbAdapterState<ReceiptAddPage> {
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      int id = await databaseAdapter.saveReceipt(_stateReceipt);
+      int id = await databaseProvider.saveReceipt(_stateReceipt);
       _stateReceipt.id = id;
 
       Navigator.of(context).pop(_stateReceipt);

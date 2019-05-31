@@ -40,7 +40,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
   }
 
   Future<bool> _loadAsyncCurrentData() async {
-    gymLocations = await databaseAdapter.getGymLocationProxiesAll();
+    gymLocations = await databaseProvider.getGymLocationProxiesAll();
     return true;
   }
 
@@ -124,7 +124,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
 
       var tempGymLocation = GymLocationProxy();
       tempGymLocation.description = text;
-      var newId = await databaseAdapter.saveGymLocation(tempGymLocation);
+      var newId = await databaseProvider.saveGymLocation(tempGymLocation);
       tempGymLocation.id = newId;
 
       gymLocations.add(tempGymLocation);
@@ -140,7 +140,7 @@ class _GymPlacesFragmentState extends DbAdapterState<GymPlacesFragment> {
 
   Future<void> _deleteGymLocation(GymLocationProxy h) async {
     try {
-      await databaseAdapter.deleteGymLocation(h.id);
+      await databaseProvider.deleteGymLocation(h.id);
       gymLocations.remove(h);
 
       setState(() {});

@@ -43,12 +43,12 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
       _stateAccount.isCurrent = true;
 
       if (_stateAccount.id == null) {
-        id = await databaseAdapter.saveUserAccount(_stateAccount);
+        id = await databaseProvider.saveUserAccount(_stateAccount);
       } else {
-        id = await databaseAdapter.updateUserAccount(_stateAccount);
+        id = await databaseProvider.updateUserAccount(_stateAccount);
       }
 
-      await databaseAdapter.setCurrentUserAccount(id);
+      await databaseProvider.setCurrentUserAccount(id);
 
       Navigator.of(context).pushReplacementNamed("/");
     }
@@ -292,7 +292,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
 
   Future<bool> testIfMaxAccountsCountWasReached(BuildContext context) async {
     bool maxAccountsCountReached;
-    var accountsCount = await databaseAdapter.getUserAccountProxiesCount();
+    var accountsCount = await databaseProvider.getUserAccountProxiesCount();
     if (accountsCount > 3) {
       showDialog<void>(
         context: context,
@@ -321,7 +321,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
 
   Future<bool> testIfAccountHasDependents(BuildContext context) async {
     bool hasDependents;
-    var dependentsCount = await databaseAdapter
+    var dependentsCount = await databaseProvider
         .getHealthEntryProxiesByAccountId(_stateAccount.id);
     if (dependentsCount.length > 0) {
       showDialog<void>(
@@ -351,12 +351,12 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
   }
 
   Future _deleteAccount() async {
-    databaseAdapter.deleteUserAccount(this._stateAccount.id);
+    databaseProvider.deleteUserAccount(this._stateAccount.id);
 
-    var reminingUserAccounts = await databaseAdapter.getUserAccountProxiesAll();
+    var reminingUserAccounts = await databaseProvider.getUserAccountProxiesAll();
 
     if (reminingUserAccounts.length > 0) {
-      databaseAdapter.setCurrentUserAccount(reminingUserAccounts.first.id);
+      databaseProvider.setCurrentUserAccount(reminingUserAccounts.first.id);
       Navigator.of(context).pushReplacementNamed("/");
     } else {
       Navigator.of(context).pop();

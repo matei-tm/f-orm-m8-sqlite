@@ -36,7 +36,7 @@ class _HealthRecordsFragmentState
 
   Future<bool> _loadAsyncCurrentData(int accountId) async {
     healthEntries =
-        await databaseAdapter.getHealthEntryProxiesByAccountId(accountId);
+        await databaseProvider.getHealthEntryProxiesByAccountId(accountId);
     healthEntries = healthEntries ?? [];
     return true;
   }
@@ -126,7 +126,7 @@ class _HealthRecordsFragmentState
       var tempHealthEntry = HealthEntryProxy(
           description: text, accountId: guardedCurrentAccount.id);
       tempHealthEntry.diagnosysDate = DateTime.now();
-      var newId = await databaseAdapter.saveHealthEntry(tempHealthEntry);
+      var newId = await databaseProvider.saveHealthEntry(tempHealthEntry);
       tempHealthEntry.id = newId;
 
       healthEntries.add(tempHealthEntry);
@@ -142,7 +142,7 @@ class _HealthRecordsFragmentState
 
   Future<void> _deleteHealthEntry(HealthEntryProxy h) async {
     try {
-      await databaseAdapter.deleteHealthEntry(h.id);
+      await databaseProvider.deleteHealthEntry(h.id);
       healthEntries.remove(h);
 
       setState(() {});

@@ -27,7 +27,7 @@ class _ReceiptsFragmentState extends DbAdapterState<ReceiptsFragment> {
   }
 
   Future<List<Receipt>> _loadAsyncCurrentData() async {
-    return await databaseAdapter.getReceiptProxiesAll();
+    return await databaseProvider.getReceiptProxiesAll();
   }
 
   @override
@@ -117,7 +117,7 @@ class _ReceiptsFragmentState extends DbAdapterState<ReceiptsFragment> {
   }
 
   Future<void> _deleteReceiptFromDatabase(Receipt h) async {
-    await databaseAdapter.deleteReceipt(h.id);
+    await databaseProvider.deleteReceipt(h.id);
     receipts.remove(h);
     setState(() {});
 
