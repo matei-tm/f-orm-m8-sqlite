@@ -70,9 +70,6 @@ jobs:
       script:
         - ./tool/travis_flutter.sh
       after_success: bash <(curl -s https://codecov.io/bash) -f lcov.info
-      cache:
-        directories:
-          - $HOME/.pub-cache
     - stage: example_integration_test
       name: "FLUTTER_SDK: 1.5.4-hotfix.2-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       os: osx
@@ -100,17 +97,17 @@ jobs:
       script: ./tool/travis.sh flutter_test_driver
 
 stages:
-  - analyzer_and_format
-  - analyzer_and_format_stable
-  - unit_test
-  - example_unit_test_and_analyzer
-  - example_integration_test
+  # - analyzer_and_format
+  # - analyzer_and_format_stable
+  # - unit_test
+  # - example_unit_test_and_analyzer
+  # - example_integration_test
   - test_coverage
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only:
-    - master
+    - develop
 
 cache:
   directories:

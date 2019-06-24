@@ -31,7 +31,7 @@ run_tests () {
   if [ -f "pubspec.yaml" ] && [ -d "test" ]; then
     echo "running tests in $1"
     #    flutter packages get || echo "Ignore exit(1)"
-    flutter packages get
+    
     # check if build_runner needs to be run
     #if grep build_runner pubspec.yaml > /dev/null; then
     #  flutter packages pub run build_runner build --delete-conflicting-outputs
@@ -42,6 +42,8 @@ run_tests () {
     # run tests with coverage
     if grep sqlite_m8_demo pubspec.yaml > /dev/null; then
       echo "run flutter tests"
+      flutter packages get
+      
       if [ -f "test/all_tests.dart" ]; then
         flutter test --coverage test/all_tests.dart || error=true
       else
