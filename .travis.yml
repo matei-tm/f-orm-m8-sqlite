@@ -97,17 +97,17 @@ jobs:
       script: ./tool/travis.sh flutter_test_driver
 
 stages:
-  # - analyzer_and_format
-  # - analyzer_and_format_stable
-  # - unit_test
-  # - example_unit_test_and_analyzer
-  # - example_integration_test
+  - analyzer_and_format
+  - analyzer_and_format_stable
+  - unit_test
+  - example_unit_test_and_analyzer
+  - example_integration_test
   - test_coverage
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only:
-    - develop
+    - master
 
 cache:
   directories:
