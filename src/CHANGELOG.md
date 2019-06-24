@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [0.7.0+4] - 2019-06-25
+
+### Changed
+
+* test reference version to ^1.6.0
+* CI pipeline: flutter sdk updated for 1.5.4-hotfix.2-stable
+
+### Fixed
+
+* CI pipeline: authentication codes were disabled on coverage with --disable-service-auth-codes
+* CI pipeline: travis_flutter.sh reviewed
+
 ## [0.7.0+3] - 2019-06-24
 
 ### Changed
