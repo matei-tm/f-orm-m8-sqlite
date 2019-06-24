@@ -29,7 +29,7 @@ jobs:
       env: PKG="src"
       dart: dev
     - stage: example_unit_test_and_analyzer
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-infos --fatal-warnings ., flutter test]"
+      name: "FLUTTER_SDK: 1.5.4-hotfix.2-stable - DIR: example - TASKS: [dartfmt -n --set-exit-if-changed ., dartanalyzer --fatal-infos --fatal-warnings ., flutter test]"
       language: generic
       os: linux
       env: PKG="example"
@@ -38,7 +38,7 @@ jobs:
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
-        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - FLUTTER_VERSION=1.5.4-hotfix.2-${FLUTTER_CHANNEL}
         - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
@@ -51,7 +51,7 @@ jobs:
         directories:
           - $HOME/.pub-cache
     - stage: test_coverage
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: . - TASKS: run_tests"
+      name: "FLUTTER_SDK: 1.5.4-hotfix.2-stable - DIR: . - TASKS: run_tests"
       language: generic
       os: linux
       env: PKG="."
@@ -60,7 +60,7 @@ jobs:
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
-        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - FLUTTER_VERSION=1.5.4-hotfix.2-${FLUTTER_CHANNEL}
         - wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz && tar xf flutter.tar.xz > /dev/null && rm flutter.tar.xz
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
@@ -74,7 +74,7 @@ jobs:
         directories:
           - $HOME/.pub-cache
     - stage: example_integration_test
-      name: "FLUTTER_SDK: 1.2.1-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
+      name: "FLUTTER_SDK: 1.5.4-hotfix.2-stable - DIR: example - TASKS: flutter driver --target=test_driver/app.dart"
       os: osx
       # use oldest flutter supported version of xcode
       osx_image: xcode8.0
@@ -92,7 +92,7 @@ jobs:
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
-        - FLUTTER_VERSION=1.2.1-${FLUTTER_CHANNEL}
+        - FLUTTER_VERSION=1.5.4-hotfix.2-${FLUTTER_CHANNEL}
         - wget --quiet --output-document=flutter.zip https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/macos/flutter_macos_v${FLUTTER_VERSION}.zip && unzip -qq flutter.zip > /dev/null && rm flutter.zip
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
         - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
