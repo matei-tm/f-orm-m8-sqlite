@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.7.0+3] - 2019-06-24
+
+### Changed
+
+* Analyzer version to 0.36.0
+
 ## [0.7.0+2] - 2019-05-23
 
 ### Fixed
