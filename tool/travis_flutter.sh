@@ -59,8 +59,8 @@ run_tests () {
       echo "run dart tests"
       pub get
       nohup pub global run coverage:collect_coverage --port=8111 -o coverage.json --resume-isolates --wait-paused &
-      kill -s SIGQUIT $(ps ax | grep 'dart' | awk '{print $2}') & 
       dart --pause-isolates-on-exit --enable-vm-service=8111 "test/all_tests.dart" || error=true
+      kill -s SIGQUIT $(ps -ax | grep 'dart' | awk '{print $2}')
       pub global run coverage:format_coverage --packages=.packages -i coverage.json --report-on lib --lcov --out lcov.info
       if [ -f "lcov.info" ]; then
         # combine line coverage info from package tests to a common file
