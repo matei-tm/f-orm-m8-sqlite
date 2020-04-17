@@ -78,6 +78,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter description";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.description = value;
@@ -93,6 +94,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter decomposingDuration";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.decomposingDuration =
@@ -111,6 +113,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter expirationDate";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.expirationDate = DateTime.parse(value);
@@ -133,6 +136,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter numberOfItems";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.numberOfItems = int.parse(value);
@@ -148,6 +152,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter numberOfMolecules";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.numberOfMolecules = BigInt.parse(value);
@@ -164,6 +169,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter quantity";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.quantity = double.parse(value);
@@ -180,6 +186,7 @@ class _ReceiptEditPageState extends DbAdapterState<ReceiptEditPage> {
                       if (value.isEmpty) {
                         return "Please enter storage Temperature";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       _stateReceipt.storageTemperature = num.parse(value);

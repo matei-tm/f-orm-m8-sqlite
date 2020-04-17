@@ -88,6 +88,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                       if (value.isEmpty) {
                         return "Please enter account name";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       this._stateAccount.userName = value;
@@ -105,6 +106,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                       if (value.isEmpty) {
                         return "Please Enter Email";
                       }
+                      return null;
                     },
                     onSaved: (String value) {
                       this._stateAccount.email = value;
@@ -125,6 +127,7 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
                             if (value.isEmpty) {
                               return "Please enter account abbreviation";
                             }
+                            return null;
                           },
                           onSaved: (String value) {
                             this._stateAccount.abbreviation = value;
@@ -206,25 +209,25 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-            title: Text("Delete the account?"),
-            actions: <Widget>[
-              FlatButton(
-                key: Key('confirmDeleteAccount'),
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  this._deleteAccount();
-                },
-              ),
-              FlatButton(
-                key: Key('cancelDeleteAccount'),
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+        title: Text("Delete the account?"),
+        actions: <Widget>[
+          FlatButton(
+            key: Key('confirmDeleteAccount'),
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              this._deleteAccount();
+            },
           ),
+          FlatButton(
+            key: Key('cancelDeleteAccount'),
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -233,26 +236,26 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-            title: Text(
-                "The account is not saved. Instead a reset will be triggered."),
-            actions: <Widget>[
-              FlatButton(
-                key: Key('acceptResetAccount'),
-                child: Text("Accept"),
-                onPressed: () {
-                  this._formKey.currentState.reset();
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                key: Key('cancelResetAccount'),
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+        title: Text(
+            "The account is not saved. Instead a reset will be triggered."),
+        actions: <Widget>[
+          FlatButton(
+            key: Key('acceptResetAccount'),
+            child: Text("Accept"),
+            onPressed: () {
+              this._formKey.currentState.reset();
+              Navigator.of(context).pop();
+            },
           ),
+          FlatButton(
+            key: Key('cancelResetAccount'),
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -268,25 +271,25 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-            title: Text("Confirm adding new account"),
-            actions: <Widget>[
-              FlatButton(
-                key: Key('confirmAddingAccount'),
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  this._addNewAccount();
-                },
-              ),
-              FlatButton(
-                key: Key('cancelAddingAccount'),
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+        title: Text("Confirm adding new account"),
+        actions: <Widget>[
+          FlatButton(
+            key: Key('confirmAddingAccount'),
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              this._addNewAccount();
+            },
           ),
+          FlatButton(
+            key: Key('cancelAddingAccount'),
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -298,17 +301,17 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
-              title: Text("The accounts max limit was reached"),
-              actions: <Widget>[
-                FlatButton(
-                  key: Key('okLimitReached'),
-                  child: Text("OK"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+          title: Text("The accounts max limit was reached"),
+          actions: <Widget>[
+            FlatButton(
+              key: Key('okLimitReached'),
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
+          ],
+        ),
       );
 
       maxAccountsCountReached = true;
@@ -328,18 +331,18 @@ class _AccountPageState extends DbAdapterState<AccountPage> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
-              title: Text(
-                  "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health Records' and delete all entries"),
-              actions: <Widget>[
-                FlatButton(
-                  key: Key('acceptHasDependents'),
-                  child: Text("Accept"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+          title: Text(
+              "The account has dependents. As a result, deletion is forbidden.\nIf you really need to delete it, first go to 'Health Records' and delete all entries"),
+          actions: <Widget>[
+            FlatButton(
+              key: Key('acceptHasDependents'),
+              child: Text("Accept"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
+          ],
+        ),
       );
 
       hasDependents = true;

@@ -9,7 +9,7 @@ class DbAdapterState<T extends StatefulWidget> extends State<T> {
   void initState() {
     super.initState();
 
-    final MyHomePage widget = context.ancestorWidgetOfExactType(MyHomePage);
+    final MyHomePage widget = context.findAncestorWidgetOfExactType();
     databaseProvider = widget.databaseProvider;
   }
 

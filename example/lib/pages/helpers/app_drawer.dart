@@ -20,25 +20,25 @@ class AppDrawerState extends GuardedAccountState<AppDrawer> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-            title: Text("Confirm Switching Account"),
-            actions: <Widget>[
-              FlatButton(
-                key: Key("confirmSwitchingAccount"),
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  switchAccount(userAccount, context);
-                },
-              ),
-              FlatButton(
-                key: Key("cancelSwitchingAccount"),
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+        title: Text("Confirm Switching Account"),
+        actions: <Widget>[
+          FlatButton(
+            key: Key("confirmSwitchingAccount"),
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              switchAccount(userAccount, context);
+            },
           ),
+          FlatButton(
+            key: Key("cancelSwitchingAccount"),
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 

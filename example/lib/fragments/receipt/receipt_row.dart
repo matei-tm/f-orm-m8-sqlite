@@ -85,28 +85,26 @@ class ReceiptRow extends StatelessWidget {
                 ),
               ),
               // share, explore buttons
-              ButtonTheme.bar(
-                child: ButtonBar(
-                  alignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    FlatButton(
-                      key: _updateReceiptKey,
-                      child: Text(
-                        "Edit",
-                      ),
-                      textColor: Theme.of(context).accentColor,
-                      onPressed: _getHandler(onPressedUpdate),
+              ButtonBar(
+                alignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  FlatButton(
+                    key: _updateReceiptKey,
+                    child: Text(
+                      "Edit",
                     ),
-                    FlatButton(
-                      key: _deleteReceiptKey,
-                      child: Text(
-                        "Delete",
-                      ),
-                      textColor: Theme.of(context).accentColor,
-                      onPressed: _getHandler(onPressedDelete),
+                    textColor: Theme.of(context).accentColor,
+                    onPressed: _getHandler(onPressedUpdate),
+                  ),
+                  FlatButton(
+                    key: _deleteReceiptKey,
+                    child: Text(
+                      "Delete",
                     ),
-                  ],
-                ),
+                    textColor: Theme.of(context).accentColor,
+                    onPressed: _getHandler(onPressedDelete),
+                  ),
+                ],
               ),
             ],
           ),

@@ -56,7 +56,7 @@ void enableCurrentUserAccount(MockDatabaseProvider mockDatabaseProvider) {
   when(mockDatabaseProvider.setCurrentUserAccount(any)).thenAnswer((_) {
     firstUser.isCurrent = false;
     secondUser.isCurrent = true;
-    Future.value(2);
+    return Future.value(2);
   });
 }
 

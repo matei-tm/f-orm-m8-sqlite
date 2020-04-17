@@ -94,25 +94,25 @@ class _ReceiptsFragmentState extends DbAdapterState<ReceiptsFragment> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-            title: Text("Confirm Delete Receipt"),
-            actions: <Widget>[
-              FlatButton(
-                key: Key("confirmDeleteReceiptButton"),
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _deleteReceiptFromDatabase(h);
-                },
-              ),
-              FlatButton(
-                key: Key("cancelDeleteReceiptButton"),
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+        title: Text("Confirm Delete Receipt"),
+        actions: <Widget>[
+          FlatButton(
+            key: Key("confirmDeleteReceiptButton"),
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _deleteReceiptFromDatabase(h);
+            },
           ),
+          FlatButton(
+            key: Key("cancelDeleteReceiptButton"),
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 
