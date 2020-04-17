@@ -6,7 +6,8 @@
 
 ### Changed
 
-* Analyzer version to 0.39.7
+* Allow package:analyzer version 0.39.x.
+* CI pipeline: flutter sdk updated for 1.12.13+hotfix.9-stable
 
 ## [0.7.0+5] - 2020-04-17
 
