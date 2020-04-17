@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   build: '>=0.12.0 <2.0.0'
-  analyzer: ^0.36.0
+  analyzer: ^0.39.0
   path: ^1.6.2
-  source_gen: ^0.9.0
+  source_gen: ^0.9.5
   f_orm_m8: ^0.8.0
 
 dev_dependencies:

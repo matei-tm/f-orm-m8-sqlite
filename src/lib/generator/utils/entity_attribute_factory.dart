@@ -8,7 +8,7 @@ class EntityAttributeFactory {
 
   EntityAttribute extractEntityAttribute(
       FieldElement field, DartObject dataColumnAnnotation) {
-    String modelTypeName = field.type.name;
+    String modelTypeName = field.type.getDisplayString();
     String modelName = field.name;
 
     String attributeName =

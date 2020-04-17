@@ -2,11 +2,17 @@
 
 ## [Unreleased]
 
+## [0.7.1] - 2020-04-17
+
+### Changed
+
+* Analyzer version to 0.39.7
+
 ## [0.7.0+5] - 2020-04-17
 
 ### Changed
 
-* Analyzer version to 0.39.0
+* Analyzer version to 0.36.4
 
 ## [0.7.0+4] - 2019-06-25
 

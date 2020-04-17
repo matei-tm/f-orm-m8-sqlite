@@ -1,6 +1,6 @@
 /*
 Not all the models have passed the validation process. Review the following issues, fix them and rerun the builder:
 
-Error: The type List of HealthEntry.listField is not implemented. Remove it from the model.
-Error: The type Map of HealthEntry.mapField is not implemented. Remove it from the model.
+Error: The type List<int> of HealthEntry.listField is not implemented. Remove it from the model.
+Error: The type Map<String, dynamic> of HealthEntry.mapField is not implemented. Remove it from the model.
 */

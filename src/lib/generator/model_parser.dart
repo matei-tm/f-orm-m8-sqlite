@@ -82,11 +82,11 @@ class ModelParser extends ValidationCollectable {
   }
 
   bool validatePreExtractionConditions() {
-    if (isDbEntity.isAssignableFromType(modelClassElement.type)) {
+    if (isDbEntity.isAssignableFromType(modelClassElement.thisType)) {
       return true;
     }
 
-    if (isDbOpenEntity.isAssignableFromType(modelClassElement.type)) {
+    if (isDbOpenEntity.isAssignableFromType(modelClassElement.thisType)) {
       return true;
     }
 

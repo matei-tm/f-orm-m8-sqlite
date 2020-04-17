@@ -92,7 +92,7 @@ Supported orm-m8 features:
 
         dev_dependencies:
             build_runner: ^1.0.0
-            f_orm_m8_sqlite: ^0.7.0
+            f_orm_m8_sqlite: ^0.7.1
             flutter_test:
                 sdk: flutter
 
